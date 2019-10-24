@@ -1,0 +1,50 @@
+{
+  "parent": "block/thin_block",
+  "textures": {
+    "particle": "docwheat:block/bok_hay_block_top",
+    "side": "docwheat:block/bok_hay_block_side",
+    "top": "docwheat:block/bok_hay_block_top"
+  },
+  "elements": [
+    {   "from": [ 0, 0, 0 ],
+      "to": [ 16, 1, 16 ],
+      "faces": {
+        "down":  {
+          "uv": [ 0,  0, 16, 16 ],
+          "texture": "#top",
+          "cullface": "down",
+          "tintindex": 0
+        },
+        "up":    {
+          "uv": [ 0,  0, 16, 16 ],
+          "texture": "#side",
+          "tintindex": 0
+        },
+        "north": {
+          "uv": [ 0, 15, 16, 16 ],
+          "texture": "#top",
+          "cullface": "north",
+          "tintindex": 0
+        },
+        "south": {
+          "uv": [ 0, 15, 16, 16 ],
+          "texture": "#top",
+          "cullface": "south",
+          "tintindex": 0
+        },
+        "west":  {
+          "uv": [ 0, 15, 16, 16 ],
+          "texture": "#side",
+          "cullface": "west",
+          "tintindex": 0
+        },
+        "east":  {
+          "uv": [ 0, 15, 16, 16 ],
+          "texture": "#side",
+          "cullface": "east",
+          "tintindex": 0
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smoking",
+  "ingredient": {
+    "item": "docwheat:battered_cod"
+  },
+  "result": "docwheat:deep_fried_fish",
+  "experience": 0.35,
+  "cookingtime": 100
+}

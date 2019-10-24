@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smoking",
+  "ingredient": {
+    "item": "docwheat:biscuit_dough"
+  },
+  "result": "docwheat:biscuit",
+  "experience": 0.35,
+  "cookingtime": 100
+}

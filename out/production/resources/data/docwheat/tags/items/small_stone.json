@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "docwheat:small_cobblestone",
+    "docwheat:granite_stone",
+    "docwheat:diorite_stone",
+    "docwheat:andesite_stone",
+    "minecraft:stone_button"
+  ]
+}

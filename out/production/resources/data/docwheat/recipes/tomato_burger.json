@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "docwheat:roll"
+    },
+    {
+      "item": "docwheat:flint_knife"
+    },
+    {
+      "item": "minecraft:cooked_beef"
+    },
+    {
+      "item": "docwheat:tomato"
+    }
+  ],
+  "result": {
+    "item": "docwheat:tomato_burger"
+  }
+}

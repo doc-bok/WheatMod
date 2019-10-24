@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:water_bucket"
+    },
+    {
+      "tag": "docwheat:flour"
+    },
+    {
+      "tag": "docwheat:cooked_meat"
+    },
+    {
+      "item": "docwheat:stone_bowl"
+    }
+  ],
+  "result": {
+    "item": "docwheat:gravy"
+  }
+}

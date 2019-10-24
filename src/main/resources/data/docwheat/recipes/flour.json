@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "tag": "docwheat:common_grain"
+    },
+    {
+      "item": "docwheat:mortar_pestle"
+    }
+  ],
+  "result": {
+    "item": "docwheat:common_flour"
+  }
+}

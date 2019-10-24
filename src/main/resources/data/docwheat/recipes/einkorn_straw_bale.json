@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "docwheat:einkorn_straw"
+    }
+  },
+  "result": {
+    "item": "docwheat:einkorn_straw_bale"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:cod"
+    },
+    {
+      "item": "docwheat:flint_knife"
+    }
+  ],
+  "result": {
+    "item": "docwheat:cod_fillet"
+  }
+}

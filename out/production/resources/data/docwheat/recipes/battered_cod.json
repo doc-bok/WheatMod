@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "docwheat:cod_fillet"
+    },
+    {
+      "item": "docwheat:batter_bucket"
+    }
+  ],
+  "result": {
+    "item": "docwheat:battered_cod"
+  }
+}

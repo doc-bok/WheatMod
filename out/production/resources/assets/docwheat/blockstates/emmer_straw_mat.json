@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "docwheat:block/straw_mat", "y": 90 },
+    "facing=south": { "model": "docwheat:block/straw_mat", "y": 90 },
+    "facing=east": { "model": "docwheat:block/straw_mat" },
+    "facing=west": { "model": "docwheat:block/straw_mat" }
+  }
+}

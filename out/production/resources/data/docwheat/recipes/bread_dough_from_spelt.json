@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XXX",
+    "X#X",
+    "XXX"
+  ],
+  "key": {
+    "#": {
+      "item": "minecraft:water_bucket"
+    },
+    "X": {
+      "item": "docwheat:spelt_flour"
+    }
+  },
+  "result": {
+    "item": "docwheat:bread_dough",
+    "count": 8
+  }
+}

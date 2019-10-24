@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " C ",
+    "ABA",
+    " A "
+  ],
+  "key": {
+    "A": {
+      "item": "docwheat:dough"
+    },
+    "B": {
+      "tag": "docwheat:cooked_fish"
+    },
+    "C": {
+      "item": "minecraft:baked_potato"
+    }
+  },
+  "result": {
+    "item": "docwheat:uncooked_fish_pie"
+  }
+}

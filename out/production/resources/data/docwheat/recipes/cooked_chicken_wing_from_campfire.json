@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:campfire_cooking",
+  "ingredient": {
+    "item": "docwheat:chicken_wing"
+  },
+  "result": "docwheat:cooked_chicken_wing",
+  "experience": 0.35,
+  "cookingtime": 600
+}

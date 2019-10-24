@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "docwheat:einkorn_straw_bale"
+    }
+  ],
+  "result": {
+    "item": "docwheat:einkorn_straw",
+    "count": 9
+  }
+}

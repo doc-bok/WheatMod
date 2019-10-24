@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/crop",
+  "textures": {
+    "crop": "docwheat:block/tomato_stage5"
+  }
+}

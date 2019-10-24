@@ -1,0 +1,6 @@
+{
+  "parent": "docwheat:item/small_handheld",
+  "textures": {
+    "layer0": "docwheat:item/flint_knife"
+  }
+}

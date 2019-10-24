@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smoking",
+  "ingredient": {
+    "item": "docwheat:uncooked_donut"
+  },
+  "result": "docwheat:donut",
+  "experience": 0.35,
+  "cookingtime": 100
+}

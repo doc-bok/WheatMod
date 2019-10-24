@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smoking",
+  "ingredient": {
+    "item": "docwheat:raw_pasta"
+  },
+  "result": "docwheat:pasta",
+  "experience": 0.35,
+  "cookingtime": 100
+}

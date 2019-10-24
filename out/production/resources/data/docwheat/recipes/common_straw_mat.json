@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "docwheat:common_straw"
+    }
+  },
+  "result": {
+    "item": "docwheat:common_straw_mat"
+  }
+}

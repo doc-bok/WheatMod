@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "X",
+    "X",
+    "X"
+  ],
+  "key": {
+    "X": {
+      "item": "docwheat:raw_pasta"
+    }
+  },
+  "result": {
+    "item": "docwheat:raw_noodles",
+    "count": 3
+  }
+}

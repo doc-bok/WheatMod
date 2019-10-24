@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " B ",
+    "ABA",
+    " A "
+  ],
+  "key": {
+    "A": {
+      "item": "docwheat:dough"
+    },
+    "B": {
+      "item": "minecraft:apple"
+    }
+  },
+  "result": {
+    "item": "docwheat:uncooked_apple_pie"
+  }
+}
