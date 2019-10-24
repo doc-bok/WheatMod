@@ -1,8 +1,0 @@
-{
-  "replace": false,
-  "values": [
-    "docwheat:common_grain",
-    "docwheat:emmer_grain",
-    "docwheat:spelt_grain"
-  ]
-}

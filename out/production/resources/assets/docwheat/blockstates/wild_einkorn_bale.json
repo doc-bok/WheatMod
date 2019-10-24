@@ -1,7 +1,0 @@
-{
-  "variants": {
-    "axis=y": { "model": "docwheat:block/gray_hay_block" },
-    "axis=z": { "model": "docwheat:block/gray_hay_block", "x": 90 },
-    "axis=x": { "model": "docwheat:block/gray_hay_block", "x": 90, "y": 90 }
-  }
-}

@@ -1,9 +1,0 @@
-{
-  "type": "minecraft:smoking",
-  "ingredient": {
-    "item": "docwheat:porridge"
-  },
-  "result": "docwheat:warm_porridge",
-  "experience": 0.35,
-  "cookingtime": 100
-}

@@ -1,6 +1,0 @@
-{
-  "parent": "docwheat:block/tinted_crop",
-  "textures": {
-    "crop": "docwheat:block/bok_wheat_stage0"
-  }
-}

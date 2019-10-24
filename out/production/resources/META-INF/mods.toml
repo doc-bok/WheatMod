@@ -1,8 +1,0 @@
-modLoader="javafml"
-loaderVersion="[28.1]"
-credits="Developed by Doc Bok"
-[[mods]]
-modId="docwheat"
-version="0.1"
-displayName="Bok's Wheat Mod" #mandatory
-description='''Changes wheat so there are more gameplay options. Several new types of wheat, lots of new food recipes, and a new villager type!'''

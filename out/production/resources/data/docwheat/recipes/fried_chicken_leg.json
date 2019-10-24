@@ -1,9 +1,0 @@
-{
-  "type": "minecraft:smoking",
-  "ingredient": {
-    "item": "docwheat:flour_chicken_leg"
-  },
-  "result": "docwheat:fried_chicken_leg",
-  "experience": 0.35,
-  "cookingtime": 100
-}

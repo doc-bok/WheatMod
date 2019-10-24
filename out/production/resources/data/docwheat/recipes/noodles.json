@@ -1,9 +1,0 @@
-{
-  "type": "minecraft:smoking",
-  "ingredient": {
-    "item": "docwheat:raw_noodles"
-  },
-  "result": "docwheat:noodles",
-  "experience": 0.35,
-  "cookingtime": 100
-}
