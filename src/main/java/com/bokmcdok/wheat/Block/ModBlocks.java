@@ -4,11 +4,8 @@ import com.bokmcdok.wheat.Color.ModBlockColors;
 import com.bokmcdok.wheat.Item.ModItems;
 import com.bokmcdok.wheat.WheatMod;
 import net.minecraft.block.*;
-import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.client.renderer.color.BlockColors;
-import net.minecraft.item.Items;
-import net.minecraft.item.crafting.Ingredient;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -69,10 +66,7 @@ public class ModBlocks
                 new SmallStoneBlock().setRegistryName(WheatMod.MOD_ID, "andesite_stone"),
 
                 //  Vegetabls
-                new ModCropsBlock(ModItems.tomato_seeds, "tomato"),
-
-                //  Campfire
-                new ModCampfireBlock("campfire")
+                new ModCropsBlock(ModItems.tomato_seeds, "tomato")
         );
     }
 
@@ -195,9 +189,4 @@ public class ModBlocks
      * Vegetables
      */
     public static final ModCropsBlock tomato = null;
-
-    /**
-     * Campfire
-     */
-    public static final ModCampfireBlock campfire = null;
 }
