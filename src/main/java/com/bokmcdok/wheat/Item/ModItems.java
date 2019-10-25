@@ -149,10 +149,7 @@ public class ModItems
                 new ModBlockNamedItem(ModBlocks.tomato, ItemGroup.MATERIALS, "tomato_seeds"),
 
                 //  Food - Misc
-                new ModStoneBowlFoodItem(6, 7.2f, false, "gravy"),
-
-                //  Campfire
-                new ModBlockItem(ModBlocks.campfire, ItemGroup.DECORATIONS, "campfire")
+                new ModStoneBowlFoodItem(6, 7.2f, false, "gravy")
         );
     }
 
