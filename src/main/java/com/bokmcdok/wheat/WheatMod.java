@@ -1,7 +1,10 @@
 package com.bokmcdok.wheat;
 
+import com.bokmcdok.wheat.Container.ModContainers;
 import com.bokmcdok.wheat.Entity.StoneEntity;
 import com.bokmcdok.wheat.Render.StoneRenderer;
+import com.bokmcdok.wheat.Screen.FlourMillScreen;
+import net.minecraft.client.gui.ScreenManager;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -23,5 +26,7 @@ public class WheatMod
 
     private void clientSetup(final FMLClientSetupEvent event) {
         RenderingRegistry.registerEntityRenderingHandler(StoneEntity.class, new StoneRenderer());
+
+        ScreenManager.registerFactory(ModContainers.flour_mill_container, FlourMillScreen::new);
     }
 }

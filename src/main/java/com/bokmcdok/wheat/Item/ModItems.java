@@ -2,12 +2,15 @@ package com.bokmcdok.wheat.Item;
 
 import com.bokmcdok.wheat.Block.ModBlocks;
 import com.bokmcdok.wheat.Color.ModItemColors;
+import com.bokmcdok.wheat.Container.FlourMillContainer;
 import com.bokmcdok.wheat.WheatMod;
 import net.minecraft.block.ComposterBlock;
 import net.minecraft.client.renderer.color.ItemColors;
+import net.minecraft.inventory.container.ContainerType;
 import net.minecraft.item.*;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraftforge.client.event.ColorHandlerEvent;
+import net.minecraftforge.common.extensions.IForgeContainerType;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -21,9 +24,9 @@ import net.minecraftforge.registries.ObjectHolder;
 @ObjectHolder(WheatMod.MOD_ID)
 public class ModItems
 {
-
     /**
-     * Registers all the seed items.
+     * Register all items used by the mod
+     * @param event The item registry event
      */
     @SubscribeEvent
     public static void registerItems(RegistryEvent.Register<Item> event)
