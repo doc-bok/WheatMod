@@ -151,8 +151,8 @@ public class ModItems
                 //  Food - Misc
                 new ModStoneBowlFoodItem(6, 7.2f, false, "gravy"),
 
-                //  Campfire
-                new ModBlockItem(ModBlocks.campfire, ItemGroup.DECORATIONS, "campfire")
+                //  Flour Mill
+                new ModBlockNamedItem(ModBlocks.flour_mill, ItemGroup.BUILDING_BLOCKS, "flour_mill")
         );
     }
 

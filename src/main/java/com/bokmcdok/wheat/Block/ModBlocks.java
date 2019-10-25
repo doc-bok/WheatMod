@@ -66,7 +66,10 @@ public class ModBlocks
                 new SmallStoneBlock().setRegistryName(WheatMod.MOD_ID, "andesite_stone"),
 
                 //  Vegetabls
-                new ModCropsBlock(ModItems.tomato_seeds, "tomato")
+                new ModCropsBlock(ModItems.tomato_seeds, "tomato"),
+
+                //  Flour Mill
+                new FlourMillBlock("flour_mill")
         );
     }
 
@@ -189,4 +192,9 @@ public class ModBlocks
      * Vegetables
      */
     public static final ModCropsBlock tomato = null;
+
+    /**
+     * Flour Mill
+     */
+    public static final FlourMillBlock flour_mill = null;
 }
