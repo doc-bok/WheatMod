@@ -140,11 +140,11 @@ public class FlourMillContainer extends Container {
                 }
 
                 slot.onSlotChange(itemstack1, itemstack);
-            } else if (index >= 10 && index < 37) {
+            } else if (index >= 2 && index < 29) {
                 if (!this.mergeItemStack(itemstack1, 29, 38, false)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (index >= 37 && index < 46) {
+            } else if (index >= 29 && index < 38) {
                 if (!this.mergeItemStack(itemstack1, 2, 29, false)) {
                     return ItemStack.EMPTY;
                 }

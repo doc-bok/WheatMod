@@ -15,12 +15,21 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class FlourMillRecipeSerializer<T extends FlourMillRecipe> extends net.minecraftforge.registries.ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<T> {
-    private final FlourMillRecipeSerializer.IFactory<T> factory;
 
+    /**
+     * Construction
+     * @param factory The factory used to create recipes
+     */
     FlourMillRecipeSerializer(FlourMillRecipeSerializer.IFactory<T> factory) {
-        this.factory = factory;
+        mFactory = factory;
     }
 
+    /**
+     * Read a recipe from a json file
+     * @param recipeId The location of the recipe
+     * @param json The JSON data
+     * @return The newly created recipe
+     */
     @Override
     @Nonnull
     public T read(@Nonnull ResourceLocation recipeId, @Nonnull JsonObject json) {
@@ -41,9 +50,15 @@ public class FlourMillRecipeSerializer<T extends FlourMillRecipe> extends net.mi
             itemstack = new ItemStack(Registry.ITEM.getValue(resourcelocation).orElseThrow(() -> new IllegalStateException("Item: " + s1 + " does not exist")));
         }
 
-        return this.factory.create(recipeId, s, ingredient, itemstack);
+        return this.mFactory.create(recipeId, s, ingredient, itemstack);
     }
 
+    /**
+     * Read a recipe from a buffer
+     * @param recipeId The location of the recipe
+     * @param buffer The buffer to read from
+     * @return The new recipe
+     */
     @Nullable
     @Override
     public T read(@Nonnull ResourceLocation recipeId, PacketBuffer buffer) {
@@ -51,17 +66,28 @@ public class FlourMillRecipeSerializer<T extends FlourMillRecipe> extends net.mi
         Ingredient ingredient = Ingredient.read(buffer);
         ItemStack itemstack = buffer.readItemStack();
 
-        return this.factory.create(recipeId, s, ingredient, itemstack);
+        return this.mFactory.create(recipeId, s, ingredient, itemstack);
     }
 
+    /**
+     * Write a recipe to a buffer
+     * @param buffer The buffer to write to
+     * @param recipe The recipe to write
+     */
     @Override
     public void write(PacketBuffer buffer, T recipe) {
-        buffer.writeString(recipe.group);
-        recipe.ingredient.write(buffer);
-        buffer.writeItemStack(recipe.result);
+        buffer.writeString(recipe.mGroup);
+        recipe.mIngredient.write(buffer);
+        buffer.writeItemStack(recipe.mResult);
     }
 
+    /**
+     * The factory for creating a recipe
+     * @param <T> The recipe type to create
+     */
     interface IFactory<T extends FlourMillRecipe> {
         T create(ResourceLocation resourceLocation, String group, Ingredient ingredient, ItemStack result);
     }
+
+    private final FlourMillRecipeSerializer.IFactory<T> mFactory;
 }
