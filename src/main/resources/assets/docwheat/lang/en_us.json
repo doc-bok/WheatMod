@@ -110,5 +110,6 @@
   "item.docwheat.tomato_seeds": "Tomato Seed",
   "block.docwheat.tomato": "Tomato",
 
-  "item.docwheat.flour_mill": "Flour Mill"
+  "item.docwheat.flour_mill": "Flour Mill",
+  "container.flour_mill": "Flour Mill"
 }

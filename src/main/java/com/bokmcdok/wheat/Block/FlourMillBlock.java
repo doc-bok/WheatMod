@@ -92,5 +92,5 @@ public class FlourMillBlock extends Block {
     private static final VoxelShape STICK_SHAPE = Block.makeCuboidShape(7.0D, 0.0D, 7.0D, 9.0D, 16.0D, 9.0D);
     private static final VoxelShape SHAPE = VoxelShapes.or(GRINDER_SHAPE, STICK_SHAPE);
 
-    private static final ITextComponent TRANSLATION_TEXT = new TranslationTextComponent("container.crafting");
+    private static final ITextComponent TRANSLATION_TEXT = new TranslationTextComponent("container.flour_mill");
 }

@@ -65,5 +65,5 @@ public class FlourMillScreen extends ContainerScreen<FlourMillContainer> {
         blit(i, j, 0, 0, xSize, ySize);
     }
 
-    private static final ResourceLocation GUI_TEXTURES = new ResourceLocation("minecraft", "textures/gui/container/crafting_table.png");
+    private static final ResourceLocation GUI_TEXTURES = new ResourceLocation("docwheat", "textures/gui/container/flour_mill.png");
 }
