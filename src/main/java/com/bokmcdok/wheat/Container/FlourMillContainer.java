@@ -1,6 +1,7 @@
 package com.bokmcdok.wheat.Container;
 
 import com.bokmcdok.wheat.Block.ModBlocks;
+import com.bokmcdok.wheat.Recipe.FlourMillRecipe;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -9,9 +10,7 @@ import net.minecraft.inventory.CraftingInventory;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.*;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.ICraftingRecipe;
 import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.play.server.SSetSlotPacket;
 import net.minecraft.util.IWorldPosCallable;
@@ -52,7 +51,7 @@ public class FlourMillContainer extends Container {
         mPlayer = playerInventory.player;
 
         //  Setup the craft result slot.
-        addSlot(new CraftingResultSlot(mPlayer, mCraftingGrid, mResultSlot, 0, 124, 35));
+        addSlot(new ModResultSlot(FlourMillRecipe.flour_mill, mPlayer, mCraftingGrid, mResultSlot, 0, 124, 35));
 
         //  Setup crafting grid
         for(int i = 0; i < 3; ++i) {
@@ -70,7 +69,7 @@ public class FlourMillContainer extends Container {
 
         //  Setup hotbar
         for (int i = 0; i < 9; ++i) {
-            addSlot(new Slot(playerInventory, i, 8 + 1 * 18, 142));
+            addSlot(new Slot(playerInventory, i, 8 + i * 18, 142));
         }
     }
 
@@ -198,11 +197,11 @@ public class FlourMillContainer extends Container {
         if (!world.isRemote) {
             ServerPlayerEntity serverplayerentity = (ServerPlayerEntity)player;
             ItemStack itemstack = ItemStack.EMPTY;
-            Optional<ICraftingRecipe> optional = world.getServer().getRecipeManager().getRecipe(IRecipeType.CRAFTING, inventory, world);
+            Optional<FlourMillRecipe> optional = world.getServer().getRecipeManager().getRecipe(FlourMillRecipe.flour_mill, inventory, world);
             if (optional.isPresent()) {
-                ICraftingRecipe icraftingrecipe = optional.get();
-                if (result.canUseRecipe(world, serverplayerentity, icraftingrecipe)) {
-                    itemstack = icraftingrecipe.getCraftingResult(inventory);
+                FlourMillRecipe recipe = optional.get();
+                if (result.canUseRecipe(world, serverplayerentity, recipe)) {
+                    itemstack = recipe.getCraftingResult(inventory);
                 }
             }
 

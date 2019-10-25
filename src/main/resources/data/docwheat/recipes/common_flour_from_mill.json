@@ -1,0 +1,9 @@
+{
+  "type": "docwheat:flour_mill",
+  "ingredient": {
+    "tag": "docwheat:common_grain"
+  },
+  "result": {
+    "item": "docwheat:common_flour"
+  }
+}
