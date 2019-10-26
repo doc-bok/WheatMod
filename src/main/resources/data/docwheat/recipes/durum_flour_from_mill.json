@@ -1,0 +1,9 @@
+{
+  "type": "docwheat:flour_mill",
+  "ingredient": {
+    "item": "docwheat:durum_grain"
+  },
+  "result": {
+    "item": "docwheat:durum_flour"
+  }
+}

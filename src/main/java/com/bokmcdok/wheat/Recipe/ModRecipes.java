@@ -16,11 +16,17 @@ import net.minecraftforge.registries.ObjectHolder;
 @Mod.EventBusSubscriber(modid = WheatMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ModRecipes {
 
-    public static final IRecipeSerializer<PotionRecipe> POTION = null;
-
+    /**
+     * Register new recipe serialisers
+      * @param event The registry event for recipe serialisers
+     */
     @SubscribeEvent
     public static void registerRecipes(final RegistryEvent.Register<IRecipeSerializer<?>> event) {
         CraftingHelper.register(new ResourceLocation(WheatMod.MOD_ID, "potion"), PotionSerializer.INSTANCE);
         event.getRegistry().register(new PotionRecipe.Serializer().setRegistryName("crafting_potion"));
+        event.getRegistry().register(new FlourMillRecipeSerializer<>(FlourMillRecipe::new).setRegistryName("flour_mill"));
     }
+
+    public static final IRecipeSerializer<PotionRecipe> POTION = null;
+    public static final FlourMillRecipeSerializer<FlourMillRecipe> flour_mill = null;
 }
