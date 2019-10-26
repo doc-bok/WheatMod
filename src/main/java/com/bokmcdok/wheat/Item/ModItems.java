@@ -264,6 +264,11 @@ public class ModItems
                 Items.HAY_BLOCK);
 
         FISH_ITEMS = Ingredient.fromItems(Items.COD, Items.SALMON, cod_fillet, sashimi);
+
+        GRAIN_ITEMS = Ingredient.fromItems(
+                wild_einkorn_grain, common_grain, einkorn_grain,
+                wild_emmer_grain, emmer_grain, durum_grain,
+                spelt_grain);
     }
 
     /**
@@ -350,4 +355,5 @@ public class ModItems
     public static Ingredient BALE_ITEMS = null;
     public static Ingredient FISH_ITEMS = null;
     public static Ingredient FLOUR_ITEMS = null;
+    public static Ingredient GRAIN_ITEMS = null;
 }

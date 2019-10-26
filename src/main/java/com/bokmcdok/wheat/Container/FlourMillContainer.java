@@ -1,6 +1,7 @@
 package com.bokmcdok.wheat.Container;
 
 import com.bokmcdok.wheat.Block.ModBlocks;
+import com.bokmcdok.wheat.Item.ModItems;
 import com.bokmcdok.wheat.Recipe.FlourMillRecipe;
 import com.bokmcdok.wheat.Sound.ModSounds;
 import net.minecraft.entity.player.PlayerEntity;
@@ -55,7 +56,7 @@ public class FlourMillContainer extends Container {
         addSlot(new ModResultSlot(ModSounds.mill_grind, FlourMillRecipe.flour_mill, mPlayer, mCraftingGrid, mResultSlot, 0, 124, 35));
 
         //  Setup crafting grid
-        addSlot(new Slot(mCraftingGrid, 0, 48, 35));
+        addSlot(new ModSlot(ModItems.GRAIN_ITEMS, mCraftingGrid, 0, 48, 35));
 
         //  Setup player inventory
         for (int i = 0; i < 3; ++i) {
@@ -125,33 +126,41 @@ public class FlourMillContainer extends Container {
      */
     public ItemStack transferStackInSlot(PlayerEntity playerIn, int index) {
         ItemStack itemstack = ItemStack.EMPTY;
-        Slot slot = this.inventorySlots.get(index);
+        Slot slot = inventorySlots.get(index);
 
         if (slot != null && slot.getHasStack()) {
             ItemStack itemstack1 = slot.getStack();
             itemstack = itemstack1.copy();
 
-            if (index == 0) {
+            if (isResultSlot(index)) {
                 mCallable.consume((world, position) -> {
                     itemstack1.getItem().onCreated(itemstack1, world, playerIn);
                 });
 
-                if (!this.mergeItemStack(itemstack1, 2, 38, true)) {
+                if (!mergeItemStack(itemstack1, INVENTORY_START_INDEX, HOTBAR_END_INDEX, true)) {
                     return ItemStack.EMPTY;
                 }
 
                 slot.onSlotChange(itemstack1, itemstack);
-            } else if (index >= 2 && index < 29) {
-                if (!this.mergeItemStack(itemstack1, 29, 38, false)) {
+            } else if (isInputSlot(index)) {
+                if (!mergeItemStack(itemstack1, INVENTORY_START_INDEX, HOTBAR_END_INDEX, false)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (index >= 29 && index < 38) {
-                if (!this.mergeItemStack(itemstack1, 2, 29, false)) {
-                    return ItemStack.EMPTY;
+            } else {
+                if (!mergeItemStack(itemstack1, INPUT_SLOT_INDEX, INVENTORY_START_INDEX, false)) {
+                    if (isPlayerInventorySlot(index)) {
+                        if (!mergeItemStack(itemstack1, HOTBAR_START_INDEX, HOTBAR_END_INDEX, false)) {
+                            return ItemStack.EMPTY;
+                        }
+                    } else {
+                        if (!mergeItemStack(itemstack1, INVENTORY_START_INDEX, HOTBAR_START_INDEX, false)) {
+                            return ItemStack.EMPTY;
+                        }
+                    }
                 }
-            } else if (!this.mergeItemStack(itemstack1, 2, 38, false)) {
-                return ItemStack.EMPTY;
             }
+
+
 
             if (itemstack1.isEmpty()) {
                 slot.putStack(ItemStack.EMPTY);
@@ -206,6 +215,18 @@ public class FlourMillContainer extends Container {
             serverplayerentity.connection.sendPacket(new SSetSlotPacket(windowId, 0, itemstack));
         }
     }
+
+    private static boolean isResultSlot(int index) { return index == RESULT_SLOT_INDEX; }
+    private static boolean isInputSlot(int index) { return index == INPUT_SLOT_INDEX; }
+    private static boolean isPlayerSlot(int index) { return index >= INVENTORY_START_INDEX && index < HOTBAR_END_INDEX; }
+    private static boolean isPlayerInventorySlot(int index) { return index >= INVENTORY_START_INDEX && index < HOTBAR_START_INDEX; }
+    private static boolean isPlayerHotbarSlot(int index) { return index >= HOTBAR_START_INDEX && index < HOTBAR_END_INDEX; }
+
+    private static final int RESULT_SLOT_INDEX = 0;
+    private static final int INPUT_SLOT_INDEX = 1;
+    private static final int INVENTORY_START_INDEX = 2;
+    private static final int HOTBAR_START_INDEX = 29;
+    private static final int HOTBAR_END_INDEX = 38;
 
     private final CraftingInventory mCraftingGrid = new CraftingInventory(this, 3, 3);
     private final CraftResultInventory mResultSlot = new CraftResultInventory();
