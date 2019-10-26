@@ -6,5 +6,5 @@ before_install:
   - unzip -n forge-1.14.4-28.1.69-mdk.zip
   - rm forge-1.14.4-28.1.69-mdk.zip
   - chmod +x gradlew
-install: ./gradlew setupCiWorkspace
+#install: ./gradlew setupCiWorkspace
 script: ./gradlew build
