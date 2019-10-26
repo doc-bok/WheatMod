@@ -6,6 +6,8 @@ import com.bokmcdok.wheat.WheatMod;
 import net.minecraft.block.*;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.client.renderer.color.BlockColors;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundEvent;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -18,8 +20,7 @@ import net.minecraftforge.registries.ObjectHolder;
  */
 @Mod.EventBusSubscriber(modid = WheatMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 @ObjectHolder(WheatMod.MOD_ID)
-public class ModBlocks
-{
+public class ModBlocks {
     /**
      * Register all the new types of wheat in the game.
      */

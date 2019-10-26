@@ -1,0 +1,7 @@
+{
+  "mill_grind": {
+    "category": "block",
+    "subtitle": "docwheat.subtitle.mill_grind",
+    "sounds": [ "docwheat:stone_grind" ]
+  }
+}
