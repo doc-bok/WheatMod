@@ -221,19 +221,14 @@ class ModEntityUtil {
         Item item = stack.getItem();
         CatEntity cat = (CatEntity) event.getTarget();
         if (cat.isTamed()) {
-            if (cat.isOwner(player)) {
-                if (ModItems.FISH_ITEMS.test(stack)) {
-                    if (cat.getHealth() < cat.getMaxHealth() && item.isFood()) {
-                        consumeItemFromStack(player, stack);
-                        cat.heal((float)item.getFood().getHealing());
-                        event.setCanceled(true);
-                        event.setCancellationResult(ActionResultType.SUCCESS);
-                        return;
-                    }
-                }
+            if (cat.isOwner(player) && ModItems.FISH_ITEMS.test(stack) && cat.getHealth() < cat.getMaxHealth()) {
+                consumeItemFromStack(player, stack);
+                cat.heal((float) item.getFood().getHealing());
+                event.setCanceled(true);
+                event.setCancellationResult(ActionResultType.SUCCESS);
+                return;
             }
-        }
-        else if (ModItems.FISH_ITEMS.test(stack)) {
+        } else if (ModItems.FISH_ITEMS.test(stack)) {
             consumeItemFromStack(player, stack);
             if (!cat.world.isRemote) {
                 if (rand.nextInt(3) == 0) {

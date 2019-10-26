@@ -42,11 +42,9 @@ public class PotionRecipe extends ShapelessRecipe {
                 for (Ingredient j: recipeItems) {
                       if (i.getItem() == Items.POTION) {
                           for (ItemStack k: j.getMatchingStacks()) {
-                              if (k.getItem() == Items.POTION) {
-                                  if (PotionUtils.getPotionFromItem(i) == PotionUtils.getPotionFromItem(k)) {
-                                      found = true;
-                                      break;
-                                  }
+                              if (k.getItem() == Items.POTION && PotionUtils.getPotionFromItem(i) == PotionUtils.getPotionFromItem(k)) {
+                                  found = true;
+                                  break;
                               }
                           }
                       } else if (j.test(i)) {
