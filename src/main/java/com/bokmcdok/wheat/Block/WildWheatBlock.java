@@ -15,9 +15,13 @@ import java.util.Random;
  */
 public class WildWheatBlock extends WheatBlock {
 
+    private WheatBlock mCommonMutation = null;
+
     /**
      * Construct a new wild wheat block.
      * @param seed  The type of seed used to grow this wheat block.
+     * @param diseaseResistance The crop's resistance to disease.
+     * @param registryName The name of the crop in the registry.
      */
     public WildWheatBlock(Item seed, int diseaseResistance, String registryName)
     {
@@ -25,7 +29,9 @@ public class WildWheatBlock extends WheatBlock {
     }
 
     /**
-     * Register potential mutations for the wild wheat block.
+     * Register potential mutations for this block.
+     * @param commonMutation The main type of wheat that the crop will mutate into.
+     * @param rareMutation The second type of crop the bock will mutate into, which is rarer.
      */
     public void registerMutations(WheatBlock commonMutation, WheatBlock rareMutation) {
         mCommonMutation = commonMutation;
@@ -35,35 +41,24 @@ public class WildWheatBlock extends WheatBlock {
     }
 
     /**
-     * Handle wild wheat mutating into cultivated wheat.
+     * Check for a possible mutation. Wild wheat can only mutate on farmland
+     * @param worldIn The world the block is in
+     * @param pos The position of the block
+     * @param random The current RNG
+     * @param oldAge The age of the crop before the tick update.
+     * @param rarity The rarity of a mutation - a lower number means a higher chance of mutation.
      */
-    public void tick(BlockState state, World worldIn, BlockPos pos, Random random) {
-        int oldAge = getAge(state);
-        super.tick(state, worldIn, pos, random);
-
-        //  If on farmland check for mutations.
+    protected void checkForMutation(World worldIn, BlockPos pos, Random random, int oldAge, int rarity) {
         BlockPos groundPos = pos.down();
         if (worldIn.getBlockState(groundPos).getBlock() == Blocks.FARMLAND) {
-            checkForMutation(worldIn, pos, random, oldAge, 10);
+            super.checkForMutation(worldIn, pos, random, oldAge, rarity);
         }
     }
 
     /**
-     * Also handle mutating into cultivated wheat. If bonemeal is used the chance for mutation is increased.
-     */
-    public void grow(World worldIn, Random random, BlockPos pos, BlockState state) {
-        int oldAge = getAge(state);
-        super.grow(worldIn, random, pos, state);
-
-        //  If on farmland check for mutations.
-        BlockPos groundPos = pos.down();
-        if (worldIn.getBlockState(groundPos).getBlock() == Blocks.FARMLAND) {
-            checkForMutation(worldIn, pos, random, oldAge, 8);
-        }
-    }
-
-    /**
-     * Get the mutation.
+     * Get the crop this wheat will mutate into.
+     * @param random The current RNG. Used by Wild Wheat.
+     * @return The block this crop will mutate into.
      */
     @Override
     protected WheatBlock getMutation(Random random) {
@@ -74,15 +69,16 @@ public class WildWheatBlock extends WheatBlock {
         }
     }
 
-
     /**
-     * Wild Wheat can also be generated and grown on grass blocks.
+     * Allow wild wheat to also generate and grow on grass blocks.
+     * @param state The block state of the ground
+     * @param worldIn The world the block is in
+     * @param pos The position of the block
+     * @return
      */
     protected boolean isValidGround(BlockState state, IBlockReader worldIn, BlockPos pos)
     {
         return state.getBlock() == Blocks.FARMLAND ||
                state.getBlock() == Blocks.GRASS_BLOCK;
     }
-
-    private WheatBlock mCommonMutation = null;
 }
