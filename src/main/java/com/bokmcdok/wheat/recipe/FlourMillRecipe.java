@@ -21,6 +21,7 @@ public class FlourMillRecipe implements IRecipe<IInventory> {
     private final ResourceLocation id;
     private final Ingredient mIngredient;
     private final ItemStack mResult;
+    private final String mGroup;
 
     /**
      * Construction
@@ -28,11 +29,12 @@ public class FlourMillRecipe implements IRecipe<IInventory> {
      * @param ingredient The ingredient for this recipe
      * @param result The output of this recipe
      */
-    FlourMillRecipe(ResourceLocation resourceLocation, Ingredient ingredient, ItemStack result) {
+    FlourMillRecipe(ResourceLocation resourceLocation, String group, Ingredient ingredient, ItemStack result) {
         type = flour_mill;
         id = resourceLocation;
         mIngredient = ingredient;
         mResult = result;
+        mGroup = group;
     }
 
     /**
@@ -135,4 +137,10 @@ public class FlourMillRecipe implements IRecipe<IInventory> {
     public ItemStack getIcon() {
         return new ItemStack(ModBlockUtils.flour_mill);
     }
+
+    /**
+     * Get the recipe's group
+     * @return The group name
+     */
+    public String getGroup() { return mGroup; }
 }
