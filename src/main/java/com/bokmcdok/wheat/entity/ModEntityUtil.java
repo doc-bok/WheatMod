@@ -1,6 +1,6 @@
 package com.bokmcdok.wheat.entity;
 
-import com.bokmcdok.wheat.item.ModItems;
+import com.bokmcdok.wheat.item.ModItemUtils;
 import com.bokmcdok.wheat.WheatMod;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -39,15 +39,15 @@ class ModEntityUtil {
         if (entity.getType() == EntityType.COW || entity.getType() == EntityType.SHEEP)
         {
             AnimalEntity animal = (AnimalEntity)entity;
-            animal.goalSelector.addGoal(3, new TemptGoal(animal, 1.25D, ModItems.WHEAT_ITEMS, false));
+            animal.goalSelector.addGoal(3, new TemptGoal(animal, 1.25D, ModItemUtils.WHEAT_ITEMS, false));
         }
         else if (entity.getType() == EntityType.CHICKEN) {
             AnimalEntity animal = (AnimalEntity)entity;
-            animal.goalSelector.addGoal(3, new TemptGoal(animal, 1.0D, ModItems.SEED_ITEMS, false));
+            animal.goalSelector.addGoal(3, new TemptGoal(animal, 1.0D, ModItemUtils.SEED_ITEMS, false));
         }
         else if (entity.getType() == EntityType.CAT) {
             AnimalEntity animal = (AnimalEntity)entity;
-            animal.goalSelector.addGoal(3, new TemptGoal(animal, 0.6D, ModItems.FISH_ITEMS, true));
+            animal.goalSelector.addGoal(3, new TemptGoal(animal, 0.6D, ModItemUtils.FISH_ITEMS, true));
         }
     }
 
@@ -59,10 +59,10 @@ class ModEntityUtil {
     {
         Entity target = event.getTarget();
         if (target.getType() == EntityType.COW || target.getType() == EntityType.SHEEP) {
-            feedAnimal(event, ModItems.WHEAT_ITEMS);
+            feedAnimal(event, ModItemUtils.WHEAT_ITEMS);
         }
         else if (target.getType() == EntityType.CHICKEN) {
-            feedAnimal(event, ModItems.SEED_ITEMS);
+            feedAnimal(event, ModItemUtils.SEED_ITEMS);
         }
         else if (target.getType() == EntityType.LLAMA) {
             feedLlama(event);
@@ -115,11 +115,11 @@ class ModEntityUtil {
         int growth = 0;
         int temper = 0;
         float heal = 0.0f;
-        if (ModItems.WHEAT_ITEMS.test(stack)) {
+        if (ModItemUtils.WHEAT_ITEMS.test(stack)) {
             growth = 10;
             temper = 3;
             heal = 2.0f;
-        } else if (ModItems.BALE_ITEMS.test(stack)) {
+        } else if (ModItemUtils.BALE_ITEMS.test(stack)) {
             growth = 90;
             temper = 6;
             heal = 10.f;
@@ -147,12 +147,12 @@ class ModEntityUtil {
         int growth = 0;
         int temper = 0;
         float heal = 0.0f;
-        if (ModItems.WHEAT_ITEMS.test(stack)) {
+        if (ModItemUtils.WHEAT_ITEMS.test(stack)) {
             growth = 20;
             temper = 3;
             heal = 2.0f;
         }
-        else if (ModItems.BALE_ITEMS.test(stack)) {
+        else if (ModItemUtils.BALE_ITEMS.test(stack)) {
             growth = 180;
             heal = 20.f;
         }
@@ -229,11 +229,11 @@ class ModEntityUtil {
         Item item = stack.getItem();
         CatEntity cat = (CatEntity) event.getTarget();
         if (cat.isTamed()) {
-            if (cat.isOwner(player) && ModItems.FISH_ITEMS.test(stack) && heal(cat, (float) item.getFood().getHealing())) {
+            if (cat.isOwner(player) && ModItemUtils.FISH_ITEMS.test(stack) && heal(cat, (float) item.getFood().getHealing())) {
                 consumeEvent(event, player, stack);
                 return;
             }
-        } else if (ModItems.FISH_ITEMS.test(stack)) {
+        } else if (ModItemUtils.FISH_ITEMS.test(stack)) {
             consumeEvent(event, player, stack);
             if (!cat.world.isRemote) {
                 if (rand.nextInt(3) == 0) {

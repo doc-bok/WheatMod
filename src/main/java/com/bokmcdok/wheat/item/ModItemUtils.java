@@ -5,7 +5,9 @@ import com.bokmcdok.wheat.color.ModItemColors;
 import com.bokmcdok.wheat.WheatMod;
 import net.minecraft.block.ComposterBlock;
 import net.minecraft.client.renderer.color.ItemColors;
-import net.minecraft.item.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
+import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.event.RegistryEvent;
@@ -19,8 +21,101 @@ import net.minecraftforge.registries.ObjectHolder;
  */
 @Mod.EventBusSubscriber(modid = WheatMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 @ObjectHolder(WheatMod.MOD_ID)
-public class ModItems
+public class ModItemUtils
 {
+
+    /**
+     * The grain items for reference.
+     */
+    public static final Item wild_einkorn_grain = null;
+    public static final Item common_grain = null;
+    public static final Item einkorn_grain = null;
+
+    public static final Item wild_emmer_grain = null;
+    public static final Item emmer_grain = null;
+    public static final Item durum_grain = null;
+
+    public static final Item spelt_grain = null;
+
+    /**
+     * The hay/wheat items for reference.
+     */
+    public static final Item wild_einkorn_hay = null;
+    public static final Item common_straw = null;
+    public static final Item einkorn_straw = null;
+
+    public static final Item wild_emmer_hay = null;
+    public static final Item emmer_straw = null;
+    public static final Item durum_straw = null;
+
+    public static final Item spelt_straw = null;
+
+    /**
+     * The bale items for reference
+     */
+    public static final Item wild_einkorn_bale = null;
+    public static final Item common_straw_bale = null;
+    public static final Item einkorn_straw_bale = null;
+
+    public static final Item emmer_straw_bale = null;
+    public static final Item durum_straw_bale = null;
+
+    public static final Item spelt_straw_bale = null;
+
+    /**
+     * The thatch items for reference
+     */
+    public static final Item common_thatch = null;
+    public static final Item einkorn_thatch = null;
+    public static final Item emmer_thatch = null;
+    public static final Item durum_thatch = null;
+    public static final Item spelt_thatch = null;
+
+    /**
+     * The mat items for reference
+     */
+    public static final Item common_straw_mat = null;
+    public static final Item einkorn_straw_mat = null;
+
+    public static final Item emmer_straw_mat = null;
+    public static final Item durum_straw_mat = null;
+
+    public static final Item spelt_straw_mat = null;
+
+    /**
+     * Ingredients for reference
+     */
+    public static final Item common_flour = null;
+    public static final Item durum_flour = null;
+    public static final Item spelt_flour = null;
+
+    /**
+     * Food Items for reference
+     */
+    public static final Item chicken_leg = null;
+    public static final Item chicken_breast = null;
+    public static final Item chicken_wing = null;
+
+    public static final Item cod_fillet = null;
+    public static final Item sashimi = null;
+
+    public static final Item tomato = null;
+    public static final Item tomato_seeds = null;
+
+    public static final Item dough = null;
+
+    /**
+     * Miscellaneous Items for reference
+     */
+    public static final Item stone_bowl = null;
+
+    public static Ingredient WHEAT_ITEMS = null;
+    public static Ingredient SEED_ITEMS = null;
+    public static Ingredient BALE_ITEMS = null;
+    public static Ingredient FISH_ITEMS = null;
+    public static Ingredient FLOUR_ITEMS = null;
+    public static Ingredient GRAIN_ITEMS = null;
+
     /**
      * Register all items used by the mod
      * @param event The item registry event
@@ -44,21 +139,17 @@ public class ModItems
                 new ModItem(ItemGroup.MATERIALS, "wild_einkorn_hay"),
                 new ModItem(ItemGroup.MATERIALS, "common_straw"),
                 new ModItem(ItemGroup.MATERIALS, "einkorn_straw"),
-
                 new ModItem(ItemGroup.MATERIALS, "wild_emmer_hay"),
                 new ModItem(ItemGroup.MATERIALS, "emmer_straw"),
                 new ModItem(ItemGroup.MATERIALS, "durum_straw"),
-
                 new ModItem(ItemGroup.MATERIALS, "spelt_straw"),
 
                 //  Bales
                 new ModBlockItem(ModBlockUtils.wild_einkorn_bale, ItemGroup.BUILDING_BLOCKS, "wild_einkorn_bale"),
                 new ModBlockItem(ModBlockUtils.common_straw_bale, ItemGroup.BUILDING_BLOCKS, "common_straw_bale"),
                 new ModBlockItem(ModBlockUtils.einkorn_straw_bale, ItemGroup.BUILDING_BLOCKS, "einkorn_straw_bale"),
-
                 new ModBlockItem(ModBlockUtils.emmer_straw_bale, ItemGroup.BUILDING_BLOCKS, "emmer_straw_bale"),
                 new ModBlockItem(ModBlockUtils.durum_straw_bale, ItemGroup.BUILDING_BLOCKS, "durum_straw_bale"),
-
                 new ModBlockItem(ModBlockUtils.spelt_straw_bale, ItemGroup.BUILDING_BLOCKS, "spelt_straw_bale"),
 
                 //  Thatch
@@ -165,6 +256,7 @@ public class ModItems
 
     /**
      * Registers the color handlers for all the new seeds.
+     * @param event The color handler event
      */
     @SubscribeEvent
     public static void registerBlockColourHandlers(ColorHandlerEvent.Item event)
@@ -217,6 +309,7 @@ public class ModItems
 
     /**
      * Register all items with the composter and set up item groups.
+     * @param event The common setup event
      */
     @SubscribeEvent
     public static void commonSetup(FMLCommonSetupEvent event)
@@ -279,99 +372,4 @@ public class ModItems
                 wild_emmer_grain, emmer_grain, durum_grain,
                 spelt_grain);
     }
-
-    /**
-     * The grain items for reference.
-     */
-    public static final Item wild_einkorn_grain = null;
-    public static final Item common_grain = null;
-    public static final Item einkorn_grain = null;
-
-    public static final Item wild_emmer_grain = null;
-    public static final Item emmer_grain = null;
-    public static final Item durum_grain = null;
-
-    public static final Item spelt_grain = null;
-
-    /**
-     * The hay/wheat items for reference.
-     */
-    public static final Item wild_einkorn_hay = null;
-    public static final Item common_straw = null;
-    public static final Item einkorn_straw = null;
-
-    public static final Item wild_emmer_hay = null;
-    public static final Item emmer_straw = null;
-    public static final Item durum_straw = null;
-
-    public static final Item spelt_straw = null;
-
-    /**
-     * The bale items for reference
-     */
-    public static final Item wild_einkorn_bale = null;
-    public static final Item common_straw_bale = null;
-    public static final Item einkorn_straw_bale = null;
-
-    public static final Item emmer_straw_bale = null;
-    public static final Item durum_straw_bale = null;
-
-    public static final Item spelt_straw_bale = null;
-
-    /**
-     * The thatch items for reference
-     */
-    public static final Item common_thatch = null;
-    public static final Item einkorn_thatch = null;
-    public static final Item emmer_thatch = null;
-    public static final Item durum_thatch = null;
-    public static final Item spelt_thatch = null;
-
-    /**
-     * The mat items for reference
-     */
-    public static final Item common_straw_mat = null;
-    public static final Item einkorn_straw_mat = null;
-
-    public static final Item emmer_straw_mat = null;
-    public static final Item durum_straw_mat = null;
-
-    public static final Item spelt_straw_mat = null;
-
-    /**
-     * Ingredients for reference
-     */
-    public static final Item common_flour = null;
-    public static final Item durum_flour = null;
-    public static final Item spelt_flour = null;
-
-    /**
-     * Food Items for reference
-     */
-    public static final Item chicken_leg = null;
-    public static final Item chicken_breast = null;
-    public static final Item chicken_wing = null;
-
-    public static final Item cod_fillet = null;
-    public static final Item sashimi = null;
-
-    public static final Item tomato = null;
-    public static final Item tomato_seeds = null;
-
-    public static final Item dough = null;
-    public static final Item bread_dough = null;
-    public static final Item raw_pasta = null;
-
-    /**
-     * Miscellaneous Items for reference
-     */
-
-    public static final Item stone_bowl = null;
-
-    public static Ingredient WHEAT_ITEMS = null;
-    public static Ingredient SEED_ITEMS = null;
-    public static Ingredient BALE_ITEMS = null;
-    public static Ingredient FISH_ITEMS = null;
-    public static Ingredient FLOUR_ITEMS = null;
-    public static Ingredient GRAIN_ITEMS = null;
 }

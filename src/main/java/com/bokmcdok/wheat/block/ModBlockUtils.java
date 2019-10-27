@@ -1,7 +1,7 @@
 package com.bokmcdok.wheat.block;
 
 import com.bokmcdok.wheat.color.ModBlockColors;
-import com.bokmcdok.wheat.item.ModItems;
+import com.bokmcdok.wheat.item.ModItemUtils;
 import com.bokmcdok.wheat.WheatMod;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -88,15 +88,15 @@ public class ModBlockUtils {
     {
         event.getRegistry().registerAll(
                 //  Wheat Blocks
-                new WildWheatBlock(ModItems.wild_einkorn_grain, 128, "wild_einkorn"),
-                new WheatBlock(ModItems.common_grain, 256, "common_wheat"),
-                new WheatBlock(ModItems.einkorn_grain, 256, "einkorn"),
+                new WildWheatBlock(ModItemUtils.wild_einkorn_grain, 128, "wild_einkorn"),
+                new WheatBlock(ModItemUtils.common_grain, 256, "common_wheat"),
+                new WheatBlock(ModItemUtils.einkorn_grain, 256, "einkorn"),
 
-                new WildWheatBlock(ModItems.wild_emmer_grain, 128, "wild_emmer"),
-                new WheatBlock(ModItems.emmer_grain, 256, "emmer"),
-                new WheatBlock(ModItems.durum_grain, 256, "durum"),
+                new WildWheatBlock(ModItemUtils.wild_emmer_grain, 128, "wild_emmer"),
+                new WheatBlock(ModItemUtils.emmer_grain, 256, "emmer"),
+                new WheatBlock(ModItemUtils.durum_grain, 256, "durum"),
 
-                new WheatBlock(ModItems.spelt_grain, 512, "spelt"),
+                new WheatBlock(ModItemUtils.spelt_grain, 512, "spelt"),
 
                 new WheatBlock(null, 1024, "diseased_wheat"),
 
@@ -135,7 +135,7 @@ public class ModBlockUtils {
                 new SmallStoneBlock().setRegistryName(WheatMod.MOD_ID, "andesite_stone"),
 
                 //  Vegetabls
-                new ModCropsBlock(ModItems.tomato_seeds, "tomato"),
+                new ModCropsBlock(ModItemUtils.tomato_seeds, "tomato"),
 
                 //  Flour Mill
                 new FlourMillBlock("flour_mill")

@@ -1,7 +1,7 @@
 package com.bokmcdok.wheat.container;
 
 import com.bokmcdok.wheat.block.ModBlockUtils;
-import com.bokmcdok.wheat.item.ModItems;
+import com.bokmcdok.wheat.item.ModItemUtils;
 import com.bokmcdok.wheat.recipe.FlourMillRecipe;
 import com.bokmcdok.wheat.sound.ModSounds;
 import net.minecraft.entity.player.PlayerEntity;
@@ -66,7 +66,7 @@ public class FlourMillContainer extends Container {
         addSlot(new ModResultSlot(ModSounds.mill_grind, FlourMillRecipe.flour_mill, mPlayer, mCraftingGrid, mResultSlot, 0, 124, 35));
 
         //  Setup crafting grid
-        addSlot(new ModSlot(ModItems.GRAIN_ITEMS, mCraftingGrid, 0, 48, 35));
+        addSlot(new ModSlot(ModItemUtils.GRAIN_ITEMS, mCraftingGrid, 0, 48, 35));
 
         //  Setup player inventory
         for (int i = 0; i < 3; ++i) {

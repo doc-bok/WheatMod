@@ -21,6 +21,6 @@ public class ModStoneBowlFoodItem extends Item {
 
     @Override
     public ItemStack getContainerItem(ItemStack itemStack) {
-        return new ItemStack(ModItems.stone_bowl);
+        return new ItemStack(ModItemUtils.stone_bowl);
     }
 }
