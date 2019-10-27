@@ -23,6 +23,16 @@ import java.util.Optional;
 
 public class FlourMillContainer extends Container {
 
+    private static final int RESULT_SLOT_INDEX = 0;
+    private static final int INPUT_SLOT_INDEX = 1;
+    private static final int INVENTORY_START_INDEX = 2;
+    private static final int HOTBAR_START_INDEX = 29;
+    private static final int HOTBAR_END_INDEX = 38;
+
+    private final CraftingInventory mCraftingGrid = new CraftingInventory(this, 3, 3);
+    private final CraftResultInventory mResultSlot = new CraftResultInventory();
+    private final IWorldPosCallable mCallable;
+    private final PlayerEntity mPlayer;
     /**
      * Construction
      * @param windowId The id of the window this container uses
@@ -216,20 +226,24 @@ public class FlourMillContainer extends Container {
         }
     }
 
+    /**
+     * Check if the slot is the result slot
+     * @param index The index of the slot
+     * @return True if it is the index of the result slot
+     */
     private static boolean isResultSlot(int index) { return index == RESULT_SLOT_INDEX; }
+
+    /**
+     * Check if the slot is the input slot
+     * @param index The index of the slot
+     * @return True if it is the index of the input slot
+     */
     private static boolean isInputSlot(int index) { return index == INPUT_SLOT_INDEX; }
-    private static boolean isPlayerSlot(int index) { return index >= INVENTORY_START_INDEX && index < HOTBAR_END_INDEX; }
+
+    /**
+     * Check if the slot is a player inventory slot
+     * @param index The index of the slot
+     * @return True if it is the index of a player inventory slot
+     */
     private static boolean isPlayerInventorySlot(int index) { return index >= INVENTORY_START_INDEX && index < HOTBAR_START_INDEX; }
-    private static boolean isPlayerHotbarSlot(int index) { return index >= HOTBAR_START_INDEX && index < HOTBAR_END_INDEX; }
-
-    private static final int RESULT_SLOT_INDEX = 0;
-    private static final int INPUT_SLOT_INDEX = 1;
-    private static final int INVENTORY_START_INDEX = 2;
-    private static final int HOTBAR_START_INDEX = 29;
-    private static final int HOTBAR_END_INDEX = 38;
-
-    private final CraftingInventory mCraftingGrid = new CraftingInventory(this, 3, 3);
-    private final CraftResultInventory mResultSlot = new CraftResultInventory();
-    private final IWorldPosCallable mCallable;
-    private final PlayerEntity mPlayer;
 }
