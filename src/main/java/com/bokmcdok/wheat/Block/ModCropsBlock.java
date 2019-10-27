@@ -9,6 +9,14 @@ import net.minecraft.item.Item;
 import net.minecraft.util.IItemProvider;
 
 public class ModCropsBlock extends CropsBlock {
+
+    private final Item mSeed;
+
+    /**
+     * Construction
+     * @param seed  The seed that is used to grow this crop.
+     * @param registryName The registry name of this crop.
+     */
     public ModCropsBlock(Item seed, String registryName)
     {
         super(Block.Properties.create(Material.PLANTS).doesNotBlockMovement().tickRandomly().hardnessAndResistance(0).sound(SoundType.CROP));
@@ -19,11 +27,7 @@ public class ModCropsBlock extends CropsBlock {
 
     /**
      * Get the type of seed used to grow this block.
+     * @return The seed item used to grow this crop.
      */
     protected IItemProvider getSeedsItem() { return mSeed; }
-
-    /**
-     * The seed used to grow this wheat.
-     */
-    private final Item mSeed;
 }
