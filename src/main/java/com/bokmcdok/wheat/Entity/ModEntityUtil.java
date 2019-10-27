@@ -20,7 +20,6 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
-import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -89,17 +88,13 @@ class ModEntityUtil {
         if (food.test(stack)) {
             AnimalEntity animal = (AnimalEntity) event.getTarget();
             if (animal.getGrowingAge() == 0 && animal.canBreed()) {
-                consumeItemFromStack(player, stack);
+                consumeEvent(event, player, stack);
                 animal.setInLove(player);
-                event.setCanceled(true);
-                event.setCancellationResult(ActionResultType.SUCCESS);
             }
 
             if (animal.isChild()) {
-                consumeItemFromStack(player, stack);
+                consumeEvent(event, player, stack);
                 animal.ageUp((int)((float)(-animal.getGrowingAge() / 20) * 0.1F), true);
-                event.setCanceled(true);
-                event.setCancellationResult(ActionResultType.SUCCESS);
             }
         }
     }
@@ -165,20 +160,16 @@ class ModEntityUtil {
         feedHorseOrLlama(event,false, growth, temper, heal, SoundEvents.ENTITY_HORSE_EAT);
     }
 
-    private static void feedHorseOrLlama(PlayerInteractEvent.EntityInteract event,
-                                         boolean eating, int growth, int temper, float heal,
-                                         SoundEvent eatingSound)
-    {
-        PlayerEntity player = event.getPlayer();
-        Hand hand = event.getHand();
-        ItemStack stack = player.getHeldItem(hand);
-        AbstractHorseEntity animal = (AbstractHorseEntity) event.getTarget();
-
+    private static boolean heal(AnimalEntity animal, float heal) {
         if (animal.getHealth() < animal.getMaxHealth() && heal > 0.0f) {
             animal.heal(heal);
-            eating = true;
+            return true;
         }
 
+        return false;
+    }
+
+    private static boolean grow(AnimalEntity animal, int growth) {
         if (animal.isChild() && growth > 0) {
             animal.world.addParticle(ParticleTypes.HAPPY_VILLAGER,
                     animal.posX + (double)(rand.nextFloat() * animal.getWidth() * 2.0F) - (double)animal.getWidth(),
@@ -190,21 +181,38 @@ class ModEntityUtil {
                 animal.addGrowth(growth);
             }
 
-            eating = true;
+            return true;
         }
 
-        if (temper > 0 && (eating || !animal.isTame()) && animal.getTemper() < animal.getMaxTemper()) {
-            eating = true;
+        return false;
+    }
 
+    private static boolean improveTemper(AbstractHorseEntity animal, int temper, boolean eating) {
+        if (temper > 0 && (eating || !animal.isTame()) && animal.getTemper() < animal.getMaxTemper()) {
             if (!animal.world.isRemote()) {
                 animal.increaseTemper(temper);
             }
+
+            return true;
         }
 
+        return false;
+    }
+
+    private static void feedHorseOrLlama(PlayerInteractEvent.EntityInteract event,
+                                         boolean eating, int growth, int temper, float heal,
+                                         SoundEvent eatingSound)
+    {
+        AbstractHorseEntity animal = (AbstractHorseEntity) event.getTarget();
+        eating |= heal(animal, heal);
+        eating |= grow(animal, growth);
+        eating |= improveTemper(animal, temper, eating);
+
         if (eating) {
-            consumeItemFromStack(player, stack);
-            event.setCanceled(true);
-            event.setCancellationResult(ActionResultType.SUCCESS);
+            PlayerEntity player = event.getPlayer();
+            Hand hand = event.getHand();
+            ItemStack stack = player.getHeldItem(hand);
+            consumeEvent(event, player, stack);
 
             if (!animal.isSilent()) {
                 animal.world.playSound((PlayerEntity) null, animal.posX, animal.posY, animal.posZ,
@@ -221,15 +229,12 @@ class ModEntityUtil {
         Item item = stack.getItem();
         CatEntity cat = (CatEntity) event.getTarget();
         if (cat.isTamed()) {
-            if (cat.isOwner(player) && ModItems.FISH_ITEMS.test(stack) && cat.getHealth() < cat.getMaxHealth()) {
-                consumeItemFromStack(player, stack);
-                cat.heal((float) item.getFood().getHealing());
-                event.setCanceled(true);
-                event.setCancellationResult(ActionResultType.SUCCESS);
+            if (cat.isOwner(player) && ModItems.FISH_ITEMS.test(stack) && heal(cat, (float) item.getFood().getHealing())) {
+                consumeEvent(event, player, stack);
                 return;
             }
         } else if (ModItems.FISH_ITEMS.test(stack)) {
-            consumeItemFromStack(player, stack);
+            consumeEvent(event, player, stack);
             if (!cat.world.isRemote) {
                 if (rand.nextInt(3) == 0) {
                     cat.setTamedBy(player);
@@ -243,8 +248,6 @@ class ModEntityUtil {
                 }
             }
 
-            event.setCanceled(true);
-            event.setCancellationResult(ActionResultType.SUCCESS);
             return;
         }
     }
@@ -259,12 +262,18 @@ class ModEntityUtil {
     }
 
     /**
-     * Decreases ItemStack size by one
+     * Consumes the used item and consumes the event
+     * @param event The event to consume
+     * @param player The player
+     * @param stack The stack of items used on the mob
      */
-    private static void consumeItemFromStack(PlayerEntity player, ItemStack stack) {
+    private static void consumeEvent(PlayerInteractEvent.EntityInteract event, PlayerEntity player, ItemStack stack) {
         if (!player.abilities.isCreativeMode) {
             stack.shrink(1);
         }
+
+        event.setCanceled(true);
+        event.setCancellationResult(ActionResultType.SUCCESS);
     }
 
     /**
