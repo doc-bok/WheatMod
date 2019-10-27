@@ -102,7 +102,7 @@ public class PotionRecipe extends ShapelessRecipe {
      */
     @Override
     public IRecipeSerializer<?> getSerializer() {
-        return ModRecipes.POTION;
+        return ModRecipeUtils.POTION;
     }
 
     /**

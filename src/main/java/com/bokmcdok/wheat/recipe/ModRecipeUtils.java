@@ -1,7 +1,7 @@
 package com.bokmcdok.wheat.recipe;
 
 import com.bokmcdok.wheat.WheatMod;
-import net.minecraft.item.crafting.*;
+import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.crafting.CraftingHelper;
 import net.minecraftforge.event.RegistryEvent;
@@ -14,7 +14,10 @@ import net.minecraftforge.registries.ObjectHolder;
  */
 @ObjectHolder(WheatMod.MOD_ID)
 @Mod.EventBusSubscriber(modid = WheatMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
-public class ModRecipes {
+public class ModRecipeUtils {
+
+    public static final IRecipeSerializer<PotionRecipe> POTION = null;
+    public static final FlourMillRecipeSerializer<FlourMillRecipe> flour_mill = null;
 
     /**
      * Register new recipe serialisers
@@ -26,7 +29,4 @@ public class ModRecipes {
         event.getRegistry().register(new PotionRecipe.Serializer().setRegistryName("crafting_potion"));
         event.getRegistry().register(new FlourMillRecipeSerializer<>(FlourMillRecipe::new).setRegistryName("flour_mill"));
     }
-
-    public static final IRecipeSerializer<PotionRecipe> POTION = null;
-    public static final FlourMillRecipeSerializer<FlourMillRecipe> flour_mill = null;
 }

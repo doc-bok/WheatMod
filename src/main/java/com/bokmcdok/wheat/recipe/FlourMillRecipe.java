@@ -96,7 +96,7 @@ public class FlourMillRecipe implements IRecipe<IInventory> {
     @Override
     @Nonnull
     public IRecipeSerializer<?> getSerializer() {
-        return ModRecipes.flour_mill;
+        return ModRecipeUtils.flour_mill;
     }
 
     /**
