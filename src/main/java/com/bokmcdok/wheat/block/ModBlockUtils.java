@@ -20,7 +20,7 @@ import net.minecraftforge.registries.ObjectHolder;
  */
 @Mod.EventBusSubscriber(modid = WheatMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 @ObjectHolder(WheatMod.MOD_ID)
-public class ModBlocks {
+public class ModBlockUtils {
 
     /**
      * The new types of wheat.

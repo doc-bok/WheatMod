@@ -1,6 +1,6 @@
 package com.bokmcdok.wheat.recipe;
 
-import com.bokmcdok.wheat.block.ModBlocks;
+import com.bokmcdok.wheat.block.ModBlockUtils;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
@@ -122,7 +122,7 @@ public class FlourMillRecipe implements IRecipe<IInventory> {
     @Override
     @Nonnull
     public ItemStack getIcon() {
-        return new ItemStack(ModBlocks.flour_mill);
+        return new ItemStack(ModBlockUtils.flour_mill);
     }
 
     public static final IRecipeType<FlourMillRecipe> flour_mill = IRecipeType.register("flour_mill");

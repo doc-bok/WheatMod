@@ -1,6 +1,6 @@
 package com.bokmcdok.wheat.item;
 
-import com.bokmcdok.wheat.block.ModBlocks;
+import com.bokmcdok.wheat.block.ModBlockUtils;
 import com.bokmcdok.wheat.color.ModItemColors;
 import com.bokmcdok.wheat.WheatMod;
 import net.minecraft.block.ComposterBlock;
@@ -30,15 +30,15 @@ public class ModItems
     {
         event.getRegistry().registerAll(
                 //  Grain
-                new ModBlockNamedItem(ModBlocks.wild_einkorn, ItemGroup.MATERIALS, "wild_einkorn_grain"),
-                new ModBlockNamedItem(ModBlocks.common_wheat, ItemGroup.MATERIALS, "common_grain"),
-                new ModBlockNamedItem(ModBlocks.einkorn, ItemGroup.MATERIALS, "einkorn_grain"),
+                new ModBlockNamedItem(ModBlockUtils.wild_einkorn, ItemGroup.MATERIALS, "wild_einkorn_grain"),
+                new ModBlockNamedItem(ModBlockUtils.common_wheat, ItemGroup.MATERIALS, "common_grain"),
+                new ModBlockNamedItem(ModBlockUtils.einkorn, ItemGroup.MATERIALS, "einkorn_grain"),
 
-                new ModBlockNamedItem(ModBlocks.wild_emmer, ItemGroup.MATERIALS, "wild_emmer_grain"),
-                new ModBlockNamedItem(ModBlocks.emmer, ItemGroup.MATERIALS, "emmer_grain"),
-                new ModBlockNamedItem(ModBlocks.durum, ItemGroup.MATERIALS, "durum_grain"),
+                new ModBlockNamedItem(ModBlockUtils.wild_emmer, ItemGroup.MATERIALS, "wild_emmer_grain"),
+                new ModBlockNamedItem(ModBlockUtils.emmer, ItemGroup.MATERIALS, "emmer_grain"),
+                new ModBlockNamedItem(ModBlockUtils.durum, ItemGroup.MATERIALS, "durum_grain"),
 
-                new ModBlockNamedItem(ModBlocks.spelt, ItemGroup.MATERIALS, "spelt_grain"),
+                new ModBlockNamedItem(ModBlockUtils.spelt, ItemGroup.MATERIALS, "spelt_grain"),
 
                 //  Hay/Wheat
                 new ModItem(ItemGroup.MATERIALS, "wild_einkorn_hay"),
@@ -52,35 +52,35 @@ public class ModItems
                 new ModItem(ItemGroup.MATERIALS, "spelt_straw"),
 
                 //  Bales
-                new ModBlockItem(ModBlocks.wild_einkorn_bale, ItemGroup.BUILDING_BLOCKS, "wild_einkorn_bale"),
-                new ModBlockItem(ModBlocks.common_straw_bale, ItemGroup.BUILDING_BLOCKS, "common_straw_bale"),
-                new ModBlockItem(ModBlocks.einkorn_straw_bale, ItemGroup.BUILDING_BLOCKS, "einkorn_straw_bale"),
+                new ModBlockItem(ModBlockUtils.wild_einkorn_bale, ItemGroup.BUILDING_BLOCKS, "wild_einkorn_bale"),
+                new ModBlockItem(ModBlockUtils.common_straw_bale, ItemGroup.BUILDING_BLOCKS, "common_straw_bale"),
+                new ModBlockItem(ModBlockUtils.einkorn_straw_bale, ItemGroup.BUILDING_BLOCKS, "einkorn_straw_bale"),
 
-                new ModBlockItem(ModBlocks.emmer_straw_bale, ItemGroup.BUILDING_BLOCKS, "emmer_straw_bale"),
-                new ModBlockItem(ModBlocks.durum_straw_bale, ItemGroup.BUILDING_BLOCKS, "durum_straw_bale"),
+                new ModBlockItem(ModBlockUtils.emmer_straw_bale, ItemGroup.BUILDING_BLOCKS, "emmer_straw_bale"),
+                new ModBlockItem(ModBlockUtils.durum_straw_bale, ItemGroup.BUILDING_BLOCKS, "durum_straw_bale"),
 
-                new ModBlockItem(ModBlocks.spelt_straw_bale, ItemGroup.BUILDING_BLOCKS, "spelt_straw_bale"),
+                new ModBlockItem(ModBlockUtils.spelt_straw_bale, ItemGroup.BUILDING_BLOCKS, "spelt_straw_bale"),
 
                 //  Thatch
-                new ModBlockItem(ModBlocks.common_thatch, ItemGroup.BUILDING_BLOCKS, "common_thatch"),
-                new ModBlockItem(ModBlocks.einkorn_thatch, ItemGroup.BUILDING_BLOCKS, "einkorn_thatch"),
-                new ModBlockItem(ModBlocks.emmer_thatch, ItemGroup.BUILDING_BLOCKS, "emmer_thatch"),
-                new ModBlockItem(ModBlocks.durum_thatch, ItemGroup.BUILDING_BLOCKS, "durum_thatch"),
-                new ModBlockItem(ModBlocks.spelt_thatch, ItemGroup.BUILDING_BLOCKS, "spelt_thatch"),
+                new ModBlockItem(ModBlockUtils.common_thatch, ItemGroup.BUILDING_BLOCKS, "common_thatch"),
+                new ModBlockItem(ModBlockUtils.einkorn_thatch, ItemGroup.BUILDING_BLOCKS, "einkorn_thatch"),
+                new ModBlockItem(ModBlockUtils.emmer_thatch, ItemGroup.BUILDING_BLOCKS, "emmer_thatch"),
+                new ModBlockItem(ModBlockUtils.durum_thatch, ItemGroup.BUILDING_BLOCKS, "durum_thatch"),
+                new ModBlockItem(ModBlockUtils.spelt_thatch, ItemGroup.BUILDING_BLOCKS, "spelt_thatch"),
 
                 //  Straw Mats
-                new ModBlockItem(ModBlocks.common_straw_mat, ItemGroup.DECORATIONS, "common_straw_mat"),
-                new ModBlockItem(ModBlocks.einkorn_straw_mat, ItemGroup.DECORATIONS, "einkorn_straw_mat"),
+                new ModBlockItem(ModBlockUtils.common_straw_mat, ItemGroup.DECORATIONS, "common_straw_mat"),
+                new ModBlockItem(ModBlockUtils.einkorn_straw_mat, ItemGroup.DECORATIONS, "einkorn_straw_mat"),
 
-                new ModBlockItem(ModBlocks.emmer_straw_mat, ItemGroup.DECORATIONS, "emmer_straw_mat"),
-                new ModBlockItem(ModBlocks.durum_straw_mat, ItemGroup.DECORATIONS, "durum_straw_mat"),
-                new ModBlockItem(ModBlocks.spelt_straw_mat, ItemGroup.DECORATIONS, "spelt_straw_mat"),
+                new ModBlockItem(ModBlockUtils.emmer_straw_mat, ItemGroup.DECORATIONS, "emmer_straw_mat"),
+                new ModBlockItem(ModBlockUtils.durum_straw_mat, ItemGroup.DECORATIONS, "durum_straw_mat"),
+                new ModBlockItem(ModBlockUtils.spelt_straw_mat, ItemGroup.DECORATIONS, "spelt_straw_mat"),
 
                 //  Small Stones
-                new ModStoneItem(ModBlocks.small_cobblestone, ItemGroup.DECORATIONS, "small_cobblestone"),
-                new ModStoneItem(ModBlocks.granite_stone, ItemGroup.DECORATIONS, "granite_stone"),
-                new ModStoneItem(ModBlocks.diorite_stone, ItemGroup.DECORATIONS, "diorite_stone"),
-                new ModStoneItem(ModBlocks.andesite_stone, ItemGroup.DECORATIONS, "andesite_stone"),
+                new ModStoneItem(ModBlockUtils.small_cobblestone, ItemGroup.DECORATIONS, "small_cobblestone"),
+                new ModStoneItem(ModBlockUtils.granite_stone, ItemGroup.DECORATIONS, "granite_stone"),
+                new ModStoneItem(ModBlockUtils.diorite_stone, ItemGroup.DECORATIONS, "diorite_stone"),
+                new ModStoneItem(ModBlockUtils.andesite_stone, ItemGroup.DECORATIONS, "andesite_stone"),
 
                 //  Stone Bowl
                 new ModItem(ItemGroup.MATERIALS, "stone_bowl"),
@@ -153,13 +153,13 @@ public class ModItems
 
                 //  Food - Vegetables
                 new ModFoodItem(1, 1.2f, false, "tomato"),
-                new ModBlockNamedItem(ModBlocks.tomato, ItemGroup.MATERIALS, "tomato_seeds"),
+                new ModBlockNamedItem(ModBlockUtils.tomato, ItemGroup.MATERIALS, "tomato_seeds"),
 
                 //  Food - Misc
                 new ModStoneBowlFoodItem(6, 7.2f, false, "gravy"),
 
                 //  Flour Mill
-                new ModBlockNamedItem(ModBlocks.flour_mill, ItemGroup.BUILDING_BLOCKS, "flour_mill")
+                new ModBlockNamedItem(ModBlockUtils.flour_mill, ItemGroup.BUILDING_BLOCKS, "flour_mill")
         );
     }
 

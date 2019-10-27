@@ -1,6 +1,6 @@
 package com.bokmcdok.wheat.container;
 
-import com.bokmcdok.wheat.block.ModBlocks;
+import com.bokmcdok.wheat.block.ModBlockUtils;
 import com.bokmcdok.wheat.item.ModItems;
 import com.bokmcdok.wheat.recipe.FlourMillRecipe;
 import com.bokmcdok.wheat.sound.ModSounds;
@@ -125,7 +125,7 @@ public class FlourMillContainer extends Container {
      * @return True if the player can interact
      */
     public boolean canInteractWith(PlayerEntity playerIn) {
-        return isWithinUsableDistance(mCallable, playerIn, ModBlocks.flour_mill);
+        return isWithinUsableDistance(mCallable, playerIn, ModBlockUtils.flour_mill);
     }
 
     /**

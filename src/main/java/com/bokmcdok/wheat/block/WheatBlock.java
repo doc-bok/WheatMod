@@ -101,14 +101,14 @@ public class WheatBlock extends ModCropsBlock {
                     diseaseChance.addAndGet(-10);
                 }
 
-                if (block == ModBlocks.diseased_wheat) {
+                if (block == ModBlockUtils.diseased_wheat) {
                     int current = diseaseChance.get();
                     diseaseChance.set(current / 2);
                 }
             });
 
             if (diseaseChance.get() <= 1 || random.nextInt(diseaseChance.get()) < 1) {
-                worldIn.setBlockState(pos, ModBlocks.diseased_wheat.getDefaultState().with(getAgeProperty(), newAge));
+                worldIn.setBlockState(pos, ModBlockUtils.diseased_wheat.getDefaultState().with(getAgeProperty(), newAge));
             }
         }
     }

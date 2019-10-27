@@ -1,6 +1,6 @@
 package com.bokmcdok.wheat.terraingen;
 
-import com.bokmcdok.wheat.block.ModBlocks;
+import com.bokmcdok.wheat.block.ModBlockUtils;
 import com.bokmcdok.wheat.block.WildWheatBlock;
 import com.bokmcdok.wheat.WheatMod;
 import net.minecraft.world.biome.Biome;
@@ -28,12 +28,12 @@ class ModTerrain {
             if (biome.getCategory() == Biome.Category.FOREST ||
                     biome.getCategory() == Biome.Category.PLAINS) {
 
-                addWildWheatFeature(biome, ModBlocks.wild_einkorn);
+                addWildWheatFeature(biome, ModBlockUtils.wild_einkorn);
 
             } else if (biome.getCategory() == Biome.Category.RIVER ||
                     biome.getCategory() == Biome.Category.SWAMP) {
 
-                addWildWheatFeature(biome, ModBlocks.wild_emmer);
+                addWildWheatFeature(biome, ModBlockUtils.wild_emmer);
             }
         }
     }
