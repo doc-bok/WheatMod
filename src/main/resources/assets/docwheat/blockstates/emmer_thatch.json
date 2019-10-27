@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "axis=y": { "model": "docwheat:block/thatch_block" },
+    "axis=z": { "model": "docwheat:block/thatch_block", "x": 90 },
+    "axis=x": { "model": "docwheat:block/thatch_block", "x": 90, "y": 90 }
+  }
+}

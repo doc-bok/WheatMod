@@ -1,0 +1,7 @@
+{
+  "parent": "docwheat:block/tinted_cube_column",
+  "textures": {
+    "end": "docwheat:block/thatch_block_top",
+    "side": "docwheat:block/thatch_block_side"
+  }
+}

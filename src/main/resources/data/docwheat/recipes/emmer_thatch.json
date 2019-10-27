@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#X",
+    "X#"
+  ],
+  "key": {
+    "X": {
+      "item": "docwheat:emmer_straw_bale"
+    },
+    "#": {
+      "item": "minecraft:dirt"
+    }
+  },
+  "result": {
+    "item": "docwheat:emmer_thatch",
+    "count": 4
+  }
+}

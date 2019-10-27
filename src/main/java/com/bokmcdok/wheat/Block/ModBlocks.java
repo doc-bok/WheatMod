@@ -60,6 +60,15 @@ public class ModBlocks {
 
                 new StrawMatBlock("spelt_straw_mat"),
 
+                //  Thatch
+                new BaleBlock(MaterialColor.YELLOW, "common_thatch"),
+                new BaleBlock(MaterialColor.YELLOW, "einkorn_thatch"),
+
+                new BaleBlock(MaterialColor.YELLOW, "emmer_thatch"),
+                new BaleBlock(MaterialColor.YELLOW, "durum_thatch"),
+
+                new BaleBlock(MaterialColor.YELLOW, "spelt_thatch"),
+
                 //  Stone
                 new SmallStoneBlock().setRegistryName(WheatMod.MOD_ID, "small_cobblestone"),
                 new SmallStoneBlock().setRegistryName(WheatMod.MOD_ID, "granite_stone"),
@@ -91,24 +100,29 @@ public class ModBlocks {
         blockColors.register(ModBlockColors.COMMON_WHEAT, common_wheat);
         blockColors.register(ModBlockColors.COMMON_WHEAT, common_straw_bale);
         blockColors.register(ModBlockColors.COMMON_WHEAT, common_straw_mat);
+        blockColors.register(ModBlockColors.COMMON_WHEAT, common_thatch);
 
         blockColors.register(ModBlockColors.EINKORN, einkorn);
         blockColors.register(ModBlockColors.EINKORN, einkorn_straw_bale);
         blockColors.register(ModBlockColors.EINKORN, einkorn_straw_mat);
+        blockColors.register(ModBlockColors.EINKORN, einkorn_thatch);
 
         blockColors.register(ModBlockColors.WILD_EMMER, wild_emmer);
 
         blockColors.register(ModBlockColors.EMMER, emmer);
         blockColors.register(ModBlockColors.EMMER, emmer_straw_bale);
         blockColors.register(ModBlockColors.EMMER, emmer_straw_mat);
+        blockColors.register(ModBlockColors.EMMER, emmer_thatch);
 
         blockColors.register(ModBlockColors.DURUM, durum);
         blockColors.register(ModBlockColors.DURUM, durum_straw_bale);
         blockColors.register(ModBlockColors.DURUM, durum_straw_mat);
+        blockColors.register(ModBlockColors.DURUM, durum_thatch);
 
         blockColors.register(ModBlockColors.SPELT, spelt);
         blockColors.register(ModBlockColors.SPELT, spelt_straw_bale);
         blockColors.register(ModBlockColors.SPELT, spelt_straw_mat);
+        blockColors.register(ModBlockColors.SPELT, spelt_thatch);
 
         blockColors.register(ModBlockColors.DISEASED_WHEAT, diseased_wheat);
     }
@@ -127,6 +141,13 @@ public class ModBlocks {
         fireBlock.setFireInfo(emmer_straw_bale, 60, 20);
         fireBlock.setFireInfo(durum_straw_bale, 60, 20);
         fireBlock.setFireInfo(spelt_straw_bale, 60, 20);
+
+        //  Thatch
+        fireBlock.setFireInfo(common_thatch, 60, 20);
+        fireBlock.setFireInfo(einkorn_thatch, 60, 20);
+        fireBlock.setFireInfo(emmer_thatch, 60, 20);
+        fireBlock.setFireInfo(durum_thatch, 60, 20);
+        fireBlock.setFireInfo(spelt_thatch, 60, 20);
 
         //  Straw Mats
         fireBlock.setFireInfo(common_straw_mat, 60, 20);
@@ -169,6 +190,17 @@ public class ModBlocks {
     public static final BaleBlock durum_straw_bale = null;
 
     public static final BaleBlock spelt_straw_bale = null;
+
+    /**
+     * Thatch
+     */
+    public static final BaleBlock common_thatch = null;
+    public static final BaleBlock einkorn_thatch = null;
+
+    public static final BaleBlock emmer_thatch = null;
+    public static final BaleBlock durum_thatch = null;
+
+    public static final BaleBlock spelt_thatch = null;
 
     /**
      * Straw Mats
