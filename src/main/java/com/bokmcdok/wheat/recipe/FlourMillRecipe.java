@@ -19,7 +19,6 @@ public class FlourMillRecipe implements IRecipe<IInventory> {
 
     private final IRecipeType<?> type;
     private final ResourceLocation id;
-    private final String mGroup;
     private final Ingredient mIngredient;
     private final ItemStack mResult;
 
@@ -33,7 +32,6 @@ public class FlourMillRecipe implements IRecipe<IInventory> {
     FlourMillRecipe(ResourceLocation resourceLocation, String group, Ingredient ingredient, ItemStack result) {
         type = flour_mill;
         id = resourceLocation;
-        mGroup = group;
         mIngredient = ingredient;
         mResult = result;
     }
