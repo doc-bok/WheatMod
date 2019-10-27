@@ -1,15 +1,9 @@
 package com.bokmcdok.wheat.Color;
 
-import net.minecraft.client.renderer.color.IBlockColor;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.world.GrassColors;
-import net.minecraft.world.biome.BiomeColors;
 
 public class ModItemColors {
-    private static int COLOR(int r, int g, int b) {
-        return (r & 255) << 16 | (g & 255) << 8 | b & 255;
-    }
-
     public static final IItemColor WILD_EINKORN = (item, state) ->
     {
         return GrassColors.get(0.5D, 1.0D);
@@ -54,4 +48,15 @@ public class ModItemColors {
     public static final IItemColor TOMATO_SEEDS = (item, state) -> {
         return COLOR(255, 99, 71);
     };
+
+    /**
+     * Helper function to generate a colour.
+     * @param r Red
+     * @param g Green
+     * @param b Blue
+     * @return An integer representing the specified colour.
+     */
+    private static int COLOR(int r, int g, int b) {
+        return (r & 255) << 16 | (g & 255) << 8 | b & 255;
+    }
 }
