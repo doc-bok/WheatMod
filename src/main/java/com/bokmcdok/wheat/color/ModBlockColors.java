@@ -15,11 +15,11 @@ public class ModBlockColors {
     };
 
     public static final IBlockColor COMMON_WHEAT = (state, reader, pos, tintIndex) -> {
-        return COLOR(245, 222, 89);
+        return color(245, 222, 89);
     };
 
     public static final IBlockColor EINKORN = (state, reader, pos, tintIndex) -> {
-        return COLOR(179, 222, 89);
+        return color(179, 222, 89);
     };
 
     public static final IBlockColor WILD_EMMER = (state, reader, pos, tintIndex) -> {
@@ -34,19 +34,19 @@ public class ModBlockColors {
     };
 
     public static final IBlockColor EMMER = (state, reader, pos, tintIndex) -> {
-        return COLOR(222, 245, 89);
+        return color(222, 245, 89);
     };
 
     public static final IBlockColor DURUM = (state, reader, pos, tintIndex) -> {
-        return COLOR(179, 245, 89);
+        return color(179, 245, 89);
     };
 
     public static final IBlockColor DISEASED_WHEAT = (state, reader, pos, tintIndex) -> {
-        return COLOR(156, 66, 0);
+        return color(156, 66, 0);
     };
 
     public static final IBlockColor SPELT = (state, reader, pos, tintIndex) -> {
-        return COLOR(230, 230, 44);
+        return color(230, 230, 44);
     };
 
     /**
@@ -56,7 +56,7 @@ public class ModBlockColors {
      * @param b Blue
      * @return An integer representing the specified colour.
      */
-    private static int COLOR(int r, int g, int b) {
+    private static int color(int r, int g, int b) {
         return (r & 255) << 16 | (g & 255) << 8 | b & 255;
     }
 }

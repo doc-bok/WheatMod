@@ -10,15 +10,15 @@ public class ModItemColors {
     };
 
     public static final IItemColor COMMON_WHEAT = (item, state) -> {
-        return COLOR(245, 222, 89);
+        return color(245, 222, 89);
     };
 
     public static final IItemColor EINKORN = (item, state) -> {
-        return COLOR(179, 222, 89);
+        return color(179, 222, 89);
     };
 
     public static final IItemColor COMMON_FLOUR = (item, state) -> {
-        return COLOR(255, 232, 178);
+        return color(255, 232, 178);
     };
 
     public static final IItemColor WILD_EMMER = (item, state) -> {
@@ -26,27 +26,27 @@ public class ModItemColors {
     };
 
     public static final IItemColor EMMER = (item, state) -> {
-        return COLOR(222, 245, 89);
+        return color(222, 245, 89);
     };
 
     public static final IItemColor DURUM = (item, state) -> {
-        return COLOR(179, 245, 89);
+        return color(179, 245, 89);
     };
 
     public static final IItemColor DURUM_FLOUR = (item, state) -> {
-        return COLOR(222, 245, 178);
+        return color(222, 245, 178);
     };
 
     public static final IItemColor SPELT = (item, state) -> {
-        return COLOR(230, 230, 44);
+        return color(230, 230, 44);
     };
 
     public static final IItemColor SPELT_FLOUR = (item, state) -> {
-        return COLOR(245, 244, 178);
+        return color(245, 244, 178);
     };
 
     public static final IItemColor TOMATO_SEEDS = (item, state) -> {
-        return COLOR(255, 99, 71);
+        return color(255, 99, 71);
     };
 
     /**
@@ -56,7 +56,7 @@ public class ModItemColors {
      * @param b Blue
      * @return An integer representing the specified colour.
      */
-    private static int COLOR(int r, int g, int b) {
+    private static int color(int r, int g, int b) {
         return (r & 255) << 16 | (g & 255) << 8 | b & 255;
     }
 }
