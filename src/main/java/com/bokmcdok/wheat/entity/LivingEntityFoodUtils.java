@@ -27,7 +27,7 @@ import net.minecraftforge.fml.common.Mod;
 import java.util.Random;
 
 @Mod.EventBusSubscriber(modid = WheatMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
-class ModEntityUtil {
+class LivingEntityFoodUtils {
 
     protected final static Random rand = new Random();
 
@@ -206,11 +206,11 @@ class ModEntityUtil {
                                          SoundEvent eatingSound)
     {
         AbstractHorseEntity animal = (AbstractHorseEntity) event.getTarget();
-        eating |= heal(animal, heal);
-        eating |= grow(animal, growth);
-        eating |= improveTemper(animal, temper, eating);
+        boolean shouldConsume = eating | heal(animal, heal);
+        shouldConsume |= grow(animal, growth);
+        shouldConsume |= improveTemper(animal, temper, shouldConsume);
 
-        if (eating) {
+        if (shouldConsume) {
             PlayerEntity player = event.getPlayer();
             Hand hand = event.getHand();
             ItemStack stack = player.getHeldItem(hand);
