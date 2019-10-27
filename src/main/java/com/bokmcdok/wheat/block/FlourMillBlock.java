@@ -24,6 +24,12 @@ import net.minecraft.world.World;
 
 public class FlourMillBlock extends Block {
 
+    private static final VoxelShape GRINDER_SHAPE = Block.makeCuboidShape(2.0D, 0.0D, 2.0D, 14.0D, 9.0D, 14.0D);
+    private static final VoxelShape STICK_SHAPE = Block.makeCuboidShape(7.0D, 0.0D, 7.0D, 9.0D, 16.0D, 9.0D);
+    private static final VoxelShape SHAPE = VoxelShapes.or(GRINDER_SHAPE, STICK_SHAPE);
+
+    private static final ITextComponent TRANSLATION_TEXT = new TranslationTextComponent("container.flour_mill");
+
     /**
      * Construction
      * @param registryName The name of this block in the registry.
@@ -87,10 +93,4 @@ public class FlourMillBlock extends Block {
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
         return SHAPE;
     }
-
-    private static final VoxelShape GRINDER_SHAPE = Block.makeCuboidShape(2.0D, 0.0D, 2.0D, 14.0D, 9.0D, 14.0D);
-    private static final VoxelShape STICK_SHAPE = Block.makeCuboidShape(7.0D, 0.0D, 7.0D, 9.0D, 16.0D, 9.0D);
-    private static final VoxelShape SHAPE = VoxelShapes.or(GRINDER_SHAPE, STICK_SHAPE);
-
-    private static final ITextComponent TRANSLATION_TEXT = new TranslationTextComponent("container.flour_mill");
 }
