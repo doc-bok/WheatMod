@@ -3,7 +3,7 @@ package com.bokmcdok.wheat.container;
 import com.bokmcdok.wheat.block.ModBlockUtils;
 import com.bokmcdok.wheat.item.ModItemUtils;
 import com.bokmcdok.wheat.recipe.FlourMillRecipe;
-import com.bokmcdok.wheat.sound.ModSounds;
+import com.bokmcdok.wheat.sound.ModSoundUtils;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -59,12 +59,12 @@ public class FlourMillContainer extends Container {
      * @param callable ???
      */
     public FlourMillContainer(int windowId, PlayerInventory playerInventory, IWorldPosCallable callable) {
-        super(ModContainers.flour_mill_container, windowId);
+        super(ModContainerUtils.flour_mill_container, windowId);
         mCallable = callable;
         mPlayer = playerInventory.player;
 
         //  Setup the craft result slot.
-        addSlot(new ModResultSlot(ModSounds.mill_grind, FlourMillRecipe.flour_mill, mPlayer, mCraftingGrid, mResultSlot, 0, 124, 35));
+        addSlot(new ModResultSlot(ModSoundUtils.mill_grind, FlourMillRecipe.flour_mill, mPlayer, mCraftingGrid, mResultSlot, 0, 124, 35));
 
         //  Setup crafting grid
         addSlot(new ModSlot(ModItemUtils.GRAIN_ITEMS, mCraftingGrid, 0, 48, 35));

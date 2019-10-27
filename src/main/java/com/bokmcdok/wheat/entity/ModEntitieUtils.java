@@ -10,7 +10,7 @@ import net.minecraftforge.registries.ObjectHolder;
 
 @Mod.EventBusSubscriber(modid=WheatMod.MOD_ID, bus=Mod.EventBusSubscriber.Bus.MOD)
 @ObjectHolder(WheatMod.MOD_ID)
-public class ModEntities {
+public class ModEntitieUtils {
 
     public static final EntityType<StoneEntity> stone_entity = null;
 

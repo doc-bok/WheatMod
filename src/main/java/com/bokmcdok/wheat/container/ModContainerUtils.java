@@ -13,7 +13,7 @@ import net.minecraftforge.registries.ObjectHolder;
  */
 @Mod.EventBusSubscriber(modid = WheatMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 @ObjectHolder(WheatMod.MOD_ID)
-public class ModContainers {
+public class ModContainerUtils {
 
     public static final ContainerType<FlourMillContainer> flour_mill_container = null;
 
