@@ -15,6 +15,8 @@ import net.minecraftforge.registries.ObjectHolder;
 @ObjectHolder(WheatMod.MOD_ID)
 public class ModContainers {
 
+    public static final ContainerType<FlourMillContainer> flour_mill_container = null;
+
     /**
      * Register the new containers
      * @param event The register event for containers
@@ -25,6 +27,4 @@ public class ModContainers {
                 IForgeContainerType.create(FlourMillContainer::new).setRegistryName("flour_mill_container")
         );
     }
-
-    public static final ContainerType<FlourMillContainer> flour_mill_container = null;
 }
