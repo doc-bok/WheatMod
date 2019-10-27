@@ -15,6 +15,14 @@ import javax.annotation.Nonnull;
 
 public class FlourMillRecipe implements IRecipe<IInventory> {
 
+    public static final IRecipeType<FlourMillRecipe> flour_mill = IRecipeType.register("flour_mill");
+
+    private final IRecipeType<?> type;
+    private final ResourceLocation id;
+    private final String mGroup;
+    private final Ingredient mIngredient;
+    private final ItemStack mResult;
+
     /**
      * Construction
      * @param resourceLocation The location of this recipe
@@ -124,12 +132,4 @@ public class FlourMillRecipe implements IRecipe<IInventory> {
     public ItemStack getIcon() {
         return new ItemStack(ModBlockUtils.flour_mill);
     }
-
-    public static final IRecipeType<FlourMillRecipe> flour_mill = IRecipeType.register("flour_mill");
-
-    private final IRecipeType<?> type;
-    private final ResourceLocation id;
-    final String mGroup;
-    final Ingredient mIngredient;
-    final ItemStack mResult;
 }
