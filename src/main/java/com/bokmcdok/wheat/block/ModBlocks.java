@@ -1,7 +1,7 @@
 package com.bokmcdok.wheat.block;
 
-import com.bokmcdok.wheat.Color.ModBlockColors;
-import com.bokmcdok.wheat.Item.ModItems;
+import com.bokmcdok.wheat.color.ModBlockColors;
+import com.bokmcdok.wheat.item.ModItems;
 import com.bokmcdok.wheat.WheatMod;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
