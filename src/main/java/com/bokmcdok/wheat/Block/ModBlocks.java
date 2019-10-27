@@ -3,11 +3,11 @@ package com.bokmcdok.wheat.Block;
 import com.bokmcdok.wheat.Color.ModBlockColors;
 import com.bokmcdok.wheat.Item.ModItems;
 import com.bokmcdok.wheat.WheatMod;
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.FireBlock;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.client.renderer.color.BlockColors;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvent;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -21,6 +21,65 @@ import net.minecraftforge.registries.ObjectHolder;
 @Mod.EventBusSubscriber(modid = WheatMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 @ObjectHolder(WheatMod.MOD_ID)
 public class ModBlocks {
+
+    /**
+     * The new types of wheat.
+     */
+    public static final WildWheatBlock wild_einkorn = null;
+    public static final WheatBlock common_wheat = null;
+    public static final WheatBlock einkorn = null;
+    public static final WildWheatBlock wild_emmer = null;
+    public static final WheatBlock emmer = null;
+    public static final WheatBlock durum = null;
+    public static final WheatBlock spelt = null;
+    public static final WheatBlock diseased_wheat = null;
+
+    /**
+     * The new types of Hay/Straw
+     */
+    public static final BaleBlock wild_einkorn_bale = null;
+    public static final BaleBlock common_straw_bale = null;
+    public static final BaleBlock einkorn_straw_bale = null;
+    public static final BaleBlock emmer_straw_bale = null;
+    public static final BaleBlock durum_straw_bale = null;
+    public static final BaleBlock spelt_straw_bale = null;
+
+    /**
+     * Thatch
+     */
+    public static final BaleBlock common_thatch = null;
+    public static final BaleBlock einkorn_thatch = null;
+    public static final BaleBlock emmer_thatch = null;
+    public static final BaleBlock durum_thatch = null;
+    public static final BaleBlock spelt_thatch = null;
+
+    /**
+     * Straw Mats
+     */
+    public static final StrawMatBlock common_straw_mat = null;
+    public static final StrawMatBlock einkorn_straw_mat = null;
+    public static final StrawMatBlock emmer_straw_mat = null;
+    public static final StrawMatBlock durum_straw_mat = null;
+    public static final StrawMatBlock spelt_straw_mat = null;
+
+    /**
+     * Stones
+     */
+    public static final SmallStoneBlock small_cobblestone = null;
+    public static final SmallStoneBlock granite_stone = null;
+    public static final SmallStoneBlock diorite_stone = null;
+    public static final SmallStoneBlock andesite_stone = null;
+
+    /**
+     * Vegetables
+     */
+    public static final ModCropsBlock tomato = null;
+
+    /**
+     * Flour Mill
+     */
+    public static final FlourMillBlock flour_mill = null;
+
     /**
      * Register all the new types of wheat in the game.
      */
@@ -132,7 +191,7 @@ public class ModBlocks {
      */
     @SubscribeEvent
     public static void commonSetup(FMLCommonSetupEvent event) {
-        FireBlock fireBlock = (FireBlock)Blocks.FIRE;
+        FireBlock fireBlock = (FireBlock) Blocks.FIRE;
 
         //  Bales
         fireBlock.setFireInfo(wild_einkorn_bale, 60, 20);
@@ -163,71 +222,4 @@ public class ModBlocks {
         emmer.registerMutation(spelt, common_wheat);
         common_wheat.registerMutation(spelt, emmer);
     }
-
-    /**
-     * The new types of wheat.
-     */
-    public static final WildWheatBlock wild_einkorn = null;
-    public static final WheatBlock common_wheat = null;
-    public static final WheatBlock einkorn = null;
-
-    public static final WildWheatBlock wild_emmer = null;
-    public static final WheatBlock emmer = null;
-    public static final WheatBlock durum = null;
-
-    public static final WheatBlock spelt = null;
-
-    public static final WheatBlock diseased_wheat = null;
-
-    /**
-     * The new types of Hay/Straw
-     */
-    public static final BaleBlock wild_einkorn_bale = null;
-    public static final BaleBlock common_straw_bale = null;
-    public static final BaleBlock einkorn_straw_bale = null;
-
-    public static final BaleBlock emmer_straw_bale = null;
-    public static final BaleBlock durum_straw_bale = null;
-
-    public static final BaleBlock spelt_straw_bale = null;
-
-    /**
-     * Thatch
-     */
-    public static final BaleBlock common_thatch = null;
-    public static final BaleBlock einkorn_thatch = null;
-
-    public static final BaleBlock emmer_thatch = null;
-    public static final BaleBlock durum_thatch = null;
-
-    public static final BaleBlock spelt_thatch = null;
-
-    /**
-     * Straw Mats
-     */
-    public static final StrawMatBlock common_straw_mat = null;
-    public static final StrawMatBlock einkorn_straw_mat = null;
-
-    public static final StrawMatBlock emmer_straw_mat = null;
-    public static final StrawMatBlock durum_straw_mat = null;
-
-    public static final StrawMatBlock spelt_straw_mat = null;
-
-    /**
-     * Stones
-     */
-    public static final SmallStoneBlock small_cobblestone = null;
-    public static final SmallStoneBlock granite_stone = null;
-    public static final SmallStoneBlock diorite_stone = null;
-    public static final SmallStoneBlock andesite_stone = null;
-
-    /**
-     * Vegetables
-     */
-    public static final ModCropsBlock tomato = null;
-
-    /**
-     * Flour Mill
-     */
-    public static final FlourMillBlock flour_mill = null;
 }
