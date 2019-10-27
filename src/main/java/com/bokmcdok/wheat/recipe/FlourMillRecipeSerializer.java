@@ -16,6 +16,8 @@ import javax.annotation.Nullable;
 
 public class FlourMillRecipeSerializer<T extends FlourMillRecipe> extends net.minecraftforge.registries.ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<T> {
 
+    private final FlourMillRecipeSerializer.IFactory<T> mFactory;
+
     /**
      * Construction
      * @param factory The factory used to create recipes
@@ -88,6 +90,4 @@ public class FlourMillRecipeSerializer<T extends FlourMillRecipe> extends net.mi
     interface IFactory<T extends FlourMillRecipe> {
         T create(ResourceLocation resourceLocation, String group, Ingredient ingredient, ItemStack result);
     }
-
-    private final FlourMillRecipeSerializer.IFactory<T> mFactory;
 }

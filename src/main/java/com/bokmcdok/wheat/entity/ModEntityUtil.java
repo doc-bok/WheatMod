@@ -29,6 +29,8 @@ import java.util.Random;
 @Mod.EventBusSubscriber(modid = WheatMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 class ModEntityUtil {
 
+    protected final static Random rand = new Random();
+
     /**
      * Add new goals to certain animals so they will be attracted to new items.
      */
@@ -292,6 +294,4 @@ class ModEntityUtil {
             entity.world.addParticle(iparticledata, entity.posX + (double)(rand.nextFloat() * entity.getWidth() * 2.0F) - (double)entity.getWidth(), entity.posY + 0.5D + (double)(rand.nextFloat() * entity.getHeight()), entity.posZ + (double)(rand.nextFloat() * entity.getWidth() * 2.0F) - (double)entity.getWidth(), d0, d1, d2);
         }
     }
-
-    protected final static Random rand = new Random();
 }

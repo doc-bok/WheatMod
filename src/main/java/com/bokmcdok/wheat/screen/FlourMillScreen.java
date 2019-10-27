@@ -12,6 +12,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 @OnlyIn(Dist.CLIENT)
 public class FlourMillScreen extends ContainerScreen<FlourMillContainer> {
 
+    private static final ResourceLocation GUI_TEXTURES = new ResourceLocation("docwheat", "textures/gui/container/flour_mill.png");
+
     /**
      * Construction
      * @param container The container this screen is rendering
@@ -22,8 +24,7 @@ public class FlourMillScreen extends ContainerScreen<FlourMillContainer> {
         super(container, playerInventory, name);
     }
 
-    /**
-     * Just tick
+    /*** Just tick
      */
     public void tick() {
         super.tick();
@@ -64,6 +65,4 @@ public class FlourMillScreen extends ContainerScreen<FlourMillContainer> {
         int j = (this.height - this.ySize) / 2;
         blit(i, j, 0, 0, xSize, ySize);
     }
-
-    private static final ResourceLocation GUI_TEXTURES = new ResourceLocation("docwheat", "textures/gui/container/flour_mill.png");
 }

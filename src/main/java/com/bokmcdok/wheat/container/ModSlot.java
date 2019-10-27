@@ -7,6 +7,8 @@ import net.minecraft.item.crafting.Ingredient;
 
 public class ModSlot extends Slot {
 
+    private final Ingredient mValidItems;
+
     /**
      * Construction
      * @param validItems Items that are valid for this slot
@@ -28,6 +30,4 @@ public class ModSlot extends Slot {
     public boolean isItemValid(ItemStack stack) {
         return mValidItems.test(stack);
     }
-
-    private final Ingredient mValidItems;
 }

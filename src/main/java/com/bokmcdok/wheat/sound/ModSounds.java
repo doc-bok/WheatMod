@@ -11,6 +11,9 @@ import net.minecraftforge.registries.ObjectHolder;
 @Mod.EventBusSubscriber(modid = WheatMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 @ObjectHolder(WheatMod.MOD_ID)
 public class ModSounds {
+
+    public static final SoundEvent mill_grind = null;
+    
     /**
      * Register the sounds used by the mod
      * @param event The event containing the sound event registry
@@ -21,6 +24,4 @@ public class ModSounds {
                 new SoundEvent(new ResourceLocation("docwheat", "mill_grind")).setRegistryName("docwheat", "mill_grind")
         );
     }
-
-    public static final SoundEvent mill_grind = null;
 }
