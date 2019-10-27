@@ -12,6 +12,11 @@ import net.minecraft.util.SoundEvent;
 
 public class ModResultSlot<C extends CraftingInventory, T extends IRecipe<C>> extends CraftingResultSlot {
 
+    private final SoundEvent mCraftSound;
+    private final IRecipeType<T> mRecipeType;
+    private final C mCraftingInventory;
+    private final PlayerEntity mPlayer;
+
     /**
      * Constructor
      * @param recipeType The type of recipe to use as a result
@@ -82,10 +87,4 @@ public class ModResultSlot<C extends CraftingInventory, T extends IRecipe<C>> ex
 
         return stack;
     }
-
-    private final SoundEvent mCraftSound;
-    private final IRecipeType<T> mRecipeType;
-    private final C mCraftingInventory;
-    private final PlayerEntity mPlayer;
-
 }
