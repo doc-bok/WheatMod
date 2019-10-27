@@ -64,6 +64,13 @@ public class ModItems
 
                 new ModBlockItem(ModBlocks.spelt_straw_bale, ItemGroup.BUILDING_BLOCKS, "spelt_straw_bale"),
 
+                //  Thatch
+                new ModBlockItem(ModBlocks.common_thatch, ItemGroup.BUILDING_BLOCKS, "common_thatch"),
+                new ModBlockItem(ModBlocks.einkorn_thatch, ItemGroup.BUILDING_BLOCKS, "einkorn_thatch"),
+                new ModBlockItem(ModBlocks.emmer_thatch, ItemGroup.BUILDING_BLOCKS, "emmer_thatch"),
+                new ModBlockItem(ModBlocks.durum_thatch, ItemGroup.BUILDING_BLOCKS, "durum_thatch"),
+                new ModBlockItem(ModBlocks.spelt_thatch, ItemGroup.BUILDING_BLOCKS, "spelt_thatch"),
+
                 //  Straw Mats
                 new ModBlockItem(ModBlocks.common_straw_mat, ItemGroup.DECORATIONS, "common_straw_mat"),
                 new ModBlockItem(ModBlocks.einkorn_straw_mat, ItemGroup.DECORATIONS, "einkorn_straw_mat"),
@@ -174,12 +181,14 @@ public class ModItems
         blockColors.register(ModItemColors.COMMON_WHEAT, common_grain);
         blockColors.register(ModItemColors.COMMON_WHEAT, common_straw);
         blockColors.register(ModItemColors.COMMON_WHEAT, common_straw_bale);
+        blockColors.register(ModItemColors.COMMON_WHEAT, common_thatch);
         blockColors.register(ModItemColors.COMMON_WHEAT, common_straw_mat);
         blockColors.register(ModItemColors.COMMON_FLOUR, common_flour);
 
         blockColors.register(ModItemColors.EINKORN, einkorn_grain);
         blockColors.register(ModItemColors.EINKORN, einkorn_straw);
         blockColors.register(ModItemColors.EINKORN, einkorn_straw_bale);
+        blockColors.register(ModItemColors.EINKORN, einkorn_thatch);
         blockColors.register(ModItemColors.EINKORN, einkorn_straw_mat);
 
         blockColors.register(ModItemColors.WILD_EMMER, wild_emmer_grain);
@@ -188,17 +197,20 @@ public class ModItems
         blockColors.register(ModItemColors.EMMER, emmer_grain);
         blockColors.register(ModItemColors.EMMER, emmer_straw);
         blockColors.register(ModItemColors.EMMER, emmer_straw_bale);
+        blockColors.register(ModItemColors.EMMER, emmer_thatch);
         blockColors.register(ModItemColors.EMMER, emmer_straw_mat);
 
         blockColors.register(ModItemColors.DURUM, durum_grain);
         blockColors.register(ModItemColors.DURUM, durum_straw);
         blockColors.register(ModItemColors.DURUM, durum_straw_bale);
+        blockColors.register(ModItemColors.DURUM, durum_thatch);
         blockColors.register(ModItemColors.DURUM, durum_straw_mat);
         blockColors.register(ModItemColors.DURUM_FLOUR, durum_flour);
 
         blockColors.register(ModItemColors.SPELT, spelt_grain);
         blockColors.register(ModItemColors.SPELT, spelt_straw);
         blockColors.register(ModItemColors.SPELT, spelt_straw_bale);
+        blockColors.register(ModItemColors.SPELT, spelt_thatch);
         blockColors.register(ModItemColors.SPELT, spelt_straw_mat);
         blockColors.register(ModItemColors.SPELT_FLOUR, spelt_flour);
 
@@ -308,6 +320,15 @@ public class ModItems
     public static final Item durum_straw_bale = null;
 
     public static final Item spelt_straw_bale = null;
+
+    /**
+     * The thatch items for reference
+     */
+    public static final Item common_thatch = null;
+    public static final Item einkorn_thatch = null;
+    public static final Item emmer_thatch = null;
+    public static final Item durum_thatch = null;
+    public static final Item spelt_thatch = null;
 
     /**
      * The mat items for reference

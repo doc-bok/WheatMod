@@ -30,6 +30,7 @@ public class WildWheatBlock extends WheatBlock {
     public void registerMutations(WheatBlock commonMutation, WheatBlock rareMutation) {
         mCommonMutation = commonMutation;
         mMutation = rareMutation;
+        mRequired = this;
         mCanMutate = true;
     }
 

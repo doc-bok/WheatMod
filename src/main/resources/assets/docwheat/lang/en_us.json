@@ -8,12 +8,14 @@
   "item.docwheat.common_grain": "Common Wheat Grain",
   "item.docwheat.common_straw": "Straw",
   "block.docwheat.common_straw_bale": "Straw Bale",
+  "block.docwheat.common_thatch": "Thatch",
   "block.docwheat.common_straw_mat": "Straw Mat",
 
   "item.docwheat.einkorn_grain": "Einkorn Grain",
   "item.docwheat.einkorn_straw": "Einkorn Straw",
   "block.docwheat.einkorn_wheat": "Einkorn",
   "block.docwheat.einkorn_straw_bale": "Einkorn Straw Bale",
+  "block.docwheat.einkorn_thatch": "Einkorn Thatch",
   "block.docwheat.einkorn_straw_mat": "Einkorn Straw Mat",
 
   "block.docwheat.wild_emmer": "Wild Emmer",
@@ -24,18 +26,21 @@
   "item.docwheat.emmer_straw": "Emmer Straw",
   "block.docwheat.emmer_wheat": "Emmer",
   "block.docwheat.emmer_straw_bale": "Emmer Straw Bale",
+  "block.docwheat.emmer_thatch": "Emmer Thatch",
   "block.docwheat.emmer_straw_mat": "Emmer Straw Mat",
 
   "item.docwheat.durum_grain": "Durum Grain",
   "item.docwheat.durum_straw": "Durum Straw",
   "block.docwheat.durum_wheat": "Durum",
   "block.docwheat.durum_straw_bale": "Durum Straw Bale",
+  "block.docwheat.durum_thatch": "Durum Thatch",
   "block.docwheat.durum_straw_mat": "Durum Straw Mat",
 
   "item.docwheat.spelt_grain": "Spelt Grain",
   "item.docwheat.spelt_straw": "Spelt Straw",
   "block.docwheat.spelt_wheat": "Spelt",
   "block.docwheat.spelt_straw_bale": "Spelt Straw Bale",
+  "block.docwheat.spelt_thatch": "Spelt Thatch",
   "block.docwheat.spelt_straw_mat": "Spelt Straw Mat",
 
   "block.docwheat.diseased_wheat": "Diseased Wheat",

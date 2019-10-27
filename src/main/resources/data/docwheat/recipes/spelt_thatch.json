@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "#X",
+    "X#"
+  ],
+  "key": {
+    "X": {
+      "item": "docwheat:spelt_straw_bale"
+    },
+    "#": {
+      "item": "minecraft:dirt"
+    }
+  },
+  "result": {
+    "item": "docwheat:spelt_thatch",
+    "count": 4
+  }
+}
