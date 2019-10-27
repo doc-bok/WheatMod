@@ -1,15 +1,11 @@
 package com.bokmcdok.wheat.Block;
 
-import com.bokmcdok.wheat.WheatMod;
-import net.minecraft.block.*;
-import net.minecraft.block.material.Material;
-import net.minecraft.item.BlockNamedItem;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.item.Item;
-import net.minecraft.util.IItemProvider;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.common.crafting.CraftingHelper;
-import net.minecraftforge.fml.common.Mod;
 
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -21,8 +17,16 @@ import java.util.stream.Stream;
  */
 public class WheatBlock extends ModCropsBlock {
 
+    protected WheatBlock mMutation = null;
+    protected WheatBlock mRequired = null;
+    protected boolean mCanMutate = false;
+    private final int mDiseaseResistance;
+
     /**
      * Construct a new wheat block.
+     * @param seed The seed used to grow this wheat.
+     * @param diseaseResistance The crop's resistance to disease.
+     * @param registryName The name of the crop in the registry.
      */
     public WheatBlock(Item seed, int diseaseResistance, String registryName)
     {
@@ -34,6 +38,8 @@ public class WheatBlock extends ModCropsBlock {
 
     /**
      * Register potential mutations for the wheat block.
+     * @param mutation The potential mutation for this block.
+     * @param required The other type of wheat required to mutate this crop.
      */
     public void registerMutation(WheatBlock mutation, WheatBlock required) {
         mMutation = mutation;
@@ -42,7 +48,11 @@ public class WheatBlock extends ModCropsBlock {
     }
 
     /**
-     * Handle wheat diseases and mutations.
+     * Main update - checks for disease and mutations
+     * @param state The current block state
+     * @param worldIn The world the block is in
+     * @param pos The position of the block
+     * @param random The current RNG
      */
     public void tick(BlockState state, World worldIn, BlockPos pos, Random random) {
         int oldAge = getAge(state);
@@ -53,6 +63,10 @@ public class WheatBlock extends ModCropsBlock {
 
     /**
      * When grown using bonemeal there is zero chance of disease and a higher chance of mutation.
+     * @param worldIn The world the block is in
+     * @param random The current RNG
+     * @param pos The position of the block
+     * @param state The current block state
      */
     public void grow(World worldIn, Random random, BlockPos pos, BlockState state) {
         int oldAge = getAge(state);
@@ -61,6 +75,14 @@ public class WheatBlock extends ModCropsBlock {
         checkForMutation(worldIn, pos, random, oldAge, 10);
     }
 
+    /**
+     * Randomly mutates crops into diseased crops. The chances are increased by close-cropping, nearby mushrooms, and
+     * other nearby diseased crops.
+     * @param worldIn The world the block is in
+     * @param pos The position of the block
+     * @param random The current RNG
+     * @param oldAge The age of the crop before the tick update.
+     */
     protected void checkForDisease(World worldIn, BlockPos pos, Random random, int oldAge) {
         int newAge = worldIn.getBlockState(pos).get(getAgeProperty());
         if (oldAge != newAge) {
@@ -92,7 +114,12 @@ public class WheatBlock extends ModCropsBlock {
     }
 
     /**
-     * Check for a mutation.
+     * Check for a possible mutation.
+     * @param worldIn The world the block is in
+     * @param pos The position of the block
+     * @param random The current RNG
+     * @param oldAge The age of the crop before the tick update.
+     * @param rarity The rarity of a mutation - a lower number means a higher chance of mutation.
      */
     protected void checkForMutation(World worldIn, BlockPos pos, Random random, int oldAge, int rarity) {
         if (oldAge <= 2 && canMutate()) {
@@ -117,24 +144,15 @@ public class WheatBlock extends ModCropsBlock {
     }
 
     /**
-     * Get the mutation.
+     * Get the crop this wheat will mutate into.
+     * @param random The current RNG. Used by Wild Wheat.
+     * @return The block this crop will mutate into.
      */
     protected WheatBlock getMutation(Random random) { return mMutation; }
 
     /**
      * Get whether or not this wheat can mutate.
+     * @return True if the crop can mutate.
      */
     protected boolean canMutate() { return mCanMutate; }
-
-    /**
-     * The potential mutation (if any).
-     */
-    protected WheatBlock mMutation = null;
-    protected WheatBlock mRequired = null;
-    protected boolean mCanMutate = false;
-
-    /**
-     * This wheat's resistance to disease.
-     */
-    private final int mDiseaseResistance;
 }
