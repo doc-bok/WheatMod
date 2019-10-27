@@ -5,9 +5,6 @@ import net.minecraft.world.GrassColors;
 import net.minecraft.world.biome.BiomeColors;
 
 public class ModBlockColors {
-    private static int COLOR(int r, int g, int b) {
-        return (r & 255) << 16 | (g & 255) << 8 | b & 255;
-    }
 
     public static final IBlockColor WILD_EINKORN = (state, reader, pos, tintIndex) -> {
         if (reader != null && pos != null) {
@@ -51,4 +48,15 @@ public class ModBlockColors {
     public static final IBlockColor SPELT = (state, reader, pos, tintIndex) -> {
         return COLOR(230, 230, 44);
     };
+
+    /**
+     * Helper function to generate a colour.
+     * @param r Red
+     * @param g Green
+     * @param b Blue
+     * @return An integer representing the specified colour.
+     */
+    private static int COLOR(int r, int g, int b) {
+        return (r & 255) << 16 | (g & 255) << 8 | b & 255;
+    }
 }
