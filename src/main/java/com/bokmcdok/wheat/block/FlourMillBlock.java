@@ -1,6 +1,6 @@
 package com.bokmcdok.wheat.block;
 
-import com.bokmcdok.wheat.Container.FlourMillContainer;
+import com.bokmcdok.wheat.container.FlourMillContainer;
 import com.bokmcdok.wheat.WheatMod;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
