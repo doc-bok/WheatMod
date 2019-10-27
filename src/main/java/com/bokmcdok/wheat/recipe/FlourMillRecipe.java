@@ -122,6 +122,12 @@ public class FlourMillRecipe implements IRecipe<IInventory> {
     }
 
     /**
+     * Get the ingredient
+     * @return The ingredient required
+     */
+    public Ingredient getIngredient() { return  mIngredient; }
+
+    /**
      * Get the icon for this recipe
      * @return The flour mill item
      */

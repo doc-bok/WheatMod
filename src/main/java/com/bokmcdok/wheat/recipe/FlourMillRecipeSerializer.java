@@ -76,9 +76,9 @@ public class FlourMillRecipeSerializer<T extends FlourMillRecipe> extends net.mi
      */
     @Override
     public void write(PacketBuffer buffer, T recipe) {
-        buffer.writeString(recipe.mGroup);
-        recipe.mIngredient.write(buffer);
-        buffer.writeItemStack(recipe.mResult);
+        buffer.writeString(recipe.getGroup());
+        recipe.getIngredient().write(buffer);
+        buffer.writeItemStack(recipe.getRecipeOutput());
     }
 
     /**
