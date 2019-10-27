@@ -1,4 +1,4 @@
-package com.bokmcdok.wheat.Block;
+package com.bokmcdok.wheat.block;
 
 import com.bokmcdok.wheat.Color.ModBlockColors;
 import com.bokmcdok.wheat.Item.ModItems;

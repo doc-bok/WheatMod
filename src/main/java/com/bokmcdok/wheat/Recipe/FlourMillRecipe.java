@@ -1,6 +1,6 @@
 package com.bokmcdok.wheat.Recipe;
 
-import com.bokmcdok.wheat.Block.ModBlocks;
+import com.bokmcdok.wheat.block.ModBlocks;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;

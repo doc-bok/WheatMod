@@ -1,4 +1,4 @@
-package com.bokmcdok.wheat.Block;
+package com.bokmcdok.wheat.block;
 
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;

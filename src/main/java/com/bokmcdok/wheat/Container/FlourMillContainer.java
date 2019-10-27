@@ -1,6 +1,6 @@
 package com.bokmcdok.wheat.Container;
 
-import com.bokmcdok.wheat.Block.ModBlocks;
+import com.bokmcdok.wheat.block.ModBlocks;
 import com.bokmcdok.wheat.Item.ModItems;
 import com.bokmcdok.wheat.Recipe.FlourMillRecipe;
 import com.bokmcdok.wheat.Sound.ModSounds;

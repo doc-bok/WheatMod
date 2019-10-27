@@ -1,7 +1,7 @@
 package com.bokmcdok.wheat.TerrainGen;
 
-import com.bokmcdok.wheat.Block.ModBlocks;
-import com.bokmcdok.wheat.Block.WildWheatBlock;
+import com.bokmcdok.wheat.block.ModBlocks;
+import com.bokmcdok.wheat.block.WildWheatBlock;
 import com.bokmcdok.wheat.WheatMod;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStage;

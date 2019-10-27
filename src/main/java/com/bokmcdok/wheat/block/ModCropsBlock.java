@@ -1,4 +1,4 @@
-package com.bokmcdok.wheat.Block;
+package com.bokmcdok.wheat.block;
 
 import com.bokmcdok.wheat.WheatMod;
 import net.minecraft.block.Block;
