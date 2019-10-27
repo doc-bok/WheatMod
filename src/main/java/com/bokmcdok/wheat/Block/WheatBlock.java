@@ -109,10 +109,8 @@ public class WheatBlock extends ModCropsBlock {
                     }
                 });
 
-                if (mutateChance.get() && newAge >= 3) {
-                    if (random.nextInt(rarity) < 1) {
-                        worldIn.setBlockState(pos, getMutation(random).getDefaultState().with(getAgeProperty(), newAge));
-                    }
+                if (mutateChance.get() && newAge >= 3 && random.nextInt(rarity) < 1){
+                    worldIn.setBlockState(pos, getMutation(random).getDefaultState().with(getAgeProperty(), newAge));
                 }
             }
         }
