@@ -14,14 +14,27 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
 
 public class StrawMatBlock extends HorizontalBlock {
+
     private static final VoxelShape SHAPE = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 1.0D, 16.0D);
 
+    /**
+     * Construction
+     * @param registryName The name of the block in the registry.
+     */
     StrawMatBlock(String registryName) {
         super(Block.Properties.create(Material.PLANTS).hardnessAndResistance(0.5F).sound(SoundType.CROP));
         setDefaultState(stateContainer.getBaseState().with(HORIZONTAL_FACING, Direction.NORTH));
         setRegistryName(WheatMod.MOD_ID, registryName);
     }
 
+    /**
+     * Get the shape of the block.
+     * @param state The current block state
+     * @param worldIn The world the block is in
+     * @param pos The position of the block
+     * @param context The selection context
+     * @return The shape of the mat (similar to carpet).
+     */
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
         return SHAPE;
     }
@@ -31,15 +44,35 @@ public class StrawMatBlock extends HorizontalBlock {
      * For example, fences make their connections to the passed in state if possible, and wet concrete powder immediately
      * returns its solidified counterpart.
      * Note that this method should ideally consider only the specific face passed in.
+     * @param stateIn The current block state
+     * @param facing The direction the block is facing
+     * @param facingState The state of the block that is being faced
+     * @param worldIn The world the block is in
+     * @param currentPos The position of the block
+     * @param facingPos The position of the block being faced
+     * @return The new block state based on the placement.
      */
     public BlockState updatePostPlacement(BlockState stateIn, Direction facing, BlockState facingState, IWorld worldIn, BlockPos currentPos, BlockPos facingPos) {
-        return !stateIn.isValidPosition(worldIn, currentPos) ? Blocks.AIR.getDefaultState() : super.updatePostPlacement(stateIn, facing, facingState, worldIn, currentPos, facingPos);
+        return !stateIn.isValidPosition(worldIn, currentPos) ? Blocks.AIR.getDefaultState() :
+                super.updatePostPlacement(stateIn, facing, facingState, worldIn, currentPos, facingPos);
     }
 
+    /**
+     * Check if this is a valid position for the block (must be above a solid block)
+     * @param state The current block state
+     * @param worldIn The world
+     * @param pos The position to check
+     * @return True if the block can be placed
+     */
     public boolean isValidPosition(BlockState state, IWorldReader worldIn, BlockPos pos) {
         return !worldIn.isAirBlock(pos.down());
     }
 
+    /**
+     * Get the block state based on the direction the block is facing.
+     * @param context The context of the user placement action
+     * @return A new block state with the right direction
+     */
     public BlockState getStateForPlacement(BlockItemUseContext context) {
         float yaw = context.getPlayer().rotationYaw;
         while (yaw < 0) { yaw += 360; }
@@ -57,6 +90,10 @@ public class StrawMatBlock extends HorizontalBlock {
         }
     }
 
+    /**
+     * Add the HORIZONTAL_FACING state to the block.
+     * @param builder The state builder for the block.
+     */
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
         builder.add(HORIZONTAL_FACING);
     }
