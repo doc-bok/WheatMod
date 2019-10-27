@@ -34,6 +34,8 @@ public class FlourMillContainer extends Container {
     private final CraftResultInventory mResultSlot = new CraftResultInventory();
     private final IWorldPosCallable mCallable;
     private final PlayerEntity mPlayer;
+
+
     /**
      * Construction
      * @param windowId The id of the window this container uses
@@ -42,7 +44,6 @@ public class FlourMillContainer extends Container {
     public FlourMillContainer(int windowId, PlayerInventory playerInventory, PacketBuffer extraData) {
         this(windowId, playerInventory);
     }
-
     /**
      * Construction
      * @param windowId The id of the window this container uses

@@ -25,11 +25,10 @@ public class FlourMillRecipe implements IRecipe<IInventory> {
     /**
      * Construction
      * @param resourceLocation The location of this recipe
-     * @param group The group this recipe belongs to
      * @param ingredient The ingredient for this recipe
      * @param result The output of this recipe
      */
-    FlourMillRecipe(ResourceLocation resourceLocation, String group, Ingredient ingredient, ItemStack result) {
+    FlourMillRecipe(ResourceLocation resourceLocation, Ingredient ingredient, ItemStack result) {
         type = flour_mill;
         id = resourceLocation;
         mIngredient = ingredient;
