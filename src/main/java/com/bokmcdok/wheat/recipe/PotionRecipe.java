@@ -1,6 +1,5 @@
 package com.bokmcdok.wheat.recipe;
 
-import com.bokmcdok.wheat.WheatMod;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
@@ -16,15 +15,27 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
 public class PotionRecipe extends ShapelessRecipe {
-    static int MAX_WIDTH = 3;
-    static int MAX_HEIGHT = 3;
+    private static int MAX_WIDTH = 3;
+    private static int MAX_HEIGHT = 3;
 
+    /**
+     * Construction
+     * @param idIn The resource location of this recipe
+     * @param groupIn The group for the recipe book
+     * @param recipeOutputIn The Output of the recipe
+     * @param recipeItemsIn The ingredients for the recipe
+     */
     public PotionRecipe(ResourceLocation idIn, String groupIn, ItemStack recipeOutputIn, NonNullList<Ingredient> recipeItemsIn) {
         super(idIn, groupIn, recipeOutputIn, recipeItemsIn);
     }
 
+    /**
+     * Check the inventory matches the recipe
+     * @param inv The crafting grid to check
+     * @param worldIn The current world
+     * @return True if the recipe matches
+     */
     public boolean matches(CraftingInventory inv, World worldIn) {
-        RecipeItemHelper recipeitemhelper = new RecipeItemHelper();
         java.util.List<ItemStack> inputs = new java.util.ArrayList<>();
 
         for(int j = 0; j < inv.getSizeInventory(); ++j) {
@@ -62,7 +73,11 @@ public class PotionRecipe extends ShapelessRecipe {
         return false;
     }
 
-    //  Get the remaining items (i.e. return any glass bottles)
+    /**
+     * Get the remaining items (i.e. return any glass bottles)
+     * @param inv The crafting grid
+     * @return The remaining items, which includes glass bottles
+     */
     @Override
     public NonNullList<ItemStack> getRemainingItems(CraftingInventory inv) {
         NonNullList<ItemStack> nonnulllist = NonNullList.withSize(inv.getSizeInventory(), ItemStack.EMPTY);
@@ -81,14 +96,26 @@ public class PotionRecipe extends ShapelessRecipe {
         return nonnulllist;
     }
 
-    //  Serialize the recipe.
+    /**
+     * Serialize the recipe.
+     * @return The serialised recipe
+     */
     @Override
     public IRecipeSerializer<?> getSerializer() {
         return ModRecipes.POTION;
     }
 
+    /**
+     * The recipe serializer
+     */
     public static class Serializer extends net.minecraftforge.registries.ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<PotionRecipe> {
-        private static final ResourceLocation NAME = new ResourceLocation(WheatMod.MOD_ID, "crafting_potion");
+
+        /**
+         * Read the recipe from a JSON string
+         * @param recipeId The ID of the recipe
+         * @param json The JSON data
+         * @return A new instance of the recipe
+         */
         public PotionRecipe read(ResourceLocation recipeId, JsonObject json) {
             String s = JSONUtils.getString(json, "group", "");
             NonNullList<Ingredient> nonnulllist = readIngredients(JSONUtils.getJsonArray(json, "ingredients"));
@@ -102,6 +129,11 @@ public class PotionRecipe extends ShapelessRecipe {
             }
         }
 
+        /**
+         * Read the ingredients from a JSON array
+         * @param jsonArray The Array of ingredients
+         * @return A list of ingredients
+         */
         private static NonNullList<Ingredient> readIngredients(JsonArray jsonArray) {
             NonNullList<Ingredient> nonnulllist = NonNullList.create();
 
@@ -115,6 +147,12 @@ public class PotionRecipe extends ShapelessRecipe {
             return nonnulllist;
         }
 
+        /**
+         * Read the receipe from a network buffer
+         * @param recipeId The ID of the recipe
+         * @param buffer The network buffer
+         * @return A new instance of the recipe
+         */
         public PotionRecipe read(ResourceLocation recipeId, PacketBuffer buffer) {
             String s = buffer.readString(32767);
             int i = buffer.readVarInt();
@@ -128,6 +166,11 @@ public class PotionRecipe extends ShapelessRecipe {
             return new PotionRecipe(recipeId, s, itemstack, nonnulllist);
         }
 
+        /**
+         * Write the recipe to a network buffer
+         * @param buffer The buffer to write to
+         * @param recipe The recipe to write
+         */
         public void write(PacketBuffer buffer, PotionRecipe recipe) {
             NonNullList<Ingredient> recipeItems = recipe.getIngredients();
             buffer.writeString(recipe.getGroup());
