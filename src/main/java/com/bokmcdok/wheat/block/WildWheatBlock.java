@@ -48,10 +48,10 @@ public class WildWheatBlock extends WheatBlock {
      * @param oldAge The age of the crop before the tick update.
      * @param rarity The rarity of a mutation - a lower number means a higher chance of mutation.
      */
-    protected void checkForMutation(World worldIn, BlockPos pos, Random random, int oldAge, int rarity) {
+    protected void checkForMutation(World worldIn, BlockPos pos, Random random, int oldAge, int newAge, int rarity) {
         BlockPos groundPos = pos.down();
         if (worldIn.getBlockState(groundPos).getBlock() == Blocks.FARMLAND) {
-            super.checkForMutation(worldIn, pos, random, oldAge, rarity);
+            super.checkForMutation(worldIn, pos, random, oldAge, newAge, rarity);
         }
     }
 

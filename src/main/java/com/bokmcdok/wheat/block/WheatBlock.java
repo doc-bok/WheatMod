@@ -57,8 +57,18 @@ public class WheatBlock extends ModCropsBlock {
     public void tick(BlockState state, World worldIn, BlockPos pos, Random random) {
         int oldAge = getAge(state);
         super.tick(state, worldIn, pos, random);
-        checkForDisease(worldIn, pos, random, oldAge);
-        checkForMutation(worldIn, pos, random, oldAge, 15);
+
+        //  If a crop is generated in the air it will be destroyed during the tick update and replaced with an air
+        //  block. In this case we don't want to check for disease/mutation as the crop no longer exists and it will
+        //  cause Minecraft to crash when it tries to get the Age property.
+        BlockState newState = worldIn.getBlockState(pos);
+        if (newState.getBlock() != Blocks.AIR) {
+            int newAge = newState.get(getAgeProperty());
+            if (oldAge != newAge) {
+                checkForDisease(worldIn, pos, random, newAge);
+                checkForMutation(worldIn, pos, random, oldAge, newAge, 15);
+            }
+        }
     }
 
     /**
@@ -71,8 +81,11 @@ public class WheatBlock extends ModCropsBlock {
     public void grow(World worldIn, Random random, BlockPos pos, BlockState state) {
         int oldAge = getAge(state);
         super.grow(worldIn, random, pos, state);
-
-        checkForMutation(worldIn, pos, random, oldAge, 10);
+        BlockState newState = worldIn.getBlockState(pos);
+        if (newState.getBlock() != Blocks.AIR) {
+            int newAge = newState.get(getAgeProperty());
+            checkForMutation(worldIn, pos, random, oldAge, newAge, 10);
+        }
     }
 
     /**
@@ -81,35 +94,32 @@ public class WheatBlock extends ModCropsBlock {
      * @param worldIn The world the block is in
      * @param pos The position of the block
      * @param random The current RNG
-     * @param oldAge The age of the crop before the tick update.
+     * @param age The age of the crop after the tick update.
      */
-    protected void checkForDisease(World worldIn, BlockPos pos, Random random, int oldAge) {
-        int newAge = worldIn.getBlockState(pos).get(getAgeProperty());
-        if (oldAge != newAge) {
-            AtomicInteger diseaseChance = new AtomicInteger(mDiseaseResistance);
-            Stream<BlockPos> blocks = BlockPos.getAllInBox(pos.east().north(), pos.west().south());
-            blocks.forEach((p) -> {
-                BlockState blockState = worldIn.getBlockState(p);
-                Block block = blockState.getBlock();
-                if (block == this) {
-                    diseaseChance.addAndGet(-1);
-                }
-
-                if (block == Blocks.BROWN_MUSHROOM_BLOCK || block == Blocks.RED_MUSHROOM_BLOCK || block == Blocks.MUSHROOM_STEM ||
-                        block == Blocks.BROWN_MUSHROOM || block == Blocks.RED_MUSHROOM ||
-                        block == Blocks.POTTED_BROWN_MUSHROOM || block == Blocks.POTTED_RED_MUSHROOM) {
-                    diseaseChance.addAndGet(-10);
-                }
-
-                if (block == ModBlockUtils.diseased_wheat) {
-                    int current = diseaseChance.get();
-                    diseaseChance.set(current / 2);
-                }
-            });
-
-            if (diseaseChance.get() <= 1 || random.nextInt(diseaseChance.get()) < 1) {
-                worldIn.setBlockState(pos, ModBlockUtils.diseased_wheat.getDefaultState().with(getAgeProperty(), newAge));
+    protected void checkForDisease(World worldIn, BlockPos pos, Random random, int age) {
+        AtomicInteger diseaseChance = new AtomicInteger(mDiseaseResistance);
+        Stream<BlockPos> blocks = BlockPos.getAllInBox(pos.east().north(), pos.west().south());
+        blocks.forEach((p) -> {
+            BlockState blockState = worldIn.getBlockState(p);
+            Block block = blockState.getBlock();
+            if (block == this) {
+                diseaseChance.addAndGet(-1);
             }
+
+            if (block == Blocks.BROWN_MUSHROOM_BLOCK || block == Blocks.RED_MUSHROOM_BLOCK || block == Blocks.MUSHROOM_STEM ||
+                    block == Blocks.BROWN_MUSHROOM || block == Blocks.RED_MUSHROOM ||
+                    block == Blocks.POTTED_BROWN_MUSHROOM || block == Blocks.POTTED_RED_MUSHROOM) {
+                diseaseChance.addAndGet(-10);
+            }
+
+            if (block == ModBlockUtils.diseased_wheat) {
+                int current = diseaseChance.get();
+                diseaseChance.set(current / 2);
+            }
+        });
+
+        if (diseaseChance.get() <= 1 || random.nextInt(diseaseChance.get()) < 1) {
+            worldIn.setBlockState(pos, ModBlockUtils.diseased_wheat.getDefaultState().with(getAgeProperty(), age));
         }
     }
 
@@ -121,24 +131,21 @@ public class WheatBlock extends ModCropsBlock {
      * @param oldAge The age of the crop before the tick update.
      * @param rarity The rarity of a mutation - a lower number means a higher chance of mutation.
      */
-    protected void checkForMutation(World worldIn, BlockPos pos, Random random, int oldAge, int rarity) {
+    protected void checkForMutation(World worldIn, BlockPos pos, Random random, int oldAge, int newAge, int rarity) {
         if (oldAge <= 2 && canMutate()) {
-            int newAge = worldIn.getBlockState(pos).get(getAgeProperty());
-            if (oldAge != newAge) {
 
-                AtomicBoolean mutateChance = new AtomicBoolean(false);
-                Stream<BlockPos> blocks = BlockPos.getAllInBox(pos.east().north(), pos.west().south());
-                blocks.forEach((p) -> {
-                    BlockState blockState = worldIn.getBlockState(p);
-                    Block block = blockState.getBlock();
-                    if (block.equals(mRequired)) {
-                        mutateChance.set(true);
-                    }
-                });
-
-                if (mutateChance.get() && newAge >= 3 && random.nextInt(rarity) < 1){
-                    worldIn.setBlockState(pos, getMutation(random).getDefaultState().with(getAgeProperty(), newAge));
+            AtomicBoolean mutateChance = new AtomicBoolean(false);
+            Stream<BlockPos> blocks = BlockPos.getAllInBox(pos.east().north(), pos.west().south());
+            blocks.forEach((p) -> {
+                BlockState blockState = worldIn.getBlockState(p);
+                Block block = blockState.getBlock();
+                if (block.equals(mRequired)) {
+                    mutateChance.set(true);
                 }
+            });
+
+            if (mutateChance.get() && newAge >= 3 && random.nextInt(rarity) < 1) {
+                worldIn.setBlockState(pos, getMutation(random).getDefaultState().with(getAgeProperty(), newAge));
             }
         }
     }
