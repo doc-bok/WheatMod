@@ -3,6 +3,7 @@ package com.bokmcdok.wheat.item;
 import com.bokmcdok.wheat.block.ModBlockUtils;
 import com.bokmcdok.wheat.color.ModItemColors;
 import com.bokmcdok.wheat.WheatMod;
+import com.bokmcdok.wheat.entity.VillagerUtils;
 import net.minecraft.block.ComposterBlock;
 import net.minecraft.client.renderer.color.ItemColors;
 import net.minecraft.item.Item;
@@ -371,5 +372,20 @@ public class ModItemUtils
                 wild_einkorn_grain, common_grain, einkorn_grain,
                 wild_emmer_grain, emmer_grain, durum_grain,
                 spelt_grain);
+
+        VillagerUtils.registerFoodItem(ModItemUtils.tomato, 1);
+
+        VillagerUtils.registerFarmItem(common_grain, ModBlockUtils.common_wheat);
+        VillagerUtils.registerFarmItem(einkorn_grain, ModBlockUtils.einkorn);
+        VillagerUtils.registerFarmItem(emmer_grain, ModBlockUtils.emmer);
+        VillagerUtils.registerFarmItem(durum_grain, ModBlockUtils.durum);
+        VillagerUtils.registerFarmItem(spelt_grain, ModBlockUtils.spelt);
+        VillagerUtils.registerFarmItem(tomato, ModBlockUtils.tomato);
+
+        VillagerUtils.registerMiscItem(common_straw);
+        VillagerUtils.registerMiscItem(einkorn_straw);
+        VillagerUtils.registerMiscItem(emmer_straw);
+        VillagerUtils.registerMiscItem(durum_straw);
+        VillagerUtils.registerMiscItem(spelt_straw);
     }
 }
