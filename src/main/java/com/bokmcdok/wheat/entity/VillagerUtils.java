@@ -68,12 +68,8 @@ public class VillagerUtils {
             return true;
         }
 
-        if (profession == VillagerProfession.FARMER &&
-           (FARM_ITEMS.keySet().contains(item) || MISC_ITEMS.contains(item))) {
-            return true;
-        }
-
-        return false;
+        return (profession == VillagerProfession.FARMER &&
+               (FARM_ITEMS.keySet().contains(item) || MISC_ITEMS.contains(item)));
     }
 
     /**

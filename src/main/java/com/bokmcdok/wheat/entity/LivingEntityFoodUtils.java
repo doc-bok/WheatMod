@@ -1,24 +1,15 @@
 package com.bokmcdok.wheat.entity;
 
-import com.bokmcdok.wheat.ai.ModPickupFoodTask;
-import com.bokmcdok.wheat.ai.ModVillagerTasks;
 import com.bokmcdok.wheat.item.ModItemUtils;
 import com.bokmcdok.wheat.WheatMod;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.brain.Brain;
-import net.minecraft.entity.ai.brain.schedule.Activity;
 import net.minecraft.entity.ai.goal.TemptGoal;
-import net.minecraft.entity.item.ItemEntity;
-import net.minecraft.entity.merchant.villager.VillagerEntity;
-import net.minecraft.entity.merchant.villager.VillagerProfession;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.CatEntity;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.passive.horse.AbstractHorseEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.Inventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
