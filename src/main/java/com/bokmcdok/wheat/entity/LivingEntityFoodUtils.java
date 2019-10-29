@@ -42,12 +42,10 @@ class LivingEntityFoodUtils {
         {
             AnimalEntity animal = (AnimalEntity)entity;
             animal.goalSelector.addGoal(3, new TemptGoal(animal, 1.25D, ModItemUtils.WHEAT_ITEMS, false));
-        }
-        else if (entity.getType() == EntityType.CHICKEN) {
+        } else if (entity.getType() == EntityType.CHICKEN) {
             AnimalEntity animal = (AnimalEntity)entity;
             animal.goalSelector.addGoal(3, new TemptGoal(animal, 1.0D, ModItemUtils.SEED_ITEMS, false));
-        }
-        else if (entity.getType() == EntityType.CAT) {
+        } else if (entity.getType() == EntityType.CAT) {
             AnimalEntity animal = (AnimalEntity)entity;
             animal.goalSelector.addGoal(3, new TemptGoal(animal, 0.6D, ModItemUtils.FISH_ITEMS, true));
         }

@@ -5,7 +5,7 @@
       "rolls": 1.0,
       "entries": [
         {
-          "type": "minecraft:alternatives",
+          "type": "minecraft:group",
           "children": [
             {
               "type": "minecraft:item",
@@ -24,36 +24,123 @@
               "type": "minecraft:item",
               "name": "docwheat:common_grain"
             }
-          ]
-        }
-      ]
-    },
-    {
-      "rolls": 1.0,
-      "entries": [
+          ],
+          "weight": 8
+        },
         {
-          "type": "minecraft:item",
-          "functions": [
+          "type": "minecraft:group",
+          "children": [
             {
-              "function": "minecraft:apply_bonus",
-              "enchantment": "minecraft:fortune",
-              "formula": "minecraft:binomial_with_bonus_count",
-              "parameters": {
-                "extra": 3,
-                "probability": 0.5714286
-              }
+              "type": "minecraft:item",
+              "conditions": [
+                {
+                  "condition": "minecraft:block_state_property",
+                  "block": "minecraft:wheat",
+                  "properties": {
+                    "age": "7"
+                  }
+                }
+              ],
+              "name": "docwheat:durum_straw"
+            },
+            {
+              "type": "minecraft:item",
+              "name": "docwheat:durum_grain"
             }
           ],
-          "name": "docwheat:common_grain"
-        }
-      ],
-      "conditions": [
+          "weight": 4
+        },
         {
-          "condition": "minecraft:block_state_property",
-          "block": "minecraft:wheat",
-          "properties": {
-            "age": "7"
-          }
+          "type": "minecraft:group",
+          "children": [
+            {
+              "type": "minecraft:item",
+              "conditions": [
+                {
+                  "condition": "minecraft:block_state_property",
+                  "block": "minecraft:wheat",
+                  "properties": {
+                    "age": "7"
+                  }
+                }
+              ],
+              "name": "docwheat:emmer_straw"
+            },
+            {
+              "type": "minecraft:item",
+              "name": "docwheat:emmer_grain"
+            }
+          ],
+          "weight": 8
+        },
+        {
+          "type": "minecraft:group",
+          "children": [
+            {
+              "type": "minecraft:item",
+              "conditions": [
+                {
+                  "condition": "minecraft:block_state_property",
+                  "block": "minecraft:wheat",
+                  "properties": {
+                    "age": "7"
+                  }
+                }
+              ],
+              "name": "docwheat:einkorn_straw"
+            },
+            {
+              "type": "minecraft:item",
+              "name": "docwheat:einkorn_grain"
+            }
+          ],
+          "weight": 4
+        },
+        {
+          "type": "minecraft:group",
+          "children": [
+            {
+              "type": "minecraft:item",
+              "conditions": [
+                {
+                  "condition": "minecraft:block_state_property",
+                  "block": "minecraft:wheat",
+                  "properties": {
+                    "age": "7"
+                  }
+                }
+              ],
+              "name": "docwheat:spelt_straw"
+            },
+            {
+              "type": "minecraft:item",
+              "name": "docwheat:spelt_grain"
+            }
+          ],
+          "weight": 2
+        },
+        {
+          "type": "minecraft:group",
+          "children": [
+            {
+              "type": "minecraft:item",
+              "conditions": [
+                {
+                  "condition": "minecraft:block_state_property",
+                  "block": "minecraft:wheat",
+                  "properties": {
+                    "age": "7"
+                  }
+                }
+              ],
+              "name": "docwheat:tomato"
+            },
+            {
+              "type": "minecraft:item",
+              "name": "docwheat:tomato"
+            }
+          ],
+          "weight": 1
         }
       ]
     }
