@@ -2,8 +2,11 @@ package com.bokmcdok.wheat.entity;
 
 import com.bokmcdok.wheat.WheatMod;
 import com.bokmcdok.wheat.ai.ModVillagerTasks;
+import com.bokmcdok.wheat.item.ModItemUtils;
+import com.bokmcdok.wheat.trade.ModEmeraldForItemsTrade;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
@@ -13,16 +16,21 @@ import net.minecraft.entity.ai.brain.schedule.Activity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.entity.merchant.villager.VillagerEntity;
 import net.minecraft.entity.merchant.villager.VillagerProfession;
+import net.minecraft.entity.merchant.villager.VillagerTrades;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.item.MerchantOffer;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraftforge.event.village.VillagerTradesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
+import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 
 @Mod.EventBusSubscriber(modid = WheatMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
@@ -173,6 +181,36 @@ public class VillagerUtils {
                         }
                     }
                 }
+            }
+        }
+    }
+
+    /**
+     * Intercept village trade events. Replace wheat trades with new item trades.
+     * @param event
+     */
+    @SubscribeEvent
+    public static void onTrade(VillagerTradesEvent event) {
+        if (event.getType() == VillagerProfession.FARMER) {
+            Int2ObjectMap<List<VillagerTrades.ITrade>> trades = event.getTrades();
+            List<VillagerTrades.ITrade> noviceTrades = trades.get(1);
+            VillagerTrades.ITrade wheatTrade = null;
+            for (VillagerTrades.ITrade trade : noviceTrades) {
+                MerchantOffer offer = trade.getOffer(null, null);
+                if (offer.func_222218_a().getItem() == Items.WHEAT) {
+                    wheatTrade = trade;
+                    break;
+                }
+            }
+
+            if (wheatTrade != null) {
+                noviceTrades.remove(wheatTrade);
+                noviceTrades.add(new ModEmeraldForItemsTrade(ModItemUtils.common_straw, 20, 16, 2));
+                noviceTrades.add(new ModEmeraldForItemsTrade(ModItemUtils.emmer_straw, 20, 16, 2));
+                noviceTrades.add(new ModEmeraldForItemsTrade(ModItemUtils.einkorn_straw, 20, 16, 2));
+                noviceTrades.add(new ModEmeraldForItemsTrade(ModItemUtils.durum_straw, 20, 16, 2));
+                noviceTrades.add(new ModEmeraldForItemsTrade(ModItemUtils.spelt_straw, 10, 12, 3));
+                noviceTrades.add(new ModEmeraldForItemsTrade(ModItemUtils.tomato, 20, 16, 2));
             }
         }
     }
