@@ -4,6 +4,7 @@ import com.bokmcdok.wheat.WheatMod;
 import com.bokmcdok.wheat.ai.ModVillagerTasks;
 import com.bokmcdok.wheat.item.ModItemUtils;
 import com.bokmcdok.wheat.trade.ModEmeraldForItemsTrade;
+import com.bokmcdok.wheat.trade.ModItemsForEmeraldsTrade;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
@@ -25,6 +26,7 @@ import net.minecraft.item.MerchantOffer;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.village.VillagerTradesEvent;
+import net.minecraftforge.event.village.WandererTradesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -211,6 +213,33 @@ public class VillagerUtils {
                 noviceTrades.add(new ModEmeraldForItemsTrade(ModItemUtils.spelt_straw, 10, 12, 3));
                 noviceTrades.add(new ModEmeraldForItemsTrade(ModItemUtils.tomato, 20, 16, 2));
             }
+        }
+    }
+
+    /**
+     * Replace wandering trader seed trades with new grains and seeds.
+     * @param event The event containing the trades.
+     */
+    @SubscribeEvent
+    public static void onWandererTrade(WandererTradesEvent event) {
+        List<VillagerTrades.ITrade> genericTrades = event.getGenericTrades();
+        VillagerTrades.ITrade seedTrade = null;
+        for (VillagerTrades.ITrade trade : genericTrades) {
+            MerchantOffer offer = trade.getOffer(null, null);
+            if (offer.func_222200_d().getItem() == Items.WHEAT_SEEDS) {
+                seedTrade = trade;
+                break;
+            }
+        }
+
+        if (seedTrade != null) {
+            genericTrades.remove(seedTrade);
+            genericTrades.add(new ModItemsForEmeraldsTrade(ModItemUtils.common_grain, 1, 1, 12, 1));
+            genericTrades.add(new ModItemsForEmeraldsTrade(ModItemUtils.einkorn_grain, 1, 1, 12, 1));
+            genericTrades.add(new ModItemsForEmeraldsTrade(ModItemUtils.emmer_grain, 1, 1, 12, 1));
+            genericTrades.add(new ModItemsForEmeraldsTrade(ModItemUtils.durum_grain, 1, 1, 12, 1));
+            genericTrades.add(new ModItemsForEmeraldsTrade(ModItemUtils.spelt_grain, 2, 1, 12, 2));
+            genericTrades.add(new ModItemsForEmeraldsTrade(ModItemUtils.tomato_seeds, 1, 1, 12, 1));
         }
     }
 
