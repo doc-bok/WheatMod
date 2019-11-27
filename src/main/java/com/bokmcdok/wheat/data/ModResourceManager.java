@@ -10,8 +10,6 @@ import net.minecraft.resources.IResourceManager;
 import net.minecraft.resources.IResourcePack;
 import net.minecraft.resources.ResourcePackType;
 import net.minecraft.util.ResourceLocation;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -23,7 +21,6 @@ import java.util.Set;
 import java.util.function.Predicate;
 
 public class ModResourceManager implements IResourceManager {
-    private static final Logger LOGGER = LogManager.getLogger();
     private final Map<String, FallbackResourceManager> mNamespaceResourceManagers = Maps.newHashMap();
     private final Set<String> mResourceNamespaces = Sets.newLinkedHashSet();
     private final ResourcePackType mType;

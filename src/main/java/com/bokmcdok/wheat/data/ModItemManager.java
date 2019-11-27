@@ -26,7 +26,6 @@ public class ModItemManager extends JsonReloadListener {
     private static final Gson GSON = (new GsonBuilder()).setPrettyPrinting().disableHtmlEscaping().create();
     private static final Logger LOGGER = LogManager.getLogger();
     private Set<Item> mItems = ImmutableSet.of();
-    private boolean mSomeRecipesErrored;
 
     private enum ItemType {
         ITEM,
@@ -47,12 +46,11 @@ public class ModItemManager extends JsonReloadListener {
     }
 
     public void apply(Map<ResourceLocation, JsonObject> splashList, IResourceManager resourceManager, IProfiler profiler) {
-        splashList = prepare(resourceManager, profiler);
+        Map<ResourceLocation, JsonObject> itemResources = prepare(resourceManager, profiler);
 
-        mSomeRecipesErrored = false;
         mItems = Sets.newHashSet();
 
-        for(Entry<ResourceLocation, JsonObject> entry : splashList.entrySet()) {
+        for(Entry<ResourceLocation, JsonObject> entry : itemResources.entrySet()) {
             ResourceLocation resourceLocation = entry.getKey();
             if (resourceLocation.getPath().startsWith("_")) { continue; }
 

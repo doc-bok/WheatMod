@@ -216,36 +216,6 @@ class AnimalUtils {
         }
     }
 
-    private static void feedCat(PlayerInteractEvent.EntityInteract event) {
-        PlayerEntity player = event.getPlayer();
-        Hand hand = event.getHand();
-        ItemStack stack = player.getHeldItem(hand);
-        Item item = stack.getItem();
-        CatEntity cat = (CatEntity) event.getTarget();
-        if (cat.isTamed()) {
-            if (cat.isOwner(player) && ModItemUtils.FISH_ITEMS.test(stack) && heal(cat, (float) item.getFood().getHealing())) {
-                consumeEvent(event, player, stack);
-                return;
-            }
-        } else if (ModItemUtils.FISH_ITEMS.test(stack)) {
-            consumeEvent(event, player, stack);
-            if (!cat.world.isRemote) {
-                if (rand.nextInt(3) == 0) {
-                    cat.setTamedBy(player);
-                    playTameEffect(cat, true);
-                    //cat.sitGoal.setSitting(true);
-                    cat.world.setEntityState(cat, (byte)7);
-                }
-                else {
-                    playTameEffect(cat, false);
-                    cat.world.setEntityState(cat, (byte)7);
-                }
-            }
-
-            return;
-        }
-    }
-
     private static boolean cannotEat(AbstractHorseEntity entity, PlayerEntity player) {
         if (entity.isChild()) {
             if (entity.isTame() && player.isSneaking()) { return true; }
