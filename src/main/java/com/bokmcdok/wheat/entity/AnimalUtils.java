@@ -27,7 +27,7 @@ import net.minecraftforge.fml.common.Mod;
 import java.util.Random;
 
 @Mod.EventBusSubscriber(modid = WheatMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
-class LivingEntityFoodUtils {
+class AnimalUtils {
 
     protected final static Random rand = new Random();
 
@@ -45,9 +45,6 @@ class LivingEntityFoodUtils {
         } else if (entity.getType() == EntityType.CHICKEN) {
             AnimalEntity animal = (AnimalEntity)entity;
             animal.goalSelector.addGoal(3, new TemptGoal(animal, 1.0D, ModItemUtils.SEED_ITEMS, false));
-        } else if (entity.getType() == EntityType.CAT) {
-            AnimalEntity animal = (AnimalEntity)entity;
-            animal.goalSelector.addGoal(3, new TemptGoal(animal, 0.6D, ModItemUtils.FISH_ITEMS, true));
         }
     }
 
@@ -71,9 +68,6 @@ class LivingEntityFoodUtils {
                 target.getType() == EntityType.DONKEY ||
                 target.getType() == EntityType.MULE ) {
             feedHorse(event);
-        }
-        else if (target.getType() == EntityType.CAT) {
-            feedCat(event);
         }
     }
 
@@ -160,7 +154,7 @@ class LivingEntityFoodUtils {
         feedHorseOrLlama(event,false, growth, temper, heal, SoundEvents.ENTITY_HORSE_EAT);
     }
 
-    private static boolean heal(AnimalEntity animal, float heal) {
+    public static boolean heal(AnimalEntity animal, float heal) {
         if (animal.getHealth() < animal.getMaxHealth() && heal > 0.0f) {
             animal.heal(heal);
             return true;
@@ -267,7 +261,7 @@ class LivingEntityFoodUtils {
      * @param player The player
      * @param stack The stack of items used on the mob
      */
-    private static void consumeEvent(PlayerInteractEvent.EntityInteract event, PlayerEntity player, ItemStack stack) {
+    public static void consumeEvent(PlayerInteractEvent.EntityInteract event, PlayerEntity player, ItemStack stack) {
         if (!player.abilities.isCreativeMode) {
             stack.shrink(1);
         }
@@ -279,7 +273,7 @@ class LivingEntityFoodUtils {
     /**
      * Play the taming effect, will either be hearts or smoke depending on status
      */
-    private static void playTameEffect(TameableEntity entity, boolean play) {
+    public static void playTameEffect(TameableEntity entity, boolean play) {
         IParticleData iparticledata = ParticleTypes.HEART;
         if (!play) {
             iparticledata = ParticleTypes.SMOKE;
