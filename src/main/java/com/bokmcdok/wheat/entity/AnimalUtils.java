@@ -6,11 +6,9 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.goal.TemptGoal;
 import net.minecraft.entity.passive.AnimalEntity;
-import net.minecraft.entity.passive.CatEntity;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.passive.horse.AbstractHorseEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.particles.IParticleData;
@@ -27,7 +25,7 @@ import net.minecraftforge.fml.common.Mod;
 import java.util.Random;
 
 @Mod.EventBusSubscriber(modid = WheatMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
-class LivingEntityFoodUtils {
+class AnimalUtils {
 
     protected final static Random rand = new Random();
 
@@ -45,9 +43,6 @@ class LivingEntityFoodUtils {
         } else if (entity.getType() == EntityType.CHICKEN) {
             AnimalEntity animal = (AnimalEntity)entity;
             animal.goalSelector.addGoal(3, new TemptGoal(animal, 1.0D, ModItemUtils.SEED_ITEMS, false));
-        } else if (entity.getType() == EntityType.CAT) {
-            AnimalEntity animal = (AnimalEntity)entity;
-            animal.goalSelector.addGoal(3, new TemptGoal(animal, 0.6D, ModItemUtils.FISH_ITEMS, true));
         }
     }
 
@@ -71,9 +66,6 @@ class LivingEntityFoodUtils {
                 target.getType() == EntityType.DONKEY ||
                 target.getType() == EntityType.MULE ) {
             feedHorse(event);
-        }
-        else if (target.getType() == EntityType.CAT) {
-            feedCat(event);
         }
     }
 
@@ -160,7 +152,7 @@ class LivingEntityFoodUtils {
         feedHorseOrLlama(event,false, growth, temper, heal, SoundEvents.ENTITY_HORSE_EAT);
     }
 
-    private static boolean heal(AnimalEntity animal, float heal) {
+    public static boolean heal(AnimalEntity animal, float heal) {
         if (animal.getHealth() < animal.getMaxHealth() && heal > 0.0f) {
             animal.heal(heal);
             return true;
@@ -222,36 +214,6 @@ class LivingEntityFoodUtils {
         }
     }
 
-    private static void feedCat(PlayerInteractEvent.EntityInteract event) {
-        PlayerEntity player = event.getPlayer();
-        Hand hand = event.getHand();
-        ItemStack stack = player.getHeldItem(hand);
-        Item item = stack.getItem();
-        CatEntity cat = (CatEntity) event.getTarget();
-        if (cat.isTamed()) {
-            if (cat.isOwner(player) && ModItemUtils.FISH_ITEMS.test(stack) && heal(cat, (float) item.getFood().getHealing())) {
-                consumeEvent(event, player, stack);
-                return;
-            }
-        } else if (ModItemUtils.FISH_ITEMS.test(stack)) {
-            consumeEvent(event, player, stack);
-            if (!cat.world.isRemote) {
-                if (rand.nextInt(3) == 0) {
-                    cat.setTamedBy(player);
-                    playTameEffect(cat, true);
-                    //cat.sitGoal.setSitting(true);
-                    cat.world.setEntityState(cat, (byte)7);
-                }
-                else {
-                    playTameEffect(cat, false);
-                    cat.world.setEntityState(cat, (byte)7);
-                }
-            }
-
-            return;
-        }
-    }
-
     private static boolean cannotEat(AbstractHorseEntity entity, PlayerEntity player) {
         if (entity.isChild()) {
             if (entity.isTame() && player.isSneaking()) { return true; }
@@ -267,7 +229,7 @@ class LivingEntityFoodUtils {
      * @param player The player
      * @param stack The stack of items used on the mob
      */
-    private static void consumeEvent(PlayerInteractEvent.EntityInteract event, PlayerEntity player, ItemStack stack) {
+    public static void consumeEvent(PlayerInteractEvent.EntityInteract event, PlayerEntity player, ItemStack stack) {
         if (!player.abilities.isCreativeMode) {
             stack.shrink(1);
         }
@@ -279,7 +241,7 @@ class LivingEntityFoodUtils {
     /**
      * Play the taming effect, will either be hearts or smoke depending on status
      */
-    private static void playTameEffect(TameableEntity entity, boolean play) {
+    public static void playTameEffect(TameableEntity entity, boolean play) {
         IParticleData iparticledata = ParticleTypes.HEART;
         if (!play) {
             iparticledata = ParticleTypes.SMOKE;

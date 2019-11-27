@@ -3,6 +3,8 @@ package com.bokmcdok.wheat.item;
 import com.bokmcdok.wheat.block.ModBlockUtils;
 import com.bokmcdok.wheat.color.ModItemColors;
 import com.bokmcdok.wheat.WheatMod;
+import com.bokmcdok.wheat.data.ModItemManager;
+import com.bokmcdok.wheat.data.ModResourceManager;
 import com.bokmcdok.wheat.entity.VillagerUtils;
 import net.minecraft.block.ComposterBlock;
 import net.minecraft.client.renderer.color.ItemColors;
@@ -10,11 +12,15 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.resources.ResourcePackType;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.loading.moddiscovery.ModFileInfo;
+import net.minecraftforge.fml.packs.ModFileResourcePack;
 import net.minecraftforge.registries.ObjectHolder;
 
 /**
@@ -124,6 +130,18 @@ public class ModItemUtils
     @SubscribeEvent
     public static void registerItems(RegistryEvent.Register<Item> event)
     {
+        //  TODO: This should be moved to a more centralised location.
+        ModFileInfo modFileInfo = ModList.get().getModFileById(WheatMod.MOD_ID);
+        ModFileResourcePack resourcePack = new ModFileResourcePack(modFileInfo.getFile());
+        ModResourceManager modResourceManager = new ModResourceManager(ResourcePackType.SERVER_DATA);
+        modResourceManager.addResourcePack(resourcePack);
+
+
+        ModItemManager itemManager = new ModItemManager();
+        itemManager.apply(null, modResourceManager, null);
+
+        event.getRegistry().registerAll(itemManager.getItems());
+
         event.getRegistry().registerAll(
                 //  Grain
                 new ModBlockNamedItem(ModBlockUtils.wild_einkorn, ItemGroup.MATERIALS, "wild_einkorn_grain"),
@@ -135,15 +153,6 @@ public class ModItemUtils
                 new ModBlockNamedItem(ModBlockUtils.durum, ItemGroup.MATERIALS, "durum_grain"),
 
                 new ModBlockNamedItem(ModBlockUtils.spelt, ItemGroup.MATERIALS, "spelt_grain"),
-
-                //  Hay/Wheat
-                new ModItem(ItemGroup.MATERIALS, "wild_einkorn_hay"),
-                new ModItem(ItemGroup.MATERIALS, "common_straw"),
-                new ModItem(ItemGroup.MATERIALS, "einkorn_straw"),
-                new ModItem(ItemGroup.MATERIALS, "wild_emmer_hay"),
-                new ModItem(ItemGroup.MATERIALS, "emmer_straw"),
-                new ModItem(ItemGroup.MATERIALS, "durum_straw"),
-                new ModItem(ItemGroup.MATERIALS, "spelt_straw"),
 
                 //  Bales
                 new ModBlockItem(ModBlockUtils.wild_einkorn_bale, ItemGroup.BUILDING_BLOCKS, "wild_einkorn_bale"),
@@ -174,77 +183,69 @@ public class ModItemUtils
                 new ModStoneItem(ModBlockUtils.diorite_stone, ItemGroup.DECORATIONS, "diorite_stone"),
                 new ModStoneItem(ModBlockUtils.andesite_stone, ItemGroup.DECORATIONS, "andesite_stone"),
 
-                //  Stone Bowl
-                new ModItem(ItemGroup.MATERIALS, "stone_bowl"),
-
                 //  Tools
                 new ModDurableItem(ItemGroup.TOOLS, 131, "mortar_pestle"),
                 new ModDurableItem(ItemGroup.TOOLS, 65, "flint_knife"),
 
-                //  Ingredients
-                new ModItem(ItemGroup.FOOD, "common_flour"),
-                new ModItem(ItemGroup.FOOD, "durum_flour"),
-                new ModItem(ItemGroup.FOOD, "spelt_flour"),
-
                 //  Food - Chicken
-                new ModFoodItem(1, 0.1f, true, "chicken_leg"),
-                new ModFoodItem(1, 0.1f, true, "chicken_breast"),
-                new ModFoodItem(1, 0.1f, true, "chicken_wing"),
-                new ModFoodItem(1, 0.1f, true, "flour_chicken_leg"),
-                new ModFoodItem(1, 0.1f, true, "flour_chicken_breast"),
-                new ModFoodItem(1, 0.1f, true, "flour_chicken_wing"),
-                new ModFoodItem(2, 0.2f, false, "cooked_chicken_leg"),
-                new ModFoodItem(2, 0.2f, false, "cooked_chicken_breast"),
-                new ModFoodItem(2, 0.2f, false, "cooked_chicken_wing"),
-                new ModFoodItem(3, 0.3f, false, "fried_chicken_leg"),
-                new ModFoodItem(3, 0.3f, false, "fried_chicken_breast"),
-                new ModFoodItem(3, 0.3f, false, "fried_chicken_wing"),
+                new ModFoodItem(1, 0.1f, true, true, "chicken_leg"),
+                new ModFoodItem(1, 0.1f, true, true, "chicken_breast"),
+                new ModFoodItem(1, 0.1f, true, true, "chicken_wing"),
+                new ModFoodItem(1, 0.1f, true, true, "flour_chicken_leg"),
+                new ModFoodItem(1, 0.1f, true, true, "flour_chicken_breast"),
+                new ModFoodItem(1, 0.1f, true, true, "flour_chicken_wing"),
+                new ModFoodItem(2, 0.2f, true, false, "cooked_chicken_leg"),
+                new ModFoodItem(2, 0.2f, true, false, "cooked_chicken_breast"),
+                new ModFoodItem(2, 0.2f, true, false, "cooked_chicken_wing"),
+                new ModFoodItem(3, 0.3f, true, false, "fried_chicken_leg"),
+                new ModFoodItem(3, 0.3f, true, false, "fried_chicken_breast"),
+                new ModFoodItem(3, 0.3f, true, false, "fried_chicken_wing"),
 
                 //  Food - Bread
-                new ModFoodItem(1, 6.0f, true, "dough"),
-                new ModFoodItem(5, 6.0f, true, "bread_dough"),
-                new ModFoodItem(1, 2.0f, false, "roll"),
-                new ModFoodItem(9, 14.8f, false, "burger"),
-                new ModFoodItem(10, 16.0f, false, "tomato_burger"),
+                new ModFoodItem(1, 6.0f, false, true, true, "dough"),
+                new ModFoodItem(5, 6.0f, false, true, "bread_dough"),
+                new ModFoodItem(1, 2.0f, false, false, true, "roll"),
+                new ModFoodItem(9, 14.8f, true, false, "burger"),
+                new ModFoodItem(10, 16.0f, true,false,"tomato_burger"),
 
                 //  Food - Fish and Chips
-                new ModFoodItem(2, 0.5f, false, "cod_fillet"),
-                new ModFoodItem(2, 0.3f, false, "sashimi"),
-                new ModFoodItem(1, 0.6f, true, "sliced_potato"),
-                new ModFoodItem(5, 7.0f, false, "chips"),
+                new ModFoodItem(2, 0.5f, false,   true, "cod_fillet"),
+                new ModFoodItem(2, 0.3f, false,  false, "sashimi"),
+                new ModFoodItem(1, 0.6f, false,   true, "sliced_potato"),
+                new ModFoodItem(5, 7.0f, false,   false, "chips"),
                 new ModDurableBucketItem(ItemGroup.FOOD, 8, "batter_bucket"),
-                new ModFoodItem(3, 0.2f, true, "battered_cod"),
-                new ModFoodItem(6, 7.0f, false, "deep_fried_fish"),
-                new ModFoodItem(11, 14.0f, false, "fish_and_chips"),
+                new ModFoodItem(3, 0.2f, false, true, "battered_cod"),
+                new ModFoodItem(6, 7.0f, false, false, "deep_fried_fish"),
+                new ModFoodItem(11, 14.0f, false, false, "fish_and_chips"),
 
                 //  Food - Sweet Things
-                new ModFoodItem(14, 2.8f, true, "cake_mix"),
-                new ModFoodItem(2, 0.4f, true, "cookie_dough"),
-                new ModFoodItem(7, 5.0f, true, "uncooked_donut"),
-                new ModFoodItem(7, 5.0f, false, "donut"),
-                new ModFoodItem(1, 0.4f, true, "biscuit_dough"),
-                new ModFoodItem(1, 0.4f, false, "biscuit"),
+                new ModFoodItem(14, 2.8f,false, true, "cake_mix"),
+                new ModFoodItem(2, 0.4f,  false, true, "cookie_dough"),
+                new ModFoodItem(7, 5.0f,  false, true, "uncooked_donut"),
+                new ModFoodItem(7, 5.0f, false, false, "donut"),
+                new ModFoodItem(1, 0.4f, false, true, "biscuit_dough"),
+                new ModFoodItem(1, 0.4f, false, false, "biscuit"),
 
                 //  Food - Pasta
-                new ModFoodItem(4, 7.2f, true, "raw_pasta"),
-                new ModFoodItem(1, 7.2f, true, "raw_noodles"),
-                new ModFoodItem(4, 7.2f, false, "pasta"),
-                new ModFoodItem(4, 8.0f, false, "noodles"),
+                new ModFoodItem(4, 7.2f, false, true, "raw_pasta"),
+                new ModFoodItem(1, 7.2f, false, true, "raw_noodles"),
+                new ModFoodItem(4, 7.2f, false, false, "pasta"),
+                new ModFoodItem(4, 8.0f, false, false, "noodles"),
 
                 //  Food - Porridge
                 new ModBowlFoodItem(6, 7.2f, false, "porridge"),
                 new ModBowlFoodItem(8, 8.0f, false, "warm_porridge"),
 
                 //  Food - Pies
-                new ModFoodItem(13, 18.8f, true, "uncooked_meat_pie"),
-                new ModFoodItem(13, 18.8f, false, "meat_pie"),
-                new ModFoodItem(13, 10.4f, true, "uncooked_apple_pie"),
-                new ModFoodItem(13, 10.4f, false, "apple_pie"),
-                new ModFoodItem(16, 21.6f, true, "uncooked_fish_pie"),
-                new ModFoodItem(16, 21.6f, false, "fish_pie"),
+                new ModFoodItem(13, 18.8f, true, true, "uncooked_meat_pie"),
+                new ModFoodItem(13, 18.8f, true, false, "meat_pie"),
+                new ModFoodItem(13, 10.4f, false, true, "uncooked_apple_pie"),
+                new ModFoodItem(13, 10.4f, false, false, "apple_pie"),
+                new ModFoodItem(16, 21.6f, false, true, "uncooked_fish_pie"),
+                new ModFoodItem(16, 21.6f, false, false, "fish_pie"),
 
                 //  Food - Vegetables
-                new ModFoodItem(1, 1.2f, false, "tomato"),
+                new ModFoodItem(1, 1.2f, false, false, "tomato"),
                 new ModBlockNamedItem(ModBlockUtils.tomato, ItemGroup.MATERIALS, "tomato_seeds"),
 
                 //  Food - Misc
