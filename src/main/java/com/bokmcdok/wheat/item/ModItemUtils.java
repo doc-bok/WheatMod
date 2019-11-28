@@ -136,50 +136,6 @@ public class ModItemUtils
         event.getRegistry().registerAll(itemManager.getItems());
 
         event.getRegistry().registerAll(
-                //  Grain
-                new ModBlockNamedItem(ModBlockUtils.wild_einkorn, ItemGroup.MATERIALS, "wild_einkorn_grain"),
-                new ModBlockNamedItem(ModBlockUtils.common_wheat, ItemGroup.MATERIALS, "common_grain"),
-                new ModBlockNamedItem(ModBlockUtils.einkorn, ItemGroup.MATERIALS, "einkorn_grain"),
-
-                new ModBlockNamedItem(ModBlockUtils.wild_emmer, ItemGroup.MATERIALS, "wild_emmer_grain"),
-                new ModBlockNamedItem(ModBlockUtils.emmer, ItemGroup.MATERIALS, "emmer_grain"),
-                new ModBlockNamedItem(ModBlockUtils.durum, ItemGroup.MATERIALS, "durum_grain"),
-
-                new ModBlockNamedItem(ModBlockUtils.spelt, ItemGroup.MATERIALS, "spelt_grain"),
-
-                //  Bales
-                new ModBlockItem(ModBlockUtils.wild_einkorn_bale, ItemGroup.BUILDING_BLOCKS, "wild_einkorn_bale"),
-                new ModBlockItem(ModBlockUtils.common_straw_bale, ItemGroup.BUILDING_BLOCKS, "common_straw_bale"),
-                new ModBlockItem(ModBlockUtils.einkorn_straw_bale, ItemGroup.BUILDING_BLOCKS, "einkorn_straw_bale"),
-                new ModBlockItem(ModBlockUtils.emmer_straw_bale, ItemGroup.BUILDING_BLOCKS, "emmer_straw_bale"),
-                new ModBlockItem(ModBlockUtils.durum_straw_bale, ItemGroup.BUILDING_BLOCKS, "durum_straw_bale"),
-                new ModBlockItem(ModBlockUtils.spelt_straw_bale, ItemGroup.BUILDING_BLOCKS, "spelt_straw_bale"),
-
-                //  Thatch
-                new ModBlockItem(ModBlockUtils.common_thatch, ItemGroup.BUILDING_BLOCKS, "common_thatch"),
-                new ModBlockItem(ModBlockUtils.einkorn_thatch, ItemGroup.BUILDING_BLOCKS, "einkorn_thatch"),
-                new ModBlockItem(ModBlockUtils.emmer_thatch, ItemGroup.BUILDING_BLOCKS, "emmer_thatch"),
-                new ModBlockItem(ModBlockUtils.durum_thatch, ItemGroup.BUILDING_BLOCKS, "durum_thatch"),
-                new ModBlockItem(ModBlockUtils.spelt_thatch, ItemGroup.BUILDING_BLOCKS, "spelt_thatch"),
-
-                //  Straw Mats
-                new ModBlockItem(ModBlockUtils.common_straw_mat, ItemGroup.DECORATIONS, "common_straw_mat"),
-                new ModBlockItem(ModBlockUtils.einkorn_straw_mat, ItemGroup.DECORATIONS, "einkorn_straw_mat"),
-
-                new ModBlockItem(ModBlockUtils.emmer_straw_mat, ItemGroup.DECORATIONS, "emmer_straw_mat"),
-                new ModBlockItem(ModBlockUtils.durum_straw_mat, ItemGroup.DECORATIONS, "durum_straw_mat"),
-                new ModBlockItem(ModBlockUtils.spelt_straw_mat, ItemGroup.DECORATIONS, "spelt_straw_mat"),
-
-                //  Small Stones
-                new ModStoneItem(ModBlockUtils.small_cobblestone, ItemGroup.DECORATIONS, "small_cobblestone"),
-                new ModStoneItem(ModBlockUtils.granite_stone, ItemGroup.DECORATIONS, "granite_stone"),
-                new ModStoneItem(ModBlockUtils.diorite_stone, ItemGroup.DECORATIONS, "diorite_stone"),
-                new ModStoneItem(ModBlockUtils.andesite_stone, ItemGroup.DECORATIONS, "andesite_stone"),
-
-                //  Tools
-                new ModDurableItem(ItemGroup.TOOLS, 131, "mortar_pestle"),
-                new ModDurableItem(ItemGroup.TOOLS, 65, "flint_knife"),
-
                 //  Food - Chicken
                 new ModFoodItem(1, 0.1f, true, true, "chicken_leg"),
                 new ModFoodItem(1, 0.1f, true, true, "chicken_breast"),
@@ -206,7 +162,6 @@ public class ModItemUtils
                 new ModFoodItem(2, 0.3f, false,  false, "sashimi"),
                 new ModFoodItem(1, 0.6f, false,   true, "sliced_potato"),
                 new ModFoodItem(5, 7.0f, false,   false, "chips"),
-                new ModDurableBucketItem(ItemGroup.FOOD, 8, "batter_bucket"),
                 new ModFoodItem(3, 0.2f, false, true, "battered_cod"),
                 new ModFoodItem(6, 7.0f, false, false, "deep_fried_fish"),
                 new ModFoodItem(11, 14.0f, false, false, "fish_and_chips"),
@@ -239,13 +194,9 @@ public class ModItemUtils
 
                 //  Food - Vegetables
                 new ModFoodItem(1, 1.2f, false, false, "tomato"),
-                new ModBlockNamedItem(ModBlockUtils.tomato, ItemGroup.MATERIALS, "tomato_seeds"),
 
                 //  Food - Misc
-                new ModStoneBowlFoodItem(6, 7.2f, false, "gravy"),
-
-                //  Flour Mill
-                new ModBlockNamedItem(ModBlockUtils.flour_mill, ItemGroup.BUILDING_BLOCKS, "flour_mill")
+                new ModStoneBowlFoodItem(6, 7.2f, false, "gravy")
         );
     }
 

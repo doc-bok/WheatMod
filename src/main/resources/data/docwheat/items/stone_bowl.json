@@ -1,5 +1,5 @@
 {
     "type": "item",
-    "itemGroup": "misc",
-    "name": "stone_bowl"
+    "group": "misc",
+    "registry_name": "stone_bowl"
 }

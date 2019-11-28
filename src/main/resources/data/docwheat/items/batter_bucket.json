@@ -1,0 +1,8 @@
+{
+    "type": "durable",
+    "group": "tools",
+    "registry_name": "batter_bucket",
+    "max_damage": 8,
+    "repairable": false,
+    "container": "bucket"
+}

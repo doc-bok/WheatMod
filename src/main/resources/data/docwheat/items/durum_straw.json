@@ -1,5 +1,5 @@
 {
     "type": "item",
-    "itemGroup": "misc",
-    "name": "durum_straw"
+    "group": "misc",
+    "registry_name": "durum_straw"
 }
