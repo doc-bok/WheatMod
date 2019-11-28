@@ -1,8 +1,6 @@
 package com.bokmcdok.wheat.item;
 
-import com.bokmcdok.wheat.WheatMod;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 
 public class ModDurableItem extends Item {

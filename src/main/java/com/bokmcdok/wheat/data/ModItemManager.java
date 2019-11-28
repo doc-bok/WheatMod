@@ -226,15 +226,15 @@ public class ModItemManager {
     }
 
     private Item getContainerItem(String containerItemName) {
-        if (containerItemName.equals("bucket")) {
+        if ("bucket".equals(containerItemName)) {
             return Items.BUCKET;
         }
 
-        if (containerItemName.equals("bowl")) {
+        if ("bowl".equals(containerItemName)) {
             return Items.BOWL;
         }
 
-        if (containerItemName.equals("bottle")) {
+        if ("bottle".equals(containerItemName)) {
             return Items.GLASS_BOTTLE;
         }
 
