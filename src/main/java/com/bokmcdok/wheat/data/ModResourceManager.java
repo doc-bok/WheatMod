@@ -10,6 +10,9 @@ import net.minecraft.resources.IResourceManager;
 import net.minecraft.resources.IResourcePack;
 import net.minecraft.resources.ResourcePackType;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.ModList;
+import net.minecraftforge.fml.loading.moddiscovery.ModFileInfo;
+import net.minecraftforge.fml.packs.ModFileResourcePack;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -25,8 +28,12 @@ public class ModResourceManager implements IResourceManager {
     private final Set<String> mResourceNamespaces = Sets.newLinkedHashSet();
     private final ResourcePackType mType;
 
-    public ModResourceManager(ResourcePackType side) {
+    public ModResourceManager(ResourcePackType side, String modId) {
         mType = side;
+
+        ModFileInfo modFileInfo = ModList.get().getModFileById(modId);
+        ModFileResourcePack resourcePack = new ModFileResourcePack(modFileInfo.getFile());
+        addResourcePack(resourcePack);
     }
 
     @Override

@@ -16,11 +16,8 @@ import net.minecraft.resources.ResourcePackType;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.loading.moddiscovery.ModFileInfo;
-import net.minecraftforge.fml.packs.ModFileResourcePack;
 import net.minecraftforge.registries.ObjectHolder;
 
 /**
@@ -131,14 +128,10 @@ public class ModItemUtils
     public static void registerItems(RegistryEvent.Register<Item> event)
     {
         //  TODO: This should be moved to a more centralised location.
-        ModFileInfo modFileInfo = ModList.get().getModFileById(WheatMod.MOD_ID);
-        ModFileResourcePack resourcePack = new ModFileResourcePack(modFileInfo.getFile());
-        ModResourceManager modResourceManager = new ModResourceManager(ResourcePackType.SERVER_DATA);
-        modResourceManager.addResourcePack(resourcePack);
 
-
+        ModResourceManager modResourceManager = new ModResourceManager(ResourcePackType.SERVER_DATA, WheatMod.MOD_ID);
         ModItemManager itemManager = new ModItemManager();
-        itemManager.apply(null, modResourceManager, null);
+        itemManager.loadItems(modResourceManager);
 
         event.getRegistry().registerAll(itemManager.getItems());
 
