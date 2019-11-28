@@ -1,0 +1,10 @@
+{
+    "type": "item",
+    "group": "food",
+    "registry_name": "fried_chicken_wing",
+    "food": {
+        "hunger": 3,
+        "saturation": 0.3,
+        "meat": true
+    }
+}

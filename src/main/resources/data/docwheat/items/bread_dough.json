@@ -1,0 +1,15 @@
+{
+    "type": "item",
+    "group": "food",
+    "registry_name": "bread_dough",
+    "food": {
+        "hunger": 5,
+        "saturation": 6.0,
+        "effects": [
+            {
+                "effect_type": "food_poisoning",
+                "probability": 0.3
+            }
+        ]
+    }
+}

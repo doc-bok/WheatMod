@@ -1,0 +1,16 @@
+{
+    "type": "item",
+    "group": "food",
+    "registry_name": "flour_chicken_breast",
+    "food": {
+        "hunger": 1,
+        "saturation": 0.1,
+        "meat": true,
+        "effects": [
+            {
+                "effect_type": "food_poisoning",
+                "probability": 0.3
+            }
+        ]
+    }
+}

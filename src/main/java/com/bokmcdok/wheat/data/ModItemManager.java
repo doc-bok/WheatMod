@@ -2,6 +2,7 @@ package com.bokmcdok.wheat.data;
 
 import com.bokmcdok.wheat.block.ModBlockUtils;
 import com.bokmcdok.wheat.item.ModDurableItem;
+import com.bokmcdok.wheat.item.ModItem;
 import com.bokmcdok.wheat.item.ModItemUtils;
 import com.bokmcdok.wheat.item.ModThrowableItem;
 import com.google.common.collect.ImmutableSet;
@@ -17,10 +18,12 @@ import com.google.gson.JsonParseException;
 import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.BlockNamedItem;
+import net.minecraft.item.Food;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.Items;
 import net.minecraft.item.Rarity;
+import net.minecraft.potion.EffectInstance;
 import net.minecraft.resources.IResourceManager;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
@@ -34,6 +37,7 @@ import java.util.Set;
 public class ModItemManager {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final String ITEMS_FOLDER = "items";
+    private ModEffectManager mEffectManager = new ModEffectManager();
     private Set<Item> mItems = ImmutableSet.of();
 
     private enum ItemType {
@@ -49,6 +53,8 @@ public class ModItemManager {
     }
 
     public void loadItems(IResourceManager resourceManager) {
+        mEffectManager.loadEffects(resourceManager);
+
         ModJsonLoader jsonLoader = new ModJsonLoader();
         Map<ResourceLocation, JsonObject> itemResources = jsonLoader.loadJsonResources(resourceManager, ITEMS_FOLDER);
 
@@ -111,20 +117,24 @@ public class ModItemManager {
         if (JSONUtils.hasField(json, "container")) {
             String containerName = JSONUtils.getString(json, "container");
             Item container = getContainerItem(containerName);
-            if (container != null) {
-                properties.containerItem(container);
-            }
+            properties.containerItem(container);
         }
 
         if (JSONUtils.hasField(json, "tool_types")) {
             JsonArray toolTypes = JSONUtils.getJsonArray(json, "tool_types");
             for (JsonElement tool : toolTypes) {
-                String type = JSONUtils.getString(tool, "tool_type");
-                int level = JSONUtils.getInt(tool, "level");
+                JsonObject toolAsJsonObject = tool.getAsJsonObject();
+                String type = JSONUtils.getString(toolAsJsonObject, "tool_type");
+                int level = JSONUtils.getInt(toolAsJsonObject, "level");
 
                 ToolType toolType = ToolType.get(type);
                 properties.addToolType(toolType, level);
             }
+        }
+
+        if (JSONUtils.hasField(json, "food")) {
+            JsonObject food = JSONUtils.getJsonObject(json, "food");
+            properties.food(deserializeFood(food));
         }
 
         String registryName = JSONUtils.getString(json, "registry_name");
@@ -133,7 +143,7 @@ public class ModItemManager {
 
         switch (type) {
             case ITEM:
-                return new Item(properties).setRegistryName(registryName);
+                return new ModItem(properties).setRegistryName(registryName);
 
             case BLOCK: {
                 String blockName = JSONUtils.getString(json, "block");
@@ -158,6 +168,51 @@ public class ModItemManager {
                 LOGGER.info("Item type {} not supported", typeValue);
                 return null;
         }
+    }
+
+    private Food deserializeFood(JsonObject json) {
+        Food.Builder builder = new Food.Builder();
+
+        if (JSONUtils.hasField(json, "hunger")) {
+            int hunger = JSONUtils.getInt(json, "hunger");
+            builder.hunger(hunger);
+        }
+
+        if (JSONUtils.hasField(json, "saturation")) {
+            float saturation = JSONUtils.getFloat(json, "saturation");
+            builder.saturation(saturation);
+        }
+
+        if (JSONUtils.hasField(json, "meat")) {
+            boolean meat = JSONUtils.getBoolean(json, "meat");
+            if (meat) { builder.meat(); }
+        }
+
+        if (JSONUtils.hasField(json, "always_edible")) {
+            boolean alwaysEdible = JSONUtils.getBoolean(json, "always_edible");
+            if (alwaysEdible) { builder.setAlwaysEdible(); }
+        }
+
+        if (JSONUtils.hasField(json, "fast_to_eat")) {
+            boolean fastToEat = JSONUtils.getBoolean(json, "fast_to_eat");
+            if (fastToEat) { builder.fastToEat(); }
+        }
+
+        if (JSONUtils.hasField(json, "effects")) {
+            JsonArray effects = JSONUtils.getJsonArray(json, "effects");
+            for (JsonElement effect : effects) {
+                JsonObject effectAsJsonObject = effect.getAsJsonObject();
+                String effectName = JSONUtils.getString(effectAsJsonObject, "effect_type");
+                float probability = JSONUtils.getFloat(effectAsJsonObject, "probability");
+
+                EffectInstance effectInstance = mEffectManager.getEffect(effectName);
+                if (effectInstance != null) {
+                    builder.effect(effectInstance, probability);
+                }
+            }
+        }
+
+        return builder.build();
     }
 
     private ItemGroup getItemGroup(String name) {

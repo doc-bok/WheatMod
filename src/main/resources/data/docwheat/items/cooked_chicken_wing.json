@@ -1,0 +1,10 @@
+{
+    "type": "item",
+    "group": "food",
+    "registry_name": "cooked_chicken_wing",
+    "food": {
+        "hunger": 2,
+        "saturation": 0.2,
+        "meat": true
+    }
+}

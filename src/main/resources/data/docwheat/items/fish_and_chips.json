@@ -1,0 +1,9 @@
+{
+    "type": "item",
+    "group": "food",
+    "registry_name": "fish_and_chips",
+    "food": {
+        "hunger": 11,
+        "saturation": 14.0
+    }
+}

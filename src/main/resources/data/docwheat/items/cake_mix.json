@@ -1,0 +1,15 @@
+{
+    "type": "item",
+    "group": "food",
+    "registry_name": "cake_mix",
+    "food": {
+        "hunger": 14,
+        "saturation": 2.8,
+        "effects": [
+            {
+                "effect_type": "food_poisoning",
+                "probability": 0.3
+            }
+        ]
+    }
+}

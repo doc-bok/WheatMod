@@ -1,0 +1,10 @@
+{
+    "type": "item",
+    "group": "food",
+    "registry_name": "warm_porridge",
+    "container": "bowl",
+    "food": {
+        "hunger": 8,
+        "saturation": 8.0
+    }
+}

@@ -1,6 +1,6 @@
 {
     "type": "durable",
-    "group": "tools",
+    "group": "food",
     "registry_name": "batter_bucket",
     "max_damage": 8,
     "repairable": false,

@@ -1,0 +1,15 @@
+{
+    "type": "item",
+    "group": "food",
+    "registry_name": "raw_pasta",
+    "food": {
+        "hunger": 4,
+        "saturation": 7.2,
+        "effects": [
+            {
+                "effect_type": "food_poisoning",
+                "probability": 0.3
+            }
+        ]
+    }
+}

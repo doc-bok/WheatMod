@@ -1,0 +1,10 @@
+{
+    "type": "item",
+    "group": "food",
+    "registry_name": "gravy",
+    "container": "bowl",
+    "food": {
+        "hunger": 6,
+        "saturation": 7.2
+    }
+}
