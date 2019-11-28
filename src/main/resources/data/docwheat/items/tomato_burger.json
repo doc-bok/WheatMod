@@ -1,0 +1,10 @@
+{
+    "type": "item",
+    "group": "food",
+    "registry_name": "tomato_burger",
+    "food": {
+        "hunger": 10,
+        "saturation": 16.0,
+        "meat": true
+    }
+}

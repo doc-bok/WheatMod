@@ -1,0 +1,6 @@
+{
+    "type": "block_named",
+    "group": "buildingBlocks",
+    "registry_name": "flour_mill",
+    "block": "flour_mill"
+}

@@ -1,0 +1,9 @@
+{
+    "type": "item",
+    "group": "food",
+    "registry_name": "tomato",
+    "food": {
+        "hunger": 1,
+        "saturation": 1.2
+    }
+}

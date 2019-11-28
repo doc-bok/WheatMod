@@ -1,5 +1,5 @@
 {
     "type": "item",
-    "itemGroup": "food",
-    "name": "durum_flour"
+    "group": "food",
+    "registry_name": "durum_flour"
 }

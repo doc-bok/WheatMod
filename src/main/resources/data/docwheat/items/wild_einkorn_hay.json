@@ -1,5 +1,5 @@
 {
     "type": "item",
-    "itemGroup": "misc",
-    "name": "wild_einkorn_hay"
+    "group": "misc",
+    "registry_name": "wild_einkorn_hay"
 }

@@ -1,0 +1,10 @@
+{
+    "type": "item",
+    "group": "food",
+    "registry_name": "meat_pie",
+    "food": {
+        "hunger": 13,
+        "saturation": 18.8,
+        "meat": true
+    }
+}

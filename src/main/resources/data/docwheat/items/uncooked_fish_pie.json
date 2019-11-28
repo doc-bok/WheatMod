@@ -1,0 +1,15 @@
+{
+    "type": "item",
+    "group": "food",
+    "registry_name": "uncooked_fish_pie",
+    "food": {
+        "hunger": 16,
+        "saturation": 21.6,
+        "effects": [
+            {
+                "effect_type": "food_poisoning",
+                "probability": 0.3
+            }
+        ]
+    }
+}
