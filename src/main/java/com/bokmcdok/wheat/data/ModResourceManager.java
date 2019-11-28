@@ -1,6 +1,5 @@
 package com.bokmcdok.wheat.data;
 
-import com.bokmcdok.wheat.WheatMod;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;

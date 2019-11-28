@@ -13,15 +13,11 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.resources.ResourcePackType;
-import net.minecraft.world.gen.feature.structure.VillageStructure;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.loading.moddiscovery.ModFileInfo;
-import net.minecraftforge.fml.packs.ModFileResourcePack;
 import net.minecraftforge.registries.ObjectHolder;
 
 /**
