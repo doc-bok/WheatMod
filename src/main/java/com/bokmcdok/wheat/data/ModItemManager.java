@@ -3,16 +3,12 @@ package com.bokmcdok.wheat.data;
 import com.bokmcdok.wheat.item.ModItem;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Sets;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 import java.util.Map.Entry;
 
 import com.google.gson.JsonParseException;
-import net.minecraft.client.resources.JsonReloadListener;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
-import net.minecraft.profiler.IProfiler;
 import net.minecraft.resources.IResourceManager;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
@@ -22,9 +18,9 @@ import org.apache.logging.log4j.Logger;
 import java.util.Map;
 import java.util.Set;
 
-public class ModItemManager extends JsonReloadListener {
-    private static final Gson GSON = (new GsonBuilder()).setPrettyPrinting().disableHtmlEscaping().create();
+public class ModItemManager {
     private static final Logger LOGGER = LogManager.getLogger();
+    private static final String ITEMS_FOLDER = "items";
     private Set<Item> mItems = ImmutableSet.of();
 
     private enum ItemType {
@@ -39,14 +35,13 @@ public class ModItemManager extends JsonReloadListener {
         STONE
     }
 
-    public ModItemManager() { super(GSON, "items"); }
-
     public Item[] getItems() {
         return mItems.toArray(new Item[0]);
     }
 
-    public void apply(Map<ResourceLocation, JsonObject> splashList, IResourceManager resourceManager, IProfiler profiler) {
-        Map<ResourceLocation, JsonObject> itemResources = prepare(resourceManager, profiler);
+    public void loadItems(IResourceManager resourceManager) {
+        ModJsonLoader jsonLoader = new ModJsonLoader();
+        Map<ResourceLocation, JsonObject> itemResources = jsonLoader.loadJsonResources(resourceManager, ITEMS_FOLDER);
 
         mItems = Sets.newHashSet();
 
