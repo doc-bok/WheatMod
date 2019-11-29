@@ -13,7 +13,11 @@ public class ModItem extends Item {
 
     /**
      * Called when the player finishes using this Item (E.g. finishes eating.). Not called when the player stops using
-     * the Item before the action is complete.
+     * the Item before the action is complete. This is used for food that is contained in a bowl, for example.
+     * @param stack The item stack to check.
+     * @param world The current world.
+     * @param entityLiving The entity that owns the item.
+     * @return The item to replace the current one with.
      */
     public ItemStack onItemUseFinish(ItemStack stack, World world, LivingEntity entityLiving) {
         if (isFood() && hasContainerItem(stack)) {

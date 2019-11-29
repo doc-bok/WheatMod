@@ -20,8 +20,6 @@ public class ModEntityUtils {
      */
     @SubscribeEvent
     public static void registerEntities(final RegistryEvent.Register<EntityType<?>> event) {
-
-
         event.getRegistry().registerAll(
                 EntityType.Builder.<StoneEntity>create(StoneEntity::new, EntityClassification.MISC)
                         .size(0.25f, 0.25f).build("stone_entity")

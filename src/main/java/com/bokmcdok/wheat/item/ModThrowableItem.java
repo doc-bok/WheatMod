@@ -21,8 +21,11 @@ public class ModThrowableItem extends BlockItem {
     }
 
     /**
-     * Called to trigger the item's "innate" right click behavior. To handle when this item is used on a block, see
-     * {@link #onItemUse}.
+     * This will create an entity and throw the item in the world.
+     * @param worldIn The current world.
+     * @param playerIn The player that owns the item.
+     * @param handIn The hand holding the item.
+     * @return The result of the action.
      */
     public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
         ItemStack itemstack = playerIn.getHeldItem(handIn);

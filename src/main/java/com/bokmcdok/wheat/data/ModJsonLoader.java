@@ -26,9 +26,15 @@ public class ModJsonLoader {
     private static final int JSON_EXTENSION_LENGTH = JSON_EXTENSION.length();
     private static final Logger LOGGER = LogManager.getLogger();
 
+    /**
+     * Load all JSON files within a folder.
+     * @param resourceManager The resource manager to use to load the files.
+     * @param folder The folder to load the JSON files from.
+     * @return A list of JSON objects loaded from the files.
+     */
     public Map<ResourceLocation, JsonObject> loadJsonResources(IResourceManager resourceManager, String folder) {
         Map<ResourceLocation, JsonObject> result = Maps.newHashMap();
-        int folderNameLength = folder.length();
+        int folderNameLength = folder.length() + 1;
 
         for (ResourceLocation resourceLocation : resourceManager.getAllResourceLocations(folder, (x) -> {
             return  x.endsWith(".json");

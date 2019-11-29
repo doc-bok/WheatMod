@@ -127,7 +127,6 @@ public class ModItemUtils
     public static void registerItems(RegistryEvent.Register<Item> event)
     {
         //  TODO: This should be moved to a more centralised location.
-
         ModResourceManager modResourceManager = new ModResourceManager(ResourcePackType.SERVER_DATA, WheatMod.MOD_ID);
         ModItemManager itemManager = new ModItemManager();
         itemManager.loadItems(modResourceManager);
