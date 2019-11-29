@@ -226,13 +226,14 @@ public class ModItemManager {
                 JsonObject effectAsJsonObject = effect.getAsJsonObject();
 
                 String effectName = JSONUtils.getString(effectAsJsonObject, "effect_type");
+                ResourceLocation location = new ResourceLocation(effectName);
 
                 float probability = 1.0f;
                 if (JSONUtils.hasField(effectAsJsonObject, "probability")) {
                     probability = JSONUtils.getFloat(effectAsJsonObject, "probability");
                 }
 
-                EffectInstance effectInstance = mEffectManager.getEffect(effectName);
+                EffectInstance effectInstance = mEffectManager.getEffect(location);
                 if (effectInstance != null) {
                     builder.effect(effectInstance, probability);
                 }

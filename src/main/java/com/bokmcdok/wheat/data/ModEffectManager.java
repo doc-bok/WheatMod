@@ -19,15 +19,15 @@ import java.util.Optional;
 public class ModEffectManager {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final String EFFECTS_FOLDER = "effects";
-    private Map<String, EffectInstance> mEffects = ImmutableMap.of();
+    private Map<ResourceLocation, EffectInstance> mEffects = ImmutableMap.of();
 
     /**
      * Returns an effect by its name
-     * @param effectName The name of the effect (same as the name of the json file).
+     * @param location The location of the effect (same as the name of the json file).
      * @return The instance of the effect.
      */
-    public EffectInstance getEffect(String effectName) {
-        return mEffects.get(effectName);
+    public EffectInstance getEffect(ResourceLocation location) {
+        return mEffects.get(location);
     }
 
     /**
@@ -51,7 +51,7 @@ public class ModEffectManager {
                     continue;
                 }
 
-                mEffects.put(resourceLocation.getPath(), effect);
+                mEffects.put(resourceLocation, effect);
 
             } catch (IllegalArgumentException | JsonParseException exception) {
                 LOGGER.error("Parsing error loading item {}", resourceLocation, exception);

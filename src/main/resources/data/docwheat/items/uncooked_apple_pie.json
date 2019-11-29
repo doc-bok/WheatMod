@@ -6,7 +6,7 @@
         "saturation": 10.4,
         "effects": [
             {
-                "effect_type": "food_poisoning",
+                "effect_type": "docwheat:food_poisoning",
                 "probability": 0.3
             }
         ]
