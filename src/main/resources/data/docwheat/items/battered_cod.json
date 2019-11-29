@@ -1,7 +1,6 @@
 {
     "type": "item",
     "group": "food",
-    "registry_name": "battered_cod",
     "food": {
         "hunger": 3,
         "saturation": 0.2,

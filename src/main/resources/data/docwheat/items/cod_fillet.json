@@ -1,7 +1,6 @@
 {
     "type": "item",
     "group": "food",
-    "registry_name": "cod_fillet",
     "food": {
         "hunger": 2,
         "saturation": 0.5,

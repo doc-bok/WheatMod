@@ -1,5 +1,4 @@
 {
     "type": "item",
-    "group": "food",
-    "registry_name": "common_flour"
+    "group": "food"
 }

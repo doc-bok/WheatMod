@@ -1,7 +1,6 @@
 {
     "type": "item",
     "group": "food",
-    "registry_name": "biscuit_dough",
     "food": {
         "hunger": 1,
         "saturation": 0.4,

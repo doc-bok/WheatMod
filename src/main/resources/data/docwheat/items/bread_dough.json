@@ -1,7 +1,6 @@
 {
     "type": "item",
     "group": "food",
-    "registry_name": "bread_dough",
     "food": {
         "hunger": 5,
         "saturation": 6.0,

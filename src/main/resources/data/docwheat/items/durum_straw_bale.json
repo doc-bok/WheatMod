@@ -1,6 +1,5 @@
 {
     "type": "block",
     "group": "buildingBlocks",
-    "registry_name": "durum_straw_bale",
-    "block": "durum_straw_bale"
+    "block": "docwheat:durum_straw_bale"
 }

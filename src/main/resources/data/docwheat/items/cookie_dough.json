@@ -1,7 +1,6 @@
 {
     "type": "item",
     "group": "food",
-    "registry_name": "cookie_dough",
     "food": {
         "hunger": 2,
         "saturation": 0.4,

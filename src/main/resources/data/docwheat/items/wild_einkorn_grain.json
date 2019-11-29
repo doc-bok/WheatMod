@@ -1,6 +1,5 @@
 {
     "type": "block_named",
     "group": "misc",
-    "registry_name": "wild_einkorn_grain",
     "block": "wild_einkorn"
 }

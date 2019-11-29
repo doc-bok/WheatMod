@@ -1,6 +1,5 @@
 {
     "type": "block",
     "group": "buildingBlocks",
-    "registry_name": "durum_thatch",
-    "block": "durum_thatch"
+    "block": "docwheat:durum_thatch"
 }

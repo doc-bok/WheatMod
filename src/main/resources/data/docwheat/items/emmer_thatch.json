@@ -1,6 +1,5 @@
 {
     "type": "block",
     "group": "buildingBlocks",
-    "registry_name": "emmer_thatch",
-    "block": "emmer_thatch"
+    "block": "docwheat:emmer_thatch"
 }

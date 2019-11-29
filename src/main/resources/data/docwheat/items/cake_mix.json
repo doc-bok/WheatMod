@@ -1,7 +1,6 @@
 {
     "type": "item",
     "group": "food",
-    "registry_name": "cake_mix",
     "food": {
         "hunger": 14,
         "saturation": 2.8,

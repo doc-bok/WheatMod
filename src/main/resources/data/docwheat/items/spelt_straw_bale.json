@@ -1,6 +1,5 @@
 {
     "type": "block",
     "group": "buildingBlocks",
-    "registry_name": "spelt_straw_bale",
-    "block": "spelt_straw_bale"
+    "block": "docwheat:spelt_straw_bale"
 }

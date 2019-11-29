@@ -1,6 +1,5 @@
 package com.bokmcdok.wheat.data;
 
-import com.bokmcdok.wheat.block.ModBlockUtils;
 import com.bokmcdok.wheat.item.ModDurableItem;
 import com.bokmcdok.wheat.item.ModItem;
 import com.bokmcdok.wheat.item.ModThrowableItem;
@@ -10,7 +9,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import java.lang.reflect.Field;
 import java.util.Map.Entry;
 
 import com.google.gson.JsonParseException;
@@ -20,12 +18,12 @@ import net.minecraft.item.BlockNamedItem;
 import net.minecraft.item.Food;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
-import net.minecraft.item.Items;
 import net.minecraft.item.Rarity;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.resources.IResourceManager;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.registry.Registry;
 import net.minecraftforge.common.ToolType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -37,7 +35,7 @@ public class ModItemManager {
     private static final String ITEMS_FOLDER = "items";
     private static final String CONTAINERS_FOLDER = "containers";
     private ModEffectManager mEffectManager = new ModEffectManager();
-    private Map<String, Item> mContainerItems = ImmutableMap.of();
+    private Map<ResourceLocation, Item> mContainerItems = ImmutableMap.of();
     private ModJsonLoader mJsonLoader = new ModJsonLoader();
 
     private enum ItemType {
@@ -93,7 +91,8 @@ public class ModItemManager {
                     continue;
                 }
 
-                mContainerItems.put(item.getRegistryName().getPath(), item);
+                item.setRegistryName(resourceLocation);
+                mContainerItems.put(resourceLocation, item);
 
             } catch (IllegalArgumentException | JsonParseException exception) {
                 LOGGER.error("Parsing error loading item {}", resourceLocation, exception);
@@ -162,31 +161,30 @@ public class ModItemManager {
             properties.food(deserializeFood(food));
         }
 
-        String registryName = JSONUtils.getString(json, "registry_name");
         String typeValue = JSONUtils.getString(json, "type");
         ItemType type = ItemType.valueOf(typeValue.toUpperCase());
 
         switch (type) {
             case ITEM:
-                return new ModItem(properties).setRegistryName(registryName);
+                return new ModItem(properties);
 
             case BLOCK: {
                 String blockName = JSONUtils.getString(json, "block");
-                return new BlockItem(getModBlock(blockName), properties).setRegistryName(registryName);
+                return new BlockItem(getModBlock(blockName), properties);
             }
 
             case BLOCK_NAMED: {
                 String blockName = JSONUtils.getString(json, "block");
-                return new BlockNamedItem(getModBlock(blockName), properties).setRegistryName(registryName);
+                return new BlockNamedItem(getModBlock(blockName), properties);
             }
 
             case THROWABLE: {
                 String blockName = JSONUtils.getString(json, "block");
-                return new ModThrowableItem(getModBlock(blockName), properties).setRegistryName(registryName);
+                return new ModThrowableItem(getModBlock(blockName), properties);
             }
 
             case DURABLE: {
-                return new ModDurableItem(properties).setRegistryName(registryName);
+                return new ModDurableItem(properties);
             }
 
             default:
@@ -271,19 +269,12 @@ public class ModItemManager {
      * @return The instance of the container item.
      */
     private Item getContainerItem(String containerItemName) {
-        if ("bucket".equals(containerItemName)) {
-            return Items.BUCKET;
+        ResourceLocation location = new ResourceLocation(containerItemName);
+        if ("minecraft".equals(location.getNamespace())) {
+            return Registry.ITEM.getOrDefault(location);
         }
 
-        if ("bowl".equals(containerItemName)) {
-            return Items.BOWL;
-        }
-
-        if ("bottle".equals(containerItemName)) {
-            return Items.GLASS_BOTTLE;
-        }
-
-        return mContainerItems.get(containerItemName);
+        return mContainerItems.get(location);
     }
 
     /**
@@ -292,12 +283,6 @@ public class ModItemManager {
      * @return The instance of the block.
      */
     private Block getModBlock(String blockName) {
-        try {
-            Field field = ModBlockUtils.class.getDeclaredField(blockName);
-            return (Block)field.get(null);
-        } catch (NoSuchFieldException | IllegalAccessException exception) {
-            LOGGER.error("Block type {} not supported", blockName, exception);
-            return null;
-        }
+        return Registry.BLOCK.getOrDefault(new ResourceLocation(blockName));
     }
 }

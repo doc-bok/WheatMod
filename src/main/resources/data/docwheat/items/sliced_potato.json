@@ -1,7 +1,6 @@
 {
     "type": "item",
     "group": "food",
-    "registry_name": "sliced_potato",
     "food": {
         "hunger": 1,
         "saturation": 0.6,

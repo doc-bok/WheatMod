@@ -1,7 +1,6 @@
 {
     "type": "item",
     "group": "food",
-    "registry_name": "raw_noodles",
     "food": {
         "hunger": 1,
         "saturation": 7.2,

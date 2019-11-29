@@ -1,7 +1,6 @@
 {
     "type": "item",
     "group": "food",
-    "registry_name": "flour_chicken_wing",
     "food": {
         "hunger": 1,
         "saturation": 0.1,

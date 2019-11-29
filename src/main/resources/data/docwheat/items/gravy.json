@@ -1,8 +1,7 @@
 {
     "type": "item",
     "group": "food",
-    "registry_name": "gravy",
-    "container": "stone_bowl",
+    "container": "docwheat:stone_bowl",
     "food": {
         "hunger": 6,
         "saturation": 7.2
