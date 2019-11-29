@@ -1,5 +1,5 @@
 {
-    "type": "durable",
+    "type": "item",
     "group": "tools",
     "max_damage": 65,
     "repairable": false

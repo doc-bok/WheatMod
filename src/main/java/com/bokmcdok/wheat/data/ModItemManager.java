@@ -1,6 +1,5 @@
 package com.bokmcdok.wheat.data;
 
-import com.bokmcdok.wheat.item.ModDurableItem;
 import com.bokmcdok.wheat.item.ModItem;
 import com.bokmcdok.wheat.item.ModThrowableItem;
 import com.google.common.collect.ImmutableMap;
@@ -42,7 +41,6 @@ public class ModItemManager {
         ITEM,
         BLOCK,
         BLOCK_NAMED,
-        DURABLE,
         THROWABLE
     }
 
@@ -181,10 +179,6 @@ public class ModItemManager {
             case THROWABLE: {
                 String blockName = JSONUtils.getString(json, "block");
                 return new ModThrowableItem(getModBlock(blockName), properties);
-            }
-
-            case DURABLE: {
-                return new ModDurableItem(properties);
             }
 
             default:
