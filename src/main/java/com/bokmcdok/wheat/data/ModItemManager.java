@@ -1,5 +1,6 @@
 package com.bokmcdok.wheat.data;
 
+import com.bokmcdok.wheat.block.ModBlockUtils;
 import com.bokmcdok.wheat.item.ModItem;
 import com.bokmcdok.wheat.item.ModThrowableItem;
 import com.google.common.collect.ImmutableMap;
@@ -8,6 +9,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import java.lang.reflect.Field;
 import java.util.Map.Entry;
 
 import com.google.gson.JsonParseException;
@@ -278,6 +280,12 @@ public class ModItemManager {
      * @return The instance of the block.
      */
     private Block getModBlock(String blockName) {
-        return Registry.BLOCK.getOrDefault(new ResourceLocation(blockName));
+        try {
+            Field field = ModBlockUtils.class.getDeclaredField(blockName);
+            return (Block)field.get(null);
+        } catch (NoSuchFieldException | IllegalAccessException exception) {
+            LOGGER.error("Block type {} not supported", blockName, exception);
+            return Registry.BLOCK.getOrDefault(new ResourceLocation(blockName));
+        }
     }
 }
