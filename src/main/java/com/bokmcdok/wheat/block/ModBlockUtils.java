@@ -69,6 +69,7 @@ public class ModBlockUtils {
     public static final SmallStoneBlock granite_stone = null;
     public static final SmallStoneBlock diorite_stone = null;
     public static final SmallStoneBlock andesite_stone = null;
+    public static final SmallStoneBlock small_sandstone = null;
 
     /**
      * Vegetables
@@ -133,6 +134,7 @@ public class ModBlockUtils {
                 new SmallStoneBlock().setRegistryName(WheatMod.MOD_ID, "granite_stone"),
                 new SmallStoneBlock().setRegistryName(WheatMod.MOD_ID, "diorite_stone"),
                 new SmallStoneBlock().setRegistryName(WheatMod.MOD_ID, "andesite_stone"),
+                new SmallStoneBlock().setRegistryName(WheatMod.MOD_ID, "small_sandstone"),
 
                 //  Vegetabls
                 new ModCropsBlock(ModItemUtils.tomato_seeds, "tomato"),

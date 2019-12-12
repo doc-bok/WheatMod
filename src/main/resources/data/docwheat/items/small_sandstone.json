@@ -1,7 +1,7 @@
 {
     "type": "block",
     "group": "decorations",
-    "block": "docwheat:small_cobblestone",
+    "block": "docwheat:small_sandstone",
     "throwing": {
         "velocity": 0.5,
         "offset": -20.0,
