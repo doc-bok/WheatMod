@@ -2,7 +2,8 @@ package com.bokmcdok.wheat.data;
 
 import com.bokmcdok.wheat.block.ModBlockUtils;
 import com.bokmcdok.wheat.item.ModItem;
-import com.bokmcdok.wheat.item.ModThrowableItem;
+import com.bokmcdok.wheat.item.ModBlockItem;
+import com.bokmcdok.wheat.item.ModItemImpl;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Maps;
 import com.google.gson.JsonArray;
@@ -24,12 +25,14 @@ import net.minecraft.potion.EffectInstance;
 import net.minecraft.resources.IResourceManager;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.registry.Registry;
 import net.minecraftforge.common.ToolType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.Map;
+import java.util.Optional;
 
 public class ModItemManager {
     private static final Logger LOGGER = LogManager.getLogger();
@@ -42,8 +45,7 @@ public class ModItemManager {
     private enum ItemType {
         ITEM,
         BLOCK,
-        BLOCK_NAMED,
-        THROWABLE
+        BLOCK_NAMED
     }
 
     /**
@@ -106,7 +108,7 @@ public class ModItemManager {
      * @return A new instance of the item.
      */
     private Item deserializeItem(JsonObject json) {
-        Item.Properties properties = new Item.Properties();
+        ModItemImpl.ModItemProperties properties = new ModItemImpl.ModItemProperties();
 
         if (JSONUtils.hasField(json, "max_stack_size")) {
             int maxStackSize = JSONUtils.getInt(json, "max_stack_size");
@@ -161,6 +163,34 @@ public class ModItemManager {
             properties.food(deserializeFood(food));
         }
 
+        if (JSONUtils.hasField(json, "throwing")) {
+            JsonObject throwing = JSONUtils.getJsonObject(json, "throwing");
+            float velocity = JSONUtils.getFloat(throwing, "velocity");
+            float offset = JSONUtils.getFloat(throwing, "offset");
+            float inaccuracy = JSONUtils.getFloat(throwing, "inaccuracy");
+
+            properties.setThrowing(offset, velocity, inaccuracy);
+
+            if (JSONUtils.hasField(throwing, "sound")) {
+                String sound = JSONUtils.getString(throwing, "sound");
+                float volume = 0.5f;
+                float pitch = 0.4f;
+
+                if (JSONUtils.hasField(throwing, "volume")) {
+                    volume = JSONUtils.getFloat(throwing, "volume");
+                }
+
+                if (JSONUtils.hasField(throwing, "volume")) {
+                    pitch = JSONUtils.getFloat(throwing, "volume");
+                }
+
+                Optional<SoundEvent> event = Registry.SOUND_EVENT.getValue(new ResourceLocation(sound));
+                if (event.isPresent()) {
+                    properties.setThrowingSound(event.get(), volume, pitch);
+                }
+            }
+        }
+
         String typeValue = JSONUtils.getString(json, "type");
         ItemType type = ItemType.valueOf(typeValue.toUpperCase());
 
@@ -170,17 +200,12 @@ public class ModItemManager {
 
             case BLOCK: {
                 String blockName = JSONUtils.getString(json, "block");
-                return new BlockItem(getModBlock(blockName), properties);
+                return new ModBlockItem(getModBlock(blockName), properties);
             }
 
             case BLOCK_NAMED: {
                 String blockName = JSONUtils.getString(json, "block");
                 return new BlockNamedItem(getModBlock(blockName), properties);
-            }
-
-            case THROWABLE: {
-                String blockName = JSONUtils.getString(json, "block");
-                return new ModThrowableItem(getModBlock(blockName), properties);
             }
 
             default:

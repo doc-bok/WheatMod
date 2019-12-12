@@ -17,7 +17,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class StoneEntity extends ProjectileItemEntity {
+public class ThrownItemEntity extends ProjectileItemEntity {
 
     private ItemStack stone = null;
 
@@ -26,7 +26,7 @@ public class StoneEntity extends ProjectileItemEntity {
      * @param type The type of entity to create
      * @param world The current world
      */
-    public StoneEntity(EntityType<? extends StoneEntity> type, World world) {
+    ThrownItemEntity(EntityType<? extends ThrownItemEntity> type, World world) {
         super(type, world);
     }
 
@@ -35,20 +35,8 @@ public class StoneEntity extends ProjectileItemEntity {
      * @param worldIn The current world
      * @param throwerIn The entity that threw the stone
      */
-    public StoneEntity(World worldIn, LivingEntity throwerIn) {
+    public ThrownItemEntity(World worldIn, LivingEntity throwerIn) {
         super(EntityType.SNOWBALL, throwerIn, worldIn);
-    }
-
-    /**
-     * Construction
-     * @param worldIn The current world
-     * @param x The x-position
-     * @param y The y-position
-     * @param z The z-position
-     */
-    public StoneEntity(World worldIn, double x, double y, double z) {
-        super(EntityType.SNOWBALL, x, y, z, worldIn);
-
     }
 
     /**
@@ -107,6 +95,6 @@ public class StoneEntity extends ProjectileItemEntity {
     @OnlyIn(Dist.CLIENT)
     private IParticleData func_213887_n() {
         ItemStack itemstack = this.func_213882_k();
-        return (IParticleData)(itemstack.isEmpty() ? ParticleTypes.ITEM_SNOWBALL : new ItemParticleData(ParticleTypes.ITEM, itemstack));
+        return (itemstack.isEmpty() ? ParticleTypes.ITEM_SNOWBALL : new ItemParticleData(ParticleTypes.ITEM, itemstack));
     }
 }
