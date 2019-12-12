@@ -1,5 +1,10 @@
 {
     "type": "block_named",
     "group": "misc",
-    "block": "durum"
+    "block": "docwheat:durum",
+    "color": {
+        "r": 179,
+        "g": 245,
+        "b": 89
+    }
 }

@@ -1,4 +1,9 @@
 {
     "type": "item",
-    "group": "food"
+    "group": "food",
+    "color": {
+        "r": 245,
+        "g": 244,
+        "b": 178
+    }
 }

@@ -1,5 +1,10 @@
 {
     "type": "block",
     "group": "buildingBlocks",
-    "block": "docwheat:common_straw_bale"
+    "block": "docwheat:common_straw_bale",
+    "color": {
+        "r": 245,
+        "g": 222,
+        "b": 89
+    }
 }

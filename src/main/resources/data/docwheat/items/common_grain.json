@@ -1,5 +1,10 @@
 {
     "type": "block_named",
     "group": "misc",
-    "block": "common_wheat"
+    "block": "docwheat:common_wheat",
+    "color": {
+        "r": 245,
+        "g": 222,
+        "b": 89
+    }
 }

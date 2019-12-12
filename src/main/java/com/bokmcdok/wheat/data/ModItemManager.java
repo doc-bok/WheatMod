@@ -1,21 +1,26 @@
 package com.bokmcdok.wheat.data;
 
 import com.bokmcdok.wheat.block.ModBlockUtils;
+import com.bokmcdok.wheat.item.IModItem;
+import com.bokmcdok.wheat.item.ModBlockNamedItem;
 import com.bokmcdok.wheat.item.ModItem;
 import com.bokmcdok.wheat.item.ModBlockItem;
 import com.bokmcdok.wheat.item.ModItemImpl;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map.Entry;
 
 import com.google.gson.JsonParseException;
 import net.minecraft.block.Block;
-import net.minecraft.item.BlockNamedItem;
+import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.item.Food;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -26,6 +31,8 @@ import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.world.FoliageColors;
+import net.minecraft.world.GrassColors;
 import net.minecraftforge.common.ToolType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -38,7 +45,7 @@ public class ModItemManager {
     private static final String ITEMS_FOLDER = "items";
     private static final String CONTAINERS_FOLDER = "containers";
     private ModEffectManager mEffectManager = new ModEffectManager();
-    private Map<ResourceLocation, Item> mContainerItems = ImmutableMap.of();
+    private Map<ResourceLocation, IModItem> mItems = ImmutableMap.of();
     private ModJsonLoader mJsonLoader = new ModJsonLoader();
 
     private enum ItemType {
@@ -48,11 +55,21 @@ public class ModItemManager {
     }
 
     /**
-     * Get the list of items to register.
+     * Get the list of items to access properties.
      * @return An array of items to register with Forge.
      */
-    public Item[] getItems() {
-        return mContainerItems.values().toArray(new Item[0]);
+    public IModItem[] getItems() {
+        return mItems.values().toArray(new IModItem[0]);
+    }
+
+    /**
+     * Get an array
+     * @return An array of items to register with Forge.
+     */
+    public Item[] getAsItems() {
+        List<IModItem> values = new ArrayList(mItems.values());
+        List<Item> converted = Lists.transform(values, i -> i.asItem());
+        return converted.toArray(new Item[0]);
     }
 
     /**
@@ -63,7 +80,7 @@ public class ModItemManager {
         //  Load effects
         mEffectManager.loadEffects(resourceManager);
 
-        mContainerItems = Maps.newHashMap();
+        mItems = Maps.newHashMap();
 
         //  Load container items
         loadItems(resourceManager, CONTAINERS_FOLDER);
@@ -71,7 +88,7 @@ public class ModItemManager {
         //  Load other items
         loadItems(resourceManager, ITEMS_FOLDER);
 
-        LOGGER.info("Loaded {} items", mContainerItems.values().size());
+        LOGGER.info("Loaded {} items", mItems.values().size());
     }
 
     /**
@@ -86,14 +103,14 @@ public class ModItemManager {
             if (resourceLocation.getPath().startsWith("_")) { continue; }
 
             try {
-                Item item = deserializeItem(entry.getValue());
+                IModItem item = deserializeItem(entry.getValue());
                 if (item == null) {
                     LOGGER.info("Skipping loading item {} as it's serializer returned null", resourceLocation);
                     continue;
                 }
 
-                item.setRegistryName(resourceLocation);
-                mContainerItems.put(resourceLocation, item);
+                item.asItem().setRegistryName(resourceLocation);
+                mItems.put(resourceLocation, item);
 
             } catch (IllegalArgumentException | JsonParseException exception) {
                 LOGGER.error("Parsing error loading item {}", resourceLocation, exception);
@@ -106,7 +123,7 @@ public class ModItemManager {
      * @param json The JSON data from the file.
      * @return A new instance of the item.
      */
-    private Item deserializeItem(JsonObject json) {
+    private IModItem deserializeItem(JsonObject json) {
         ModItemImpl.ModItemProperties properties = new ModItemImpl.ModItemProperties();
 
         if (JSONUtils.hasField(json, "max_stack_size")) {
@@ -145,6 +162,41 @@ public class ModItemManager {
             properties.containerItem(container);
         }
 
+        deserializeTools(json, properties);
+        deserializeFood(json, properties);
+        deserializeThrowing(json, properties);
+        deserializeColor(json, properties);
+
+        //  Create the right item type
+        String typeValue = JSONUtils.getString(json, "type");
+        ItemType type = ItemType.valueOf(typeValue.toUpperCase());
+
+        switch (type) {
+            case ITEM:
+                return new ModItem(properties);
+
+            case BLOCK: {
+                String blockName = JSONUtils.getString(json, "block");
+                return new ModBlockItem(getModBlock(blockName), properties);
+            }
+
+            case BLOCK_NAMED: {
+                String blockName = JSONUtils.getString(json, "block");
+                return new ModBlockNamedItem(getModBlock(blockName), properties);
+            }
+
+            default:
+                LOGGER.info("Item type {} not supported", typeValue);
+                return null;
+        }
+    }
+
+    /**
+     * Deserialize tool properties on items.
+     * @param json The JSON object from the file
+     * @param properties The properties to set.
+     */
+    private void deserializeTools(JsonObject json, ModItemImpl.ModItemProperties properties) {
         if (JSONUtils.hasField(json, "tool_types")) {
             JsonArray toolTypes = JSONUtils.getJsonArray(json, "tool_types");
             for (JsonElement tool : toolTypes) {
@@ -156,12 +208,79 @@ public class ModItemManager {
                 properties.addToolType(toolType, level);
             }
         }
+    }
 
+    /**
+     * Convert a JSON object to a Food instance.
+     * @param json The JSON object from the item file.
+     * @return A new instance of Food.
+     */
+    private void deserializeFood(JsonObject json, ModItemImpl.ModItemProperties properties) {
         if (JSONUtils.hasField(json, "food")) {
             JsonObject food = JSONUtils.getJsonObject(json, "food");
-            properties.food(deserializeFood(food));
-        }
+            Food.Builder builder = new Food.Builder();
 
+            if (JSONUtils.hasField(food, "hunger")) {
+                int hunger = JSONUtils.getInt(food, "hunger");
+                builder.hunger(hunger);
+            }
+
+            if (JSONUtils.hasField(food, "saturation")) {
+                float saturation = JSONUtils.getFloat(food, "saturation");
+                builder.saturation(saturation);
+            }
+
+            if (JSONUtils.hasField(food, "meat")) {
+                boolean meat = JSONUtils.getBoolean(food, "meat");
+                if (meat) {
+                    builder.meat();
+                }
+            }
+
+            if (JSONUtils.hasField(food, "always_edible")) {
+                boolean alwaysEdible = JSONUtils.getBoolean(food, "always_edible");
+                if (alwaysEdible) {
+                    builder.setAlwaysEdible();
+                }
+            }
+
+            if (JSONUtils.hasField(food, "fast_to_eat")) {
+                boolean fastToEat = JSONUtils.getBoolean(food, "fast_to_eat");
+                if (fastToEat) {
+                    builder.fastToEat();
+                }
+            }
+
+            if (JSONUtils.hasField(food, "effects")) {
+                JsonArray effects = JSONUtils.getJsonArray(food, "effects");
+                for (JsonElement effect : effects) {
+                    JsonObject effectAsJsonObject = effect.getAsJsonObject();
+
+                    String effectName = JSONUtils.getString(effectAsJsonObject, "effect_type");
+                    ResourceLocation location = new ResourceLocation(effectName);
+
+                    float probability = 1.0f;
+                    if (JSONUtils.hasField(effectAsJsonObject, "probability")) {
+                        probability = JSONUtils.getFloat(effectAsJsonObject, "probability");
+                    }
+
+                    EffectInstance effectInstance = mEffectManager.getEffect(location);
+                    if (effectInstance != null) {
+                        builder.effect(effectInstance, probability);
+                    }
+                }
+            }
+
+            properties.food(builder.build());
+        }
+    }
+
+    /**
+     * Deserialize throwing properties on items.
+     * @param json The JSON object from the file
+     * @param properties The properties to set.
+     */
+    private void deserializeThrowing(JsonObject json, ModItemImpl.ModItemProperties properties) {
         if (JSONUtils.hasField(json, "throwing")) {
             JsonObject throwing = JSONUtils.getJsonObject(json, "throwing");
             float velocity = JSONUtils.getFloat(throwing, "velocity");
@@ -189,84 +308,52 @@ public class ModItemManager {
                 }
             }
         }
-
-        String typeValue = JSONUtils.getString(json, "type");
-        ItemType type = ItemType.valueOf(typeValue.toUpperCase());
-
-        switch (type) {
-            case ITEM:
-                return new ModItem(properties);
-
-            case BLOCK: {
-                String blockName = JSONUtils.getString(json, "block");
-                return new ModBlockItem(getModBlock(blockName), properties);
-            }
-
-            case BLOCK_NAMED: {
-                String blockName = JSONUtils.getString(json, "block");
-                return new BlockNamedItem(getModBlock(blockName), properties);
-            }
-
-            default:
-                LOGGER.info("Item type {} not supported", typeValue);
-                return null;
-        }
     }
 
     /**
-     * Convert a JSON object to a Food instance.
-     * @param json The JSON object from the item file.
-     * @return A new instance of Food.
+     * Deserialize the color of an item
+     * @param json The JSON object from the file
+     * @param properties The properties to set.
      */
-    private Food deserializeFood(JsonObject json) {
-        Food.Builder builder = new Food.Builder();
+    private void deserializeColor(JsonObject json, ModItemImpl.ModItemProperties properties) {
+        if (JSONUtils.hasField(json, "color")) {
+            JsonObject color = JSONUtils.getJsonObject(json, "color");
+            if (JSONUtils.hasField(color, "r")) {
+                int r = JSONUtils.getInt(color, "r");
+                int g = JSONUtils.getInt(color, "g");
+                int b = JSONUtils.getInt(color, "b");
 
-        if (JSONUtils.hasField(json, "hunger")) {
-            int hunger = JSONUtils.getInt(json, "hunger");
-            builder.hunger(hunger);
-        }
+                IItemColor itemColor = (item, state) -> (r & 255) << 16 | (g & 255) << 8 | b & 255;
+                properties.setColor(itemColor);
+            } else {
+                String type = JSONUtils.getString(color, "type");
+                if ("spruce".equals(type)) {
+                    IItemColor itemColor = (item, state) -> FoliageColors.getSpruce();
+                    properties.setColor(itemColor);
+                } else if ("birch".equals(type)) {
+                    IItemColor itemColor = (item, state) -> FoliageColors.getBirch();
+                    properties.setColor(itemColor);
+                } else if ("oak".equals(type)) {
+                    IItemColor itemColor = (item, state) -> FoliageColors.getDefault();
+                    properties.setColor(itemColor);
+                } else if ("foliage".equals(type)) {
+                    float temperature = JSONUtils.getFloat(color, "temperature");
+                    float humidity = JSONUtils.getFloat(color, "humidity");
 
-        if (JSONUtils.hasField(json, "saturation")) {
-            float saturation = JSONUtils.getFloat(json, "saturation");
-            builder.saturation(saturation);
-        }
+                    IItemColor itemColor = (item, state) -> { return FoliageColors.get(temperature, humidity); };
+                    properties.setColor(itemColor);
+                } else if ("grass".equals(type)) {
+                    float temperature = JSONUtils.getFloat(color, "temperature");
+                    float humidity = JSONUtils.getFloat(color, "humidity");
 
-        if (JSONUtils.hasField(json, "meat")) {
-            boolean meat = JSONUtils.getBoolean(json, "meat");
-            if (meat) { builder.meat(); }
-        }
+                    IItemColor itemColor = (item, state) -> {
+                        return GrassColors.get(temperature, humidity);
+                    };
 
-        if (JSONUtils.hasField(json, "always_edible")) {
-            boolean alwaysEdible = JSONUtils.getBoolean(json, "always_edible");
-            if (alwaysEdible) { builder.setAlwaysEdible(); }
-        }
-
-        if (JSONUtils.hasField(json, "fast_to_eat")) {
-            boolean fastToEat = JSONUtils.getBoolean(json, "fast_to_eat");
-            if (fastToEat) { builder.fastToEat(); }
-        }
-
-        if (JSONUtils.hasField(json, "effects")) {
-            JsonArray effects = JSONUtils.getJsonArray(json, "effects");
-            for (JsonElement effect : effects) {
-                JsonObject effectAsJsonObject = effect.getAsJsonObject();
-
-                String effectName = JSONUtils.getString(effectAsJsonObject, "effect_type");
-                ResourceLocation location = new ResourceLocation(effectName);
-
-                float probability = 1.0f;
-                if (JSONUtils.hasField(effectAsJsonObject, "probability")) {
-                    probability = JSONUtils.getFloat(effectAsJsonObject, "probability");
-                }
-
-                EffectInstance effectInstance = mEffectManager.getEffect(location);
-                if (effectInstance != null) {
-                    builder.effect(effectInstance, probability);
+                    properties.setColor(itemColor);
                 }
             }
         }
-
-        return builder.build();
     }
 
     /**
@@ -295,7 +382,7 @@ public class ModItemManager {
             return Registry.ITEM.getOrDefault(location);
         }
 
-        return mContainerItems.get(location);
+        return mItems.get(location).asItem();
     }
 
     /**

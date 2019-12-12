@@ -1,5 +1,10 @@
 {
     "type": "block_named",
     "group": "misc",
-    "block": "wild_emmer"
+    "block": "docwheat:wild_emmer",
+    "color": {
+        "type": "grass",
+        "temperature": 0.5,
+        "humidity": 1.0
+    }
 }

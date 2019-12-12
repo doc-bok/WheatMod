@@ -1,6 +1,7 @@
 package com.bokmcdok.wheat.item;
 
 import com.bokmcdok.wheat.entity.ThrownItemEntity;
+import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -28,6 +29,12 @@ public class ModItemImpl {
     private float mThrowingVelocity;
     private float mThrowingInaccuracy;
 
+    private IItemColor mColor;
+
+    /**
+     * Construction
+     * @param properties The modded properties for the item.
+     */
     ModItemImpl(ModItemProperties properties) {
         mThrowingSound = properties.mThrowingSound;
         mThrowingVolume = properties.mThrowingVolume;
@@ -36,7 +43,15 @@ public class ModItemImpl {
         mThrowingOffset = properties.mThrowingOffset;
         mThrowingVelocity = properties.mThrowingVelocity;
         mThrowingInaccuracy = properties.mThrowingInaccuracy;
+
+        mColor = properties.mColor;
     }
+
+    /**
+     * Get the item's color
+     * @return The color of the item.
+     */
+    public IItemColor getColor() { return  mColor; }
 
     /**
      * Called when the player finishes using this Item (E.g. finishes eating.). Not called when the player stops using
@@ -118,6 +133,8 @@ public class ModItemImpl {
         private float mThrowingVelocity = 0.0f;
         private float mThrowingInaccuracy = 0.0f;
 
+        private IItemColor mColor = null;
+
         public void setThrowing(float offset, float velocity, float inaccuracy) {
             mThrowingOffset = offset;
             mThrowingVelocity = velocity;
@@ -128,6 +145,10 @@ public class ModItemImpl {
             mThrowingSound = event;
             mThrowingVolume = volume;
             mThrowingPitch = pitch;
+        }
+
+        public void setColor(IItemColor color) {
+            mColor = color;
         }
     }
 }

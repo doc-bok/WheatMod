@@ -1,5 +1,10 @@
 {
     "type": "block_named",
     "group": "misc",
-    "block": "spelt"
+    "block": "docwheat:spelt",
+    "color": {
+        "r": 230,
+        "g": 230,
+        "b": 44
+    }
 }

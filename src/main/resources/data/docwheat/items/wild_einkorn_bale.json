@@ -1,5 +1,10 @@
 {
     "type": "block",
     "group": "buildingBlocks",
-    "block": "docwheat:wild_einkorn_bale"
+    "block": "docwheat:wild_einkorn_bale",
+    "color": {
+        "type": "grass",
+        "temperature": 0.5,
+        "humidity": 1.0
+    }
 }

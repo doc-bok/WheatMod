@@ -1,5 +1,10 @@
 {
     "type": "block",
     "group": "decorations",
-    "block": "docwheat:emmer_straw_mat"
+    "block": "docwheat:emmer_straw_mat",
+    "color": {
+        "r": 222,
+        "g": 245,
+        "b": 89
+    }
 }

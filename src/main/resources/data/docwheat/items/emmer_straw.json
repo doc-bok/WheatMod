@@ -1,4 +1,9 @@
 {
     "type": "item",
-    "group": "misc"
+    "group": "misc",
+    "color": {
+        "r": 222,
+        "g": 245,
+        "b": 89
+    }
 }

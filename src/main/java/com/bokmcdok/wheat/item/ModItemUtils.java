@@ -1,7 +1,6 @@
 package com.bokmcdok.wheat.item;
 
 import com.bokmcdok.wheat.block.ModBlockUtils;
-import com.bokmcdok.wheat.color.ModItemColors;
 import com.bokmcdok.wheat.WheatMod;
 import com.bokmcdok.wheat.data.ModItemManager;
 import com.bokmcdok.wheat.data.ModResourceManager;
@@ -119,6 +118,9 @@ public class ModItemUtils
     public static Ingredient FLOUR_ITEMS = null;
     public static Ingredient GRAIN_ITEMS = null;
 
+    private static ModResourceManager RESOURCE_MANAGER = new ModResourceManager(ResourcePackType.SERVER_DATA, WheatMod.MOD_ID);
+    private static ModItemManager ITEM_MANAGER = new ModItemManager();
+
     /**
      * Register all items used by the mod
      * @param event The item registry event
@@ -126,12 +128,8 @@ public class ModItemUtils
     @SubscribeEvent
     public static void registerItems(RegistryEvent.Register<Item> event)
     {
-        //  TODO: This should be moved to a more centralised location.
-        ModResourceManager modResourceManager = new ModResourceManager(ResourcePackType.SERVER_DATA, WheatMod.MOD_ID);
-        ModItemManager itemManager = new ModItemManager();
-        itemManager.loadItems(modResourceManager);
-
-        event.getRegistry().registerAll(itemManager.getItems());
+        ITEM_MANAGER.loadItems(RESOURCE_MANAGER);
+        event.getRegistry().registerAll(ITEM_MANAGER.getAsItems());
     }
 
     /**
@@ -141,50 +139,14 @@ public class ModItemUtils
     @SubscribeEvent
     public static void registerBlockColourHandlers(ColorHandlerEvent.Item event)
     {
-        final ItemColors blockColors = event.getItemColors();
+        IModItem[] items = ITEM_MANAGER.getItems();
+        final ItemColors itemColors = event.getItemColors();
 
-        blockColors.register(ModItemColors.WILD_EINKORN, wild_einkorn_grain);
-        blockColors.register(ModItemColors.WILD_EINKORN, wild_einkorn_hay);
-        blockColors.register(ModItemColors.WILD_EINKORN, wild_einkorn_bale);
-
-        blockColors.register(ModItemColors.COMMON_WHEAT, common_grain);
-        blockColors.register(ModItemColors.COMMON_WHEAT, common_straw);
-        blockColors.register(ModItemColors.COMMON_WHEAT, common_straw_bale);
-        blockColors.register(ModItemColors.COMMON_WHEAT, common_thatch);
-        blockColors.register(ModItemColors.COMMON_WHEAT, common_straw_mat);
-        blockColors.register(ModItemColors.COMMON_FLOUR, common_flour);
-
-        blockColors.register(ModItemColors.EINKORN, einkorn_grain);
-        blockColors.register(ModItemColors.EINKORN, einkorn_straw);
-        blockColors.register(ModItemColors.EINKORN, einkorn_straw_bale);
-        blockColors.register(ModItemColors.EINKORN, einkorn_thatch);
-        blockColors.register(ModItemColors.EINKORN, einkorn_straw_mat);
-
-        blockColors.register(ModItemColors.WILD_EMMER, wild_emmer_grain);
-        blockColors.register(ModItemColors.WILD_EMMER, wild_emmer_hay);
-
-        blockColors.register(ModItemColors.EMMER, emmer_grain);
-        blockColors.register(ModItemColors.EMMER, emmer_straw);
-        blockColors.register(ModItemColors.EMMER, emmer_straw_bale);
-        blockColors.register(ModItemColors.EMMER, emmer_thatch);
-        blockColors.register(ModItemColors.EMMER, emmer_straw_mat);
-
-        blockColors.register(ModItemColors.DURUM, durum_grain);
-        blockColors.register(ModItemColors.DURUM, durum_straw);
-        blockColors.register(ModItemColors.DURUM, durum_straw_bale);
-        blockColors.register(ModItemColors.DURUM, durum_thatch);
-        blockColors.register(ModItemColors.DURUM, durum_straw_mat);
-        blockColors.register(ModItemColors.DURUM_FLOUR, durum_flour);
-
-        blockColors.register(ModItemColors.SPELT, spelt_grain);
-        blockColors.register(ModItemColors.SPELT, spelt_straw);
-        blockColors.register(ModItemColors.SPELT, spelt_straw_bale);
-        blockColors.register(ModItemColors.SPELT, spelt_thatch);
-        blockColors.register(ModItemColors.SPELT, spelt_straw_mat);
-        blockColors.register(ModItemColors.SPELT_FLOUR, spelt_flour);
-
-        blockColors.register(ModItemColors.TOMATO_SEEDS, tomato_seeds);
-
+        for (IModItem i : items) {
+            if (i.getColor() != null) {
+                itemColors.register(i.getColor(), i.asItem());
+            }
+        }
     }
 
     /**
