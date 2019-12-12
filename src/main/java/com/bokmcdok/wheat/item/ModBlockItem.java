@@ -29,6 +29,12 @@ public class ModBlockItem extends BlockItem implements IModItem {
     public IItemColor getColor() { return  mImpl.getColor(); }
 
     /**
+     * Get the chance an item will compost in the harvester.
+     * @return A probability between 0 and 1
+     */
+    public float getCompostChance() { return mImpl.getCompostChance(); }
+
+    /**
      * Allows handling of data driven throwing items.
      * @param world The current world.
      * @param player The player that owns the item.

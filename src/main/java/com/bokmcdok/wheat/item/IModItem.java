@@ -7,4 +7,5 @@ public interface IModItem {
     Item asItem();
 
     IItemColor getColor();
+    float getCompostChance();
 }

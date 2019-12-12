@@ -162,6 +162,11 @@ public class ModItemManager {
             properties.containerItem(container);
         }
 
+        if (JSONUtils.hasField(json, "compost_chance")) {
+            float compostChance = JSONUtils.getFloat(json, "compost_chance");
+            properties.compostChance(compostChance);
+        }
+
         deserializeTools(json, properties);
         deserializeFood(json, properties);
         deserializeThrowing(json, properties);
@@ -287,7 +292,7 @@ public class ModItemManager {
             float offset = JSONUtils.getFloat(throwing, "offset");
             float inaccuracy = JSONUtils.getFloat(throwing, "inaccuracy");
 
-            properties.setThrowing(offset, velocity, inaccuracy);
+            properties.throwing(offset, velocity, inaccuracy);
 
             if (JSONUtils.hasField(throwing, "sound")) {
                 String sound = JSONUtils.getString(throwing, "sound");
@@ -304,7 +309,7 @@ public class ModItemManager {
 
                 Optional<SoundEvent> event = Registry.SOUND_EVENT.getValue(new ResourceLocation(sound));
                 if (event.isPresent()) {
-                    properties.setThrowingSound(event.get(), volume, pitch);
+                    properties.throwingSound(event.get(), volume, pitch);
                 }
             }
         }
@@ -324,24 +329,24 @@ public class ModItemManager {
                 int b = JSONUtils.getInt(color, "b");
 
                 IItemColor itemColor = (item, state) -> (r & 255) << 16 | (g & 255) << 8 | b & 255;
-                properties.setColor(itemColor);
+                properties.color(itemColor);
             } else {
                 String type = JSONUtils.getString(color, "type");
                 if ("spruce".equals(type)) {
                     IItemColor itemColor = (item, state) -> FoliageColors.getSpruce();
-                    properties.setColor(itemColor);
+                    properties.color(itemColor);
                 } else if ("birch".equals(type)) {
                     IItemColor itemColor = (item, state) -> FoliageColors.getBirch();
-                    properties.setColor(itemColor);
+                    properties.color(itemColor);
                 } else if ("oak".equals(type)) {
                     IItemColor itemColor = (item, state) -> FoliageColors.getDefault();
-                    properties.setColor(itemColor);
+                    properties.color(itemColor);
                 } else if ("foliage".equals(type)) {
                     float temperature = JSONUtils.getFloat(color, "temperature");
                     float humidity = JSONUtils.getFloat(color, "humidity");
 
                     IItemColor itemColor = (item, state) -> { return FoliageColors.get(temperature, humidity); };
-                    properties.setColor(itemColor);
+                    properties.color(itemColor);
                 } else if ("grass".equals(type)) {
                     float temperature = JSONUtils.getFloat(color, "temperature");
                     float humidity = JSONUtils.getFloat(color, "humidity");
@@ -350,7 +355,7 @@ public class ModItemManager {
                         return GrassColors.get(temperature, humidity);
                     };
 
-                    properties.setColor(itemColor);
+                    properties.color(itemColor);
                 }
             }
         }

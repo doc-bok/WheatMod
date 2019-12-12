@@ -28,6 +28,12 @@ public class ModItem extends Item implements IModItem {
     public IItemColor getColor() { return  mImpl.getColor(); }
 
     /**
+     * Get the chance an item will compost in the harvester.
+     * @return A probability between 0 and 1
+     */
+    public float getCompostChance() { return mImpl.getCompostChance(); }
+
+    /**
      * Called when the player finishes using this Item (E.g. finishes eating.). Not called when the player stops using
      * the Item before the action is complete. This is used for food that is contained in a bowl, for example.
      * @param stack The item stack to check.

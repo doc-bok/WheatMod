@@ -22,4 +22,10 @@ public class ModBlockNamedItem extends BlockNamedItem implements IModItem {
      * @return The color of the item.
      */
     public IItemColor getColor() { return  mImpl.getColor(); }
+
+    /**
+     * Get the chance an item will compost in the harvester.
+     * @return A probability between 0 and 1
+     */
+    public float getCompostChance() { return mImpl.getCompostChance(); }
 }

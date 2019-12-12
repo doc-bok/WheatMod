@@ -31,6 +31,8 @@ public class ModItemImpl {
 
     private IItemColor mColor;
 
+    private float mCompostChance;
+
     /**
      * Construction
      * @param properties The modded properties for the item.
@@ -45,6 +47,8 @@ public class ModItemImpl {
         mThrowingInaccuracy = properties.mThrowingInaccuracy;
 
         mColor = properties.mColor;
+
+        mCompostChance = properties.mCompostChance;
     }
 
     /**
@@ -52,6 +56,12 @@ public class ModItemImpl {
      * @return The color of the item.
      */
     public IItemColor getColor() { return  mColor; }
+
+    /**
+     * Get the chance an item will compost in the harvester.
+     * @return A probability between 0 and 1
+     */
+    public float getCompostChance() { return mCompostChance; }
 
     /**
      * Called when the player finishes using this Item (E.g. finishes eating.). Not called when the player stops using
@@ -135,20 +145,24 @@ public class ModItemImpl {
 
         private IItemColor mColor = null;
 
-        public void setThrowing(float offset, float velocity, float inaccuracy) {
+        private float mCompostChance = 0.0f;
+
+        public void throwing(float offset, float velocity, float inaccuracy) {
             mThrowingOffset = offset;
             mThrowingVelocity = velocity;
             mThrowingInaccuracy = inaccuracy;
         }
 
-        public void setThrowingSound(SoundEvent event, float volume, float pitch) {
+        public void throwingSound(SoundEvent event, float volume, float pitch) {
             mThrowingSound = event;
             mThrowingVolume = volume;
             mThrowingPitch = pitch;
         }
 
-        public void setColor(IItemColor color) {
+        public void color(IItemColor color) {
             mColor = color;
         }
+
+        public void compostChance(float compostChance) { mCompostChance = compostChance; }
     }
 }

@@ -115,7 +115,6 @@ public class ModItemUtils
     public static Ingredient SEED_ITEMS = null;
     public static Ingredient BALE_ITEMS = null;
     public static Ingredient FISH_ITEMS = null;
-    public static Ingredient FLOUR_ITEMS = null;
     public static Ingredient GRAIN_ITEMS = null;
 
     private static ModResourceManager RESOURCE_MANAGER = new ModResourceManager(ResourcePackType.SERVER_DATA, WheatMod.MOD_ID);
@@ -156,37 +155,12 @@ public class ModItemUtils
     @SubscribeEvent
     public static void commonSetup(FMLCommonSetupEvent event)
     {
-        ComposterBlock.CHANCES.put(wild_einkorn_grain, 0.3f);
-        ComposterBlock.CHANCES.put(wild_einkorn_hay, 0.65f);
-        ComposterBlock.CHANCES.put(wild_einkorn_bale, 0.85f);
-
-        ComposterBlock.CHANCES.put(common_grain, 0.3f);
-        ComposterBlock.CHANCES.put(common_straw, 0.65f);
-        ComposterBlock.CHANCES.put(common_straw_bale, 0.85f);
-
-        ComposterBlock.CHANCES.put(einkorn_grain, 0.3f);
-        ComposterBlock.CHANCES.put(einkorn_straw, 0.65f);
-        ComposterBlock.CHANCES.put(einkorn_straw_bale, 0.85f);
-
-        ComposterBlock.CHANCES.put(wild_emmer_grain, 0.3f);
-        ComposterBlock.CHANCES.put(wild_emmer_hay, 0.65f);
-
-        ComposterBlock.CHANCES.put(emmer_grain, 0.3f);
-        ComposterBlock.CHANCES.put(emmer_straw, 0.65f);
-        ComposterBlock.CHANCES.put(emmer_straw_bale, 0.85f);
-
-        ComposterBlock.CHANCES.put(durum_grain, 0.3f);
-        ComposterBlock.CHANCES.put(durum_straw, 0.65f);
-        ComposterBlock.CHANCES.put(durum_straw_bale, 0.85f);
-
-        ComposterBlock.CHANCES.put(spelt_grain, 0.3f);
-        ComposterBlock.CHANCES.put(spelt_straw, 0.65f);
-        ComposterBlock.CHANCES.put(spelt_straw_bale, 0.85f);
-
-        ComposterBlock.CHANCES.put(tomato_seeds, 0.3f);
-        ComposterBlock.CHANCES.put(tomato, 0.65f);
-
-        FLOUR_ITEMS = Ingredient.fromItems(common_flour, durum_flour, spelt_flour);
+        IModItem[] items = ITEM_MANAGER.getItems();
+        for (IModItem i : items) {
+            if (i.getCompostChance() > 0.0) {
+                ComposterBlock.CHANCES.put(i.asItem(), i.getCompostChance());
+            }
+        }
 
         WHEAT_ITEMS = Ingredient.fromItems(
                 wild_einkorn_hay, common_straw, einkorn_straw,
