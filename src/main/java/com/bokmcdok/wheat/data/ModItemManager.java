@@ -396,12 +396,6 @@ public class ModItemManager {
      * @return The instance of the block.
      */
     private Block getModBlock(String blockName) {
-        try {
-            Field field = ModBlockUtils.class.getDeclaredField(blockName);
-            return (Block)field.get(null);
-        } catch (NoSuchFieldException | IllegalAccessException exception) {
-            LOGGER.error("Block type {} not supported", blockName, exception);
-            return Registry.BLOCK.getOrDefault(new ResourceLocation(blockName));
-        }
+        return Registry.BLOCK.getOrDefault(new ResourceLocation(blockName));
     }
 }
