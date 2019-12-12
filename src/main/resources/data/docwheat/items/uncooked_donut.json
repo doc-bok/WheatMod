@@ -1,13 +1,12 @@
 {
     "type": "item",
     "group": "food",
-    "registry_name": "uncooked_donut",
     "food": {
         "hunger": 7,
         "saturation": 5.0,
         "effects": [
             {
-                "effect_type": "food_poisoning",
+                "effect_type": "docwheat:food_poisoning",
                 "probability": 0.3
             }
         ]

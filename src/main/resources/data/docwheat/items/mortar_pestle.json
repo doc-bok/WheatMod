@@ -1,7 +1,6 @@
 {
-    "type": "durable",
+    "type": "item",
     "group": "tools",
-    "registry_name": "mortar_pestle",
     "max_damage": 131,
     "repairable": false
 }

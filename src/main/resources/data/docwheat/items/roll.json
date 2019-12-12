@@ -1,7 +1,6 @@
 {
     "type": "item",
     "group": "food",
-    "registry_name": "roll",
     "food": {
         "hunger": 1,
         "saturation": 2.0,

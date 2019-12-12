@@ -1,12 +1,11 @@
 package com.bokmcdok.wheat.data;
 
 import com.bokmcdok.wheat.block.ModBlockUtils;
-import com.bokmcdok.wheat.item.ModDurableItem;
 import com.bokmcdok.wheat.item.ModItem;
-import com.bokmcdok.wheat.item.ModItemUtils;
-import com.bokmcdok.wheat.item.ModThrowableItem;
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Sets;
+import com.bokmcdok.wheat.item.ModBlockItem;
+import com.bokmcdok.wheat.item.ModItemImpl;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Maps;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -16,51 +15,73 @@ import java.util.Map.Entry;
 
 import com.google.gson.JsonParseException;
 import net.minecraft.block.Block;
-import net.minecraft.item.BlockItem;
 import net.minecraft.item.BlockNamedItem;
 import net.minecraft.item.Food;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
-import net.minecraft.item.Items;
 import net.minecraft.item.Rarity;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.resources.IResourceManager;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.util.registry.Registry;
 import net.minecraftforge.common.ToolType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.Map;
-import java.util.Set;
+import java.util.Optional;
 
 public class ModItemManager {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final String ITEMS_FOLDER = "items";
+    private static final String CONTAINERS_FOLDER = "containers";
     private ModEffectManager mEffectManager = new ModEffectManager();
-    private Set<Item> mItems = ImmutableSet.of();
+    private Map<ResourceLocation, Item> mContainerItems = ImmutableMap.of();
+    private ModJsonLoader mJsonLoader = new ModJsonLoader();
 
     private enum ItemType {
         ITEM,
         BLOCK,
-        BLOCK_NAMED,
-        DURABLE,
-        THROWABLE
+        BLOCK_NAMED
     }
 
+    /**
+     * Get the list of items to register.
+     * @return An array of items to register with Forge.
+     */
     public Item[] getItems() {
-        return mItems.toArray(new Item[0]);
+        return mContainerItems.values().toArray(new Item[0]);
     }
 
+    /**
+     * Load all the items from their data files.
+     * @param resourceManager The resource manager to use to get the JSON files.
+     */
     public void loadItems(IResourceManager resourceManager) {
+        //  Load effects
         mEffectManager.loadEffects(resourceManager);
 
-        ModJsonLoader jsonLoader = new ModJsonLoader();
-        Map<ResourceLocation, JsonObject> itemResources = jsonLoader.loadJsonResources(resourceManager, ITEMS_FOLDER);
+        mContainerItems = Maps.newHashMap();
 
-        mItems = Sets.newHashSet();
+        //  Load container items
+        loadItems(resourceManager, CONTAINERS_FOLDER);
 
-        for(Entry<ResourceLocation, JsonObject> entry : itemResources.entrySet()) {
+        //  Load other items
+        loadItems(resourceManager, ITEMS_FOLDER);
+
+        LOGGER.info("Loaded {} items", mContainerItems.values().size());
+    }
+
+    /**
+     * Load items from a specified folder.
+     * @param resourceManager The resource manager to use to get the JSON files.
+     * @param folder The folder to load from.
+     */
+    private void loadItems(IResourceManager resourceManager, String folder) {
+        Map<ResourceLocation, JsonObject> containerResources = mJsonLoader.loadJsonResources(resourceManager, folder);
+        for(Entry<ResourceLocation, JsonObject> entry : containerResources.entrySet()) {
             ResourceLocation resourceLocation = entry.getKey();
             if (resourceLocation.getPath().startsWith("_")) { continue; }
 
@@ -71,18 +92,22 @@ public class ModItemManager {
                     continue;
                 }
 
-                mItems.add(item);
+                item.setRegistryName(resourceLocation);
+                mContainerItems.put(resourceLocation, item);
 
             } catch (IllegalArgumentException | JsonParseException exception) {
                 LOGGER.error("Parsing error loading item {}", resourceLocation, exception);
             }
         }
-
-        LOGGER.info("Loaded {} items", mItems.size());
     }
 
+    /**
+     * Convert a JSON file to a Minecraft Item.
+     * @param json The JSON data from the file.
+     * @return A new instance of the item.
+     */
     private Item deserializeItem(JsonObject json) {
-        Item.Properties properties = new Item.Properties();
+        ModItemImpl.ModItemProperties properties = new ModItemImpl.ModItemProperties();
 
         if (JSONUtils.hasField(json, "max_stack_size")) {
             int maxStackSize = JSONUtils.getInt(json, "max_stack_size");
@@ -137,31 +162,49 @@ public class ModItemManager {
             properties.food(deserializeFood(food));
         }
 
-        String registryName = JSONUtils.getString(json, "registry_name");
+        if (JSONUtils.hasField(json, "throwing")) {
+            JsonObject throwing = JSONUtils.getJsonObject(json, "throwing");
+            float velocity = JSONUtils.getFloat(throwing, "velocity");
+            float offset = JSONUtils.getFloat(throwing, "offset");
+            float inaccuracy = JSONUtils.getFloat(throwing, "inaccuracy");
+
+            properties.setThrowing(offset, velocity, inaccuracy);
+
+            if (JSONUtils.hasField(throwing, "sound")) {
+                String sound = JSONUtils.getString(throwing, "sound");
+                float volume = 0.5f;
+                float pitch = 0.4f;
+
+                if (JSONUtils.hasField(throwing, "volume")) {
+                    volume = JSONUtils.getFloat(throwing, "volume");
+                }
+
+                if (JSONUtils.hasField(throwing, "volume")) {
+                    pitch = JSONUtils.getFloat(throwing, "volume");
+                }
+
+                Optional<SoundEvent> event = Registry.SOUND_EVENT.getValue(new ResourceLocation(sound));
+                if (event.isPresent()) {
+                    properties.setThrowingSound(event.get(), volume, pitch);
+                }
+            }
+        }
+
         String typeValue = JSONUtils.getString(json, "type");
         ItemType type = ItemType.valueOf(typeValue.toUpperCase());
 
         switch (type) {
             case ITEM:
-                return new ModItem(properties).setRegistryName(registryName);
+                return new ModItem(properties);
 
             case BLOCK: {
                 String blockName = JSONUtils.getString(json, "block");
-                return new BlockItem(getModBlock(blockName), properties).setRegistryName(registryName);
+                return new ModBlockItem(getModBlock(blockName), properties);
             }
 
             case BLOCK_NAMED: {
                 String blockName = JSONUtils.getString(json, "block");
-                return new BlockNamedItem(getModBlock(blockName), properties).setRegistryName(registryName);
-            }
-
-            case THROWABLE: {
-                String blockName = JSONUtils.getString(json, "block");
-                return new ModThrowableItem(getModBlock(blockName), properties).setRegistryName(registryName);
-            }
-
-            case DURABLE: {
-                return new ModDurableItem(properties).setRegistryName(registryName);
+                return new BlockNamedItem(getModBlock(blockName), properties);
             }
 
             default:
@@ -170,6 +213,11 @@ public class ModItemManager {
         }
     }
 
+    /**
+     * Convert a JSON object to a Food instance.
+     * @param json The JSON object from the item file.
+     * @return A new instance of Food.
+     */
     private Food deserializeFood(JsonObject json) {
         Food.Builder builder = new Food.Builder();
 
@@ -202,10 +250,16 @@ public class ModItemManager {
             JsonArray effects = JSONUtils.getJsonArray(json, "effects");
             for (JsonElement effect : effects) {
                 JsonObject effectAsJsonObject = effect.getAsJsonObject();
-                String effectName = JSONUtils.getString(effectAsJsonObject, "effect_type");
-                float probability = JSONUtils.getFloat(effectAsJsonObject, "probability");
 
-                EffectInstance effectInstance = mEffectManager.getEffect(effectName);
+                String effectName = JSONUtils.getString(effectAsJsonObject, "effect_type");
+                ResourceLocation location = new ResourceLocation(effectName);
+
+                float probability = 1.0f;
+                if (JSONUtils.hasField(effectAsJsonObject, "probability")) {
+                    probability = JSONUtils.getFloat(effectAsJsonObject, "probability");
+                }
+
+                EffectInstance effectInstance = mEffectManager.getEffect(location);
                 if (effectInstance != null) {
                     builder.effect(effectInstance, probability);
                 }
@@ -215,6 +269,11 @@ public class ModItemManager {
         return builder.build();
     }
 
+    /**
+     * Get the Item Group for an item.
+     * @param name The string name of an ItemGroup.
+     * @return The instance of an ItemGroup.
+     */
     private ItemGroup getItemGroup(String name) {
         for (ItemGroup group : ItemGroup.GROUPS) {
             if (group.getTabLabel().equals(name)) {
@@ -225,35 +284,32 @@ public class ModItemManager {
         throw new IllegalArgumentException("Invalid Item Group:" + name);
     }
 
+    /**
+     * Get the container for an item.
+     * @param containerItemName The name of the container.
+     * @return The instance of the container item.
+     */
     private Item getContainerItem(String containerItemName) {
-        if ("bucket".equals(containerItemName)) {
-            return Items.BUCKET;
+        ResourceLocation location = new ResourceLocation(containerItemName);
+        if ("minecraft".equals(location.getNamespace())) {
+            return Registry.ITEM.getOrDefault(location);
         }
 
-        if ("bowl".equals(containerItemName)) {
-            return Items.BOWL;
-        }
-
-        if ("bottle".equals(containerItemName)) {
-            return Items.GLASS_BOTTLE;
-        }
-
-        try {
-            Field field = ModItemUtils.class.getDeclaredField(containerItemName);
-            return (Item)field.get(null);
-        } catch (NoSuchFieldException | IllegalAccessException exception) {
-            LOGGER.error("Container type {} not supported", containerItemName, exception);
-            return null;
-        }
+        return mContainerItems.get(location);
     }
 
+    /**
+     * Get the mod block for a BlockItem or BlockNamedItem.
+     * @param blockName The registry name of a block.
+     * @return The instance of the block.
+     */
     private Block getModBlock(String blockName) {
         try {
             Field field = ModBlockUtils.class.getDeclaredField(blockName);
             return (Block)field.get(null);
         } catch (NoSuchFieldException | IllegalAccessException exception) {
             LOGGER.error("Block type {} not supported", blockName, exception);
-            return null;
+            return Registry.BLOCK.getOrDefault(new ResourceLocation(blockName));
         }
     }
 }

@@ -1,0 +1,38 @@
+{
+  "type": "block",
+  "block": "docwheat:emmer_wheat",
+  "max_stack_size": 64,
+  "default_max_damage": 600,
+  "max_damage": 600,
+  "group": "misc",
+  "rarity": "common",
+  "repairable": false,
+  "container": "minecraft:bucket",
+  "tool_types": [
+    {
+      "type": "axe",
+      "level": 2
+    }
+  ],
+  "food": {
+    "hunger": 1,
+    "saturation": 0.1,
+    "meat": true,
+    "always_edible": false,
+    "fast_to_eat": false,
+    "effects": [
+      {
+        "effect_type": "food_poisoning",
+        "probability": 0.3
+      }
+    ]
+  },
+  "throwing": {
+    "velocity": 0.5,
+    "offset": -20.0,
+    "inaccuracy": 1.0,
+    "sound": "minecraft:entity.splash_potion.throw",
+    "volume": 0.5,
+    "pitch": 0.4
+  }
+}

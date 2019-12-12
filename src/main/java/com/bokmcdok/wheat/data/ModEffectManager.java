@@ -19,12 +19,21 @@ import java.util.Optional;
 public class ModEffectManager {
     private static final Logger LOGGER = LogManager.getLogger();
     private static final String EFFECTS_FOLDER = "effects";
-    private Map<String, EffectInstance> mEffects = ImmutableMap.of();
+    private Map<ResourceLocation, EffectInstance> mEffects = ImmutableMap.of();
 
-    public EffectInstance getEffect(String effectName) {
-        return mEffects.get(effectName);
+    /**
+     * Returns an effect by its name
+     * @param location The location of the effect (same as the name of the json file).
+     * @return The instance of the effect.
+     */
+    public EffectInstance getEffect(ResourceLocation location) {
+        return mEffects.get(location);
     }
 
+    /**
+     * Loads all effect JSON files from the effects folder.
+     * @param resourceManager The resource manager to use to load the JSON files.
+     */
     public void loadEffects(IResourceManager resourceManager) {
         ModJsonLoader jsonLoader = new ModJsonLoader();
         Map<ResourceLocation, JsonObject> itemResources = jsonLoader.loadJsonResources(resourceManager, EFFECTS_FOLDER);
@@ -42,7 +51,7 @@ public class ModEffectManager {
                     continue;
                 }
 
-                mEffects.put(resourceLocation.getPath().substring(1), effect);
+                mEffects.put(resourceLocation, effect);
 
             } catch (IllegalArgumentException | JsonParseException exception) {
                 LOGGER.error("Parsing error loading item {}", resourceLocation, exception);
@@ -52,6 +61,11 @@ public class ModEffectManager {
         LOGGER.info("Loaded {} effect", mEffects.values().size());
     }
 
+    /**
+     * Converts a single JSON file to an effect instance.
+     * @param json The JSON data from the file.
+     * @return A new instance of the effect.
+     */
     private EffectInstance deserializeEffect(JsonObject json) {
         String effectType = JSONUtils.getString(json, "effect");
         ResourceLocation effectKey = new ResourceLocation(effectType);

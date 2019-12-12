@@ -1,6 +1,5 @@
 {
     "type": "block",
     "group": "decorations",
-    "registry_name": "durum_straw_mat",
-    "block": "durum_straw_mat"
+    "block": "docwheat:durum_straw_mat"
 }

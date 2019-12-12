@@ -1,7 +1,6 @@
 {
     "type": "item",
     "group": "food",
-    "registry_name": "burger",
     "food": {
         "hunger": 9,
         "saturation": 14.8,

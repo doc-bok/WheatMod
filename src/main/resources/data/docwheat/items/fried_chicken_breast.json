@@ -1,7 +1,6 @@
 {
     "type": "item",
     "group": "food",
-    "registry_name": "fried_chicken_breast",
     "food": {
         "hunger": 3,
         "saturation": 0.3,

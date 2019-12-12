@@ -1,8 +1,7 @@
 {
     "type": "item",
     "group": "food",
-    "registry_name": "porridge",
-    "container": "bowl",
+    "container": "minecraft:bowl",
     "food": {
         "hunger": 6,
         "saturation": 7.2

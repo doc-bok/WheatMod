@@ -1,8 +1,7 @@
 {
-    "type": "durable",
+    "type": "item",
     "group": "food",
-    "registry_name": "batter_bucket",
     "max_damage": 8,
     "repairable": false,
-    "container": "bucket"
+    "container": "minecraft:bucket"
 }

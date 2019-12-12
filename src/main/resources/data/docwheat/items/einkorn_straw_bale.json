@@ -1,6 +1,5 @@
 {
     "type": "block",
     "group": "buildingBlocks",
-    "registry_name": "einkorn_straw_bale",
-    "block": "einkorn_straw_bale"
+    "block": "docwheat:einkorn_straw_bale"
 }

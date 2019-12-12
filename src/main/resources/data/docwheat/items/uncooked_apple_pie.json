@@ -1,13 +1,12 @@
 {
     "type": "item",
     "group": "food",
-    "registry_name": "uncooked_apple_pie",
     "food": {
         "hunger": 13,
         "saturation": 10.4,
         "effects": [
             {
-                "effect_type": "food_poisoning",
+                "effect_type": "docwheat:food_poisoning",
                 "probability": 0.3
             }
         ]

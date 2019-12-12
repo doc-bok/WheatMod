@@ -1,6 +1,5 @@
 {
     "type": "block",
     "group": "buildingBlocks",
-    "registry_name": "common_thatch",
-    "block": "common_thatch"
+    "block": "docwheat:common_thatch"
 }

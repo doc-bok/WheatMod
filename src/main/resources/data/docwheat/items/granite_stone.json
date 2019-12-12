@@ -1,6 +1,10 @@
 {
-    "type": "throwable",
+    "type": "block",
     "group": "decorations",
-    "registry_name": "granite_stone",
-    "block": "granite_stone"
+    "block": "granite_stone",
+    "throwing": {
+        "velocity": 0.5,
+        "offset": -20.0,
+        "inaccuracy": 1.0
+    }
 }

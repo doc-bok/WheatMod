@@ -1,7 +1,6 @@
 {
     "type": "item",
     "group": "food",
-    "registry_name": "deep_fried_fish",
     "food": {
         "hunger": 6,
         "saturation": 7.0

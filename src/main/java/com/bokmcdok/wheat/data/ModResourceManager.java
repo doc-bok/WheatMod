@@ -28,6 +28,11 @@ public class ModResourceManager implements IResourceManager {
     private final Set<String> mResourceNamespaces = Sets.newLinkedHashSet();
     private final ResourcePackType mType;
 
+    /**
+     * Create a new ModResourceManager
+     * @param side Either client-side or server-side.
+     * @param modId The ID of the mod to relate this resource manager to.
+     */
     public ModResourceManager(ResourcePackType side, String modId) {
         mType = side;
 
@@ -36,11 +41,21 @@ public class ModResourceManager implements IResourceManager {
         addResourcePack(resourcePack);
     }
 
+    /**
+     * Get a list of resource namespaces.
+     * @return A set of namespaces.
+     */
     @Override
     public Set<String> getResourceNamespaces() {
         return mResourceNamespaces;
     }
 
+    /**
+     * Get a resource from a location.
+     * @param resourceLocation The location of the resource.
+     * @return The resource at the location.
+     * @throws IOException Thrown if file not found.
+     */
     @Override
     public IResource getResource(ResourceLocation resourceLocation) throws IOException {
         IResourceManager resourceManager = mNamespaceResourceManagers.get(resourceLocation.getNamespace());
@@ -51,12 +66,23 @@ public class ModResourceManager implements IResourceManager {
         }
     }
 
+    /**
+     * Check there is a resource at a location.
+     * @param resourceLocation The location to check.
+     * @return True if there is a resource at the specified location.
+     */
     @Override
     public boolean hasResource(ResourceLocation resourceLocation) {
         IResourceManager resourceManager = mNamespaceResourceManagers.get(resourceLocation.getNamespace());
         return resourceManager != null && resourceManager.hasResource(resourceLocation);
     }
 
+    /**
+     * Get all the resources at the specified location.
+     * @param resourceLocation The location to get the resources from.
+     * @return A list of resources.
+     * @throws IOException Thrown if location not found.
+     */
     @Override
     public List<IResource> getAllResources(ResourceLocation resourceLocation) throws IOException {
         IResourceManager resourceManager = mNamespaceResourceManagers.get(resourceLocation.getNamespace());
@@ -67,6 +93,12 @@ public class ModResourceManager implements IResourceManager {
         }
     }
 
+    /**
+     * Get all the resource locations at a specific path.
+     * @param path The path to get the locations from.
+     * @param filter A filter to only obtain specific resources (e.g. JSON files).s
+     * @return A list of resource locations at the path.
+     */
     @Override
     public Collection<ResourceLocation> getAllResourceLocations(String path, Predicate<String> filter) {
         Set<ResourceLocation> set = Sets.newHashSet();
@@ -80,6 +112,10 @@ public class ModResourceManager implements IResourceManager {
         return list;
     }
 
+    /**
+     * Add a resource pack to the resource manager.
+     * @param resourcePack The resource pack to add.
+     */
     @Override
     public void addResourcePack(IResourcePack resourcePack) {
         for(String s : resourcePack.getResourceNamespaces(mType)) {

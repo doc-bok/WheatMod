@@ -12,7 +12,7 @@ import net.minecraftforge.registries.ObjectHolder;
 @ObjectHolder(WheatMod.MOD_ID)
 public class ModEntityUtils {
 
-    public static final EntityType<StoneEntity> stone_entity = null;
+    public static final EntityType<ThrownItemEntity> stone_entity = null;
 
     /**
      * Register entities used by the mod
@@ -20,10 +20,8 @@ public class ModEntityUtils {
      */
     @SubscribeEvent
     public static void registerEntities(final RegistryEvent.Register<EntityType<?>> event) {
-
-
         event.getRegistry().registerAll(
-                EntityType.Builder.<StoneEntity>create(StoneEntity::new, EntityClassification.MISC)
+                EntityType.Builder.<ThrownItemEntity>create(ThrownItemEntity::new, EntityClassification.MISC)
                         .size(0.25f, 0.25f).build("stone_entity")
                         .setRegistryName(WheatMod.MOD_ID, "stone_entity")
         );

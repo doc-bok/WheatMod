@@ -1,6 +1,5 @@
 {
     "type": "block",
     "group": "decorations",
-    "registry_name": "spelt_straw_mat",
-    "block": "spelt_straw_mat"
+    "block": "docwheat:spelt_straw_mat"
 }

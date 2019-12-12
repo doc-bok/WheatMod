@@ -1,6 +1,5 @@
 {
     "type": "block_named",
     "group": "misc",
-    "registry_name": "durum_grain",
     "block": "durum"
 }

@@ -1,6 +1,10 @@
 {
-    "type": "throwable",
+    "type": "block",
     "group": "decorations",
-    "registry_name": "small_cobblestone",
-    "block": "small_cobblestone"
+    "block": "small_cobblestone",
+    "throwing": {
+        "velocity": 0.5,
+        "offset": -20.0,
+        "inaccuracy": 1.0
+    }
 }
