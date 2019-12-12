@@ -15,7 +15,6 @@ import java.util.Map.Entry;
 
 import com.google.gson.JsonParseException;
 import net.minecraft.block.Block;
-import net.minecraft.item.BlockItem;
 import net.minecraft.item.BlockNamedItem;
 import net.minecraft.item.Food;
 import net.minecraft.item.Item;

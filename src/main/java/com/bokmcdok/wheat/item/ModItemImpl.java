@@ -46,7 +46,7 @@ public class ModItemImpl {
      * @param entityLiving The entity that owns the item.
      * @return The item to replace the current one with.
      */
-    ItemStack onItemUseFinish(Item item, ItemStack stack, World world, LivingEntity entityLiving) {
+    public ItemStack onItemUseFinish(Item item, ItemStack stack, World world, LivingEntity entityLiving) {
         if (item.isFood() && item.hasContainerItem(stack)) {
             return item.getContainerItem(stack);
         }
@@ -59,7 +59,7 @@ public class ModItemImpl {
      * @param stack The item stack to check.
      * @return TRUE if the item is a durable ingredient.
      */
-    boolean hasContainerItem(Item item, ItemStack stack) {
+    public boolean hasContainerItem(Item item, ItemStack stack) {
         return item.getMaxDamage(stack) > 0;
     }
 
@@ -70,7 +70,7 @@ public class ModItemImpl {
      * @param stack The item stack to check.
      * @return The item to replace the current item with.
      */
-    ItemStack getContainerItem(Item item, ItemStack stack) {
+    public ItemStack getContainerItem(Item item, ItemStack stack) {
         if (item.getMaxDamage(stack) > 0) {
             ItemStack container = stack.copy();
             container.setDamage(stack.getDamage() + 1);
@@ -89,7 +89,7 @@ public class ModItemImpl {
      * @param hand The hand holding the item.
      * @return The result of the action.
      */
-    ActionResult<ItemStack> onItemRightClick(Item item, World world, PlayerEntity player, Hand hand) {
+    public ActionResult<ItemStack> onItemRightClick(Item item, World world, PlayerEntity player, Hand hand) {
         if (mThrowingVelocity > 0.0f) {
             ItemStack itemstack = player.getHeldItem(hand);
             ItemStack itemstack1 = player.abilities.isCreativeMode ? itemstack.copy() : itemstack.split(1);
