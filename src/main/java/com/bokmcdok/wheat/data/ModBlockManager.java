@@ -7,7 +7,6 @@ import com.bokmcdok.wheat.block.ModCropsBlock;
 import com.bokmcdok.wheat.block.ModHayBlock;
 import com.bokmcdok.wheat.block.ModMatBlock;
 import com.bokmcdok.wheat.block.ModSmallStoneBlock;
-import com.bokmcdok.wheat.item.ModItemImpl;
 import com.google.common.collect.Lists;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -140,6 +139,7 @@ public class ModBlockManager extends ModDataManager<IModBlock> {
         }
 
         deserializeColor(json, properties);
+        deserializeFire(json, properties);
 
         ModCropProperties crop = deserializeCropProperties(json);
         if (crop != null) {

@@ -123,10 +123,8 @@ public class ModCropsBlock extends CropsBlock implements IModBlock {
                     if (mutation != null) {
                         if (mutation.getRequired() != null) {
                             Optional<Block> required = Registry.BLOCK.getValue(mutation.getRequired());
-                            if (required.isPresent()) {
-                                if (!isBlockPresent(world, position, required.get(), 2)) {
-                                    return;
-                                }
+                            if (required.isPresent() && !isBlockPresent(world, position, required.get(), 2)) {
+                                return;
                             }
                         }
 

@@ -1,8 +1,6 @@
 package com.bokmcdok.wheat.block;
 
-import com.bokmcdok.wheat.color.ModBlockColors;
 import com.bokmcdok.wheat.data.ModBlockManager;
-import com.bokmcdok.wheat.item.ModItemUtils;
 import com.bokmcdok.wheat.WheatMod;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -16,7 +14,6 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.registries.ObjectHolder;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 

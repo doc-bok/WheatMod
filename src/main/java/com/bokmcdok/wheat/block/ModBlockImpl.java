@@ -57,10 +57,6 @@ public class ModBlockImpl {
             mBlockProperties = Block.Properties.from(block);
         }
 
-        public ModBlockProperties(Block block, ModBlockImpl modBlock) {
-            this(block);
-        }
-
         public void doesNotBlockMovement() {
             mBlockProperties.doesNotBlockMovement();
         }

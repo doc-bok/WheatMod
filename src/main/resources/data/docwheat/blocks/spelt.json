@@ -9,6 +9,6 @@
   "crop": {
     "disease": "docwheat:diseased_wheat",
     "seed": "docwheat:spelt_grain",
-    "disease_resistance": 8
+    "disease_resistance": 9
   }
 }
