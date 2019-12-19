@@ -64,69 +64,18 @@ public class ModMaterialManager extends ModDataManager<Material> {
 
         ModMaterialBuilder builder = new ModMaterialBuilder(mapColor);
 
-        if (JSONUtils.hasField(json, "liquid")) {
-            Boolean liquid = JSONUtils.getBoolean(json, "liquid");
-            if (liquid) {
-                builder.liquid();
-            }
-        }
-
-        if (JSONUtils.hasField(json, "solid")) {
-            Boolean solid = JSONUtils.getBoolean(json, "solid");
-            if (!solid) {
-                builder.notSolid();
-            }
-        }
-
-        if (JSONUtils.hasField(json, "blocks_movement")) {
-            Boolean blocks_movement = JSONUtils.getBoolean(json, "blocks_movement");
-            if (!blocks_movement) {
-                builder.doesNotBlockMovement();
-            }
-        }
-
-        if (JSONUtils.hasField(json, "replaceable")) {
-            Boolean replaceable = JSONUtils.getBoolean(json, "replaceable");
-            if (replaceable) {
-                builder.replaceable();
-            }
-        }
+        setIfTrue(builder, json, "liquid", (x) -> x.liquid());
+        setIfFalse(builder, json, "solid", (x) -> x.notSolid());
+        setIfFalse(builder, json, "blocks_movement", (x) -> x.doesNotBlockMovement());
+        setIfTrue(builder, json, "replaceable", (x) -> x.replaceable());
 
         //  Private in Material class...
-        /*if (JSONUtils.hasField(json, "opaque")) {
-            Boolean opaque = JSONUtils.getBoolean(json, "opaque");
-            if (!opaque) {
-                builder.notOpaque();
-            }
-        }*/
+        //setIfFalse(builder, json, "opaque", (x) -> x.notOpaque());
 
-        if (JSONUtils.hasField(json, "requires_tool")) {
-            Boolean requires_tool = JSONUtils.getBoolean(json, "requires_tool");
-            if (requires_tool) {
-                builder.requiresTool();
-            }
-        }
-
-        if (JSONUtils.hasField(json, "flammable")) {
-            Boolean flammable = JSONUtils.getBoolean(json, "flammable");
-            if (flammable) {
-                builder.flammable();
-            }
-        }
-
-        if (JSONUtils.hasField(json, "push_destroys")) {
-            Boolean push_destroys = JSONUtils.getBoolean(json, "push_destroys");
-            if (push_destroys) {
-                builder.pushDestroys();
-            }
-        }
-
-        if (JSONUtils.hasField(json, "push_blocks")) {
-            Boolean push_blocks = JSONUtils.getBoolean(json, "push_blocks");
-            if (push_blocks) {
-                builder.pushBlocks();
-            }
-        }
+        setIfTrue(builder, json, "requires_tool", (x) -> x.requiresTool());
+        setIfTrue(builder, json, "flammable", (x) -> x.flammable());
+        setIfTrue(builder, json, "push_destroys", (x) -> x.pushDestroys());
+        setIfTrue(builder, json, "push_blocks", (x) -> x.pushBlocks());
 
         return builder.build();
     }
