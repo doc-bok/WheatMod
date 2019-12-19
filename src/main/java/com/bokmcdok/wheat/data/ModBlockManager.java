@@ -139,7 +139,7 @@ public class ModBlockManager extends ModDataManager<IModBlock> {
     private void deserializeFire(JsonObject json, ModBlockImpl.ModBlockProperties properties) {
         if (JSONUtils.hasField(json, "fire")) {
             JsonObject fire = JSONUtils.getJsonObject(json, "fire");
-            setTwoInts(properties, json, "encouragement", "flammability", (x, v1, v2) -> x.flammable(v1, v2));
+            setTwoInts(properties, fire, "encouragement", "flammability", (x, v1, v2) -> x.flammable(v1, v2));
         }
     }
 
@@ -240,13 +240,6 @@ public class ModBlockManager extends ModDataManager<IModBlock> {
             int value1 = JSONUtils.getInt(json, key1);
             int value2 = JSONUtils.getInt(json, key2);
             consumer.accept(properties, value1, value2);
-        }
-    }
-
-    private <T> void setString(T properties, JsonObject json, String key, BiConsumer<T, String> consumer) {
-        if (JSONUtils.hasField(json, key)) {
-            String value = JSONUtils.getString(json, key);
-            consumer.accept(properties, value);
         }
     }
 
