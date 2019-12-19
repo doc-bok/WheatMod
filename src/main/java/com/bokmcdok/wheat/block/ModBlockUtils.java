@@ -37,7 +37,6 @@ public class ModBlockUtils {
     public static final ModCropsBlock emmer = null;
     public static final ModCropsBlock durum = null;
     public static final ModCropsBlock spelt = null;
-    public static final ModCropsBlock diseased_wheat = null;
 
     /**
      * Vegetables
@@ -63,23 +62,6 @@ public class ModBlockUtils {
         event.getRegistry().registerAll(blocks);
 
         event.getRegistry().registerAll(
-                //  Wheat Blocks
-                /*new WildWheatBlock(ModItemUtils.wild_einkorn_grain, 128, "wild_einkorn"),
-                new WheatBlock(ModItemUtils.common_grain, 256, "common_wheat"),
-                new WheatBlock(ModItemUtils.einkorn_grain, 256, "einkorn"),
-
-                new WildWheatBlock(ModItemUtils.wild_emmer_grain, 128, "wild_emmer"),
-                new WheatBlock(ModItemUtils.emmer_grain, 256, "emmer"),
-                new WheatBlock(ModItemUtils.durum_grain, 256, "durum"),
-
-                new WheatBlock(ModItemUtils.spelt_grain, 512, "spelt"),
-
-                new WheatBlock(null, 1024, "diseased_wheat"),
-
-                //  Vegetables
-                new ModCropsBlock(ModItemUtils.tomato_seeds, "tomato"),*/
-
-                //  Flour Mill
                 new FlourMillBlock("flour_mill")
         );
     }
@@ -101,22 +83,6 @@ public class ModBlockUtils {
                 blockColors.register(i.getColor(), i.asBlock());
             }
         }
-
-        /*blockColors.register(ModBlockColors.WILD_EINKORN, wild_einkorn);
-
-        blockColors.register(ModBlockColors.COMMON_WHEAT, common_wheat);
-
-        blockColors.register(ModBlockColors.EINKORN, einkorn);
-
-        blockColors.register(ModBlockColors.WILD_EMMER, wild_emmer);
-
-        blockColors.register(ModBlockColors.EMMER, emmer);
-
-        blockColors.register(ModBlockColors.DURUM, durum);
-
-        blockColors.register(ModBlockColors.SPELT, spelt);
-
-        blockColors.register(ModBlockColors.DISEASED_WHEAT, diseased_wheat);*/
     }
 
     /**
@@ -142,12 +108,5 @@ public class ModBlockUtils {
             Blocks.POTTED_BROWN_MUSHROOM,
             Blocks.POTTED_RED_MUSHROOM
         ));
-
-        //  Mutations
-        /*wild_einkorn.registerMutations(einkorn, common_wheat);
-        wild_emmer.registerMutations(emmer, durum);
-
-        emmer.registerMutation(spelt, common_wheat);
-        common_wheat.registerMutation(spelt, emmer);*/
     }
 }
