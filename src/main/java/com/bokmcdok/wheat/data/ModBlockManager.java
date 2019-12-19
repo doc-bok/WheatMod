@@ -3,6 +3,7 @@ package com.bokmcdok.wheat.data;
 import com.bokmcdok.wheat.block.IModBlock;
 import com.bokmcdok.wheat.block.ModBlockImpl;
 import com.bokmcdok.wheat.block.ModHayBlock;
+import com.bokmcdok.wheat.block.ModMatBlock;
 import com.bokmcdok.wheat.item.ModItemImpl;
 import com.google.common.collect.Lists;
 import com.google.gson.JsonObject;
@@ -24,6 +25,7 @@ public class ModBlockManager extends ModDataManager<IModBlock> {
 
     private enum BlockType {
         HAY,
+        MAT,
     }
 
     public IModBlock[] getBlocks() {
@@ -139,6 +141,10 @@ public class ModBlockManager extends ModDataManager<IModBlock> {
         switch (type) {
             case HAY:
                 result = new ModHayBlock(properties);
+                break;
+
+            case MAT:
+                result = new ModMatBlock(properties);
                 break;
 
             default:

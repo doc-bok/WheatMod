@@ -1,0 +1,16 @@
+{
+  "type": "mat",
+  "material": "plants",
+  "hardness": 0.5,
+  "resistance": 0.5,
+  "sound": "crop",
+  "color": {
+    "r": 230,
+    "g": 230,
+    "b": 44
+  },
+  "fire": {
+    "encouragement": 60,
+    "flammability": 20
+  }
+}
