@@ -13,20 +13,15 @@ import com.google.gson.JsonObject;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.block.Block;
-import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.item.Food;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.Rarity;
 import net.minecraft.potion.EffectInstance;
-import net.minecraft.resources.IResourceManager;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.registry.Registry;
-import net.minecraft.world.FoliageColors;
-import net.minecraft.world.GrassColors;
 import net.minecraftforge.common.ToolType;
 
 import java.util.Optional;
@@ -62,17 +57,16 @@ public class ModItemManager extends ModDataManager<IModItem> {
 
     /**
      * Load all the items from their data files.
-     * @param resourceManager The resource manager to use to get the JSON files.
      */
-    public void loadItems(IResourceManager resourceManager) {
+    public void loadItems() {
         //  Load effects
-        mEffectManager.loadEffects(resourceManager);
+        mEffectManager.loadEffects();
 
         //  Load container items
-        loadEntries(resourceManager, CONTAINERS_FOLDER);
+        loadEntries(CONTAINERS_FOLDER);
 
         //  Load other items
-        loadEntries(resourceManager, ITEMS_FOLDER);
+        loadEntries(ITEMS_FOLDER);
     }
 
     /**
@@ -141,13 +135,13 @@ public class ModItemManager extends ModDataManager<IModItem> {
 
             case BLOCK: {
                 String blockName = JSONUtils.getString(json, "block");
-                result = new ModBlockItem(getModBlock(blockName), properties);
+                result = new ModBlockItem(getBlock(blockName), properties);
                 break;
             }
 
             case BLOCK_NAMED: {
                 String blockName = JSONUtils.getString(json, "block");
-                result = new ModBlockNamedItem(getModBlock(blockName), properties);
+                result = new ModBlockNamedItem(getBlock(blockName), properties);
                 break;
             }
 
@@ -285,43 +279,9 @@ public class ModItemManager extends ModDataManager<IModItem> {
      * @param properties The properties to set.
      */
     private void deserializeColor(JsonObject json, ModItemImpl.ModItemProperties properties) {
-        if (JSONUtils.hasField(json, "color")) {
-            JsonObject color = JSONUtils.getJsonObject(json, "color");
-            if (JSONUtils.hasField(color, "r")) {
-                int r = JSONUtils.getInt(color, "r");
-                int g = JSONUtils.getInt(color, "g");
-                int b = JSONUtils.getInt(color, "b");
-
-                IItemColor itemColor = (item, state) -> (r & 255) << 16 | (g & 255) << 8 | b & 255;
-                properties.color(itemColor);
-            } else {
-                String type = JSONUtils.getString(color, "type");
-                if ("spruce".equals(type)) {
-                    IItemColor itemColor = (item, state) -> FoliageColors.getSpruce();
-                    properties.color(itemColor);
-                } else if ("birch".equals(type)) {
-                    IItemColor itemColor = (item, state) -> FoliageColors.getBirch();
-                    properties.color(itemColor);
-                } else if ("oak".equals(type)) {
-                    IItemColor itemColor = (item, state) -> FoliageColors.getDefault();
-                    properties.color(itemColor);
-                } else if ("foliage".equals(type)) {
-                    float temperature = JSONUtils.getFloat(color, "temperature");
-                    float humidity = JSONUtils.getFloat(color, "humidity");
-
-                    IItemColor itemColor = (item, state) -> { return FoliageColors.get(temperature, humidity); };
-                    properties.color(itemColor);
-                } else if ("grass".equals(type)) {
-                    float temperature = JSONUtils.getFloat(color, "temperature");
-                    float humidity = JSONUtils.getFloat(color, "humidity");
-
-                    IItemColor itemColor = (item, state) -> {
-                        return GrassColors.get(temperature, humidity);
-                    };
-
-                    properties.color(itemColor);
-                }
-            }
+        int color = deserializeColor(json);
+        if (color != -1) {
+            properties.color((item, state) -> deserializeColor(json));
         }
     }
 
@@ -352,14 +312,5 @@ public class ModItemManager extends ModDataManager<IModItem> {
         }
 
         return getEntry(location).asItem();
-    }
-
-    /**
-     * Get the mod block for a BlockItem or BlockNamedItem.
-     * @param blockName The registry name of a block.
-     * @return The instance of the block.
-     */
-    private Block getModBlock(String blockName) {
-        return Registry.BLOCK.getOrDefault(new ResourceLocation(blockName));
     }
 }

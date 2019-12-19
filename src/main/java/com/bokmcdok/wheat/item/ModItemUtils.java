@@ -117,7 +117,6 @@ public class ModItemUtils
     public static Ingredient FISH_ITEMS = null;
     public static Ingredient GRAIN_ITEMS = null;
 
-    private static ModResourceManager RESOURCE_MANAGER = new ModResourceManager(ResourcePackType.SERVER_DATA, WheatMod.MOD_ID);
     private static ModItemManager ITEM_MANAGER = new ModItemManager();
 
     /**
@@ -127,7 +126,7 @@ public class ModItemUtils
     @SubscribeEvent
     public static void registerItems(RegistryEvent.Register<Item> event)
     {
-        ITEM_MANAGER.loadItems(RESOURCE_MANAGER);
+        ITEM_MANAGER.loadItems();
         event.getRegistry().registerAll(ITEM_MANAGER.getAsItems());
     }
 
@@ -136,7 +135,7 @@ public class ModItemUtils
      * @param event The color handler event
      */
     @SubscribeEvent
-    public static void registerBlockColourHandlers(ColorHandlerEvent.Item event)
+    public static void registerItemColourHandlers(ColorHandlerEvent.Item event)
     {
         IModItem[] items = ITEM_MANAGER.getItems();
         final ItemColors itemColors = event.getItemColors();

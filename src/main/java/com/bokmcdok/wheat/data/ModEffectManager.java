@@ -3,7 +3,6 @@ package com.bokmcdok.wheat.data;
 import com.google.gson.JsonObject;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
-import net.minecraft.resources.IResourceManager;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
@@ -15,10 +14,9 @@ public class ModEffectManager extends ModDataManager<EffectInstance> {
 
     /**
      * Loads all effect JSON files from the effects folder.
-     * @param resourceManager The resource manager to use to load the JSON files.
      */
-    public void loadEffects(IResourceManager resourceManager) {
-        loadEntries(resourceManager, EFFECTS_FOLDER);
+    public void loadEffects() {
+        loadEntries(EFFECTS_FOLDER);
     }
 
     /**
