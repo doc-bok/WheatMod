@@ -1,24 +1,18 @@
 package com.bokmcdok.wheat.data;
 
-import com.bokmcdok.wheat.block.ModBlockUtils;
 import com.bokmcdok.wheat.item.IModItem;
 import com.bokmcdok.wheat.item.ModBlockNamedItem;
 import com.bokmcdok.wheat.item.ModItem;
 import com.bokmcdok.wheat.item.ModBlockItem;
 import com.bokmcdok.wheat.item.ModItemImpl;
-import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map.Entry;
 
-import com.google.gson.JsonParseException;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.item.Food;
@@ -34,19 +28,13 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.world.FoliageColors;
 import net.minecraft.world.GrassColors;
 import net.minecraftforge.common.ToolType;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
-import java.util.Map;
 import java.util.Optional;
 
-public class ModItemManager {
-    private static final Logger LOGGER = LogManager.getLogger();
+public class ModItemManager extends ModDataManager<IModItem> {
     private static final String ITEMS_FOLDER = "items";
     private static final String CONTAINERS_FOLDER = "containers";
     private ModEffectManager mEffectManager = new ModEffectManager();
-    private Map<ResourceLocation, IModItem> mItems = ImmutableMap.of();
-    private ModJsonLoader mJsonLoader = new ModJsonLoader();
 
     private enum ItemType {
         ITEM,
@@ -55,11 +43,11 @@ public class ModItemManager {
     }
 
     /**
-     * Get the list of items to access properties.
-     * @return An array of items to register with Forge.
+     * Get the entries as a list of ModItems.
+     * @return And array of items loaded by this data manager.
      */
     public IModItem[] getItems() {
-        return mItems.values().toArray(new IModItem[0]);
+        return getAllEntries().toArray(new IModItem[0]);
     }
 
     /**
@@ -67,7 +55,7 @@ public class ModItemManager {
      * @return An array of items to register with Forge.
      */
     public Item[] getAsItems() {
-        List<IModItem> values = new ArrayList(mItems.values());
+        List<IModItem> values = new ArrayList(getAllEntries());
         List<Item> converted = Lists.transform(values, i -> i.asItem());
         return converted.toArray(new Item[0]);
     }
@@ -80,42 +68,11 @@ public class ModItemManager {
         //  Load effects
         mEffectManager.loadEffects(resourceManager);
 
-        mItems = Maps.newHashMap();
-
         //  Load container items
-        loadItems(resourceManager, CONTAINERS_FOLDER);
+        loadEntries(resourceManager, CONTAINERS_FOLDER);
 
         //  Load other items
-        loadItems(resourceManager, ITEMS_FOLDER);
-
-        LOGGER.info("Loaded {} items", mItems.values().size());
-    }
-
-    /**
-     * Load items from a specified folder.
-     * @param resourceManager The resource manager to use to get the JSON files.
-     * @param folder The folder to load from.
-     */
-    private void loadItems(IResourceManager resourceManager, String folder) {
-        Map<ResourceLocation, JsonObject> containerResources = mJsonLoader.loadJsonResources(resourceManager, folder);
-        for(Entry<ResourceLocation, JsonObject> entry : containerResources.entrySet()) {
-            ResourceLocation resourceLocation = entry.getKey();
-            if (resourceLocation.getPath().startsWith("_")) { continue; }
-
-            try {
-                IModItem item = deserializeItem(entry.getValue());
-                if (item == null) {
-                    LOGGER.info("Skipping loading item {} as it's serializer returned null", resourceLocation);
-                    continue;
-                }
-
-                item.asItem().setRegistryName(resourceLocation);
-                mItems.put(resourceLocation, item);
-
-            } catch (IllegalArgumentException | JsonParseException exception) {
-                LOGGER.error("Parsing error loading item {}", resourceLocation, exception);
-            }
-        }
+        loadEntries(resourceManager, ITEMS_FOLDER);
     }
 
     /**
@@ -123,7 +80,7 @@ public class ModItemManager {
      * @param json The JSON data from the file.
      * @return A new instance of the item.
      */
-    private IModItem deserializeItem(JsonObject json) {
+    protected IModItem deserialize(ResourceLocation location, JsonObject json) {
         ModItemImpl.ModItemProperties properties = new ModItemImpl.ModItemProperties();
 
         if (JSONUtils.hasField(json, "max_stack_size")) {
@@ -176,24 +133,31 @@ public class ModItemManager {
         String typeValue = JSONUtils.getString(json, "type");
         ItemType type = ItemType.valueOf(typeValue.toUpperCase());
 
+        IModItem result = null;
         switch (type) {
             case ITEM:
-                return new ModItem(properties);
+                result = new ModItem(properties);
+                break;
 
             case BLOCK: {
                 String blockName = JSONUtils.getString(json, "block");
-                return new ModBlockItem(getModBlock(blockName), properties);
+                result = new ModBlockItem(getModBlock(blockName), properties);
+                break;
             }
 
             case BLOCK_NAMED: {
                 String blockName = JSONUtils.getString(json, "block");
-                return new ModBlockNamedItem(getModBlock(blockName), properties);
+                result = new ModBlockNamedItem(getModBlock(blockName), properties);
+                break;
             }
 
             default:
                 LOGGER.info("Item type {} not supported", typeValue);
                 return null;
         }
+
+        result.asItem().setRegistryName(location);
+        return result;
     }
 
     /**
@@ -269,7 +233,7 @@ public class ModItemManager {
                         probability = JSONUtils.getFloat(effectAsJsonObject, "probability");
                     }
 
-                    EffectInstance effectInstance = mEffectManager.getEffect(location);
+                    EffectInstance effectInstance = mEffectManager.getEntry(location);
                     if (effectInstance != null) {
                         builder.effect(effectInstance, probability);
                     }
@@ -303,8 +267,8 @@ public class ModItemManager {
                     volume = JSONUtils.getFloat(throwing, "volume");
                 }
 
-                if (JSONUtils.hasField(throwing, "volume")) {
-                    pitch = JSONUtils.getFloat(throwing, "volume");
+                if (JSONUtils.hasField(throwing, "pitch")) {
+                    pitch = JSONUtils.getFloat(throwing, "pitch");
                 }
 
                 Optional<SoundEvent> event = Registry.SOUND_EVENT.getValue(new ResourceLocation(sound));
@@ -387,7 +351,7 @@ public class ModItemManager {
             return Registry.ITEM.getOrDefault(location);
         }
 
-        return mItems.get(location).asItem();
+        return getEntry(location).asItem();
     }
 
     /**
