@@ -1,9 +1,12 @@
 package com.bokmcdok.wheat.data;
 
 import com.bokmcdok.wheat.WheatMod;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import net.minecraft.block.Block;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.resources.ResourcePackType;
 import net.minecraft.util.JSONUtils;
@@ -11,13 +14,17 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.FoliageColors;
 import net.minecraft.world.GrassColors;
+import net.minecraftforge.common.ToolType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.util.TriConsumer;
 
 import java.lang.reflect.Field;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
 
 public abstract class ModDataManager<T> {
     protected static final Logger LOGGER = LogManager.getLogger();
@@ -153,4 +160,114 @@ public abstract class ModDataManager<T> {
      * @return A new object based on the JSON data.
      */
     protected abstract T deserialize(ResourceLocation location, JsonObject json);
+
+    protected <U> void setArray(U properties, JsonObject json, String key, BiConsumer<U, JsonObject> consumer) {
+        if (JSONUtils.hasField(json, key)) {
+            JsonArray mutations = JSONUtils.getJsonArray(json, key);
+            for (JsonElement i : mutations) {
+                JsonObject value = i.getAsJsonObject();
+                consumer.accept(properties, value);
+            }
+        }
+    }
+
+    protected <U> void setBoolean(U properties, JsonObject json, String key, BiConsumer<U, Boolean> consumer) {
+        if (JSONUtils.hasField(json, key)) {
+            boolean value = JSONUtils.getBoolean(json, key);
+            consumer.accept(properties, value);
+        }
+    }
+
+    protected <U> void setIfFalse(U properties, JsonObject json, String key, Consumer<U> consumer) {
+        if (JSONUtils.hasField(json, key)) {
+            Boolean value = JSONUtils.getBoolean(json, key);
+            if (!value) {
+                consumer.accept(properties);
+            }
+        }
+    }
+
+    protected <U> void setIfTrue(U properties, JsonObject json, String key, Consumer<U> consumer) {
+        if (JSONUtils.hasField(json, key)) {
+            Boolean value = JSONUtils.getBoolean(json, key);
+            if (value) {
+                consumer.accept(properties);
+            }
+        }
+    }
+
+    protected <U> void setFloat(U properties, JsonObject json, String key, BiConsumer<U, Float> consumer) {
+        if (JSONUtils.hasField(json, key)) {
+            float value = JSONUtils.getFloat(json, key);
+            consumer.accept(properties, value);
+        }
+    }
+
+    protected <U> void setTwoFloats(U properties, JsonObject json, String key1, String key2, TriConsumer<U, Float, Float> consumer) {
+        if (JSONUtils.hasField(json, key1) &&
+                JSONUtils.hasField(json, key2)) {
+            float value1 = JSONUtils.getFloat(json, key1);
+            float value2 = JSONUtils.getFloat(json, key2);
+            consumer.accept(properties, value1, value2);
+        }
+    }
+
+    protected <U> void setInt(U properties, JsonObject json, String key, BiConsumer<U, Integer> consumer) {
+        if (JSONUtils.hasField(json, key)) {
+            int value = JSONUtils.getInt(json, key);
+            consumer.accept(properties, value);
+        }
+    }
+
+    protected <U> void setTwoInts(U properties, JsonObject json, String key1, String key2, TriConsumer<U, Integer, Integer> consumer) {
+        if (JSONUtils.hasField(json, key1) &&
+                JSONUtils.hasField(json, key2)) {
+            int value1 = JSONUtils.getInt(json, key1);
+            int value2 = JSONUtils.getInt(json, key2);
+            consumer.accept(properties, value1, value2);
+        }
+    }
+
+    protected <U> void setString(U properties, JsonObject json, String key, BiConsumer<U, String> consumer) {
+        if (JSONUtils.hasField(json, key)) {
+            String value = JSONUtils.getString(json, key);
+            consumer.accept(properties, value);
+        }
+    }
+
+    protected <U> void setResourceLocation(U properties, JsonObject json, String key, BiConsumer<U, ResourceLocation> consumer) {
+        if (JSONUtils.hasField(json, key)) {
+            String value = JSONUtils.getString(json, key);
+            consumer.accept(properties, new ResourceLocation(value));
+        }
+    }
+
+    protected <U> void setSound(U properties, JsonObject json, String key, BiConsumer<U, SoundType> consumer) {
+        if (JSONUtils.hasField(json, key)) {
+            String name = JSONUtils.getString(json, key).toUpperCase();
+
+            try {
+                Field field = SoundType.class.getDeclaredField(name);
+                consumer.accept(properties, (SoundType)field.get(null));
+            } catch (NoSuchFieldException | IllegalAccessException exception) {
+                LOGGER.error("Sound Type {} not supported", name, exception);
+            }
+        }
+    }
+
+    protected <U> void setToolType(U properties, JsonObject json, String key, BiConsumer<U, ToolType> consumer) {
+        if (JSONUtils.hasField(json, key)) {
+            String toolType = JSONUtils.getString(json, key);
+            ToolType tool = ToolType.get(toolType);
+            consumer.accept(properties, tool);
+        }
+    }
+
+    protected <U> void setBlock(U properties, JsonObject json, String key, BiConsumer<U, Block> consumer) {
+        if (JSONUtils.hasField(json, key)) {
+            String blockName = JSONUtils.getString(json, key);
+            Block block = getBlock(blockName);
+            consumer.accept(properties, block);
+        }
+    }
 }

@@ -77,46 +77,14 @@ public class ModItemManager extends ModDataManager<IModItem> {
     protected IModItem deserialize(ResourceLocation location, JsonObject json) {
         ModItemImpl.ModItemProperties properties = new ModItemImpl.ModItemProperties();
 
-        if (JSONUtils.hasField(json, "max_stack_size")) {
-            int maxStackSize = JSONUtils.getInt(json, "max_stack_size");
-            properties.maxStackSize(maxStackSize);
-        }
-
-        if (JSONUtils.hasField(json,"default_max_damage")) {
-            int defaultMaxDamage = JSONUtils.getInt(json, "default_max_damage");
-            properties.defaultMaxDamage(defaultMaxDamage);
-        }
-
-        if (JSONUtils.hasField(json,"max_damage")) {
-            int defaultMaxDamage = JSONUtils.getInt(json, "max_damage");
-            properties.maxDamage(defaultMaxDamage);
-        }
-
-        if (JSONUtils.hasField(json, "group")) {
-            String group = JSONUtils.getString(json, "group");
-            properties.group(getItemGroup(group));
-        }
-
-        if (JSONUtils.hasField(json, "rarity")) {
-            String rarity = JSONUtils.getString(json, "rarity");
-            properties.rarity(Rarity.valueOf(rarity.toUpperCase()));
-        }
-
-        if (JSONUtils.hasField(json, "repairable")) {
-            Boolean repairable = JSONUtils.getBoolean(json, "repairable");
-            if (!repairable) { properties.setNoRepair(); }
-        }
-
-        if (JSONUtils.hasField(json, "container")) {
-            String containerName = JSONUtils.getString(json, "container");
-            Item container = getContainerItem(containerName);
-            properties.containerItem(container);
-        }
-
-        if (JSONUtils.hasField(json, "compost_chance")) {
-            float compostChance = JSONUtils.getFloat(json, "compost_chance");
-            properties.compostChance(compostChance);
-        }
+        setInt(properties, json, "max_stack_size", (x, value) -> x.maxStackSize(value));
+        setInt(properties, json, "default_max_damage", (x, value) -> x.defaultMaxDamage(value));
+        setInt(properties, json, "max_damage", (x, value) -> x.maxDamage(value));
+        setString(properties, json, "group", (x, value) -> x.group(getItemGroup(value)));
+        setString(properties, json, "rarity", (x, value) -> x.rarity(Rarity.valueOf(value)));
+        setIfFalse(properties, json, "repairable", (x) -> x.setNoRepair());
+        setString(properties, json, "container", (x, value) -> x.containerItem(getContainerItem(value)));
+        setFloat(properties, json, "compost_chance", (x, value) -> x.compostChance(value));
 
         deserializeTools(json, properties);
         deserializeFood(json, properties);
@@ -183,56 +151,27 @@ public class ModItemManager extends ModDataManager<IModItem> {
             JsonObject food = JSONUtils.getJsonObject(json, "food");
             Food.Builder builder = new Food.Builder();
 
-            if (JSONUtils.hasField(food, "hunger")) {
-                int hunger = JSONUtils.getInt(food, "hunger");
-                builder.hunger(hunger);
-            }
+            setInt(builder, food, "hunger", (x, value) -> x.hunger(value));
+            setFloat(builder, food, "saturation", (x, value) -> x.saturation(value));
+            setIfTrue(builder, food, "meat", (x) -> x.meat());
+            setIfTrue(builder, food, "always_edible", (x) -> x.setAlwaysEdible());
+            setIfTrue(builder, food, "fast_to_eat", (x) -> x.fastToEat());
+            setArray(builder, food, "effects", (x, effect) -> {
+                JsonObject effectAsJsonObject = effect.getAsJsonObject();
 
-            if (JSONUtils.hasField(food, "saturation")) {
-                float saturation = JSONUtils.getFloat(food, "saturation");
-                builder.saturation(saturation);
-            }
+                String effectName = JSONUtils.getString(effectAsJsonObject, "effect_type");
+                ResourceLocation location = new ResourceLocation(effectName);
 
-            if (JSONUtils.hasField(food, "meat")) {
-                boolean meat = JSONUtils.getBoolean(food, "meat");
-                if (meat) {
-                    builder.meat();
+                float probability = 1.0f;
+                if (JSONUtils.hasField(effectAsJsonObject, "probability")) {
+                    probability = JSONUtils.getFloat(effectAsJsonObject, "probability");
                 }
-            }
 
-            if (JSONUtils.hasField(food, "always_edible")) {
-                boolean alwaysEdible = JSONUtils.getBoolean(food, "always_edible");
-                if (alwaysEdible) {
-                    builder.setAlwaysEdible();
+                EffectInstance effectInstance = mEffectManager.getEntry(location);
+                if (effectInstance != null) {
+                    x.effect(effectInstance, probability);
                 }
-            }
-
-            if (JSONUtils.hasField(food, "fast_to_eat")) {
-                boolean fastToEat = JSONUtils.getBoolean(food, "fast_to_eat");
-                if (fastToEat) {
-                    builder.fastToEat();
-                }
-            }
-
-            if (JSONUtils.hasField(food, "effects")) {
-                JsonArray effects = JSONUtils.getJsonArray(food, "effects");
-                for (JsonElement effect : effects) {
-                    JsonObject effectAsJsonObject = effect.getAsJsonObject();
-
-                    String effectName = JSONUtils.getString(effectAsJsonObject, "effect_type");
-                    ResourceLocation location = new ResourceLocation(effectName);
-
-                    float probability = 1.0f;
-                    if (JSONUtils.hasField(effectAsJsonObject, "probability")) {
-                        probability = JSONUtils.getFloat(effectAsJsonObject, "probability");
-                    }
-
-                    EffectInstance effectInstance = mEffectManager.getEntry(location);
-                    if (effectInstance != null) {
-                        builder.effect(effectInstance, probability);
-                    }
-                }
-            }
+            });
 
             properties.food(builder.build());
         }
