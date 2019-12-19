@@ -71,11 +71,11 @@ public class ModBlockUtils {
                 new WheatBlock(null, 1024, "diseased_wheat"),
 
                 //  Stone
-                new SmallStoneBlock().setRegistryName(WheatMod.MOD_ID, "small_cobblestone"),
-                new SmallStoneBlock().setRegistryName(WheatMod.MOD_ID, "granite_stone"),
-                new SmallStoneBlock().setRegistryName(WheatMod.MOD_ID, "diorite_stone"),
-                new SmallStoneBlock().setRegistryName(WheatMod.MOD_ID, "andesite_stone"),
-                new SmallStoneBlock().setRegistryName(WheatMod.MOD_ID, "small_sandstone"),
+                /*new ModSmallStoneBlock().setRegistryName(WheatMod.MOD_ID, "small_cobblestone"),
+                new ModSmallStoneBlock().setRegistryName(WheatMod.MOD_ID, "granite_stone"),
+                new ModSmallStoneBlock().setRegistryName(WheatMod.MOD_ID, "diorite_stone"),
+                new ModSmallStoneBlock().setRegistryName(WheatMod.MOD_ID, "andesite_stone"),
+                new ModSmallStoneBlock().setRegistryName(WheatMod.MOD_ID, "small_sandstone"),*/
 
                 //  Vegetabls
                 new ModCropsBlock(ModItemUtils.tomato_seeds, "tomato"),
