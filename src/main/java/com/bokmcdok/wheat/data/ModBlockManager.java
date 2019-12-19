@@ -2,11 +2,15 @@ package com.bokmcdok.wheat.data;
 
 import com.bokmcdok.wheat.block.IModBlock;
 import com.bokmcdok.wheat.block.ModBlockImpl;
+import com.bokmcdok.wheat.block.ModCropProperties;
+import com.bokmcdok.wheat.block.ModCropsBlock;
 import com.bokmcdok.wheat.block.ModHayBlock;
 import com.bokmcdok.wheat.block.ModMatBlock;
 import com.bokmcdok.wheat.block.ModSmallStoneBlock;
 import com.bokmcdok.wheat.item.ModItemImpl;
 import com.google.common.collect.Lists;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
@@ -25,6 +29,7 @@ public class ModBlockManager extends ModDataManager<IModBlock> {
     private static final ModMaterialManager MATERIAL_MANAGER = new ModMaterialManager();
 
     private enum BlockType {
+        CROP,
         HAY,
         MAT,
         SMALL_STONE
@@ -136,11 +141,20 @@ public class ModBlockManager extends ModDataManager<IModBlock> {
 
         deserializeColor(json, properties);
 
+        ModCropProperties crop = deserializeCropProperties(json);
+        if (crop != null) {
+            properties.crop(crop);
+        }
+
         String typeValue = JSONUtils.getString(json, "type");
         BlockType type = BlockType.valueOf(typeValue.toUpperCase());
 
         IModBlock result = null;
         switch (type) {
+            case CROP:
+                result = new ModCropsBlock(properties);
+                break;
+
             case HAY:
                 result = new ModHayBlock(properties);
                 break;
@@ -201,5 +215,56 @@ public class ModBlockManager extends ModDataManager<IModBlock> {
             int flammability = JSONUtils.getInt(fire, "flammability");
             properties.flammable(encouragement, flammability);
         }
+    }
+
+    private ModCropProperties deserializeCropProperties(JsonObject json) {
+        if (JSONUtils.hasField(json, "crop")) {
+            JsonObject crop = JSONUtils.getJsonObject(json, "crop");
+            ModCropProperties properties = new ModCropProperties();
+
+            if (JSONUtils.hasField(crop, "disease")) {
+                String disease = JSONUtils.getString(crop, "disease");
+                properties.disease(new ResourceLocation(disease));
+            }
+
+            if (JSONUtils.hasField(crop, "seed")) {
+                String seed = JSONUtils.getString(crop, "seed");
+                properties.seed(new ResourceLocation(seed));
+            }
+
+            if (JSONUtils.hasField(crop, "disease_resistance")) {
+                int diseaseResistance = JSONUtils.getInt(crop, "disease_resistance");
+                properties.diseaseResistance(diseaseResistance);
+            }
+
+            if (JSONUtils.hasField(crop, "wild")) {
+                boolean wild = JSONUtils.getBoolean(crop, "wild");
+                properties.wild(wild);
+            }
+
+            if (JSONUtils.hasField(crop, "mutations")) {
+                JsonArray mutations = JSONUtils.getJsonArray(crop, "mutations");
+                for (JsonElement i : mutations) {
+                    JsonObject mutation = i.getAsJsonObject();
+                    ResourceLocation mutationBlock = new ResourceLocation(JSONUtils.getString(mutation, "mutation"));
+
+                    ResourceLocation required = null;
+                    if (JSONUtils.hasField(mutation, "required")) {
+                        required = new ResourceLocation(JSONUtils.getString(mutation, "required"));
+                    }
+
+                    int weight = 1;
+                    if (JSONUtils.hasField(mutation, "weight")) {
+                        weight = JSONUtils.getInt(mutation, "weight");
+                    }
+
+                    properties.addMutation(mutationBlock, required, weight);
+                }
+            }
+
+            return properties;
+        }
+
+        return null;
     }
 }

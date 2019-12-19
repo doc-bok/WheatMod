@@ -15,4 +15,8 @@ public interface IModBlock {
 
     int getFlammability();
     int getFireEncouragement();
+
+    default ModCropProperties getCropProperties() {
+        return null;
+    }
 }

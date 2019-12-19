@@ -15,6 +15,11 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.registries.ObjectHolder;
 
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Registers all the blocks used in this mod.
  */
@@ -25,14 +30,14 @@ public class ModBlockUtils {
     /**
      * The new types of wheat.
      */
-    public static final WildWheatBlock wild_einkorn = null;
-    public static final WheatBlock common_wheat = null;
-    public static final WheatBlock einkorn = null;
-    public static final WildWheatBlock wild_emmer = null;
-    public static final WheatBlock emmer = null;
-    public static final WheatBlock durum = null;
-    public static final WheatBlock spelt = null;
-    public static final WheatBlock diseased_wheat = null;
+    public static final ModCropsBlock wild_einkorn = null;
+    public static final ModCropsBlock common_wheat = null;
+    public static final ModCropsBlock einkorn = null;
+    public static final ModCropsBlock wild_emmer = null;
+    public static final ModCropsBlock emmer = null;
+    public static final ModCropsBlock durum = null;
+    public static final ModCropsBlock spelt = null;
+    public static final ModCropsBlock diseased_wheat = null;
 
     /**
      * Vegetables
@@ -44,6 +49,7 @@ public class ModBlockUtils {
      */
     public static final FlourMillBlock flour_mill = null;
 
+    public static Set<Block> MUSHROOMS;
     private static final ModBlockManager BLOCK_MANAGER = new ModBlockManager();
 
     /**
@@ -58,7 +64,7 @@ public class ModBlockUtils {
 
         event.getRegistry().registerAll(
                 //  Wheat Blocks
-                new WildWheatBlock(ModItemUtils.wild_einkorn_grain, 128, "wild_einkorn"),
+                /*new WildWheatBlock(ModItemUtils.wild_einkorn_grain, 128, "wild_einkorn"),
                 new WheatBlock(ModItemUtils.common_grain, 256, "common_wheat"),
                 new WheatBlock(ModItemUtils.einkorn_grain, 256, "einkorn"),
 
@@ -70,15 +76,8 @@ public class ModBlockUtils {
 
                 new WheatBlock(null, 1024, "diseased_wheat"),
 
-                //  Stone
-                /*new ModSmallStoneBlock().setRegistryName(WheatMod.MOD_ID, "small_cobblestone"),
-                new ModSmallStoneBlock().setRegistryName(WheatMod.MOD_ID, "granite_stone"),
-                new ModSmallStoneBlock().setRegistryName(WheatMod.MOD_ID, "diorite_stone"),
-                new ModSmallStoneBlock().setRegistryName(WheatMod.MOD_ID, "andesite_stone"),
-                new ModSmallStoneBlock().setRegistryName(WheatMod.MOD_ID, "small_sandstone"),*/
-
-                //  Vegetabls
-                new ModCropsBlock(ModItemUtils.tomato_seeds, "tomato"),
+                //  Vegetables
+                new ModCropsBlock(ModItemUtils.tomato_seeds, "tomato"),*/
 
                 //  Flour Mill
                 new FlourMillBlock("flour_mill")
@@ -103,7 +102,7 @@ public class ModBlockUtils {
             }
         }
 
-        blockColors.register(ModBlockColors.WILD_EINKORN, wild_einkorn);
+        /*blockColors.register(ModBlockColors.WILD_EINKORN, wild_einkorn);
 
         blockColors.register(ModBlockColors.COMMON_WHEAT, common_wheat);
 
@@ -117,7 +116,7 @@ public class ModBlockUtils {
 
         blockColors.register(ModBlockColors.SPELT, spelt);
 
-        blockColors.register(ModBlockColors.DISEASED_WHEAT, diseased_wheat);
+        blockColors.register(ModBlockColors.DISEASED_WHEAT, diseased_wheat);*/
     }
 
     /**
@@ -134,11 +133,21 @@ public class ModBlockUtils {
             }
         }
 
+        MUSHROOMS = new HashSet<Block>(Arrays.asList(
+            Blocks.BROWN_MUSHROOM_BLOCK,
+            Blocks.RED_MUSHROOM_BLOCK,
+            Blocks.MUSHROOM_STEM,
+            Blocks.BROWN_MUSHROOM,
+            Blocks.RED_MUSHROOM,
+            Blocks.POTTED_BROWN_MUSHROOM,
+            Blocks.POTTED_RED_MUSHROOM
+        ));
+
         //  Mutations
-        wild_einkorn.registerMutations(einkorn, common_wheat);
+        /*wild_einkorn.registerMutations(einkorn, common_wheat);
         wild_emmer.registerMutations(emmer, durum);
 
         emmer.registerMutation(spelt, common_wheat);
-        common_wheat.registerMutation(spelt, emmer);
+        common_wheat.registerMutation(spelt, emmer);*/
     }
 }

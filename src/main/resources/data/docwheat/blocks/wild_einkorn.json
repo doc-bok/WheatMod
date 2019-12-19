@@ -1,0 +1,24 @@
+{
+  "type": "crop",
+  "from": "minecraft:wheat",
+  "color": {
+    "type": "grass",
+    "temperature": 0.5,
+    "humidity": 1.0
+  },
+  "crop": {
+    "disease": "docwheat:diseased_wheat",
+    "seed": "docwheat:wild_einkorn_grain",
+    "disease_resistance": 7,
+    "wild": true,
+    "mutations": [
+      {
+        "mutation": "docwheat:einkorn",
+        "weight": 3
+      },
+      {
+        "mutation": "docwheat:common_wheat"
+      }
+    ]
+  }
+}

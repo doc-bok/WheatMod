@@ -1,0 +1,8 @@
+{
+  "type": "crop",
+  "from": "minecraft:beetroot",
+  "crop": {
+    "seed": "docwheat:tomato_seeds",
+    "disease_resistance": 8
+  }
+}

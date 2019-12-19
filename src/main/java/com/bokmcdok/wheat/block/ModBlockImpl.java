@@ -11,11 +11,13 @@ public class ModBlockImpl {
     private IBlockColor mColor;
     private int mFireEncouragement;
     private int mFireFlammability;
+    private ModCropProperties mCropProperties;
 
     public ModBlockImpl(ModBlockProperties properties) {
         mColor = properties.mColor;
         mFireEncouragement = properties.mFireEncouragement;
         mFireFlammability = properties.mFireFlammability;
+        mCropProperties = properties.mCropProperties;
     }
 
     /**
@@ -32,12 +34,16 @@ public class ModBlockImpl {
         return mFireEncouragement;
     }
 
+    public ModCropProperties getCropProperties() { return  mCropProperties; }
+
     public static class ModBlockProperties {
         private Block.Properties mBlockProperties;
 
         private IBlockColor mColor = null;
         private int mFireEncouragement = 0;
         private int mFireFlammability = 0;
+
+        private ModCropProperties mCropProperties;
 
         public ModBlockProperties(Material material) {
             mBlockProperties = Block.Properties.create(material);
@@ -106,6 +112,10 @@ public class ModBlockImpl {
         public void flammable(int encouragement, int flammability) {
             mFireEncouragement = encouragement;
             mFireFlammability = flammability;
+        }
+
+        public void crop(ModCropProperties properties) {
+            mCropProperties = properties;
         }
 
         public Block.Properties asBlockProperties() {

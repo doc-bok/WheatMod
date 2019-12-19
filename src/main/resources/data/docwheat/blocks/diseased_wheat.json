@@ -1,0 +1,10 @@
+{
+  "type": "crop",
+  "from": "minecraft:wheat",
+  "color": {
+    "r": 156,
+    "g": 66,
+    "b": 0
+  },
+  "crop": {}
+}

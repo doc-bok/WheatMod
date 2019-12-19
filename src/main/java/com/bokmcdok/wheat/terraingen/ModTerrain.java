@@ -1,7 +1,7 @@
 package com.bokmcdok.wheat.terraingen;
 
 import com.bokmcdok.wheat.block.ModBlockUtils;
-import com.bokmcdok.wheat.block.WildWheatBlock;
+import com.bokmcdok.wheat.block.ModCropsBlock;
 import com.bokmcdok.wheat.WheatMod;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStage;
@@ -41,7 +41,7 @@ class ModTerrain {
     /**
      * Add a wild wheat feature to generate in a biome.
      */
-    private static void addWildWheatFeature(Biome biome, WildWheatBlock block)
+    private static void addWildWheatFeature(Biome biome, ModCropsBlock block)
     {
         //  Chance is equal to 1 / x. The calculation makes age 3 the most commonly generated age, decreasing as the age
         //  gets further away. Age 7 (the final age) is least common.
