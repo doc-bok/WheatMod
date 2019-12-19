@@ -4,7 +4,6 @@ import com.bokmcdok.wheat.material.ModMaterialBuilder;
 import com.google.gson.JsonObject;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
-import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
 
 public class ModMaterialManager extends ModDataManager<Material> {
