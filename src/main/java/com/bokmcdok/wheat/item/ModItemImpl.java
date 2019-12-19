@@ -1,6 +1,7 @@
 package com.bokmcdok.wheat.item;
 
 import com.bokmcdok.wheat.entity.ThrownItemEntity;
+import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -28,6 +29,14 @@ public class ModItemImpl {
     private float mThrowingVelocity;
     private float mThrowingInaccuracy;
 
+    private IItemColor mColor;
+
+    private float mCompostChance;
+
+    /**
+     * Construction
+     * @param properties The modded properties for the item.
+     */
     ModItemImpl(ModItemProperties properties) {
         mThrowingSound = properties.mThrowingSound;
         mThrowingVolume = properties.mThrowingVolume;
@@ -36,7 +45,23 @@ public class ModItemImpl {
         mThrowingOffset = properties.mThrowingOffset;
         mThrowingVelocity = properties.mThrowingVelocity;
         mThrowingInaccuracy = properties.mThrowingInaccuracy;
+
+        mColor = properties.mColor;
+
+        mCompostChance = properties.mCompostChance;
     }
+
+    /**
+     * Get the item's color
+     * @return The color of the item.
+     */
+    public IItemColor getColor() { return  mColor; }
+
+    /**
+     * Get the chance an item will compost in the harvester.
+     * @return A probability between 0 and 1
+     */
+    public float getCompostChance() { return mCompostChance; }
 
     /**
      * Called when the player finishes using this Item (E.g. finishes eating.). Not called when the player stops using
@@ -118,16 +143,26 @@ public class ModItemImpl {
         private float mThrowingVelocity = 0.0f;
         private float mThrowingInaccuracy = 0.0f;
 
-        public void setThrowing(float offset, float velocity, float inaccuracy) {
+        private IItemColor mColor = null;
+
+        private float mCompostChance = 0.0f;
+
+        public void throwing(float offset, float velocity, float inaccuracy) {
             mThrowingOffset = offset;
             mThrowingVelocity = velocity;
             mThrowingInaccuracy = inaccuracy;
         }
 
-        public void setThrowingSound(SoundEvent event, float volume, float pitch) {
+        public void throwingSound(SoundEvent event, float volume, float pitch) {
             mThrowingSound = event;
             mThrowingVolume = volume;
             mThrowingPitch = pitch;
         }
+
+        public void color(IItemColor color) {
+            mColor = color;
+        }
+
+        public void compostChance(float compostChance) { mCompostChance = compostChance; }
     }
 }

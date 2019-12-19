@@ -1,5 +1,10 @@
 {
     "type": "block",
     "group": "decorations",
-    "block": "docwheat:common_straw_mat"
+    "block": "docwheat:common_straw_mat",
+    "color": {
+        "r": 245,
+        "g": 222,
+        "b": 89
+    }
 }

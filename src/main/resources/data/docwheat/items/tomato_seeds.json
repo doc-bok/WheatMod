@@ -1,5 +1,11 @@
 {
     "type": "block_named",
     "group": "misc",
-    "block": "tomato"
+    "block": "docwheat:tomato",
+    "color": {
+        "r": 255,
+        "g": 99,
+        "b": 71
+    },
+    "compost_chance": 0.3
 }

@@ -1,5 +1,11 @@
 {
     "type": "block_named",
     "group": "misc",
-    "block": "emmer"
+    "block": "docwheat:emmer",
+    "color": {
+        "r": 222,
+        "g": 245,
+        "b": 89
+    },
+    "compost_chance": 0.3
 }

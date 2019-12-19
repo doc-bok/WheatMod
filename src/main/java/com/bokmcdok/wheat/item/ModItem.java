@@ -1,5 +1,6 @@
 package com.bokmcdok.wheat.item;
 
+import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -8,13 +9,29 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 
-public class ModItem extends Item {
+public class ModItem extends Item implements IModItem {
     private final ModItemImpl mImpl;
 
+    /**
+     * Construction
+     * @param properties The properties of the item.
+     */
     public ModItem(ModItemImpl.ModItemProperties properties) {
         super(properties);
         mImpl = new ModItemImpl(properties);
     }
+
+    /**
+     * Get the item's color
+     * @return The color of the item.
+     */
+    public IItemColor getColor() { return  mImpl.getColor(); }
+
+    /**
+     * Get the chance an item will compost in the harvester.
+     * @return A probability between 0 and 1
+     */
+    public float getCompostChance() { return mImpl.getCompostChance(); }
 
     /**
      * Called when the player finishes using this Item (E.g. finishes eating.). Not called when the player stops using

@@ -1,0 +1,24 @@
+{
+  "type": "crop",
+  "from": "minecraft:wheat",
+  "color": {
+    "type": "foliage",
+    "temperature": 0.5,
+    "humidity": 1.0
+  },
+  "crop": {
+    "disease": "docwheat:diseased_wheat",
+    "seed": "docwheat:wild_emmer_grain",
+    "disease_resistance": 7,
+    "wild": true,
+    "mutations": [
+      {
+        "mutation": "docwheat:emmer",
+        "weight": 3
+      },
+      {
+        "mutation": "docwheat:durum"
+      }
+    ]
+  }
+}

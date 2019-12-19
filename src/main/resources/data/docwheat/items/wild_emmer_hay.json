@@ -1,4 +1,10 @@
 {
     "type": "item",
-    "group": "misc"
+    "group": "misc",
+    "color": {
+        "type": "grass",
+        "temperature": 0.5,
+        "humidity": 1.0
+    },
+    "compost_chance": 0.65
 }

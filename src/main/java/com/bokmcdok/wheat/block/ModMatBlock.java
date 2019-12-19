@@ -1,8 +1,10 @@
 package com.bokmcdok.wheat.block;
 
-import com.bokmcdok.wheat.WheatMod;
-import net.minecraft.block.*;
-import net.minecraft.block.material.Material;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.HorizontalBlock;
+import net.minecraft.client.renderer.color.IBlockColor;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.state.StateContainer;
 import net.minecraft.util.Direction;
@@ -13,18 +15,26 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.IWorldReader;
 
-public class StrawMatBlock extends HorizontalBlock {
+public class ModMatBlock extends HorizontalBlock implements IModBlock {
 
     private static final VoxelShape SHAPE = Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 1.0D, 16.0D);
+    private ModBlockImpl mImpl;
 
-    /**
-     * Construction
-     * @param registryName The name of the block in the registry.
-     */
-    StrawMatBlock(String registryName) {
-        super(Block.Properties.create(Material.PLANTS).hardnessAndResistance(0.5F).sound(SoundType.CROP));
-        setDefaultState(stateContainer.getBaseState().with(HORIZONTAL_FACING, Direction.NORTH));
-        setRegistryName(WheatMod.MOD_ID, registryName);
+    public ModMatBlock(ModBlockImpl.ModBlockProperties properties) {
+        super(properties.asBlockProperties());
+        mImpl = new ModBlockImpl(properties);
+    }
+
+    public IBlockColor getColor() {
+        return mImpl.getColor();
+    }
+
+    public int getFlammability() {
+        return mImpl.getFlammability();
+    }
+
+    public int getFireEncouragement() {
+        return mImpl.getFireEncouragement();
     }
 
     /**

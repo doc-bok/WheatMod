@@ -1,7 +1,7 @@
 {
     "type": "block",
     "group": "decorations",
-    "block": "andesite_stone",
+    "block": "docwheat:andesite_stone",
     "throwing": {
         "velocity": 0.5,
         "offset": -20.0,

@@ -1,5 +1,11 @@
 {
     "type": "block",
     "group": "buildingBlocks",
-    "block": "docwheat:einkorn_straw_bale"
+    "block": "docwheat:einkorn_straw_bale",
+    "color": {
+        "r": 179,
+        "g": 222,
+        "b": 89
+    },
+    "compost_chance": 0.85
 }

@@ -1,4 +1,10 @@
 {
     "type": "item",
-    "group": "misc"
+    "group": "misc",
+    "color": {
+        "r": 179,
+        "g": 245,
+        "b": 89
+    },
+    "compost_chance": 0.65
 }

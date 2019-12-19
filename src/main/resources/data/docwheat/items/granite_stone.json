@@ -1,7 +1,7 @@
 {
     "type": "block",
     "group": "decorations",
-    "block": "granite_stone",
+    "block": "docwheat:granite_stone",
     "throwing": {
         "velocity": 0.5,
         "offset": -20.0,

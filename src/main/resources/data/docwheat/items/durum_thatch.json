@@ -1,5 +1,10 @@
 {
     "type": "block",
     "group": "buildingBlocks",
-    "block": "docwheat:durum_thatch"
+    "block": "docwheat:durum_thatch",
+    "color": {
+        "r": 179,
+        "g": 245,
+        "b": 89
+    }
 }

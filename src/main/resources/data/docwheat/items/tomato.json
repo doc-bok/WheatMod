@@ -4,5 +4,6 @@
     "food": {
         "hunger": 1,
         "saturation": 1.2
-    }
+    },
+    "compost_chance": 0.65
 }

@@ -1,17 +1,14 @@
 package com.bokmcdok.wheat.item;
 
 import com.bokmcdok.wheat.block.ModBlockUtils;
-import com.bokmcdok.wheat.color.ModItemColors;
 import com.bokmcdok.wheat.WheatMod;
 import com.bokmcdok.wheat.data.ModItemManager;
-import com.bokmcdok.wheat.data.ModResourceManager;
 import com.bokmcdok.wheat.entity.VillagerUtils;
 import net.minecraft.block.ComposterBlock;
 import net.minecraft.client.renderer.color.ItemColors;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.resources.ResourcePackType;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -116,8 +113,9 @@ public class ModItemUtils
     public static Ingredient SEED_ITEMS = null;
     public static Ingredient BALE_ITEMS = null;
     public static Ingredient FISH_ITEMS = null;
-    public static Ingredient FLOUR_ITEMS = null;
     public static Ingredient GRAIN_ITEMS = null;
+
+    private static ModItemManager ITEM_MANAGER = new ModItemManager();
 
     /**
      * Register all items used by the mod
@@ -126,12 +124,8 @@ public class ModItemUtils
     @SubscribeEvent
     public static void registerItems(RegistryEvent.Register<Item> event)
     {
-        //  TODO: This should be moved to a more centralised location.
-        ModResourceManager modResourceManager = new ModResourceManager(ResourcePackType.SERVER_DATA, WheatMod.MOD_ID);
-        ModItemManager itemManager = new ModItemManager();
-        itemManager.loadItems(modResourceManager);
-
-        event.getRegistry().registerAll(itemManager.getItems());
+        ITEM_MANAGER.loadItems();
+        event.getRegistry().registerAll(ITEM_MANAGER.getAsItems());
     }
 
     /**
@@ -139,52 +133,16 @@ public class ModItemUtils
      * @param event The color handler event
      */
     @SubscribeEvent
-    public static void registerBlockColourHandlers(ColorHandlerEvent.Item event)
+    public static void registerItemColourHandlers(ColorHandlerEvent.Item event)
     {
-        final ItemColors blockColors = event.getItemColors();
+        IModItem[] items = ITEM_MANAGER.getItems();
+        final ItemColors itemColors = event.getItemColors();
 
-        blockColors.register(ModItemColors.WILD_EINKORN, wild_einkorn_grain);
-        blockColors.register(ModItemColors.WILD_EINKORN, wild_einkorn_hay);
-        blockColors.register(ModItemColors.WILD_EINKORN, wild_einkorn_bale);
-
-        blockColors.register(ModItemColors.COMMON_WHEAT, common_grain);
-        blockColors.register(ModItemColors.COMMON_WHEAT, common_straw);
-        blockColors.register(ModItemColors.COMMON_WHEAT, common_straw_bale);
-        blockColors.register(ModItemColors.COMMON_WHEAT, common_thatch);
-        blockColors.register(ModItemColors.COMMON_WHEAT, common_straw_mat);
-        blockColors.register(ModItemColors.COMMON_FLOUR, common_flour);
-
-        blockColors.register(ModItemColors.EINKORN, einkorn_grain);
-        blockColors.register(ModItemColors.EINKORN, einkorn_straw);
-        blockColors.register(ModItemColors.EINKORN, einkorn_straw_bale);
-        blockColors.register(ModItemColors.EINKORN, einkorn_thatch);
-        blockColors.register(ModItemColors.EINKORN, einkorn_straw_mat);
-
-        blockColors.register(ModItemColors.WILD_EMMER, wild_emmer_grain);
-        blockColors.register(ModItemColors.WILD_EMMER, wild_emmer_hay);
-
-        blockColors.register(ModItemColors.EMMER, emmer_grain);
-        blockColors.register(ModItemColors.EMMER, emmer_straw);
-        blockColors.register(ModItemColors.EMMER, emmer_straw_bale);
-        blockColors.register(ModItemColors.EMMER, emmer_thatch);
-        blockColors.register(ModItemColors.EMMER, emmer_straw_mat);
-
-        blockColors.register(ModItemColors.DURUM, durum_grain);
-        blockColors.register(ModItemColors.DURUM, durum_straw);
-        blockColors.register(ModItemColors.DURUM, durum_straw_bale);
-        blockColors.register(ModItemColors.DURUM, durum_thatch);
-        blockColors.register(ModItemColors.DURUM, durum_straw_mat);
-        blockColors.register(ModItemColors.DURUM_FLOUR, durum_flour);
-
-        blockColors.register(ModItemColors.SPELT, spelt_grain);
-        blockColors.register(ModItemColors.SPELT, spelt_straw);
-        blockColors.register(ModItemColors.SPELT, spelt_straw_bale);
-        blockColors.register(ModItemColors.SPELT, spelt_thatch);
-        blockColors.register(ModItemColors.SPELT, spelt_straw_mat);
-        blockColors.register(ModItemColors.SPELT_FLOUR, spelt_flour);
-
-        blockColors.register(ModItemColors.TOMATO_SEEDS, tomato_seeds);
-
+        for (IModItem i : items) {
+            if (i.getColor() != null) {
+                itemColors.register(i.getColor(), i.asItem());
+            }
+        }
     }
 
     /**
@@ -194,37 +152,12 @@ public class ModItemUtils
     @SubscribeEvent
     public static void commonSetup(FMLCommonSetupEvent event)
     {
-        ComposterBlock.CHANCES.put(wild_einkorn_grain, 0.3f);
-        ComposterBlock.CHANCES.put(wild_einkorn_hay, 0.65f);
-        ComposterBlock.CHANCES.put(wild_einkorn_bale, 0.85f);
-
-        ComposterBlock.CHANCES.put(common_grain, 0.3f);
-        ComposterBlock.CHANCES.put(common_straw, 0.65f);
-        ComposterBlock.CHANCES.put(common_straw_bale, 0.85f);
-
-        ComposterBlock.CHANCES.put(einkorn_grain, 0.3f);
-        ComposterBlock.CHANCES.put(einkorn_straw, 0.65f);
-        ComposterBlock.CHANCES.put(einkorn_straw_bale, 0.85f);
-
-        ComposterBlock.CHANCES.put(wild_emmer_grain, 0.3f);
-        ComposterBlock.CHANCES.put(wild_emmer_hay, 0.65f);
-
-        ComposterBlock.CHANCES.put(emmer_grain, 0.3f);
-        ComposterBlock.CHANCES.put(emmer_straw, 0.65f);
-        ComposterBlock.CHANCES.put(emmer_straw_bale, 0.85f);
-
-        ComposterBlock.CHANCES.put(durum_grain, 0.3f);
-        ComposterBlock.CHANCES.put(durum_straw, 0.65f);
-        ComposterBlock.CHANCES.put(durum_straw_bale, 0.85f);
-
-        ComposterBlock.CHANCES.put(spelt_grain, 0.3f);
-        ComposterBlock.CHANCES.put(spelt_straw, 0.65f);
-        ComposterBlock.CHANCES.put(spelt_straw_bale, 0.85f);
-
-        ComposterBlock.CHANCES.put(tomato_seeds, 0.3f);
-        ComposterBlock.CHANCES.put(tomato, 0.65f);
-
-        FLOUR_ITEMS = Ingredient.fromItems(common_flour, durum_flour, spelt_flour);
+        IModItem[] items = ITEM_MANAGER.getItems();
+        for (IModItem i : items) {
+            if (i.getCompostChance() > 0.0) {
+                ComposterBlock.CHANCES.put(i.asItem(), i.getCompostChance());
+            }
+        }
 
         WHEAT_ITEMS = Ingredient.fromItems(
                 wild_einkorn_hay, common_straw, einkorn_straw,

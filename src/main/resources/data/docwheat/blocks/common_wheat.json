@@ -1,0 +1,20 @@
+{
+  "type": "crop",
+  "from": "minecraft:wheat",
+  "color": {
+    "r": 245,
+    "g": 222,
+    "b": 89
+  },
+  "crop": {
+    "disease": "docwheat:diseased_wheat",
+    "seed": "docwheat:common_grain",
+    "disease_resistance": 8,
+    "mutations": [
+      {
+        "mutation": "docwheat:spelt",
+        "required": "docwheat:emmer"
+      }
+    ]
+  }
+}
