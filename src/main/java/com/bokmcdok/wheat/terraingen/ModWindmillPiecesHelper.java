@@ -2,6 +2,7 @@ package com.bokmcdok.wheat.terraingen;
 
 import com.google.common.collect.ImmutableList;
 import com.mojang.datafixers.util.Pair;
+import net.minecraft.block.Blocks;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.Rotation;
@@ -15,6 +16,10 @@ import net.minecraft.world.gen.feature.jigsaw.JigsawPiece;
 import net.minecraft.world.gen.feature.jigsaw.SingleJigsawPiece;
 import net.minecraft.world.gen.feature.structure.AbstractVillagePiece;
 import net.minecraft.world.gen.feature.structure.StructurePiece;
+import net.minecraft.world.gen.feature.template.AlwaysTrueRuleTest;
+import net.minecraft.world.gen.feature.template.RandomBlockMatchRuleTest;
+import net.minecraft.world.gen.feature.template.RuleEntry;
+import net.minecraft.world.gen.feature.template.RuleStructureProcessor;
 import net.minecraft.world.gen.feature.template.TemplateManager;
 
 import java.util.List;
@@ -25,7 +30,16 @@ public class ModWindmillPiecesHelper {
     }
 
     static {
-        JigsawManager.field_214891_a.register(new JigsawPattern(new ResourceLocation("docwheat:windmill/windmills"), new ResourceLocation("empty"), ImmutableList.of(Pair.of(new SingleJigsawPiece("docwheat:windmill/windmill"), 1)), JigsawPattern.PlacementBehaviour.RIGID));
+        JigsawManager.field_214891_a.register(
+                new JigsawPattern(
+                        new ResourceLocation("docwheat:windmill/windmills"),
+                        new ResourceLocation("empty"),
+                        ImmutableList.of(
+                                Pair.of(new SingleJigsawPiece("docwheat:windmill/windmill", ImmutableList.of(
+                                        new RuleStructureProcessor(ImmutableList.of(
+                                                new RuleEntry(new RandomBlockMatchRuleTest(Blocks.COBBLESTONE, 0.2f), AlwaysTrueRuleTest.INSTANCE, Blocks.MOSSY_COBBLESTONE.getDefaultState()))))),
+                                1)),
+                        JigsawPattern.PlacementBehaviour.RIGID));
     }
 
     public static class ModWindmill extends AbstractVillagePiece {
