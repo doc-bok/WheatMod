@@ -38,6 +38,11 @@ public class ModWindmillStructure extends ScatteredStructure<ModWindmillConfig> 
 
     public boolean hasStartAt(ChunkGenerator<?> chunkGenerator, Random random, int chunkPosX, int chunkPosZ) {
         ChunkPos position = getStartPositionForPosition(chunkGenerator, random, chunkPosX, chunkPosZ, 0, 0);
+
+        int newX = random.nextInt(2) < 1 ? position.x - 3 : position.x + 3;
+        int newZ = random.nextInt(2) < 1 ? position.z - 3 : position.z + 3;
+
+        position = new ChunkPos(newX, newZ);
         if (chunkPosX == position.x && chunkPosZ == position.z) {
             int i = chunkPosX >> 4;
             int j = chunkPosZ >> 4;
@@ -62,7 +67,7 @@ public class ModWindmillStructure extends ScatteredStructure<ModWindmillConfig> 
     }
 
     protected int getSeedModifier() {
-        return 526886245;
+        return 10387312;    //  Same as villages
     }
 
     public static class Start extends MarginedStructureStart {
