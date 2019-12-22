@@ -8,6 +8,7 @@ import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.feature.BushConfig;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.placement.ChanceConfig;
+import net.minecraft.world.gen.placement.IPlacementConfig;
 import net.minecraft.world.gen.placement.Placement;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -35,6 +36,13 @@ class ModTerrain {
 
                 addWildWheatFeature(biome, ModBlockUtils.wild_emmer);
             }
+
+            if (biome.getCategory() == Biome.Category.PLAINS) {
+                biome.addStructure(ModFeature.WINDMILL, new ModWindmillConfig(1));
+                biome.addFeature(GenerationStage.Decoration.SURFACE_STRUCTURES, Biome.createDecoratedFeature(ModFeature.WINDMILL, new ModWindmillConfig(1), Placement.NOPE, IPlacementConfig.NO_PLACEMENT_CONFIG));
+            }
+
+            Feature.STRUCTURES.put("windmill", ModFeature.WINDMILL);
         }
     }
 
