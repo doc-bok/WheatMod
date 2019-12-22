@@ -11,7 +11,7 @@ import net.minecraftforge.registries.ObjectHolder;
 
 @Mod.EventBusSubscriber(modid = WheatMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 @ObjectHolder(WheatMod.MOD_ID)
-public class ModFeature {
+public class ModFeatureUtils {
     public static Structure<ModWindmillConfig> WINDMILL = new ModWindmillStructure(ModWindmillConfig::deserialize);
 
     @SubscribeEvent

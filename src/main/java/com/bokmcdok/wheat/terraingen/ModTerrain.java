@@ -38,11 +38,11 @@ class ModTerrain {
             }
 
             if (biome.getCategory() == Biome.Category.PLAINS) {
-                biome.addStructure(ModFeature.WINDMILL, new ModWindmillConfig(1));
-                biome.addFeature(GenerationStage.Decoration.SURFACE_STRUCTURES, Biome.createDecoratedFeature(ModFeature.WINDMILL, new ModWindmillConfig(1), Placement.NOPE, IPlacementConfig.NO_PLACEMENT_CONFIG));
+                biome.addStructure(ModFeatureUtils.WINDMILL, new ModWindmillConfig(1));
+                biome.addFeature(GenerationStage.Decoration.SURFACE_STRUCTURES, Biome.createDecoratedFeature(ModFeatureUtils.WINDMILL, new ModWindmillConfig(1), Placement.NOPE, IPlacementConfig.NO_PLACEMENT_CONFIG));
             }
 
-            Feature.STRUCTURES.put("windmill", ModFeature.WINDMILL);
+            Feature.STRUCTURES.put("windmill", ModFeatureUtils.WINDMILL);
         }
     }
 

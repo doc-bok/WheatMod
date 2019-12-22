@@ -49,7 +49,7 @@ public class ModWindmillStructure extends ScatteredStructure<ModWindmillConfig> 
             }
 
             Biome biome = chunkGenerator.getBiomeProvider().getBiome(new BlockPos((chunkPosX << 4) + 9, 0, (chunkPosZ << 4) + 9));
-            if (chunkGenerator.hasStructure(biome, ModFeature.WINDMILL)) {
+            if (chunkGenerator.hasStructure(biome, ModFeatureUtils.WINDMILL)) {
                 return true;
             }
         }
@@ -67,12 +67,12 @@ public class ModWindmillStructure extends ScatteredStructure<ModWindmillConfig> 
 
     public static class Start extends MarginedStructureStart {
         public Start(Structure<?> structure, int chunkX, int chunkZ, Biome biome, MutableBoundingBox bounds, int reference, long seed) {
-            super(structure, chunkX, chunkX, biome, bounds, reference, seed);
+            super(structure, chunkX, chunkZ, biome, bounds, reference, seed);
         }
 
         public void init(ChunkGenerator<?> generator, TemplateManager templateManager, int chunkX, int chunkZ, Biome biome) {
             BlockPos position = new BlockPos(chunkX * 16, 90, chunkZ * 16);
-            ModWindmillPieces.assemble(generator, templateManager, position, components, rand);
+            ModWindmillPiecesHelper.assemble(generator, templateManager, position, components, rand);
             recalculateStructureSize();
         }
     }

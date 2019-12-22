@@ -19,9 +19,9 @@ import net.minecraft.world.gen.feature.template.TemplateManager;
 
 import java.util.List;
 
-public class ModWindmillPieces {
+public class ModWindmillPiecesHelper {
     public static void assemble(ChunkGenerator<?> generator, TemplateManager templateManager, BlockPos position, List<StructurePiece> pieces, SharedSeedRandom random) {
-        JigsawManager.func_214889_a(new ResourceLocation("docwheat:windmill/windmills"), 7, ModWindmillPieces.ModWindmill::new, generator, templateManager, position, pieces, random);
+        JigsawManager.func_214889_a(new ResourceLocation("docwheat:windmill/windmills"), 7, ModWindmillPiecesHelper.ModWindmill::new, generator, templateManager, position, pieces, random);
     }
 
     static {
