@@ -1,0 +1,166 @@
+{
+  "type": "minecraft:chest",
+  "pools": [
+    {
+      "rolls": {
+        "min": 3.0,
+        "max": 8.0,
+        "type": "minecraft:uniform"
+      },
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "weight": 3,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1.0,
+                "max": 3.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ],
+          "name": "docwheat:meat_pie"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 10,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1.0,
+                "max": 5.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ],
+          "name": "minecraft:bread"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 5,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1.0,
+                "max": 3.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ],
+          "name": "docwheat:biscuit"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 15,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1.0,
+                "max": 3.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ],
+          "name": "docwheat:common_flour"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 15,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1.0,
+                "max": 3.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ],
+          "name": "docwheat:donut"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 5,
+          "name": "docwheat:durum_flour"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 5,
+          "name": "docwheat:common_grain"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 5,
+          "name": "docwheat:einkorn_grain"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 5,
+          "name": "docwheat:emmer_grain"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 5,
+          "name": "docwheat:durum_grain"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 5,
+          "name": "docwheat:dough"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 5,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 3.0,
+                "max": 7.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ],
+          "name": "docwheat:apple_pie"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 5,
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 3.0,
+                "max": 7.0,
+                "type": "minecraft:uniform"
+              }
+            }
+          ],
+          "name": "docwheat:noodles"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 3,
+          "name": "docwheat:porridge"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "docwheat:gravy"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "docwheat:fish_pie"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "docwheat:spelt_grain"
+        }
+      ]
+    }
+  ]
+}
