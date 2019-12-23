@@ -12,7 +12,7 @@ import net.minecraft.entity.ai.brain.task.WorkTask;
 import net.minecraft.entity.merchant.villager.VillagerEntity;
 import net.minecraft.entity.merchant.villager.VillagerProfession;
 
-public class ModVillagerTasks {
+public class ModVillagerTaskHelper {
     public static ImmutableList<Pair<Integer, ? extends Task<? super VillagerEntity>>> core(VillagerProfession profession, float movementSpeed) {
         return ImmutableList.of(Pair.of(4, new ModPickupFoodTask()));
     }

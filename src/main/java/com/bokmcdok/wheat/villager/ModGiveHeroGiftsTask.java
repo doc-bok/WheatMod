@@ -42,7 +42,7 @@ public class ModGiveHeroGiftsTask extends GiveHeroGiftsTask {
         lootTables.put(VillagerProfession.TOOLSMITH, LootTables.GAMEPLAY_HERO_OF_THE_VILLAGE_TOOLSMITH_GIFT);
         lootTables.put(VillagerProfession.WEAPONSMITH, LootTables.GAMEPLAY_HERO_OF_THE_VILLAGE_WEAPONSMITH_GIFT);
 
-        lootTables.put(ModVillagerProfession.BAKER, new ResourceLocation("docwheat", "gameplay/hero_of_the_village/baker_gift" ));
+        lootTables.put(ModVillagerProfessionHelper.BAKER, new ResourceLocation("docwheat", "gameplay/hero_of_the_village/baker_gift" ));
     });
 
     private long mStartTime;

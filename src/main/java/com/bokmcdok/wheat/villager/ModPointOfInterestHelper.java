@@ -14,7 +14,7 @@ import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import java.lang.reflect.Method;
 
 @Mod.EventBusSubscriber(modid = WheatMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
-public class ModPointOfInterestType {
+public class ModPointOfInterestHelper {
 
     public static PointOfInterestType BAKER;
 

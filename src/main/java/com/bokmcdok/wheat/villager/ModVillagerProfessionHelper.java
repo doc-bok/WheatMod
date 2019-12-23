@@ -17,12 +17,12 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
 @Mod.EventBusSubscriber(modid = WheatMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
-public class ModVillagerProfession {
+public class ModVillagerProfessionHelper {
     public static VillagerProfession BAKER;
 
     @SubscribeEvent
     public static void registerProfession(RegistryEvent.Register<VillagerProfession> event) {
-        BAKER = new VillagerProfession("baker", ModPointOfInterestType.BAKER, ImmutableSet.of(), ImmutableSet.of());
+        BAKER = new VillagerProfession("baker", ModPointOfInterestHelper.BAKER, ImmutableSet.of(), ImmutableSet.of());
         event.getRegistry().registerAll(BAKER.setRegistryName("baker"));
     }
 
@@ -53,6 +53,6 @@ public class ModVillagerProfession {
                         new ModItemsForEmeraldsTrade(ModItemUtils.apple_pie, 4, 1, 30)
                 }));
 
-        VillagerTrades.field_221239_a.put(ModVillagerProfession.BAKER, bakerTrades);
+        VillagerTrades.field_221239_a.put(ModVillagerProfessionHelper.BAKER, bakerTrades);
     }
 }

@@ -125,10 +125,10 @@ public class VillagerUtils {
             float speed = (float) villager.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getValue();
 
             Brain<VillagerEntity> brain = villager.getBrain();
-            brain.registerActivity(Activity.WORK, ModVillagerTasks.work(profession, speed));
-            brain.registerActivity(Activity.MEET, ModVillagerTasks.meet(profession, speed));
-            brain.registerActivity(Activity.IDLE, ModVillagerTasks.idle(profession, speed));
-            brain.registerActivity(Activity.CORE, ModVillagerTasks.core(profession, speed));
+            brain.registerActivity(Activity.WORK, ModVillagerTaskHelper.work(profession, speed));
+            brain.registerActivity(Activity.MEET, ModVillagerTaskHelper.meet(profession, speed));
+            brain.registerActivity(Activity.IDLE, ModVillagerTaskHelper.idle(profession, speed));
+            brain.registerActivity(Activity.CORE, ModVillagerTaskHelper.core(profession, speed));
         }
     }
 
