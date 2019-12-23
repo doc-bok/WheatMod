@@ -1,6 +1,6 @@
 {
   "type": "crop",
-  "from": "minecraft:beetroot",
+  "from": "minecraft:wheat",
   "crop": {
     "seed": "docwheat:tomato_seeds"
   }
