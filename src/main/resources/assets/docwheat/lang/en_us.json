@@ -117,5 +117,7 @@
   "block.docwheat.tomato": "Tomato",
 
   "item.docwheat.flour_mill": "Flour Mill",
-  "container.flour_mill": "Flour Mill"
+  "container.flour_mill": "Flour Mill",
+
+  "entity.minecraft.villager.docwheat.baker": "Baker"
 }

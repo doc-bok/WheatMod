@@ -3,7 +3,7 @@ package com.bokmcdok.wheat.item;
 import com.bokmcdok.wheat.block.ModBlockUtils;
 import com.bokmcdok.wheat.WheatMod;
 import com.bokmcdok.wheat.data.ModItemManager;
-import com.bokmcdok.wheat.entity.VillagerUtils;
+import com.bokmcdok.wheat.villager.VillagerUtils;
 import net.minecraft.block.ComposterBlock;
 import net.minecraft.client.renderer.color.ItemColors;
 import net.minecraft.item.Item;
@@ -103,6 +103,14 @@ public class ModItemUtils
     public static final Item tomato_seeds = null;
 
     public static final Item dough = null;
+
+    public static final Item porridge = null;
+    public static final Item pasta = null;
+    public static final Item donut = null;
+    public static final Item gravy = null;
+    public static final Item meat_pie = null;
+    public static final Item fish_pie = null;
+    public static final Item apple_pie = null;
 
     /**
      * Miscellaneous Items for reference

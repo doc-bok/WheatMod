@@ -1,7 +1,6 @@
-package com.bokmcdok.wheat.entity;
+package com.bokmcdok.wheat.villager;
 
 import com.bokmcdok.wheat.WheatMod;
-import com.bokmcdok.wheat.ai.ModVillagerTasks;
 import com.bokmcdok.wheat.item.ModItemUtils;
 import com.bokmcdok.wheat.trade.ModEmeraldForItemsTrade;
 import com.bokmcdok.wheat.trade.ModItemsForEmeraldsTrade;
@@ -125,11 +124,11 @@ public class VillagerUtils {
             VillagerProfession profession = villager.getVillagerData().getProfession();
             float speed = (float) villager.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getValue();
 
-            if (profession == VillagerProfession.FARMER) {
-                Brain<VillagerEntity> brain = villager.getBrain();
-                brain.registerActivity(Activity.CORE, ModVillagerTasks.core(profession, speed));
-                brain.registerActivity(Activity.WORK, ModVillagerTasks.work(profession, speed));
-            }
+            Brain<VillagerEntity> brain = villager.getBrain();
+            brain.registerActivity(Activity.WORK, ModVillagerTaskHelper.work(profession, speed));
+            brain.registerActivity(Activity.MEET, ModVillagerTaskHelper.meet(profession, speed));
+            brain.registerActivity(Activity.IDLE, ModVillagerTaskHelper.idle(profession, speed));
+            brain.registerActivity(Activity.CORE, ModVillagerTaskHelper.core(profession, speed));
         }
     }
 
