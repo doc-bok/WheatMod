@@ -1,6 +1,6 @@
-package com.bokmcdok.wheat.ai;
+package com.bokmcdok.wheat.villager;
 
-import com.bokmcdok.wheat.entity.VillagerUtils;
+import com.bokmcdok.wheat.villager.VillagerUtils;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.entity.ai.brain.memory.MemoryModuleStatus;
 import net.minecraft.entity.ai.brain.memory.MemoryModuleType;
