@@ -1,0 +1,138 @@
+{
+  "poi": "docwheat:flour_mill",
+  "giftsa": "docwheat:gameplay/hero_of_the_village/baker_gift",
+  "trades": {
+    "novice": [
+      {
+        "type": "sell",
+        "item": "docwheat:biscuit",
+        "cost": 1,
+        "quantity": 8,
+        "max_trades": 16,
+        "XP": 1
+      },
+      {
+        "type": "sell",
+        "item": "minecraft:cookie",
+        "cost": 1,
+        "quantity": 6,
+        "max_trades": 16,
+        "XP": 1
+      },
+      {
+        "type": "sell",
+        "item": "docwheat:roll",
+        "cost": 1,
+        "quantity": 5,
+        "max_trades": 16,
+        "XP": 1
+      },
+      {
+        "type": "buy",
+        "item": "docwheat:common_flour",
+        "quantity": 20,
+        "max_trades": 16,
+        "XP": 2
+      },
+      {
+        "type": "buy",
+        "item": "minecraft:cocoa_beans",
+        "quantity": 15,
+        "max_trades": 16,
+        "XP": 2
+      }
+    ],
+    "apprentice": [
+      {
+        "type": "sell",
+        "item": "minecraft:bread",
+        "cost": 1,
+        "quantity": 6,
+        "max_trades": 16,
+        "XP": 5
+      },
+      {
+        "type": "sell",
+        "item": "docwheat:donut",
+        "cost": 2,
+        "quantity": 12,
+        "max_trades": 16,
+        "XP": 5
+      },
+      {
+        "type": "sell",
+        "item": "minecraft:pumpkin_pie",
+        "cost": 1,
+        "quantity": 4,
+        "max_trades": 16,
+        "XP": 5
+      },
+      {
+        "type": "buy",
+        "item": "minecraft:sugar",
+        "quantity": 6,
+        "max_trades": 16,
+        "XP": 10
+      },
+      {
+        "type": "buy",
+        "item": "minecraft:pumpkin",
+        "quantity": 6,
+        "max_trades": 16,
+        "XP": 10
+      }
+    ],
+    "journeyman": [
+      {
+        "type": "sell",
+        "item": "minecraft:cake",
+        "cost": 1,
+        "quantity": 1,
+        "max_trades": 8,
+        "XP": 10
+      },
+      {
+        "type": "buy",
+        "item": "minecraft:egg",
+        "quantity": 6,
+        "max_trades": 16,
+        "XP": 20
+      }
+    ],
+    "expert": [
+      {
+        "type": "sell",
+        "item": "docwheat:apple_pie",
+        "cost": 2,
+        "quantity": 1,
+        "max_trades": 12,
+        "XP": 15
+      },
+      {
+        "type": "buy",
+        "item": "minecraft:apple",
+        "quantity": 18,
+        "max_trades": 12,
+        "XP": 30
+      }
+    ],
+    "master": [
+      {
+        "type": "sell",
+        "item": "docwheat:fish_pie",
+        "cost": 4,
+        "quantity": 1,
+        "max_trades": 12,
+        "XP": 30
+      },
+      {
+        "type": "sell",
+        "item": "docwheat:meat_pie",
+        "cost": 3,
+        "quantity": 1,
+        "max_trades": 12,
+        "XP": 30
+      }
+    ]
+  }
+}

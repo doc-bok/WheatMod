@@ -27,7 +27,7 @@ import java.util.Map;
 import java.util.Optional;
 
 public class ModGiveHeroGiftsTask extends GiveHeroGiftsTask {
-    private static final Map<VillagerProfession, ResourceLocation> GIFTS = Util.make(Maps.newHashMap(), (lootTables) -> {
+    public static final Map<VillagerProfession, ResourceLocation> GIFTS = Util.make(Maps.newHashMap(), (lootTables) -> {
         lootTables.put(VillagerProfession.ARMORER, LootTables.GAMEPLAY_HERO_OF_THE_VILLAGE_ARMORER_GIFT);
         lootTables.put(VillagerProfession.BUTCHER, LootTables.GAMEPLAY_HERO_OF_THE_VILLAGE_BUTCHER_GIFT);
         lootTables.put(VillagerProfession.CARTOGRAPHER, LootTables.GAMEPLAY_HERO_OF_THE_VILLAGE_CARTOGRAPHER_GIFT);
@@ -41,8 +41,6 @@ public class ModGiveHeroGiftsTask extends GiveHeroGiftsTask {
         lootTables.put(VillagerProfession.SHEPHERD, LootTables.GAMEPLAY_HERO_OF_THE_VILLAGE_SHEPHERD_GIFT);
         lootTables.put(VillagerProfession.TOOLSMITH, LootTables.GAMEPLAY_HERO_OF_THE_VILLAGE_TOOLSMITH_GIFT);
         lootTables.put(VillagerProfession.WEAPONSMITH, LootTables.GAMEPLAY_HERO_OF_THE_VILLAGE_WEAPONSMITH_GIFT);
-
-        lootTables.put(ModVillagerProfessionHelper.BAKER, new ResourceLocation("docwheat", "gameplay/hero_of_the_village/baker_gift" ));
     });
 
     private long mStartTime;
