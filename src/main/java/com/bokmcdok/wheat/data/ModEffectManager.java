@@ -16,7 +16,7 @@ public class ModEffectManager extends ModDataManager<EffectInstance> {
      * Loads all effect JSON files from the effects folder.
      */
     public void loadEffects() {
-        loadEntries(EFFECTS_FOLDER);
+        loadDataEntries(EFFECTS_FOLDER);
     }
 
     /**

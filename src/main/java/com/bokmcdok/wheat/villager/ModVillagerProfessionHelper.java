@@ -30,7 +30,7 @@ public class ModVillagerProfessionHelper {
 
     @SubscribeEvent
     public static void registerPointsOfInterest(RegistryEvent.Register<PointOfInterestType> event) {
-        PROFESSION_MANAGER.loadEntries("villagers");
+        PROFESSION_MANAGER.loadDataEntries("villagers");
 
         Collection<ModVillagerProfession> professions = PROFESSION_MANAGER.getAllEntries();
         for (ModVillagerProfession i : professions) {

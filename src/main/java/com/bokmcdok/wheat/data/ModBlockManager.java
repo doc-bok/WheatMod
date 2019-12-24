@@ -41,7 +41,7 @@ public class ModBlockManager extends ModDataManager<IModBlock> {
 
     public void loadBlocks() {
         MATERIAL_MANAGER.loadMaterials();
-        loadEntries(BLOCKS_FOLDER);
+        loadDataEntries(BLOCKS_FOLDER);
     }
 
     protected IModBlock deserialize(ResourceLocation location, JsonObject json) {
