@@ -1,6 +1,6 @@
 {
   "poi": "docwheat:flour_mill",
-  "giftsa": "docwheat:gameplay/hero_of_the_village/baker_gift",
+  "gifts": "docwheat:gameplay/hero_of_the_village/baker_gift",
   "trades": {
     "novice": [
       {
