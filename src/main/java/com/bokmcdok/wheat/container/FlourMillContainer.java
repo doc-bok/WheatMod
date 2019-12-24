@@ -17,6 +17,8 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.play.server.SSetSlotPacket;
 import net.minecraft.util.IWorldPosCallable;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 
 import java.util.Optional;
@@ -65,7 +67,7 @@ public class FlourMillContainer extends Container {
         mPlayer = playerInventory.player;
 
         //  Setup the craft result slot.
-        addSlot(new ModResultSlot(ModSoundUtils.mill_grind, FlourMillRecipe.flour_mill, mPlayer, mCraftingGrid, mResultSlot, 0, 124, 35));
+        addSlot(new ModResultSlot(Registry.SOUND_EVENT.getOrDefault(new ResourceLocation("docwheat:mill_grind")), FlourMillRecipe.flour_mill, mPlayer, mCraftingGrid, mResultSlot, 0, 124, 35));
 
         //  Setup crafting grid
         addSlot(new ModSlot(ModItemUtils.GRAIN_ITEMS, mCraftingGrid, 0, 48, 35));

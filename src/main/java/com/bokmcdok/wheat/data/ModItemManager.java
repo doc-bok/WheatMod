@@ -63,10 +63,10 @@ public class ModItemManager extends ModDataManager<IModItem> {
         mEffectManager.loadEffects();
 
         //  Load container items
-        loadEntries(CONTAINERS_FOLDER);
+        loadDataEntries(CONTAINERS_FOLDER);
 
         //  Load other items
-        loadEntries(ITEMS_FOLDER);
+        loadDataEntries(ITEMS_FOLDER);
     }
 
     /**

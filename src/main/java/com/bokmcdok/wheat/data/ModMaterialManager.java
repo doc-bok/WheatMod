@@ -10,7 +10,7 @@ public class ModMaterialManager extends ModDataManager<Material> {
     private static final String MATERIALS_FOLDER = "materials";
 
     public void loadMaterials() {
-        loadEntries(MATERIALS_FOLDER);
+        loadDataEntries(MATERIALS_FOLDER);
         addCustomEntry("minecraft:air", Material.AIR);
         addCustomEntry("minecraft:structure_void", Material.STRUCTURE_VOID);
         addCustomEntry("minecraft:portal", Material.PORTAL);

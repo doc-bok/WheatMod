@@ -1,6 +1,7 @@
 package com.bokmcdok.wheat.data;
 
 import com.bokmcdok.wheat.WheatMod;
+import com.google.common.collect.Lists;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -8,6 +9,7 @@ import com.google.gson.JsonParseException;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.MaterialColor;
+import net.minecraft.resources.IResourceManager;
 import net.minecraft.resources.ResourcePackType;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
@@ -22,6 +24,7 @@ import org.apache.logging.log4j.util.TriConsumer;
 import java.lang.reflect.Field;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
@@ -29,7 +32,8 @@ import java.util.function.Consumer;
 public abstract class ModDataManager<T> {
     protected static final Logger LOGGER = LogManager.getLogger();
     private static final ModJsonLoader JSON_LOADER = new ModJsonLoader();
-    private static ModResourceManager RESOURCE_MANAGER = new ModResourceManager(ResourcePackType.SERVER_DATA, WheatMod.MOD_ID);
+    private static ModResourceManager ASSET_RESOURCE_MANAGER = new ModResourceManager(ResourcePackType.CLIENT_RESOURCES, WheatMod.MOD_ID);
+    private static ModResourceManager DATA_RESOURCE_MANAGER = new ModResourceManager(ResourcePackType.SERVER_DATA, WheatMod.MOD_ID);
 
     private Map<ResourceLocation, T> mEntries = new HashMap<>();
 
@@ -54,8 +58,33 @@ public abstract class ModDataManager<T> {
      * Load items from a specified folder.
      * @param folder The folder to load from.
      */
-    public void loadEntries(String folder) {
-        Map<ResourceLocation, JsonObject> containerResources = JSON_LOADER.loadJsonResources(RESOURCE_MANAGER, folder);
+    public void loadAssetEntries(String folder, String extension) {
+        List<ResourceLocation> containerResources = listResources(ASSET_RESOURCE_MANAGER, folder, extension);
+        for(ResourceLocation resourceLocation : containerResources) {
+            if (resourceLocation.getPath().startsWith("_")) { continue; }
+
+            try {
+                T entry = deserialize(resourceLocation, null);
+                if (entry == null) {
+                    LOGGER.info("Skipping loading entry {} as it's serializer returned null", resourceLocation);
+                    continue;
+                }
+
+                mEntries.put(resourceLocation, entry);
+
+            } catch (IllegalArgumentException | JsonParseException exception) {
+                LOGGER.error("Parsing error loading entry {}", resourceLocation, exception);
+            }
+        }
+
+        LOGGER.info("Loaded {} entries", mEntries.values().size());
+    }
+    public void loadDataEntries(String folder) {
+        loadEntries(DATA_RESOURCE_MANAGER, folder);
+    }
+
+    protected void loadEntries(ModResourceManager resourceManager, String folder) {
+        Map<ResourceLocation, JsonObject> containerResources = JSON_LOADER.loadJsonResources(resourceManager, folder);
         for(Map.Entry<ResourceLocation, JsonObject> i : containerResources.entrySet()) {
             ResourceLocation resourceLocation = i.getKey();
             if (resourceLocation.getPath().startsWith("_")) { continue; }
@@ -84,6 +113,23 @@ public abstract class ModDataManager<T> {
      */
     protected void addCustomEntry(String location, T entry) {
         mEntries.put(new ResourceLocation(location), entry);
+    }
+
+    protected List<ResourceLocation> listResources(IResourceManager resourceManager, String folder, String extension) {
+        List<ResourceLocation> result = Lists.newArrayList();
+        int folderNameLength = folder.length() + 1;
+
+        for (ResourceLocation resourceLocation : resourceManager.getAllResourceLocations(folder, (x) -> {
+            return  x.endsWith(extension);
+        })) {
+            String path = resourceLocation.getPath();
+            String namespace = resourceLocation.getNamespace();
+            String resourceName = path.substring(folderNameLength, path.length() - extension.length());
+            ResourceLocation registryName = new ResourceLocation(namespace, resourceName);
+            result.add(registryName);
+        }
+
+        return  result;
     }
 
     /**
