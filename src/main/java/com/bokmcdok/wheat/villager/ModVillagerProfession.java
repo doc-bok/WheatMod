@@ -4,7 +4,6 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import net.minecraft.util.ResourceLocation;
 
-import java.rmi.registry.Registry;
 import java.util.List;
 import java.util.Map;
 

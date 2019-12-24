@@ -55,6 +55,9 @@ public class ModVillagerTrade {
 
                 case SELL:
                     return new ModItemsForEmeraldsTrade(item.get(), mCost, mQuantity, mMaxTrades, mXP);
+
+                default:
+                    return null;
             }
         }
 
