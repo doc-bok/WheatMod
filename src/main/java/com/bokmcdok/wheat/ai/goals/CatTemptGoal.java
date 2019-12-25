@@ -1,4 +1,4 @@
-package com.bokmcdok.wheat.ai;
+package com.bokmcdok.wheat.ai.goals;
 
 import net.minecraft.entity.passive.CatEntity;
 import net.minecraft.entity.player.PlayerEntity;

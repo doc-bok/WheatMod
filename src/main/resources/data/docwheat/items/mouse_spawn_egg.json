@@ -1,0 +1,21 @@
+{
+    "type": "spawn_egg",
+    "group": "misc",
+    "entity": "docwheat:field_mouse",
+
+    "primary_color": {
+        "color": {
+            "r": 165,
+            "g": 42,
+            "b": 42
+        }
+    },
+
+    "secondary_color": {
+        "color": {
+            "r": 82,
+            "g": 21,
+            "b": 21
+        }
+    }
+}

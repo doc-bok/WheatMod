@@ -3,7 +3,7 @@
     "group": "misc",
     "block": "docwheat:wild_emmer",
     "color": {
-        "type": "grass",
+        "type": "foliage",
         "temperature": 0.5,
         "humidity": 1.0
     },

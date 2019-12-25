@@ -1,18 +1,22 @@
 package com.bokmcdok.wheat.data;
 
+import com.bokmcdok.wheat.entity.ModEntityUtils;
 import com.bokmcdok.wheat.item.IModItem;
 import com.bokmcdok.wheat.item.ModBlockNamedItem;
 import com.bokmcdok.wheat.item.ModItem;
 import com.bokmcdok.wheat.item.ModBlockItem;
 import com.bokmcdok.wheat.item.ModItemImpl;
+import com.bokmcdok.wheat.item.ModSpawnEggItem;
 import com.google.common.collect.Lists;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.minecraft.entity.EntityType;
 import net.minecraft.item.Food;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -34,7 +38,8 @@ public class ModItemManager extends ModDataManager<IModItem> {
     private enum ItemType {
         ITEM,
         BLOCK,
-        BLOCK_NAMED
+        BLOCK_NAMED,
+        SPAWN_EGG
     }
 
     /**
@@ -110,6 +115,16 @@ public class ModItemManager extends ModDataManager<IModItem> {
             case BLOCK_NAMED: {
                 String blockName = JSONUtils.getString(json, "block");
                 result = new ModBlockNamedItem(getBlock(blockName), properties);
+                break;
+            }
+
+            case SPAWN_EGG: {
+                String entityName = JSONUtils.getString(json, "entity");
+                JsonObject primaryColorJson = JSONUtils.getJsonObject(json, "primary_color");
+                JsonObject secondaryColorJson = JSONUtils.getJsonObject(json, "secondary_color");
+                int primaryColor = deserializeColor(primaryColorJson);
+                int secondaryColor = deserializeColor(secondaryColorJson);
+                result = new ModSpawnEggItem(new ResourceLocation(entityName), primaryColor, secondaryColor, properties);
                 break;
             }
 
@@ -251,5 +266,15 @@ public class ModItemManager extends ModDataManager<IModItem> {
         }
 
         return getEntry(location).asItem();
+    }
+
+    private EntityType<?> getEntity(ResourceLocation entityName) {
+        try {
+            Field field = ModEntityUtils.class.getDeclaredField(entityName.getPath());
+            return (EntityType<?>)field.get(null);
+        } catch (NoSuchFieldException | IllegalAccessException exception) {
+            LOGGER.error("Entity type {} not supported", entityName, exception);
+            return null;
+        }
     }
 }

@@ -1,11 +1,16 @@
-package com.bokmcdok.wheat.entity;
+package com.bokmcdok.wheat.entity.animal.cat;
 
 import com.bokmcdok.wheat.WheatMod;
-import com.bokmcdok.wheat.ai.CatTemptGoal;
+import com.bokmcdok.wheat.ai.goals.CatTemptGoal;
+import com.bokmcdok.wheat.entity.animal.AnimalUtils;
+import com.bokmcdok.wheat.entity.animal.mouse.ModMouseEntity;
 import com.bokmcdok.wheat.item.ModItemUtils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.goal.NonTamedTargetGoal;
 import net.minecraft.entity.passive.CatEntity;
+import net.minecraft.entity.passive.TurtleEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -16,6 +21,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 import java.util.Random;
+import java.util.function.Predicate;
 
 @Mod.EventBusSubscriber(modid = WheatMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
 public class CatUtils {
@@ -33,6 +39,8 @@ public class CatUtils {
         if (entity.getType() == EntityType.CAT) {
             CatEntity cat = (CatEntity)entity;
             cat.goalSelector.addGoal(3, new CatTemptGoal(cat, 0.6D, ModItemUtils.FISH_ITEMS, true));
+            cat.targetSelector.addGoal(1, new NonTamedTargetGoal<>(cat, ModMouseEntity.class, false, null));
+
         }
     }
 

@@ -119,5 +119,8 @@
   "item.docwheat.flour_mill": "Flour Mill",
   "container.flour_mill": "Flour Mill",
 
-  "entity.minecraft.villager.docwheat.baker": "Baker"
+  "entity.minecraft.villager.docwheat.baker": "Baker",
+
+  "item.docwheat.mouse_spawn_egg": "Field Mouse Spawn Egg",
+  "entity.docwheat.mouse": "Field Mouse"
 }

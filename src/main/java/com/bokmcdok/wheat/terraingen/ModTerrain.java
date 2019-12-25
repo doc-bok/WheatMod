@@ -3,6 +3,8 @@ package com.bokmcdok.wheat.terraingen;
 import com.bokmcdok.wheat.block.ModBlockUtils;
 import com.bokmcdok.wheat.block.ModCropsBlock;
 import com.bokmcdok.wheat.WheatMod;
+import com.bokmcdok.wheat.entity.ModEntityUtils;
+import net.minecraft.entity.EntityClassification;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.feature.BushConfig;
@@ -23,26 +25,37 @@ class ModTerrain {
      */
     @SubscribeEvent
     public static void onCommonSetup(final FMLCommonSetupEvent event) {
+        Feature.STRUCTURES.put("windmill", ModFeatureUtils.WINDMILL);
+
         for (Biome biome : ForgeRegistries.BIOMES) {
+            switch (biome.getCategory()) {
+                case PLAINS:
+                    addWildWheatFeature(biome, ModBlockUtils.wild_einkorn);
+                    biome.addStructure(ModFeatureUtils.WINDMILL, new ModWindmillConfig(1));
+                    biome.addFeature(GenerationStage.Decoration.SURFACE_STRUCTURES, Biome.createDecoratedFeature(ModFeatureUtils.WINDMILL, new ModWindmillConfig(1), Placement.NOPE, IPlacementConfig.NO_PLACEMENT_CONFIG));
+                    biome.getSpawns(EntityClassification.CREATURE).add(new Biome.SpawnListEntry(ModEntityUtils.field_mouse, 10, 8, 8));
+                    break;
 
-            //  We have Einkorn wheat generated in Forest and Plains biomes.
-            if (biome.getCategory() == Biome.Category.FOREST ||
-                    biome.getCategory() == Biome.Category.PLAINS) {
+                case FOREST:
+                    addWildWheatFeature(biome, ModBlockUtils.wild_einkorn);
+                    biome.getSpawns(EntityClassification.CREATURE).add(new Biome.SpawnListEntry(ModEntityUtils.field_mouse, 10, 8, 8));
+                    break;
 
-                addWildWheatFeature(biome, ModBlockUtils.wild_einkorn);
+                case RIVER:
+                case SWAMP:
+                    addWildWheatFeature(biome, ModBlockUtils.wild_emmer);
 
-            } else if (biome.getCategory() == Biome.Category.RIVER ||
-                    biome.getCategory() == Biome.Category.SWAMP) {
+                case TAIGA:
+                case EXTREME_HILLS:
+                case JUNGLE:
+                case SAVANNA:
+                case MUSHROOM:
+                    biome.getSpawns(EntityClassification.CREATURE).add(new Biome.SpawnListEntry(ModEntityUtils.field_mouse, 10, 8, 8));
+                    break;
 
-                addWildWheatFeature(biome, ModBlockUtils.wild_emmer);
+                default:
+                    break;
             }
-
-            if (biome.getCategory() == Biome.Category.PLAINS) {
-                biome.addStructure(ModFeatureUtils.WINDMILL, new ModWindmillConfig(1));
-                biome.addFeature(GenerationStage.Decoration.SURFACE_STRUCTURES, Biome.createDecoratedFeature(ModFeatureUtils.WINDMILL, new ModWindmillConfig(1), Placement.NOPE, IPlacementConfig.NO_PLACEMENT_CONFIG));
-            }
-
-            Feature.STRUCTURES.put("windmill", ModFeatureUtils.WINDMILL);
         }
     }
 
