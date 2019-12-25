@@ -5,6 +5,7 @@ import com.bokmcdok.wheat.item.ModBlockNamedItem;
 import com.bokmcdok.wheat.item.ModItem;
 import com.bokmcdok.wheat.item.ModBlockItem;
 import com.bokmcdok.wheat.item.ModItemImpl;
+import com.bokmcdok.wheat.item.ModSpawnEggItem;
 import com.google.common.collect.Lists;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -34,7 +35,8 @@ public class ModItemManager extends ModDataManager<IModItem> {
     private enum ItemType {
         ITEM,
         BLOCK,
-        BLOCK_NAMED
+        BLOCK_NAMED,
+        SPAWN_EGG
     }
 
     /**
@@ -110,6 +112,16 @@ public class ModItemManager extends ModDataManager<IModItem> {
             case BLOCK_NAMED: {
                 String blockName = JSONUtils.getString(json, "block");
                 result = new ModBlockNamedItem(getBlock(blockName), properties);
+                break;
+            }
+
+            case SPAWN_EGG: {
+                String entityName = JSONUtils.getString(json, "entity");
+                JsonObject primaryColorJson = JSONUtils.getJsonObject(json, "primary_color");
+                JsonObject secondaryColorJson = JSONUtils.getJsonObject(json, "secondary_color");
+                int primaryColor = deserializeColor(primaryColorJson);
+                int secondaryColor = deserializeColor(secondaryColorJson);
+                result = new ModSpawnEggItem(new ResourceLocation(entityName), primaryColor, secondaryColor, properties);
                 break;
             }
 

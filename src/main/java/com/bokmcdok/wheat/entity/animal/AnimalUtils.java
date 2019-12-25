@@ -1,4 +1,4 @@
-package com.bokmcdok.wheat.entity;
+package com.bokmcdok.wheat.entity.animal;
 
 import com.bokmcdok.wheat.item.ModItemUtils;
 import com.bokmcdok.wheat.WheatMod;
@@ -25,7 +25,7 @@ import net.minecraftforge.fml.common.Mod;
 import java.util.Random;
 
 @Mod.EventBusSubscriber(modid = WheatMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.FORGE)
-class AnimalUtils {
+public class AnimalUtils {
 
     protected final static Random rand = new Random();
 

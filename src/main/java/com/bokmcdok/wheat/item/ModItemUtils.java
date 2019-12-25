@@ -23,7 +23,6 @@ import net.minecraftforge.registries.ObjectHolder;
 @ObjectHolder(WheatMod.MOD_ID)
 public class ModItemUtils
 {
-
     /**
      * The grain items for reference.
      */
@@ -63,31 +62,9 @@ public class ModItemUtils
     public static final Item spelt_straw_bale = null;
 
     /**
-     * The thatch items for reference
-     */
-    public static final Item common_thatch = null;
-    public static final Item einkorn_thatch = null;
-    public static final Item emmer_thatch = null;
-    public static final Item durum_thatch = null;
-    public static final Item spelt_thatch = null;
-
-    /**
-     * The mat items for reference
-     */
-    public static final Item common_straw_mat = null;
-    public static final Item einkorn_straw_mat = null;
-
-    public static final Item emmer_straw_mat = null;
-    public static final Item durum_straw_mat = null;
-
-    public static final Item spelt_straw_mat = null;
-
-    /**
      * Ingredients for reference
      */
     public static final Item common_flour = null;
-    public static final Item durum_flour = null;
-    public static final Item spelt_flour = null;
 
     /**
      * Food Items for reference
@@ -104,18 +81,10 @@ public class ModItemUtils
 
     public static final Item dough = null;
 
-    public static final Item porridge = null;
-    public static final Item pasta = null;
-    public static final Item donut = null;
-    public static final Item gravy = null;
-    public static final Item meat_pie = null;
-    public static final Item fish_pie = null;
-    public static final Item apple_pie = null;
-
     /**
      * Miscellaneous Items for reference
      */
-    public static final Item stone_bowl = null;
+    public static final Item mouse_tail = null;
 
     public static Ingredient WHEAT_ITEMS = null;
     public static Ingredient SEED_ITEMS = null;

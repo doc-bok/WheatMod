@@ -1,11 +1,17 @@
 package com.bokmcdok.wheat.entity;
 
 import com.bokmcdok.wheat.WheatMod;
+import com.bokmcdok.wheat.entity.animal.mouse.ModMouseEntity;
+import com.bokmcdok.wheat.entity.animal.mouse.ModMouseRenderFactory;
 import net.minecraft.entity.EntityClassification;
+import net.minecraft.entity.EntitySpawnPlacementRegistry;
 import net.minecraft.entity.EntityType;
+import net.minecraft.world.gen.Heightmap;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.registries.ObjectHolder;
 
 @Mod.EventBusSubscriber(modid=WheatMod.MOD_ID, bus=Mod.EventBusSubscriber.Bus.MOD)
@@ -13,6 +19,7 @@ import net.minecraftforge.registries.ObjectHolder;
 public class ModEntityUtils {
 
     public static final EntityType<ThrownItemEntity> stone_entity = null;
+    public static final EntityType<ModMouseEntity> field_mouse = null;
 
     /**
      * Register entities used by the mod
@@ -23,7 +30,22 @@ public class ModEntityUtils {
         event.getRegistry().registerAll(
                 EntityType.Builder.<ThrownItemEntity>create(ThrownItemEntity::new, EntityClassification.MISC)
                         .size(0.25f, 0.25f).build("stone_entity")
-                        .setRegistryName(WheatMod.MOD_ID, "stone_entity")
+                        .setRegistryName(WheatMod.MOD_ID, "stone_entity"),
+                EntityType.Builder.<ModMouseEntity>create(ModMouseEntity::new, EntityClassification.CREATURE)
+                        .size(0.4f, 0.3f)
+                        .build("field_mouse")
+                        .setRegistryName(WheatMod.MOD_ID, "field_mouse")
         );
+    }
+
+    /**
+     * Register spawn entries
+     * @param event The common setup event
+     */
+    @SubscribeEvent
+    public static void commonSetup(FMLCommonSetupEvent event)
+    {
+        EntitySpawnPlacementRegistry.register(field_mouse, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ModMouseEntity::canSpawn);
+        RenderingRegistry.registerEntityRenderingHandler(ModMouseEntity.class, new ModMouseRenderFactory());
     }
 }
