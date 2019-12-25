@@ -122,5 +122,6 @@
   "entity.minecraft.villager.docwheat.baker": "Baker",
 
   "item.docwheat.mouse_spawn_egg": "Field Mouse Spawn Egg",
-  "entity.docwheat.mouse": "Field Mouse"
+  "entity.docwheat.mouse": "Field Mouse",
+  "item.docwheat.mouse_tail": "Mouse Tail"
 }
