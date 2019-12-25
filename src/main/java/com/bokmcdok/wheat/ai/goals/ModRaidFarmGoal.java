@@ -63,7 +63,7 @@ public class ModRaidFarmGoal extends MoveToBlockGoal {
 
     protected boolean shouldMoveTo(IWorldReader worldIn, BlockPos position) {
         Block block = worldIn.getBlockState(position).getBlock();
-        if (block == Blocks.FARMLAND && mWantsToRaid && !mCanRaid) {
+        if ((block == Blocks.FARMLAND || block == Blocks.GRASS_BLOCK) && mWantsToRaid && !mCanRaid) {
             BlockPos up = position.up();
             BlockState blockstate = worldIn.getBlockState(up);
             block = blockstate.getBlock();
