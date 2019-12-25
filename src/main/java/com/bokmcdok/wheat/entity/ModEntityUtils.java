@@ -3,8 +3,6 @@ package com.bokmcdok.wheat.entity;
 import com.bokmcdok.wheat.WheatMod;
 import com.bokmcdok.wheat.entity.animal.mouse.ModMouseEntity;
 import com.bokmcdok.wheat.entity.animal.mouse.ModMouseRenderFactory;
-import com.bokmcdok.wheat.entity.animal.mouse.ModMouseRenderer;
-import com.bokmcdok.wheat.render.StoneRenderer;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntitySpawnPlacementRegistry;
 import net.minecraft.entity.EntityType;

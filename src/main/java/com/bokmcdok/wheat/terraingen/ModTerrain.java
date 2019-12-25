@@ -44,6 +44,8 @@ class ModTerrain {
                 case RIVER:
                 case SWAMP:
                     addWildWheatFeature(biome, ModBlockUtils.wild_emmer);
+                    biome.getSpawns(EntityClassification.CREATURE).add(new Biome.SpawnListEntry(ModEntityUtils.field_mouse, 10, 8, 8));
+                    break;
 
                 case TAIGA:
                 case EXTREME_HILLS:

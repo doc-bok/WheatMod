@@ -4,7 +4,6 @@ import com.bokmcdok.wheat.block.ModCropsBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.CarrotBlock;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.ai.goal.MoveToBlockGoal;
 import net.minecraft.util.math.BlockPos;
@@ -62,13 +61,13 @@ public class ModRaidFarmGoal extends MoveToBlockGoal {
         }
     }
 
-    protected boolean shouldMoveTo(IWorldReader worldIn, BlockPos pos) {
-        Block block = worldIn.getBlockState(pos).getBlock();
+    protected boolean shouldMoveTo(IWorldReader worldIn, BlockPos position) {
+        Block block = worldIn.getBlockState(position).getBlock();
         if (block == Blocks.FARMLAND && mWantsToRaid && !mCanRaid) {
-            pos = pos.up();
-            BlockState blockstate = worldIn.getBlockState(pos);
+            BlockPos up = position.up();
+            BlockState blockstate = worldIn.getBlockState(up);
             block = blockstate.getBlock();
-            if (block instanceof CarrotBlock && ((CarrotBlock)block).isMaxAge(blockstate)) {
+            if (block instanceof ModCropsBlock && ((ModCropsBlock)block).isMaxAge(blockstate)) {
                 mCanRaid = true;
                 return true;
             }

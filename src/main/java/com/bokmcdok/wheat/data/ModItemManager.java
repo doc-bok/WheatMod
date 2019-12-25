@@ -267,14 +267,4 @@ public class ModItemManager extends ModDataManager<IModItem> {
 
         return getEntry(location).asItem();
     }
-
-    private EntityType<?> getEntity(ResourceLocation entityName) {
-        try {
-            Field field = ModEntityUtils.class.getDeclaredField(entityName.getPath());
-            return (EntityType<?>)field.get(null);
-        } catch (NoSuchFieldException | IllegalAccessException exception) {
-            LOGGER.error("Entity type {} not supported", entityName, exception);
-            return null;
-        }
-    }
 }
