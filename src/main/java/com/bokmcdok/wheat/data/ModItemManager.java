@@ -1,6 +1,5 @@
 package com.bokmcdok.wheat.data;
 
-import com.bokmcdok.wheat.entity.ModEntityUtils;
 import com.bokmcdok.wheat.item.IModItem;
 import com.bokmcdok.wheat.item.ModBlockNamedItem;
 import com.bokmcdok.wheat.item.ModItem;
@@ -12,11 +11,9 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.minecraft.entity.EntityType;
 import net.minecraft.item.Food;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
