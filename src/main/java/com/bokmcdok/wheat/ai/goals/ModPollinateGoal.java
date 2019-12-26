@@ -10,18 +10,18 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 
-public class ModRaidFarmGoal extends MoveToBlockGoal {
-    private final CreatureEntity mEntity;
-    private boolean mWantsToRaid;
-    private boolean mCanRaid;
+public class ModPollinateGoal extends MoveToBlockGoal {
+    private final CreatureEntity mOwner;
+    private boolean mWantsToPollinate;
+    private boolean mCanPollinate;
 
     /**
      * Construction
-     * @param entity The entity that owns this goal
+     * @param owner The owner of this goal.
      */
-    public ModRaidFarmGoal(CreatureEntity entity) {
-        super(entity, 0.7, 16);
-        mEntity = entity;
+    public ModPollinateGoal(CreatureEntity owner) {
+        super(owner, 0.7, 16);
+        mOwner = owner;
     }
 
     /**
@@ -30,13 +30,13 @@ public class ModRaidFarmGoal extends MoveToBlockGoal {
      */
     @Override
     public boolean shouldExecute() {
-        if (runDelay <= 0) {
-            if (!net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(mEntity.world, mEntity)) {
+        if (runDelay < 0) {
+            if (!net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(mOwner.world, mOwner)) {
                 return false;
             }
 
-            mCanRaid = false;
-            mWantsToRaid = true;
+            mCanPollinate = false;
+            mWantsToPollinate = true;
         }
 
         return super.shouldExecute();
@@ -47,36 +47,34 @@ public class ModRaidFarmGoal extends MoveToBlockGoal {
      * @return TRUE if the goal should continue.
      */
     public boolean shouldContinueExecuting() {
-        return mCanRaid && super.shouldContinueExecuting();
+        return mCanPollinate && super.shouldContinueExecuting();
     }
 
     /**
-     * Update the goal and eat the crop if it can.
+     * Update the goal and pollinate the crop if it can.
      */
     public void tick() {
         super.tick();
-        mEntity.getLookController().setLookPosition(
+        mOwner.getLookController().setLookPosition(
                 (double)destinationBlock.getX() + 0.5D,
                 destinationBlock.getY() + 1,
                 (double)destinationBlock.getZ() + 0.5D,
-                10.0F, (float)mEntity.getVerticalFaceSpeed());
+                10.0F, (float)mOwner.getVerticalFaceSpeed());
         if (getIsAboveDestination()) {
-            World world = mEntity.world;
+            World world = mOwner.world;
             BlockPos blockpos = destinationBlock.up();
             BlockState blockstate = world.getBlockState(blockpos);
             Block block = blockstate.getBlock();
-            if (mCanRaid && block instanceof CropsBlock) {
+            if (mCanPollinate && block instanceof CropsBlock) {
+                CropsBlock crop = (CropsBlock)block;
                 Integer integer = blockstate.get(CropsBlock.AGE);
-                if (integer == 0) {
-                    world.setBlockState(blockpos, Blocks.AIR.getDefaultState(), 2);
-                    world.destroyBlock(blockpos, true);
-                } else {
-                    world.setBlockState(blockpos, blockstate.with(CropsBlock.AGE, Integer.valueOf(integer - 1)), 2);
+                if (integer < crop.getMaxAge()) {
+                    world.setBlockState(blockpos, blockstate.with(CropsBlock.AGE, Integer.valueOf(integer + 1)), 2);
                     world.playEvent(2001, blockpos, Block.getStateId(blockstate));
                 }
             }
 
-            mCanRaid = false;
+            mCanPollinate = false;
             runDelay = 10;
         }
     }
@@ -85,16 +83,16 @@ public class ModRaidFarmGoal extends MoveToBlockGoal {
      * Check if moving to a block will help achieve the goal.
      * @param world The current world.
      * @param position The position of the block.
-     * @return TRUE if the block can be eaten.
+     * @return TRUE if the block can be pollinated.
      */
     protected boolean shouldMoveTo(IWorldReader world, BlockPos position) {
         Block block = world.getBlockState(position).getBlock();
-        if ((block == Blocks.FARMLAND || block == Blocks.GRASS_BLOCK) && mWantsToRaid && !mCanRaid) {
+        if ((block == Blocks.FARMLAND || block == Blocks.GRASS_BLOCK) && mWantsToPollinate && !mCanPollinate) {
             BlockPos up = position.up();
             BlockState blockstate = world.getBlockState(up);
             block = blockstate.getBlock();
-            if (block instanceof CropsBlock && ((CropsBlock)block).isMaxAge(blockstate)) {
-                mCanRaid = true;
+            if (block instanceof CropsBlock && !((CropsBlock)block).isMaxAge(blockstate)) {
+                mCanPollinate = true;
                 return true;
             }
         }

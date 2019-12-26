@@ -1,6 +1,8 @@
 package com.bokmcdok.wheat.entity;
 
 import com.bokmcdok.wheat.WheatMod;
+import com.bokmcdok.wheat.entity.animal.butterfly.ModButterflyEntity;
+import com.bokmcdok.wheat.entity.animal.butterfly.ModButterflyRenderFactory;
 import com.bokmcdok.wheat.entity.animal.mouse.ModMouseEntity;
 import com.bokmcdok.wheat.entity.animal.mouse.ModMouseRenderFactory;
 import net.minecraft.entity.EntityClassification;
@@ -20,6 +22,7 @@ public class ModEntityUtils {
 
     public static final EntityType<ThrownItemEntity> stone_entity = null;
     public static final EntityType<ModMouseEntity> field_mouse = null;
+    public static final EntityType<ModButterflyEntity> butterfly = null;
 
     /**
      * Register entities used by the mod
@@ -31,10 +34,16 @@ public class ModEntityUtils {
                 EntityType.Builder.<ThrownItemEntity>create(ThrownItemEntity::new, EntityClassification.MISC)
                         .size(0.25f, 0.25f).build("stone_entity")
                         .setRegistryName(WheatMod.MOD_ID, "stone_entity"),
+
                 EntityType.Builder.<ModMouseEntity>create(ModMouseEntity::new, EntityClassification.CREATURE)
                         .size(0.4f, 0.3f)
                         .build("field_mouse")
-                        .setRegistryName(WheatMod.MOD_ID, "field_mouse")
+                        .setRegistryName(WheatMod.MOD_ID, "field_mouse"),
+
+                EntityType.Builder.<ModButterflyEntity>create(ModButterflyEntity::new, EntityClassification.CREATURE)
+                        .size(0.4f, 0.3f)
+                        .build("field_mouse")
+                        .setRegistryName(WheatMod.MOD_ID, "butterfly")
         );
     }
 
@@ -46,6 +55,9 @@ public class ModEntityUtils {
     public static void commonSetup(FMLCommonSetupEvent event)
     {
         EntitySpawnPlacementRegistry.register(field_mouse, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ModMouseEntity::canSpawn);
+        EntitySpawnPlacementRegistry.register(butterfly, EntitySpawnPlacementRegistry.PlacementType.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ModButterflyEntity::canSpawn);
+
         RenderingRegistry.registerEntityRenderingHandler(ModMouseEntity.class, new ModMouseRenderFactory());
+        RenderingRegistry.registerEntityRenderingHandler(ModButterflyEntity.class, new ModButterflyRenderFactory());
     }
 }

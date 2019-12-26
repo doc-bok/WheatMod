@@ -1,0 +1,21 @@
+{
+    "type": "spawn_egg",
+    "group": "misc",
+    "entity": "docwheat:butterfly",
+
+    "primary_color": {
+        "color": {
+            "r": 231,
+            "g": 42,
+            "b": 42
+        }
+    },
+
+    "secondary_color": {
+        "color": {
+            "r": 21,
+            "g": 21,
+            "b": 21
+        }
+    }
+}
