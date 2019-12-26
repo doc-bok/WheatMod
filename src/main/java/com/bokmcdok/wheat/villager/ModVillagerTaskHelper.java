@@ -1,5 +1,9 @@
 package com.bokmcdok.wheat.villager;
 
+import com.bokmcdok.wheat.ai.tasks.ModCreateFarmTask;
+import com.bokmcdok.wheat.ai.tasks.ModFarmTask;
+import com.bokmcdok.wheat.ai.tasks.ModGiveHeroGiftsTask;
+import com.bokmcdok.wheat.ai.tasks.ModPickupFoodTask;
 import com.google.common.collect.ImmutableList;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.entity.ai.brain.memory.MemoryModuleType;
@@ -24,7 +28,9 @@ public class ModVillagerTaskHelper {
                         Pair.of(new WorkTask(MemoryModuleType.JOB_SITE, 4), 2),
                         Pair.of(new WalkTowardsPosTask(MemoryModuleType.JOB_SITE, 1, 10), 5),
                         Pair.of(new WalkTowardsRandomSecondaryPosTask(MemoryModuleType.SECONDARY_JOB_SITE, 0.4F, 1, 6, MemoryModuleType.JOB_SITE), 5),
-                        Pair.of(new ModFarmTask(), profession == VillagerProfession.FARMER ? 2 : 5)))),
+                        Pair.of(new ModFarmTask(), profession == VillagerProfession.FARMER ? 2 : 5),
+                        Pair.of(new ModCreateFarmTask(), profession == VillagerProfession.FARMER ? 2 : 5)
+                ))),
                 Pair.of(2, new ModGiveHeroGiftsTask(100)));
     }
 

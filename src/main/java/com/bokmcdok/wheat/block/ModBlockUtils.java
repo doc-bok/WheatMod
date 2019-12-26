@@ -6,6 +6,8 @@ import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FireBlock;
 import net.minecraft.client.renderer.color.BlockColors;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -34,6 +36,7 @@ public class ModBlockUtils {
     public static final ModCropsBlock emmer = null;
     public static final ModCropsBlock durum = null;
     public static final ModCropsBlock spelt = null;
+    public static final ModCropsBlock diseased_wheat = null;
 
     /**
      * Vegetables
@@ -105,5 +108,30 @@ public class ModBlockUtils {
             Blocks.POTTED_BROWN_MUSHROOM,
             Blocks.POTTED_RED_MUSHROOM
         ));
+    }
+
+    /**
+     * Check if the specified block is present within a certain radius.
+     * @param world The current world.
+     * @param position The position to check.
+     * @param block The block to look for.
+     * @param radius The radius to search.
+     * @return TRUE if the block is within the specified radius.
+     */
+    public static boolean isBlockPresent(World world, BlockPos position, Block block, int radius) {
+        for (int x = (radius * -1); x < radius + 1; x++) {
+            for (int z = (radius * -1); z < radius + 1; z++) {
+                if (x == 0 && z == 0) {
+                    continue;
+                }
+
+                BlockPos posToCheck = position.add(x, 0, z);
+                if(world.getBlockState(posToCheck).getBlock() == block) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 }

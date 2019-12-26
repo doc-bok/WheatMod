@@ -1,4 +1,4 @@
-package com.bokmcdok.wheat.villager;
+package com.bokmcdok.wheat.ai.tasks;
 
 import com.bokmcdok.wheat.villager.VillagerUtils;
 import com.google.common.collect.ImmutableMap;

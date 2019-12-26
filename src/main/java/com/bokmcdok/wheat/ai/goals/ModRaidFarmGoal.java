@@ -21,7 +21,7 @@ public class ModRaidFarmGoal extends MoveToBlockGoal {
     }
 
     public boolean shouldExecute() {
-        if (this.runDelay <= 0) {
+        if (runDelay <= 0) {
             if (!net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(mEntity.world, mEntity)) {
                 return false;
             }
@@ -39,8 +39,12 @@ public class ModRaidFarmGoal extends MoveToBlockGoal {
 
     public void tick() {
         super.tick();
-        mEntity.getLookController().setLookPosition((double)destinationBlock.getX() + 0.5D, destinationBlock.getY() + 1, (double)destinationBlock.getZ() + 0.5D, 10.0F, (float)mEntity.getVerticalFaceSpeed());
-        if (this.getIsAboveDestination()) {
+        mEntity.getLookController().setLookPosition(
+                (double)destinationBlock.getX() + 0.5D,
+                destinationBlock.getY() + 1,
+                (double)destinationBlock.getZ() + 0.5D,
+                10.0F, (float)mEntity.getVerticalFaceSpeed());
+        if (getIsAboveDestination()) {
             World world = mEntity.world;
             BlockPos blockpos = destinationBlock.up();
             BlockState blockstate = world.getBlockState(blockpos);
