@@ -10,13 +10,13 @@
       "item": "docwheat:dough"
     },
     "B": {
-      "item": "minecraft:apple"
+      "item": "minecraft:pumpkin"
     },
     "C": {
       "item": "minecraft:sugar"
     }
   },
   "result": {
-    "item": "docwheat:uncooked_apple_pie"
+    "item": "docwheat:uncooked_pumpkin_pie"
   }
 }
