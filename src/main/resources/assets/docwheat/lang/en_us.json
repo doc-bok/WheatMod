@@ -123,5 +123,8 @@
 
   "item.docwheat.mouse_spawn_egg": "Field Mouse Spawn Egg",
   "entity.docwheat.mouse": "Field Mouse",
-  "item.docwheat.mouse_tail": "Mouse Tail"
+  "item.docwheat.mouse_tail": "Mouse Tail",
+
+  "item.docwheat.butterfly_spawn_egg": "Butterfly Spawn Egg",
+  "entity.docwheat.butterfly": "Butterfly"
 }
