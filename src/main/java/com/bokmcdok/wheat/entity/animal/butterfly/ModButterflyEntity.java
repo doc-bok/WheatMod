@@ -131,9 +131,8 @@ public class ModButterflyEntity extends CreatureEntity {
     @Nullable
     @Override
     public ILivingEntityData onInitialSpawn(IWorld world, DifficultyInstance difficulty, SpawnReason reason, @Nullable ILivingEntityData data, @Nullable CompoundNBT nbt) {
-        data = super.onInitialSpawn(world, difficulty, reason, data, nbt);
         setIsButterfly(world.getWorld().isDaytime());
-        return data;
+        return super.onInitialSpawn(world, difficulty, reason, data, nbt);
     }
 
     /**
@@ -160,13 +159,17 @@ public class ModButterflyEntity extends CreatureEntity {
      * @param other The other entity.
      */
     @Override
-    protected void collideWithEntity(Entity other) {}
+    protected void collideWithEntity(Entity other) {
+        //no-op
+    }
 
     /**
      * Disable collision detection.
      */
     @Override
-    protected void collideWithNearbyEntities() {}
+    protected void collideWithNearbyEntities() {
+        //no-op
+    }
 
     /**
      * Set the health to 3 hearts.
@@ -224,7 +227,9 @@ public class ModButterflyEntity extends CreatureEntity {
      * @param damageMultiplier The damage multiplier from the fall.
      */
     @Override
-    public void fall(float distance, float damageMultiplier) {}
+    public void fall(float distance, float damageMultiplier) {
+        //no-op
+    }
 
     /**
      * Butterflies can't fall.
@@ -234,7 +239,9 @@ public class ModButterflyEntity extends CreatureEntity {
      * @param position The position of the block.
      */
     @Override
-    protected void updateFallState(double y, boolean onGround, BlockState state, BlockPos position) {}
+    protected void updateFallState(double y, boolean onGround, BlockState state, BlockPos position) {
+        //no-op
+    }
 
     /**
      * Get the eye height of the entity.

@@ -8,7 +8,6 @@ import net.minecraft.world.IWorldReader;
 
 public class ModAttractToLightGoal extends MoveToBlockGoal {
     private final CreatureEntity mOwner;
-    private boolean mWantsToFollow;
     private boolean mCanFollow;
 
     /**
@@ -28,7 +27,6 @@ public class ModAttractToLightGoal extends MoveToBlockGoal {
     public boolean shouldExecute() {
         if (runDelay < 0) {
             mCanFollow = false;
-            mWantsToFollow = true;
         }
 
         return super.shouldExecute();
