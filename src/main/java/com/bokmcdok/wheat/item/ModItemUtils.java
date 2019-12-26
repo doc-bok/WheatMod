@@ -167,9 +167,12 @@ public class ModItemUtils
         VillagerUtils.registerFarmItem(common_grain, ModBlockUtils.common_wheat);
         VillagerUtils.registerFarmItem(einkorn_grain, ModBlockUtils.einkorn);
         VillagerUtils.registerFarmItem(emmer_grain, ModBlockUtils.emmer);
+        VillagerUtils.registerFarmItem(wild_einkorn_grain, ModBlockUtils.wild_einkorn);
+        VillagerUtils.registerFarmItem(wild_emmer_grain, ModBlockUtils.wild_emmer);
         VillagerUtils.registerFarmItem(durum_grain, ModBlockUtils.durum);
         VillagerUtils.registerFarmItem(spelt_grain, ModBlockUtils.spelt);
         VillagerUtils.registerFarmItem(tomato, ModBlockUtils.tomato);
+        VillagerUtils.registerFarmItem(null, ModBlockUtils.diseased_wheat);
 
         VillagerUtils.registerMiscItem(common_straw);
         VillagerUtils.registerMiscItem(einkorn_straw);

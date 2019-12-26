@@ -1,6 +1,7 @@
 package com.bokmcdok.wheat.villager;
 
 import com.bokmcdok.wheat.WheatMod;
+import com.bokmcdok.wheat.ai.tasks.ModGiveHeroGiftsTask;
 import com.bokmcdok.wheat.data.ModProfessionManager;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;

@@ -123,7 +123,7 @@ public class ModCropsBlock extends CropsBlock implements IModBlock {
                     if (mutation != null) {
                         if (mutation.getRequired() != null) {
                             Optional<Block> required = Registry.BLOCK.getValue(mutation.getRequired());
-                            if (required.isPresent() && !isBlockPresent(world, position, required.get(), 2)) {
+                            if (required.isPresent() && !ModBlockUtils.isBlockPresent(world, position, required.get(), 2)) {
                                 return;
                             }
                         }
@@ -164,23 +164,6 @@ public class ModCropsBlock extends CropsBlock implements IModBlock {
                 }
             }
         }
-    }
-
-    private boolean isBlockPresent(World world, BlockPos position, Block block, int radius) {
-        for (int x = (radius * -1); x < radius + 1; x++) {
-            for (int z = (radius * -1); z < radius + 1; z++) {
-                if (x == 0 && z == 0) {
-                    continue;
-                }
-
-                BlockPos posToCheck = position.add(x, 0, z);
-                if(world.getBlockState(posToCheck).getBlock() == block) {
-                    return true;
-                }
-            }
-        }
-
-        return false;
     }
 
     private int getTotalBlocksPresent(World world, BlockPos position, Block block, int radius) {
