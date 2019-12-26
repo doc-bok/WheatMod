@@ -104,10 +104,10 @@ public class ModButterflyEntity extends CreatureEntity {
             if (position.getY() < world.getSeaLevel()) {
                 return false;
             } else {
-                return light >= random.nextInt(4) ? false : MobEntity.func_223315_a(entity, world, reason, position, random);
+                return light >= 4 && MobEntity.func_223315_a(entity, world, reason, position, random);
             }
         } else {
-            return light < random.nextInt(4) ? false : MobEntity.func_223315_a(entity, world, reason, position, random);
+            return light < random.nextInt(4) && MobEntity.func_223315_a(entity, world, reason, position, random);
         }
     }
 

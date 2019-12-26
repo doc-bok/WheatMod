@@ -20,7 +20,7 @@ public class ModPollinateGoal extends MoveToBlockGoal {
      * @param owner The owner of this goal.
      */
     public ModPollinateGoal(CreatureEntity owner) {
-        super(owner, 0.7, 16);
+        super(owner, 0.7, 16, 8);
         mOwner = owner;
     }
 
