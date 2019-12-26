@@ -52,23 +52,24 @@ public class ModCreateFarmTask extends Task<VillagerEntity> {
             return false;
         } else {
 
-        }
-        BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos(owner.posX, owner.posY, owner.posZ);
-        mFarmableBlocks.clear();
 
-        for (int i1 = -1; i1 <= 1; ++i1) {
-            for (int k = -1; k <= 1; ++k) {
-                for (int l = -1; l <= 1; ++l) {
-                    blockpos$mutableblockpos.setPos(owner.posX + (double) i1, owner.posY + (double) k, owner.posZ + (double) l);
-                    if (isFarmableBlock(blockpos$mutableblockpos, world)) {
-                        mFarmableBlocks.add(new BlockPos(blockpos$mutableblockpos));
+            BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos(owner.posX, owner.posY, owner.posZ);
+            mFarmableBlocks.clear();
+
+            for (int i1 = -1; i1 <= 1; ++i1) {
+                for (int k = -1; k <= 1; ++k) {
+                    for (int l = -1; l <= 1; ++l) {
+                        blockpos$mutableblockpos.setPos(owner.posX + (double) i1, owner.posY + (double) k, owner.posZ + (double) l);
+                        if (isFarmableBlock(blockpos$mutableblockpos, world)) {
+                            mFarmableBlocks.add(new BlockPos(blockpos$mutableblockpos));
+                        }
                     }
                 }
             }
-        }
 
-        mPosition = getRandomFarmableBlock(world);
-        return mPosition != null;
+            mPosition = getRandomFarmableBlock(world);
+            return mPosition != null;
+        }
     }
 
     /**
