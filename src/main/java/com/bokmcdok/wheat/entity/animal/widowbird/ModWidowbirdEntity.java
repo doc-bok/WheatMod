@@ -23,7 +23,6 @@ import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.ai.goal.OcelotAttackGoal;
 import net.minecraft.entity.ai.goal.PanicGoal;
 import net.minecraft.entity.ai.goal.SwimGoal;
-import net.minecraft.entity.ai.goal.TemptGoal;
 import net.minecraft.entity.ai.goal.WaterAvoidingRandomFlyingGoal;
 import net.minecraft.entity.passive.IFlyingAnimal;
 import net.minecraft.item.ItemStack;
@@ -277,10 +276,7 @@ public class ModWidowbirdEntity extends ModNestingEntity implements IFlyingAnima
         goalSelector.addGoal(0, new PanicGoal(this, 1.25d));
         goalSelector.addGoal(0, new SwimGoal(this));
         goalSelector.addGoal(2, new WaterAvoidingRandomFlyingGoal(this, 1.0d));
-        //goalSelector.addGoal(3, new TemptGoal(this, 0.6d, ModItemUtils.SEED_ITEMS, true));
-        //goalSelector.addGoal(3, new FollowMobGoal(this, 1.0d, 3.0f, 7.0f));
         goalSelector.addGoal(9, new OcelotAttackGoal(this));
-        //goalSelector.addGoal(10, new BreedGoal(this, 0.8D));
         goalSelector.addGoal(10, new ModMateGoal(this, 0.8d));
         goalSelector.addGoal(10, new ModCreateNestGoal(this));
         goalSelector.addGoal(10, new ModNestingGoal(this));
