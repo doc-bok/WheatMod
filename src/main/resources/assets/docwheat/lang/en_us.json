@@ -130,5 +130,7 @@
   "entity.docwheat.butterfly": "Butterfly",
 
   "item.docwheat.widowbird_egg": "Long-Tailed Widowbird Egg",
-  "block.docwheat.widowbird_nest": "Long-Tailed Widowbird Nest"
+  "block.docwheat.widowbird_nest": "Long-Tailed Widowbird Nest",
+  "item.docwheat.widowbird_spawn_egg": "Long-Tailed Widowbird Spawn Egg",
+  "entity.docwheat.widowbird": "Long-Tailed Widowbird"
 }

@@ -14,6 +14,9 @@ public class ModMouseModel<T extends Entity> extends EntityModel<T> {
     private static final int[][] MOUSE_BOX_LENGTH = new int[][]{{1, 1, 1}, {3, 2, 2}, {4, 3, 3}, {3, 3, 3}, {3, 3, 3}, {1, 1, 2}, {1, 1, 2}};
     private static final int[][] MOUSE_TEXTURE_POSITIONS = new int[][]{{13, 4}, {0, 0}, {0, 9}, {0, 16}, {0, 16}, {11, 0}, {13, 4}};
 
+    /**
+     * Construction
+     */
     public ModMouseModel() {
         final float[] zPlacement = new float[7];
         mTextureMap = new RendererModel[7];
@@ -41,8 +44,18 @@ public class ModMouseModel<T extends Entity> extends EntityModel<T> {
         mModel[2].setRotationPoint(0.0F, 19.0F, zPlacement[1]);
     }
 
-    public void render(T entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
-        setRotationAngles(entityIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
+    /**
+     * Render the model.
+     * @param entity The entity.
+     * @param limbSwing The limb swing angle.
+     * @param limbSwingAmount The amount of limb swing.
+     * @param ageInTicks The age of the model.
+     * @param netHeadYaw The head's yaw angle.
+     * @param headPitch The head's pitch angle.
+     * @param scale The size to render the bird.
+     */
+    public void render(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
+        setRotationAngles(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
 
         for(RendererModel renderermodel : mTextureMap) {
             renderermodel.render(scale);
@@ -51,10 +64,20 @@ public class ModMouseModel<T extends Entity> extends EntityModel<T> {
         for(RendererModel renderermodel1 : mModel) {
             renderermodel1.render(scale);
         }
-
     }
 
-    public void setRotationAngles(T entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scaleFactor) {
+    /**
+     * Set the model's rotation angles.
+     * @param entity The entity.
+     * @param limbSwing The limb swing angle.
+     * @param limbSwingAmount The amount of limb swing.
+     * @param ageInTicks The age of the model.
+     * @param netHeadYaw The head's yaw angle.
+     * @param headPitch The head's pitch angle.
+     * @param scale The size to render the bird.
+     */
+    @Override
+    public void setRotationAngles(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
         for(int i = 0; i < mTextureMap.length; ++i) {
             mTextureMap[i].rotateAngleY = MathHelper.cos(ageInTicks * 0.9F + (float)i * 0.15F * (float)Math.PI) * (float)Math.PI * 0.05F * (float)(1 + Math.abs(i - 2));
             mTextureMap[i].rotationPointX = MathHelper.sin(ageInTicks * 0.9F + (float)i * 0.15F * (float)Math.PI) * (float)Math.PI * 0.2F * (float)Math.abs(i - 2);

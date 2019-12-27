@@ -25,10 +25,6 @@ import java.util.Set;
 @Mod.EventBusSubscriber(modid = WheatMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 @ObjectHolder(WheatMod.MOD_ID)
 public class ModBlockUtils {
-
-    /**
-     * The new types of wheat.
-     */
     public static final ModCropsBlock wild_einkorn = null;
     public static final ModCropsBlock common_wheat = null;
     public static final ModCropsBlock einkorn = null;
@@ -38,15 +34,11 @@ public class ModBlockUtils {
     public static final ModCropsBlock spelt = null;
     public static final ModCropsBlock diseased_wheat = null;
 
-    /**
-     * Vegetables
-     */
     public static final ModCropsBlock tomato = null;
 
-    /**
-     * Flour Mill
-     */
     public static final FlourMillBlock flour_mill = null;
+
+    public static final ModBlock widowbird_nest = null;
 
     public static Set<Block> MUSHROOMS;
     private static final ModBlockManager BLOCK_MANAGER = new ModBlockManager();
