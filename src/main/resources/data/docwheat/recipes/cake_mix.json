@@ -16,7 +16,7 @@
       "item": "docwheat:dough"
     },
     "E": {
-      "item": "minecraft:egg"
+      "tag": "docwheat:eggs"
     }
   },
   "result": {
