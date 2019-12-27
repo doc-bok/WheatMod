@@ -1,6 +1,7 @@
 package com.bokmcdok.wheat.data;
 
 import com.bokmcdok.wheat.block.IModBlock;
+import com.bokmcdok.wheat.block.ModBlock;
 import com.bokmcdok.wheat.block.ModBlockImpl;
 import com.bokmcdok.wheat.block.ModCropProperties;
 import com.bokmcdok.wheat.block.ModCropsBlock;
@@ -8,12 +9,16 @@ import com.bokmcdok.wheat.block.ModHayBlock;
 import com.bokmcdok.wheat.block.ModMatBlock;
 import com.bokmcdok.wheat.block.ModSmallStoneBlock;
 import com.google.common.collect.Lists;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.math.shapes.VoxelShapes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +28,7 @@ public class ModBlockManager extends ModDataManager<IModBlock> {
     private static final ModMaterialManager MATERIAL_MANAGER = new ModMaterialManager();
 
     private enum BlockType {
+        BLOCK,
         CROP,
         HAY,
         MAT,
@@ -80,6 +86,8 @@ public class ModBlockManager extends ModDataManager<IModBlock> {
 
         deserializeColor(json, properties);
         deserializeFire(json, properties);
+        properties.setShape(deserializeShape(json, "shape"));
+        properties.setCollisionShape(deserializeShape(json, "collision_shape"));
 
         ModCropProperties crop = deserializeCropProperties(json);
         if (crop != null) {
@@ -91,6 +99,10 @@ public class ModBlockManager extends ModDataManager<IModBlock> {
 
         IModBlock result = null;
         switch (type) {
+            case BLOCK:
+                result = new ModBlock(properties);
+                break;
+
             case CROP:
                 result = new ModCropsBlock(properties);
                 break;
@@ -135,6 +147,11 @@ public class ModBlockManager extends ModDataManager<IModBlock> {
         }
     }
 
+    /**
+     * Deserializes properties for crops.
+     * @param json The json data to deserialize.
+     * @return The crop's properties.
+     */
     private ModCropProperties deserializeCropProperties(JsonObject json) {
         if (JSONUtils.hasField(json, "crop")) {
             JsonObject crop = JSONUtils.getJsonObject(json, "crop");
@@ -166,5 +183,36 @@ public class ModBlockManager extends ModDataManager<IModBlock> {
         }
 
         return null;
+    }
+
+    /**
+     * Deserialize a shape for culling or collisions
+     * @param json The json object.
+     * @param key The key of the shape to deserialize.
+     * @return A new voxel shape for the block.
+     */
+    private VoxelShape deserializeShape(JsonObject json, String key) {
+        VoxelShape result = null;
+        if (JSONUtils.hasField(json, key)) {
+            JsonArray shapes = JSONUtils.getJsonArray(json, key);
+            for(JsonElement i : shapes) {
+                JsonObject shape = i.getAsJsonObject();
+                JsonArray from = JSONUtils.getJsonArray(shape, "from");
+                JsonArray to = JSONUtils.getJsonArray(shape, "to");
+                double fromX = from.get(0).getAsDouble();
+                double fromY = from.get(1).getAsDouble();
+                double fromZ = from.get(2).getAsDouble();
+                double toX = to.get(0).getAsDouble();
+                double toY = to.get(1).getAsDouble();
+                double toZ = to.get(2).getAsDouble();
+                if (result == null) {
+                    result = Block.makeCuboidShape(fromX, fromY, fromZ, toX, toY, toZ);
+                } else {
+                    result = VoxelShapes.or(result, Block.makeCuboidShape(fromX, fromY, fromZ, toX, toY, toZ));
+                }
+            }
+        }
+
+        return result;
     }
 }

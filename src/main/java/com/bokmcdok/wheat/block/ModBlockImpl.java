@@ -5,6 +5,8 @@ import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.client.renderer.color.IBlockColor;
+import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraftforge.common.ToolType;
 
 public class ModBlockImpl {
@@ -12,12 +14,16 @@ public class ModBlockImpl {
     private int mFireEncouragement;
     private int mFireFlammability;
     private ModCropProperties mCropProperties;
+    private VoxelShape mShape;
+    private VoxelShape mCollisionShape;
 
     public ModBlockImpl(ModBlockProperties properties) {
         mColor = properties.mColor;
         mFireEncouragement = properties.mFireEncouragement;
         mFireFlammability = properties.mFireFlammability;
         mCropProperties = properties.mCropProperties;
+        mShape = properties.mShape;
+        mCollisionShape = properties.mCollisionShape;
     }
 
     /**
@@ -36,12 +42,20 @@ public class ModBlockImpl {
 
     public ModCropProperties getCropProperties() { return  mCropProperties; }
 
+    public VoxelShape getShape() { return  mShape; }
+
+    public VoxelShape getCollisionShape() {
+        return  mCollisionShape == null ? mShape : mCollisionShape;
+    }
+
     public static class ModBlockProperties {
         private Block.Properties mBlockProperties;
 
         private IBlockColor mColor = null;
         private int mFireEncouragement = 0;
         private int mFireFlammability = 0;
+        private VoxelShape mShape;
+        private VoxelShape mCollisionShape;
 
         private ModCropProperties mCropProperties;
 
@@ -112,6 +126,14 @@ public class ModBlockImpl {
 
         public void crop(ModCropProperties properties) {
             mCropProperties = properties;
+        }
+
+        public void setShape(VoxelShape shape) {
+            mShape = shape;
+        }
+
+        public void setCollisionShape(VoxelShape shape) {
+            mCollisionShape = shape;
         }
 
         public Block.Properties asBlockProperties() {
