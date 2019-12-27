@@ -1,0 +1,20 @@
+{
+  "type": "block",
+  "from": "minecraft:hay_block",
+  "color": {
+    "r": 245,
+    "g": 222,
+    "b": 124
+  },
+  "fire": {
+    "encouragement": 60,
+    "flammability": 20
+  },
+  "block_movement": false,
+  "shape": [
+    {
+      "from": [0, 0, 0],
+      "to": [16, 4, 16]
+    }
+  ]
+}
