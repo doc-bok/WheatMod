@@ -6,7 +6,6 @@ import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.client.renderer.color.IBlockColor;
 import net.minecraft.util.math.shapes.VoxelShape;
-import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraftforge.common.ToolType;
 
 public class ModBlockImpl {

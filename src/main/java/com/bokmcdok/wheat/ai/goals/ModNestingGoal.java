@@ -31,10 +31,8 @@ public class ModNestingGoal extends MoveToBlockGoal {
      */
     @Override
     public boolean shouldExecute() {
-        if (runDelay < 0) {
-            if (!net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(mOwner.world, mOwner)) {
-                return false;
-            }
+        if (runDelay < 0 && !net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(mOwner.world, mOwner)) {
+            return false;
         }
 
         return !mOwner.world.isDaytime() && mOwner.getHasNest() && super.shouldExecute();
