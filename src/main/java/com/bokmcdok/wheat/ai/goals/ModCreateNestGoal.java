@@ -30,10 +30,8 @@ public class ModCreateNestGoal extends MoveToBlockGoal {
      */
     @Override
     public boolean shouldExecute() {
-        if (runDelay < 0) {
-            if (!net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(mOwner.world, mOwner)) {
-                return false;
-            }
+        if (runDelay < 0 && !net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(mOwner.world, mOwner)) {
+            return false;
         }
 
         if (mOwner.getIsFertilized()) {
@@ -89,10 +87,6 @@ public class ModCreateNestGoal extends MoveToBlockGoal {
      */
     protected boolean shouldMoveTo(IWorldReader world, BlockPos position) {
         Block block = world.getBlockState(position).getBlock();
-        if (block instanceof TallGrassBlock && mOwner.getIsFertilized()) {
-            return true;
-        }
-
-        return false;
+        return block instanceof TallGrassBlock && mOwner.getIsFertilized();
     }
 }

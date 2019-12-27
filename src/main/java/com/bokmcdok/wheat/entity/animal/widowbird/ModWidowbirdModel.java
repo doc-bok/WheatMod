@@ -13,9 +13,6 @@ public class ModWidowbirdModel extends EntityModel<ModWidowbirdEntity> {
     private final RendererModel mWingLeft;
     private final RendererModel mWingRight;
     private final RendererModel mHead;
-    private final RendererModel mHead2;
-    private final RendererModel mBeak1;
-    private final RendererModel mBeak2;
     private final RendererModel mFeather;
     private final RendererModel mLegLeft;
     private final RendererModel mLegRight;
@@ -47,20 +44,20 @@ public class ModWidowbirdModel extends EntityModel<ModWidowbirdEntity> {
         mHead.addBox(-1.0F, -1.5F, -1.0F, 2, 3, 2);
         mHead.setRotationPoint(0.0F, 15.69F, -2.76F);
 
-        mHead2 = new RendererModel(this, 10, 0);
-        mHead2.addBox(-1.0F, -0.5F, -2.0F, 2, 1, 4);
-        mHead2.setRotationPoint(0.0F, -2.0F, -1.0F);
-        mHead.addChild(mHead2);
+        RendererModel Head2 = new RendererModel(this, 10, 0);
+        Head2.addBox(-1.0F, -0.5F, -2.0F, 2, 1, 4);
+        Head2.setRotationPoint(0.0F, -2.0F, -1.0F);
+        mHead.addChild(Head2);
 
-        mBeak1 = new RendererModel(this, 11, 7);
-        mBeak1.addBox(-0.5F, -1.0F, -0.5F, 1, 2, 1);
-        mBeak1.setRotationPoint(0.0F, -0.5F, -1.5F);
-        mHead.addChild(mBeak1);
+        RendererModel Beak1 = new RendererModel(this, 11, 7);
+        Beak1.addBox(-0.5F, -1.0F, -0.5F, 1, 2, 1);
+        Beak1.setRotationPoint(0.0F, -0.5F, -1.5F);
+        mHead.addChild(Beak1);
 
-        mBeak2 = new RendererModel(this, 16, 7);
-        mBeak2.addBox(-0.5F, 0.0F, -0.5F, 1, 2, 1);
-        mBeak2.setRotationPoint(0.0F, -1.75F, -2.45F);
-        mHead.addChild(mBeak2);
+        RendererModel Beak2 = new RendererModel(this, 16, 7);
+        Beak2.addBox(-0.5F, 0.0F, -0.5F, 1, 2, 1);
+        Beak2.setRotationPoint(0.0F, -1.75F, -2.45F);
+        mHead.addChild(Beak2);
 
         mFeather = new RendererModel(this, 2, 18);
         mFeather.addBox(0.0F, -4.0F, -2.0F, 0, 5, 4);
