@@ -79,6 +79,20 @@ public class ModCropsBlock extends CropsBlock implements IModBlock {
     }
 
     /**
+     * Turns the crop into a diseased crop.
+     * @param world The current world.
+     * @param position The position of the crop.
+     * @param state The state of the crop.
+     */
+    public void diseaseCrop(World world, BlockPos position, BlockState state) {
+        ResourceLocation disease = mCropProperties.getDiseaseCrop();
+        if (disease != null) {
+            Optional<Block> diseaseBlock = Registry.BLOCK.getValue(disease);
+            world.setBlockState(position, diseaseBlock.get().getDefaultState().with(getAgeProperty(), getAge(state)));
+        }
+    }
+
+    /**
      * Allow wild wheat to also generate and grow on grass blocks.
      * @param state The block state of the ground
      * @param world The world the block is in

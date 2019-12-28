@@ -1,7 +1,12 @@
 package com.bokmcdok.wheat.entity.feldgeister.getreidewolf;
 
+import com.bokmcdok.wheat.ai.goals.ModDiseaseFarmGoal;
+import com.bokmcdok.wheat.block.ModBlockUtils;
+import com.bokmcdok.wheat.block.ModCropsBlock;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
@@ -68,6 +73,18 @@ public class ModGetreidewolfEntity extends MonsterEntity {
             mTimeWolfIsShaking = 0.0f;
             mPrevTimeWolfIsShaking = 0.0f;
             world.setEntityState(this, (byte)8);
+        }
+
+        for(int l = 0; l < 4; ++l) {
+            int i = MathHelper.floor(this.posX + (double)((float)(l % 2 * 2 - 1) * 0.25F));
+            int j = MathHelper.floor(this.posY);
+            int k = MathHelper.floor(this.posZ + (double)((float)(l / 2 % 2 * 2 - 1) * 0.25F));
+            BlockPos blockPosition = new BlockPos(i, j, k);
+            BlockState blockState = world.getBlockState(blockPosition);
+            Block block = blockState.getBlock();
+            if (ModBlockUtils.WHEAT.contains(block) && block instanceof ModCropsBlock) {
+                ((ModCropsBlock)block).diseaseCrop(world, blockPosition, blockState);
+            }
         }
     }
 
@@ -254,6 +271,7 @@ public class ModGetreidewolfEntity extends MonsterEntity {
         goalSelector.addGoal(1, new SwimGoal(this));
         goalSelector.addGoal(4, new LeapAtTargetGoal(this, 0.4f));
         goalSelector.addGoal(5, new MeleeAttackGoal(this, 1.0d, true));
+        goalSelector.addGoal(5, new ModDiseaseFarmGoal(this, ModBlockUtils.WHEAT));
         goalSelector.addGoal(8, new WaterAvoidingRandomWalkingGoal(this, 1.0d));
         goalSelector.addGoal(10, new LookRandomlyGoal(this));
 

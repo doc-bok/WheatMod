@@ -1,20 +1,19 @@
 package com.bokmcdok.wheat.ai.goals;
 
+import com.bokmcdok.wheat.block.ModCropsBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.CropsBlock;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.ai.goal.MoveToBlockGoal;
-import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 
 import java.util.Set;
 
-public class ModRaidFarmGoal extends MoveToBlockGoal {
-    private final Set<Block> mCropsToRaid;
+public class ModDiseaseFarmGoal extends MoveToBlockGoal {
+    private final Set<Block> mCropsToDisease;
     private final CreatureEntity mEntity;
     private boolean mWantsToRaid;
     private boolean mCanRaid;
@@ -23,10 +22,10 @@ public class ModRaidFarmGoal extends MoveToBlockGoal {
      * Construction
      * @param entity The entity that owns this goal
      */
-    public ModRaidFarmGoal(CreatureEntity entity, Set<Block> cropsToRaid) {
+    public ModDiseaseFarmGoal(CreatureEntity entity, Set<Block> cropsToRaid) {
         super(entity, 0.7, 16);
         mEntity = entity;
-        mCropsToRaid = cropsToRaid;
+        mCropsToDisease = cropsToRaid;
     }
 
     /**
@@ -70,24 +69,9 @@ public class ModRaidFarmGoal extends MoveToBlockGoal {
             BlockPos blockpos = destinationBlock.up();
             BlockState blockstate = world.getBlockState(blockpos);
             Block block = blockstate.getBlock();
-            if (mCanRaid && mCropsToRaid.contains(block)) {
-                Integer integer = blockstate.get(CropsBlock.AGE);
-                if (integer == 0) {
-                    world.setBlockState(blockpos, Blocks.AIR.getDefaultState(), 2);
-                    world.destroyBlock(blockpos, true);
-                } else {
-                    world.setBlockState(blockpos, blockstate.with(CropsBlock.AGE, Integer.valueOf(integer - 1)), 2);
-                    world.playEvent(2001, blockpos, Block.getStateId(blockstate));
-                }
-            }
-
-            if (mEntity instanceof AnimalEntity) {
-                AnimalEntity ageable = (AnimalEntity)mEntity;
-                if (ageable.isChild()) {
-                    ageable.addGrowth(3);
-                } else {
-                    ageable.setInLove(600);
-                }
+            if (mCanRaid && mCropsToDisease.contains(block) && block instanceof ModCropsBlock) {
+                ModCropsBlock crop = (ModCropsBlock)block;
+                crop.diseaseCrop(world, blockpos, blockstate);
             }
 
             mCanRaid = false;
@@ -107,7 +91,7 @@ public class ModRaidFarmGoal extends MoveToBlockGoal {
             BlockPos up = position.up();
             BlockState blockstate = world.getBlockState(up);
             block = blockstate.getBlock();
-            if (mCropsToRaid.contains(block)) {
+            if (mCropsToDisease.contains(block) && block instanceof ModCropsBlock) {
                 mCanRaid = true;
                 return true;
             }
