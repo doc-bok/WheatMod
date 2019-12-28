@@ -1,6 +1,5 @@
 package com.bokmcdok.wheat.entity.feldgeister.getreidewolf;
 
-import com.bokmcdok.wheat.entity.animal.widowbird.ModWidowbirdRenderer;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
