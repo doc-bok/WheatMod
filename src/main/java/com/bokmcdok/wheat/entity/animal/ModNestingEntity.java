@@ -54,7 +54,7 @@ public abstract class ModNestingEntity extends AnimalEntity {
     public boolean canMateWith(AnimalEntity animal) {
         if (animal instanceof ModNestingEntity) {
             ModNestingEntity mate = (ModNestingEntity)animal;
-            return mate.getIsMale() != getIsMale();
+            return mate.getIsMale() != getIsMale() && super.canMateWith(animal);
         }
 
         return false;

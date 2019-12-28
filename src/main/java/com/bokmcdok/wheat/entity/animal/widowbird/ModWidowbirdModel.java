@@ -1,5 +1,6 @@
 package com.bokmcdok.wheat.entity.animal.widowbird;
 
+import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.entity.model.RendererModel;
 import net.minecraft.util.math.MathHelper;
@@ -85,13 +86,29 @@ public class ModWidowbirdModel extends EntityModel<ModWidowbirdEntity> {
      */
     @Override
     public void render(ModWidowbirdEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
+        GlStateManager.pushMatrix();
+        if (entity.isChild()) {
+            GlStateManager.translatef(0.0F, 5.0F * scale, 2.0F * scale);
+        }
+
+        mHead.render(scale);
+
+        GlStateManager.popMatrix();
+        GlStateManager.pushMatrix();
+
+        if (entity.isChild()) {
+            GlStateManager.scalef(0.5F, 0.5F, 0.5F);
+            GlStateManager.translatef(0.0F, 24.0F * scale, 0.0F);
+        }
+
         mBody.render(scale);
         mWingLeft.render(scale);
         mWingRight.render(scale);
         mTail.render(scale);
-        mHead.render(scale);
         mLegLeft.render(scale);
         mLegRight.render(scale);
+
+        GlStateManager.popMatrix();
     }
 
     /**
