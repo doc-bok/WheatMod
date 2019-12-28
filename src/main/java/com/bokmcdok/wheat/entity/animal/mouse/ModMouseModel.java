@@ -1,5 +1,6 @@
 package com.bokmcdok.wheat.entity.animal.mouse;
 
+import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.entity.model.RendererModel;
 import net.minecraft.entity.Entity;
@@ -8,7 +9,7 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
-public class ModMouseModel<T extends Entity> extends EntityModel<T> {
+public class ModMouseModel<T extends Entity> extends EntityModel<ModMouseEntity> {
     private final RendererModel[] mTextureMap;
     private final RendererModel[] mModel;
     private static final int[][] MOUSE_BOX_LENGTH = new int[][]{{1, 1, 1}, {3, 2, 2}, {4, 3, 3}, {3, 3, 3}, {3, 3, 3}, {1, 1, 2}, {1, 1, 2}};
@@ -18,6 +19,7 @@ public class ModMouseModel<T extends Entity> extends EntityModel<T> {
      * Construction
      */
     public ModMouseModel() {
+        GlStateManager.pushMatrix();
         final float[] zPlacement = new float[7];
         mTextureMap = new RendererModel[7];
         float f = -3.5F;
@@ -54,8 +56,14 @@ public class ModMouseModel<T extends Entity> extends EntityModel<T> {
      * @param headPitch The head's pitch angle.
      * @param scale The size to render the bird.
      */
-    public void render(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
+    public void render(ModMouseEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
         setRotationAngles(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, scale);
+
+        GlStateManager.pushMatrix();
+        if (entity.isChild()) {
+            GlStateManager.scalef(0.5F, 0.5F, 0.5F);
+            GlStateManager.translatef(0.0F, 24.0F * scale, 0.0F);
+        }
 
         for(RendererModel renderermodel : mTextureMap) {
             renderermodel.render(scale);
@@ -64,6 +72,8 @@ public class ModMouseModel<T extends Entity> extends EntityModel<T> {
         for(RendererModel renderermodel1 : mModel) {
             renderermodel1.render(scale);
         }
+
+        GlStateManager.popMatrix();
     }
 
     /**
@@ -77,7 +87,7 @@ public class ModMouseModel<T extends Entity> extends EntityModel<T> {
      * @param scale The size to render the bird.
      */
     @Override
-    public void setRotationAngles(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
+    public void setRotationAngles(ModMouseEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
         for(int i = 0; i < mTextureMap.length; ++i) {
             mTextureMap[i].rotateAngleY = MathHelper.cos(ageInTicks * 0.9F + (float)i * 0.15F * (float)Math.PI) * (float)Math.PI * 0.05F * (float)(1 + Math.abs(i - 2));
             mTextureMap[i].rotationPointX = MathHelper.sin(ageInTicks * 0.9F + (float)i * 0.15F * (float)Math.PI) * (float)Math.PI * 0.2F * (float)Math.abs(i - 2);
