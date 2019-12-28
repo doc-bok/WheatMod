@@ -45,6 +45,11 @@ public class ModMateGoal extends BreedGoal {
         if (player != null) {
             player.addStat(Stats.ANIMALS_BRED);
             CriteriaTriggers.BRED_ANIMALS.trigger(player, animal, field_75391_e, null);
+
+            Random random = animal.getRNG();
+            if (world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT)) {
+                world.addEntity(new ExperienceOrbEntity(world, animal.posX, animal.posY, animal.posZ, random.nextInt(7) + 1));
+            }
         }
 
         ModNestingEntity female = mNestingEntity.getIsMale() ? (ModNestingEntity)field_75391_e : mNestingEntity;
@@ -52,10 +57,5 @@ public class ModMateGoal extends BreedGoal {
 
         mNestingEntity.resetInLove();
         field_75391_e.resetInLove();
-
-        Random random = animal.getRNG();
-        if (world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT)) {
-            world.addEntity(new ExperienceOrbEntity(world, animal.posX, animal.posY, animal.posZ, random.nextInt(7) + 1));
-        }
     }
 }
