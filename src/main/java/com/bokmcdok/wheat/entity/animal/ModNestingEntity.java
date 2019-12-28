@@ -1,6 +1,5 @@
 package com.bokmcdok.wheat.entity.animal;
 
-import com.bokmcdok.wheat.entity.animal.widowbird.ModWidowbirdEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ILivingEntityData;
 import net.minecraft.entity.SpawnReason;
