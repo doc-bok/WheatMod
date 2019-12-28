@@ -3,11 +3,6 @@ package com.bokmcdok.wheat.item;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.SpawnEggItem;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.registry.Registry;
-
-import javax.annotation.Nullable;
 
 public class ModSpawnEggItem extends SpawnEggItem implements IModItem {
     private final ModItemImpl mImpl;
