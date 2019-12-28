@@ -83,7 +83,11 @@ public class ModRaidFarmGoal extends MoveToBlockGoal {
 
             if (mEntity instanceof AnimalEntity) {
                 AnimalEntity ageable = (AnimalEntity)mEntity;
-                ageable.setInLove(600);
+                if (ageable.isChild()) {
+                    ageable.addGrowth(3);
+                } else {
+                    ageable.setInLove(600);
+                }
             }
 
             mCanRaid = false;
