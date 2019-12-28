@@ -146,6 +146,26 @@ public class ModButterflyEntity extends CreatureEntity {
     }
 
     /**
+     * Store NBT data so that status is maintained between saves.
+     * @param data The NBT data.
+     */
+    @Override
+    public void writeAdditional(CompoundNBT data) {
+        super.writeAdditional(data);
+        data.putBoolean("IsButterfly", getIsButterfly());
+    }
+
+    /**
+     * Read NBT data so that status is maintained between saves.
+     * @param data The NBT data.
+     */
+    @Override
+    public void readAdditional(CompoundNBT data) {
+        super.readAdditional(data);
+        setIsButterfly(data.getBoolean("IsButterfly"));
+    }
+
+    /**
      * Butterflies are silent.
      * @return No volume.
      */
