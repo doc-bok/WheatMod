@@ -1,6 +1,8 @@
 package com.bokmcdok.wheat.entity.animal.mouse;
 
+import com.bokmcdok.wheat.ai.goals.ModBreedGoal;
 import com.bokmcdok.wheat.ai.goals.ModRaidFarmGoal;
+import com.bokmcdok.wheat.block.ModBlockUtils;
 import com.bokmcdok.wheat.entity.ModEntityUtils;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -9,7 +11,6 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.goal.AvoidEntityGoal;
-import net.minecraft.entity.ai.goal.BreedGoal;
 import net.minecraft.entity.ai.goal.LookAtGoal;
 import net.minecraft.entity.ai.goal.PanicGoal;
 import net.minecraft.entity.ai.goal.SwimGoal;
@@ -43,14 +44,14 @@ public class ModMouseEntity extends AnimalEntity {
     protected void registerGoals() {
         goalSelector.addGoal(1, new SwimGoal(this));
         goalSelector.addGoal(1, new PanicGoal(this, 2.2D));
-        goalSelector.addGoal(2, new BreedGoal(this, 0.8D));
+        goalSelector.addGoal(2, new ModBreedGoal(this, 0.8D));
         goalSelector.addGoal(3, new TemptGoal(this, 1.0D, Ingredient.fromItems(Items.CARROT, Items.GOLDEN_CARROT, Blocks.DANDELION), false));
         goalSelector.addGoal(4, new AvoidEntityGoal<>(this, PlayerEntity.class, 8.0F, 2.2D, 2.2D));
         goalSelector.addGoal(4, new AvoidEntityGoal<>(this, WolfEntity.class, 10.0F, 2.2D, 2.2D));
         goalSelector.addGoal(4, new AvoidEntityGoal<>(this, MonsterEntity.class, 4.0F, 2.2D, 2.2D));
         goalSelector.addGoal(4, new AvoidEntityGoal<>(this, CatEntity.class, 4.0F, 2.2D, 2.2D));
         goalSelector.addGoal(4, new AvoidEntityGoal<>(this, VillagerEntity.class, 4.0F, 2.2D, 2.2D));
-        goalSelector.addGoal(5, new ModRaidFarmGoal(this));
+        goalSelector.addGoal(5, new ModRaidFarmGoal(this, ModBlockUtils.CROPS));
         goalSelector.addGoal(6, new WaterAvoidingRandomWalkingGoal(this, 0.6D));
         goalSelector.addGoal(11, new LookAtGoal(this, PlayerEntity.class, 10.0F));
     }

@@ -6,11 +6,15 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.CropsBlock;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.ai.goal.MoveToBlockGoal;
+import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 
+import java.util.Set;
+
 public class ModRaidFarmGoal extends MoveToBlockGoal {
+    private final Set<Block> mCropsToRaid;
     private final CreatureEntity mEntity;
     private boolean mWantsToRaid;
     private boolean mCanRaid;
@@ -19,9 +23,10 @@ public class ModRaidFarmGoal extends MoveToBlockGoal {
      * Construction
      * @param entity The entity that owns this goal
      */
-    public ModRaidFarmGoal(CreatureEntity entity) {
+    public ModRaidFarmGoal(CreatureEntity entity, Set<Block> cropsToRaid) {
         super(entity, 0.7, 16);
         mEntity = entity;
+        mCropsToRaid = cropsToRaid;
     }
 
     /**
@@ -76,6 +81,15 @@ public class ModRaidFarmGoal extends MoveToBlockGoal {
                 }
             }
 
+            if (mEntity instanceof AnimalEntity) {
+                AnimalEntity ageable = (AnimalEntity)mEntity;
+                if (ageable.isChild()) {
+                    ageable.addGrowth(3);
+                } else {
+                    ageable.setInLove(600);
+                }
+            }
+
             mCanRaid = false;
             runDelay = 10;
         }
@@ -93,7 +107,7 @@ public class ModRaidFarmGoal extends MoveToBlockGoal {
             BlockPos up = position.up();
             BlockState blockstate = world.getBlockState(up);
             block = blockstate.getBlock();
-            if (block instanceof CropsBlock && ((CropsBlock)block).isMaxAge(blockstate)) {
+            if (mCropsToRaid.contains(block)) {
                 mCanRaid = true;
                 return true;
             }

@@ -5,6 +5,8 @@ import com.bokmcdok.wheat.entity.animal.butterfly.ModButterflyEntity;
 import com.bokmcdok.wheat.entity.animal.butterfly.ModButterflyRenderFactory;
 import com.bokmcdok.wheat.entity.animal.mouse.ModMouseEntity;
 import com.bokmcdok.wheat.entity.animal.mouse.ModMouseRenderFactory;
+import com.bokmcdok.wheat.entity.animal.widowbird.ModWidowbirdEntity;
+import com.bokmcdok.wheat.entity.animal.widowbird.ModWidowbirdRenderFactory;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntitySpawnPlacementRegistry;
 import net.minecraft.entity.EntityType;
@@ -23,6 +25,7 @@ public class ModEntityUtils {
     public static final EntityType<ThrownItemEntity> stone_entity = null;
     public static final EntityType<ModMouseEntity> field_mouse = null;
     public static final EntityType<ModButterflyEntity> butterfly = null;
+    public static final EntityType<ModWidowbirdEntity> widowbird = null;
 
     /**
      * Register entities used by the mod
@@ -42,8 +45,13 @@ public class ModEntityUtils {
 
                 EntityType.Builder.<ModButterflyEntity>create(ModButterflyEntity::new, EntityClassification.CREATURE)
                         .size(0.4f, 0.3f)
-                        .build("field_mouse")
-                        .setRegistryName(WheatMod.MOD_ID, "butterfly")
+                        .build("butterfly")
+                        .setRegistryName(WheatMod.MOD_ID, "butterfly"),
+
+                EntityType.Builder.create(ModWidowbirdEntity::new, EntityClassification.CREATURE)
+                        .size(0.4f, 0.3f)
+                        .build("widowbird")
+                        .setRegistryName(WheatMod.MOD_ID, "widowbird")
         );
     }
 
@@ -56,8 +64,10 @@ public class ModEntityUtils {
     {
         EntitySpawnPlacementRegistry.register(field_mouse, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ModMouseEntity::canSpawn);
         EntitySpawnPlacementRegistry.register(butterfly, EntitySpawnPlacementRegistry.PlacementType.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ModButterflyEntity::canSpawn);
+        EntitySpawnPlacementRegistry.register(widowbird, EntitySpawnPlacementRegistry.PlacementType.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ModWidowbirdEntity::canSpawn);
 
         RenderingRegistry.registerEntityRenderingHandler(ModMouseEntity.class, new ModMouseRenderFactory());
         RenderingRegistry.registerEntityRenderingHandler(ModButterflyEntity.class, new ModButterflyRenderFactory());
+        RenderingRegistry.registerEntityRenderingHandler(ModWidowbirdEntity.class, new ModWidowbirdRenderFactory());
     }
 }

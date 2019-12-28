@@ -3,7 +3,6 @@ package com.bokmcdok.wheat.container;
 import com.bokmcdok.wheat.block.ModBlockUtils;
 import com.bokmcdok.wheat.item.ModItemUtils;
 import com.bokmcdok.wheat.recipe.FlourMillRecipe;
-import com.bokmcdok.wheat.sound.ModSoundUtils;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;

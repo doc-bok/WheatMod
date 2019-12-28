@@ -1,17 +1,17 @@
-package com.bokmcdok.wheat.entity.animal.mouse;
+package com.bokmcdok.wheat.entity.animal.widowbird;
 
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 
-public class ModMouseRenderFactory implements IRenderFactory<ModMouseEntity> {
+public class ModWidowbirdRenderFactory implements IRenderFactory<ModWidowbirdEntity> {
     /**
      * Create an entity renderer.
      * @param manager The entity render manager.
      * @return The new entity renderer.
      */
     @Override
-    public EntityRenderer<? super ModMouseEntity> createRenderFor(EntityRendererManager manager) {
-        return new ModMouseRenderer(manager);
+    public EntityRenderer<? super ModWidowbirdEntity> createRenderFor(EntityRendererManager manager) {
+        return new ModWidowbirdRenderer(manager);
     }
 }

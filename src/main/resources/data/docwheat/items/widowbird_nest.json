@@ -1,0 +1,10 @@
+{
+    "type": "block",
+    "group": "decorations",
+    "block": "docwheat:widowbird_nest",
+    "color": {
+        "type": "grass",
+        "temperature": 0.5,
+        "humidity": 1.0
+    }
+}

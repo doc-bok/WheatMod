@@ -34,6 +34,7 @@ class ModTerrain {
                     biome.addStructure(ModFeatureUtils.WINDMILL, new ModWindmillConfig(1));
                     biome.addFeature(GenerationStage.Decoration.SURFACE_STRUCTURES, Biome.createDecoratedFeature(ModFeatureUtils.WINDMILL, new ModWindmillConfig(1), Placement.NOPE, IPlacementConfig.NO_PLACEMENT_CONFIG));
                     biome.getSpawns(EntityClassification.CREATURE).add(new Biome.SpawnListEntry(ModEntityUtils.field_mouse, 10, 8, 8));
+                    biome.getSpawns(EntityClassification.CREATURE).add(new Biome.SpawnListEntry(ModEntityUtils.widowbird, 10, 1, 2));
                     biome.getSpawns(EntityClassification.AMBIENT).add(new Biome.SpawnListEntry(ModEntityUtils.butterfly, 10, 4, 6));
                     break;
 
@@ -47,6 +48,7 @@ class ModTerrain {
                 case SWAMP:
                     addWildWheatFeature(biome, ModBlockUtils.wild_emmer);
                     biome.getSpawns(EntityClassification.CREATURE).add(new Biome.SpawnListEntry(ModEntityUtils.field_mouse, 10, 8, 8));
+                    biome.getSpawns(EntityClassification.CREATURE).add(new Biome.SpawnListEntry(ModEntityUtils.widowbird, 10, 1, 2));
                     biome.getSpawns(EntityClassification.AMBIENT).add(new Biome.SpawnListEntry(ModEntityUtils.butterfly, 10, 4, 6));
                     break;
 

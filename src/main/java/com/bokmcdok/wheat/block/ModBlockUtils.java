@@ -25,10 +25,6 @@ import java.util.Set;
 @Mod.EventBusSubscriber(modid = WheatMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 @ObjectHolder(WheatMod.MOD_ID)
 public class ModBlockUtils {
-
-    /**
-     * The new types of wheat.
-     */
     public static final ModCropsBlock wild_einkorn = null;
     public static final ModCropsBlock common_wheat = null;
     public static final ModCropsBlock einkorn = null;
@@ -38,17 +34,16 @@ public class ModBlockUtils {
     public static final ModCropsBlock spelt = null;
     public static final ModCropsBlock diseased_wheat = null;
 
-    /**
-     * Vegetables
-     */
     public static final ModCropsBlock tomato = null;
 
-    /**
-     * Flour Mill
-     */
     public static final FlourMillBlock flour_mill = null;
 
+    public static final ModBlock widowbird_nest = null;
+
     public static Set<Block> MUSHROOMS;
+    public static Set<Block> CROPS;
+    public static Set<Block> WHEAT;
+
     private static final ModBlockManager BLOCK_MANAGER = new ModBlockManager();
 
     /**
@@ -107,6 +102,32 @@ public class ModBlockUtils {
             Blocks.RED_MUSHROOM,
             Blocks.POTTED_BROWN_MUSHROOM,
             Blocks.POTTED_RED_MUSHROOM
+        ));
+
+        CROPS = new HashSet<>(Arrays.asList(
+           Blocks.WHEAT,
+           Blocks.BEETROOTS,
+           Blocks.CARROTS,
+           Blocks.POTATOES,
+           tomato,
+           wild_einkorn,
+           wild_emmer,
+           emmer,
+           einkorn,
+           common_wheat,
+           durum,
+           spelt
+        ));
+
+        WHEAT = new HashSet<>(Arrays.asList(
+                Blocks.WHEAT,
+                wild_einkorn,
+                wild_emmer,
+                emmer,
+                einkorn,
+                common_wheat,
+                durum,
+                spelt
         ));
     }
 
