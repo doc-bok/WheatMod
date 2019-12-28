@@ -216,10 +216,8 @@ public class ModGetreidewolfEntity extends MonsterEntity {
     public boolean attackEntityAsMob(Entity target) {
         boolean result = target.attackEntityFrom(DamageSource.causeMobDamage(this), (float)getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getValue());
 
-        if (result) {
-            if (target instanceof LivingEntity) {
-                ((LivingEntity) target).addPotionEffect(new EffectInstance(Effects.NAUSEA, 200));
-            }
+        if (result && target instanceof LivingEntity) {
+            ((LivingEntity) target).addPotionEffect(new EffectInstance(Effects.NAUSEA, 200));
         }
 
         return  result;
