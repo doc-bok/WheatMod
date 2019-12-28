@@ -14,6 +14,7 @@ import com.google.gson.JsonObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import net.minecraft.entity.EntityType;
 import net.minecraft.item.Food;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -30,6 +31,7 @@ import java.util.Optional;
 public class ModItemManager extends ModDataManager<IModItem> {
     private static final String ITEMS_FOLDER = "items";
     private static final String CONTAINERS_FOLDER = "containers";
+    private static final String SPAWN_EGGS_FOLDER = "spawn_eggs";
     private ModEffectManager mEffectManager = new ModEffectManager();
 
     private enum ItemType {
@@ -69,6 +71,13 @@ public class ModItemManager extends ModDataManager<IModItem> {
 
         //  Load other items
         loadDataEntries(ITEMS_FOLDER);
+    }
+
+    /**
+     * Load the spawn eggs.
+     */
+    public void loadSpawnEggs() {
+        loadDataEntries(SPAWN_EGGS_FOLDER);
     }
 
     /**
@@ -117,11 +126,17 @@ public class ModItemManager extends ModDataManager<IModItem> {
 
             case SPAWN_EGG: {
                 String entityName = JSONUtils.getString(json, "entity");
-                JsonObject primaryColorJson = JSONUtils.getJsonObject(json, "primary_color");
-                JsonObject secondaryColorJson = JSONUtils.getJsonObject(json, "secondary_color");
-                int primaryColor = deserializeColor(primaryColorJson);
-                int secondaryColor = deserializeColor(secondaryColorJson);
-                result = new ModSpawnEggItem(new ResourceLocation(entityName), primaryColor, secondaryColor, properties);
+
+                Optional<EntityType<?>> entityType = Registry.ENTITY_TYPE.getValue(new ResourceLocation(entityName));
+                if (entityType.isPresent()) {
+                    JsonObject primaryColorJson = JSONUtils.getJsonObject(json, "primary_color");
+                    JsonObject secondaryColorJson = JSONUtils.getJsonObject(json, "secondary_color");
+                    int primaryColor = deserializeColor(primaryColorJson);
+                    int secondaryColor = deserializeColor(secondaryColorJson);
+
+                    result = new ModSpawnEggItem(entityType.get(), primaryColor, secondaryColor, properties);
+                }
+
                 break;
             }
 

@@ -9,6 +9,7 @@ import com.bokmcdok.wheat.entity.animal.widowbird.ModWidowbirdEntity;
 import com.bokmcdok.wheat.entity.animal.widowbird.ModWidowbirdRenderFactory;
 import com.bokmcdok.wheat.entity.feldgeister.getreidewolf.ModGetreidewolfEntity;
 import com.bokmcdok.wheat.entity.feldgeister.getreidewolf.ModGetreidewolfRenderFactory;
+import com.bokmcdok.wheat.item.ModItemUtils;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntitySpawnPlacementRegistry;
 import net.minecraft.entity.EntityType;
@@ -61,6 +62,8 @@ public class ModEntityUtils {
                         .build("getreidewolf")
                         .setRegistryName(WheatMod.MOD_ID, "getreidewolf")
         );
+
+        ModItemUtils.loadSpawnEggs();
     }
 
     /**

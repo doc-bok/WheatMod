@@ -9,12 +9,17 @@ import net.minecraft.client.renderer.color.ItemColors;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.util.registry.Registry;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.registries.ForgeRegistry;
+import net.minecraftforge.registries.GameData;
+import net.minecraftforge.registries.IForgeRegistry;
 import net.minecraftforge.registries.ObjectHolder;
+import net.minecraftforge.registries.RegistryManager;
 
 /**
  * Registers all the items used in this mod.
@@ -179,5 +184,17 @@ public class ModItemUtils
         VillagerUtils.registerMiscItem(emmer_straw);
         VillagerUtils.registerMiscItem(durum_straw);
         VillagerUtils.registerMiscItem(spelt_straw);
+    }
+
+    /**
+     * Load the spawn eggs.
+     */
+    public static void loadSpawnEggs() {
+        ITEM_MANAGER.loadSpawnEggs();
+
+        ForgeRegistry<Item> itemRegistry = RegistryManager.ACTIVE.getRegistry(GameData.ITEMS);
+        itemRegistry.unfreeze();
+        itemRegistry.registerAll(ITEM_MANAGER.getAsItems());
+        itemRegistry.freeze();
     }
 }

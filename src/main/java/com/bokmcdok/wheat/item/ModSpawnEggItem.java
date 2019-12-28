@@ -11,7 +11,6 @@ import javax.annotation.Nullable;
 
 public class ModSpawnEggItem extends SpawnEggItem implements IModItem {
     private final ModItemImpl mImpl;
-    private final ResourceLocation mEntityLocation;
 
     /**
      * Construction
@@ -20,10 +19,9 @@ public class ModSpawnEggItem extends SpawnEggItem implements IModItem {
      * @param secondaryColor The secondary color of the egg
      * @param properties The item's properties
      */
-    public ModSpawnEggItem(ResourceLocation entity, int primaryColor, int secondaryColor, ModItemImpl.ModItemProperties properties) {
-        super(null, primaryColor, secondaryColor, properties);
+    public ModSpawnEggItem(EntityType<?> entity, int primaryColor, int secondaryColor, ModItemImpl.ModItemProperties properties) {
+        super(entity, primaryColor, secondaryColor, properties);
         mImpl = new ModItemImpl(properties);
-        mEntityLocation = entity;
     }
 
     /**
@@ -37,8 +35,4 @@ public class ModSpawnEggItem extends SpawnEggItem implements IModItem {
      * @return A probability between 0 and 1
      */
     public float getCompostChance() { return mImpl.getCompostChance(); }
-
-    public EntityType<?> getType(@Nullable CompoundNBT p_208076_1_) {
-        return Registry.ENTITY_TYPE.getOrDefault(mEntityLocation);
-    }
 }
