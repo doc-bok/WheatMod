@@ -6,7 +6,6 @@ import com.bokmcdok.wheat.block.ModCropsBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 
-import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
