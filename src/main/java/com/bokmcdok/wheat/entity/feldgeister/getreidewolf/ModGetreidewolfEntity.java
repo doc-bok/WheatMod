@@ -1,11 +1,14 @@
 package com.bokmcdok.wheat.entity.feldgeister.getreidewolf;
 
 import com.bokmcdok.wheat.ai.goals.ModDiseaseFarmGoal;
+import com.bokmcdok.wheat.ai.goals.ModNocturnalGoal;
+import com.bokmcdok.wheat.ai.goals.ModPollinateGoal;
 import com.bokmcdok.wheat.block.ModBlockUtils;
 import com.bokmcdok.wheat.block.ModCropsBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 
+import net.minecraft.block.CropsBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
@@ -13,6 +16,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.goal.HurtByTargetGoal;
 import net.minecraft.entity.ai.goal.LeapAtTargetGoal;
 import net.minecraft.entity.ai.goal.LookRandomlyGoal;
@@ -22,10 +26,18 @@ import net.minecraft.entity.ai.goal.SwimGoal;
 import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
 import net.minecraft.entity.merchant.villager.AbstractVillagerEntity;
 import net.minecraft.entity.monster.MonsterEntity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.Hand;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
@@ -41,16 +53,16 @@ import java.util.Random;
 import java.util.function.Predicate;
 
 public class ModGetreidewolfEntity extends MonsterEntity {
-    public static final Predicate<LivingEntity> IS_CHILD = (entity) -> {
-        return entity.isChild();
-    };
+    public static final Predicate<LivingEntity> IS_CHILD = (entity) -> entity.isChild();
+    private static final DataParameter<Boolean> FED = EntityDataManager.createKey(ModGetreidewolfEntity.class, DataSerializers.BOOLEAN);
 
+    private Goal mDiseaseCropsGoal;
     private float mHeadRotationCourse;
     private float mHeadRotationCourseOld;
-    private boolean mIsWet;
-    private boolean mIsShaking;
     private float mTimeWolfIsShaking;
     private float mPrevTimeWolfIsShaking;
+    private boolean mIsWet;
+    private boolean mIsShaking;
 
     /**
      * Construction
@@ -82,7 +94,16 @@ public class ModGetreidewolfEntity extends MonsterEntity {
             BlockState blockState = world.getBlockState(blockPosition);
             Block block = blockState.getBlock();
             if (ModBlockUtils.WHEAT.contains(block) && block instanceof ModCropsBlock) {
-                ((ModCropsBlock)block).diseaseCrop(world, blockPosition, blockState);
+                if (getIsFed()) {
+                    CropsBlock crop = (CropsBlock)block;
+                    Integer integer = blockState.get(CropsBlock.AGE);
+                    if (integer < crop.getMaxAge()) {
+                        world.setBlockState(blockPosition, blockState.with(CropsBlock.AGE, Integer.valueOf(integer + 1)), 2);
+                        world.playEvent(2001, blockPosition, Block.getStateId(blockState));
+                    }
+                } else {
+                    ((ModCropsBlock) block).diseaseCrop(world, blockPosition, blockState);
+                }
             }
         }
     }
@@ -252,6 +273,53 @@ public class ModGetreidewolfEntity extends MonsterEntity {
     }
 
     /**
+     * Store NBT data so that status is maintained between saves.
+     * @param data The NBT data.
+     */
+    @Override
+    public void writeAdditional(CompoundNBT data) {
+        super.writeAdditional(data);
+        data.putBoolean("IsFed", getIsFed());
+    }
+
+    /**
+     * Read NBT data so that status is maintained between saves.
+     * @param data The NBT data.
+     */
+    @Override
+    public void readAdditional(CompoundNBT data) {
+        super.readAdditional(data);
+        setIsFed(data.getBoolean("IsFed"));
+    }
+
+    /**
+     * If a getreidewolf is fed meat they will start to pollinate crops instead of diseasing them.
+     * @param player The player interacting with the entity.
+     * @param hand The player's hand.
+     * @return TRUE if the interaction is handled.
+     */
+    @Override
+    protected boolean processInteract(PlayerEntity player, Hand hand) {
+        if (!getIsFed()) {
+            ItemStack itemStack = player.getHeldItem(hand);
+            Item item = itemStack.getItem();
+            if (item.getFood().isMeat()) {
+                if (!player.abilities.isCreativeMode) {
+                    itemStack.shrink(1);
+                }
+
+                goalSelector.removeGoal(mDiseaseCropsGoal);
+                goalSelector.addGoal(5, new ModPollinateGoal(this));
+                setIsFed(true);
+            }
+
+            return true;
+        }
+
+        return super.processInteract(player, hand);
+    }
+
+    /**
      * Get the height of the entity's eyes.
      * @param pose The current pose.
      * @param size The size of the entity.
@@ -267,10 +335,13 @@ public class ModGetreidewolfEntity extends MonsterEntity {
      */
     @Override
     protected void registerGoals() {
+        mDiseaseCropsGoal = new ModDiseaseFarmGoal(this, ModBlockUtils.WHEAT);
+
         goalSelector.addGoal(1, new SwimGoal(this));
+        goalSelector.addGoal(3, new ModNocturnalGoal(this));
         goalSelector.addGoal(4, new LeapAtTargetGoal(this, 0.4f));
         goalSelector.addGoal(5, new MeleeAttackGoal(this, 1.0d, true));
-        goalSelector.addGoal(5, new ModDiseaseFarmGoal(this, ModBlockUtils.WHEAT));
+        goalSelector.addGoal(5, mDiseaseCropsGoal);
         goalSelector.addGoal(8, new WaterAvoidingRandomWalkingGoal(this, 1.0d));
         goalSelector.addGoal(10, new LookRandomlyGoal(this));
 
@@ -326,5 +397,30 @@ public class ModGetreidewolfEntity extends MonsterEntity {
     @Override
     protected SoundEvent getDeathSound() {
         return SoundEvents.ENTITY_LIGHTNING_BOLT_THUNDER;
+    }
+
+    /**
+     * Register data to the data manager.
+     */
+    @Override
+    protected void registerData() {
+        super.registerData();
+        dataManager.register(FED, false);
+    }
+
+    /**
+     * Check whether or not the getreidewolf has been fed.
+     * @return TRUE if the getreidewolf has been fed.
+     */
+    private boolean getIsFed() {
+        return dataManager.get(FED);
+    }
+
+    /**
+     * Set whether or not the getreidewolf has been fed.
+     * @param value TRUE if the getreidewolf has been fed.
+     */
+    private void setIsFed(boolean value) {
+        dataManager.set(FED, value);
     }
 }
