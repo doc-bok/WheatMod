@@ -7,7 +7,7 @@ import com.bokmcdok.wheat.entity.animal.mouse.ModMouseEntity;
 import com.bokmcdok.wheat.item.ModItemUtils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ai.goal.NonTamedTargetGoal;
+import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.passive.CatEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -36,7 +36,7 @@ public class CatUtils {
         if (entity.getType() == EntityType.CAT) {
             CatEntity cat = (CatEntity)entity;
             cat.goalSelector.addGoal(3, new CatTemptGoal(cat, 0.6D, ModItemUtils.FISH_ITEMS, true));
-            cat.targetSelector.addGoal(1, new NonTamedTargetGoal<>(cat, ModMouseEntity.class, false, null));
+            cat.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(cat, ModMouseEntity.class, 10,false, false, null));
 
         }
     }
