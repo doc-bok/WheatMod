@@ -34,11 +34,7 @@ public class ModCreateNestGoal extends MoveToBlockGoal {
             return false;
         }
 
-        if (mOwner.getIsFertilized()) {
-            return super.shouldExecute();
-        }
-
-        return false;
+        return mOwner.getIsFertilized() && searchForDestination();
     }
 
     /**
@@ -47,11 +43,7 @@ public class ModCreateNestGoal extends MoveToBlockGoal {
      */
     @Override
     public boolean shouldContinueExecuting() {
-        if (mOwner.getIsFertilized()) {
-            return super.shouldContinueExecuting();
-        }
-
-        return false;
+        return mOwner.getIsFertilized() && searchForDestination();
     }
 
     /**
@@ -67,14 +59,14 @@ public class ModCreateNestGoal extends MoveToBlockGoal {
                 10.0F, (float)mOwner.getVerticalFaceSpeed());
         if (getIsAboveDestination()) {
             World world = mOwner.world;
-            BlockState blockstate = world.getBlockState(destinationBlock);
+            BlockState blockstate = world.getBlockState(destinationBlock.up());
             Block block = blockstate.getBlock();
             if (mOwner.getIsFertilized() && block instanceof TallGrassBlock) {
-                world.setBlockState(destinationBlock, ModBlockUtils.widowbird_nest.getDefaultState(), 2);
+                world.setBlockState(destinationBlock.up(), ModBlockUtils.widowbird_nest.getDefaultState(), 2);
             }
 
             mOwner.setIsFertilized(false);
-            mOwner.setNestPosition(Optional.of(destinationBlock));
+            mOwner.setNestPosition(Optional.of(destinationBlock.up()));
             runDelay = 10;
         }
     }
@@ -86,7 +78,7 @@ public class ModCreateNestGoal extends MoveToBlockGoal {
      * @return TRUE if the block can be pollinated.
      */
     protected boolean shouldMoveTo(IWorldReader world, BlockPos position) {
-        Block block = world.getBlockState(position).getBlock();
+        Block block = world.getBlockState(position.up()).getBlock();
         return block instanceof TallGrassBlock && mOwner.getIsFertilized();
     }
 }

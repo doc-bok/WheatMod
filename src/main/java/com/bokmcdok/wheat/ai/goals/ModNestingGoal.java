@@ -31,11 +31,7 @@ public class ModNestingGoal extends MoveToBlockGoal {
      */
     @Override
     public boolean shouldExecute() {
-        if (runDelay < 0 && !net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(mOwner.world, mOwner)) {
-            return false;
-        }
-
-        return !mOwner.world.isDaytime() && mOwner.getHasNest() && super.shouldExecute();
+        return !mOwner.world.isDaytime() && mOwner.getHasNest() && searchForDestination();
     }
 
     /**
@@ -43,7 +39,7 @@ public class ModNestingGoal extends MoveToBlockGoal {
      * @return TRUE if the goal should continue.
      */
     public boolean shouldContinueExecuting() {
-        return !mOwner.world.isDaytime() && mOwner.getHasNest() && super.shouldExecute();
+        return !mOwner.world.isDaytime() && mOwner.getHasNest() && searchForDestination();
     }
 
     /**
@@ -53,28 +49,28 @@ public class ModNestingGoal extends MoveToBlockGoal {
         super.tick();
         mOwner.getLookController().setLookPosition(
                 (double)destinationBlock.getX() + 0.5D,
-                destinationBlock.getY() + 1,
+                destinationBlock.getY(),
                 (double)destinationBlock.getZ() + 0.5D,
                 10.0F, (float)mOwner.getVerticalFaceSpeed());
-        if (getIsAboveDestination()) {
-            World world = mOwner.world;
-            BlockState blockstate = world.getBlockState(destinationBlock);
-            Block block = blockstate.getBlock();
-            if (mOwner.getHasNest() && block == ModBlockUtils.widowbird_nest && world.getCurrentMoonPhaseFactor() > 0.9f) {
-                world.setBlockState(destinationBlock, Blocks.AIR.getDefaultState(), 2);
-                world.playEvent(2001, destinationBlock, Block.getStateId(blockstate));
 
-                //  Spawn 1-3 babies
-                int numSpawn = world.getRandom().nextInt(3) + 1;
-                for (int i = 0; i < numSpawn; i++) {
-                    AgeableEntity child = mOwner.createChild(null);
-                    child.setGrowingAge(-24000);
-                    child.setLocationAndAngles(destinationBlock.getX(), destinationBlock.getY(), destinationBlock.getZ(), 0.0f, 0.0f);
-                    world.addEntity(child);
-                }
+        World world = mOwner.world;
+        BlockState blockstate = world.getBlockState(destinationBlock);
+        Block block = blockstate.getBlock();
+
+        if (mOwner.getHasNest() && block == ModBlockUtils.widowbird_nest && world.rand.nextInt(500) == 0) {
+            mOwner.setNestPosition(Optional.empty());
+            world.setBlockState(destinationBlock, Blocks.AIR.getDefaultState(), 2);
+            world.playEvent(2001, destinationBlock, Block.getStateId(blockstate));
+
+            //  Spawn 1-3 babies
+            int numSpawn = world.getRandom().nextInt(3) + 1;
+            for (int i = 0; i < numSpawn; i++) {
+                AgeableEntity child = mOwner.createChild(null);
+                child.setGrowingAge(-24000);
+                child.setLocationAndAngles(destinationBlock.getX(), destinationBlock.getY() + 1, destinationBlock.getZ(), 0.0f, 0.0f);
+                world.addEntity(child);
             }
 
-            mOwner.setNestPosition(Optional.empty());
             runDelay = 10;
         }
     }
