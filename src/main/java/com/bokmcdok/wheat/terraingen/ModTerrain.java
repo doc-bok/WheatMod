@@ -36,12 +36,14 @@ class ModTerrain {
                     biome.getSpawns(EntityClassification.CREATURE).add(new Biome.SpawnListEntry(ModEntityUtils.field_mouse, 10, 8, 8));
                     biome.getSpawns(EntityClassification.CREATURE).add(new Biome.SpawnListEntry(ModEntityUtils.widowbird, 10, 1, 2));
                     biome.getSpawns(EntityClassification.AMBIENT).add(new Biome.SpawnListEntry(ModEntityUtils.butterfly, 10, 4, 6));
+                    biome.getSpawns(EntityClassification.MONSTER).add(new Biome.SpawnListEntry(ModEntityUtils.getreidewolf, 10, 1, 1));
                     break;
 
                 case FOREST:
                     addWildWheatFeature(biome, ModBlockUtils.wild_einkorn);
                     biome.getSpawns(EntityClassification.CREATURE).add(new Biome.SpawnListEntry(ModEntityUtils.field_mouse, 10, 8, 8));
                     biome.getSpawns(EntityClassification.AMBIENT).add(new Biome.SpawnListEntry(ModEntityUtils.butterfly, 10, 4, 6));
+                    biome.getSpawns(EntityClassification.MONSTER).add(new Biome.SpawnListEntry(ModEntityUtils.getreidewolf, 10, 1, 1));
                     break;
 
                 case RIVER:
@@ -50,6 +52,7 @@ class ModTerrain {
                     biome.getSpawns(EntityClassification.CREATURE).add(new Biome.SpawnListEntry(ModEntityUtils.field_mouse, 10, 8, 8));
                     biome.getSpawns(EntityClassification.CREATURE).add(new Biome.SpawnListEntry(ModEntityUtils.widowbird, 10, 1, 2));
                     biome.getSpawns(EntityClassification.AMBIENT).add(new Biome.SpawnListEntry(ModEntityUtils.butterfly, 10, 4, 6));
+                    biome.getSpawns(EntityClassification.MONSTER).add(new Biome.SpawnListEntry(ModEntityUtils.getreidewolf, 10, 1, 1));
                     break;
 
                 case TAIGA:
