@@ -9,6 +9,8 @@ import com.bokmcdok.wheat.entity.animal.widowbird.ModWidowbirdEntity;
 import com.bokmcdok.wheat.entity.animal.widowbird.ModWidowbirdRenderFactory;
 import com.bokmcdok.wheat.entity.feldgeister.getreidewolf.ModGetreidewolfEntity;
 import com.bokmcdok.wheat.entity.feldgeister.getreidewolf.ModGetreidewolfRenderFactory;
+import com.bokmcdok.wheat.entity.projectile.howl_attack.ModHowlAttackEntity;
+import com.bokmcdok.wheat.entity.projectile.howl_attack.ModHowlAttackRenderFactory;
 import com.bokmcdok.wheat.item.ModItemUtils;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntitySpawnPlacementRegistry;
@@ -41,6 +43,11 @@ public class ModEntityUtils {
                 EntityType.Builder.<ThrownItemEntity>create(ThrownItemEntity::new, EntityClassification.MISC)
                         .size(0.25f, 0.25f).build("stone_entity")
                         .setRegistryName(WheatMod.MOD_ID, "stone_entity"),
+
+                EntityType.Builder.<ModHowlAttackEntity>create(ModHowlAttackEntity::new, EntityClassification.MISC)
+                        .size(0.25f, 0.25f)
+                        .build("howl_attack")
+                        .setRegistryName(WheatMod.MOD_ID, "howl_attack"),
 
                 EntityType.Builder.<ModMouseEntity>create(ModMouseEntity::new, EntityClassification.CREATURE)
                         .size(0.4f, 0.3f)
@@ -82,5 +89,6 @@ public class ModEntityUtils {
         RenderingRegistry.registerEntityRenderingHandler(ModButterflyEntity.class, new ModButterflyRenderFactory());
         RenderingRegistry.registerEntityRenderingHandler(ModWidowbirdEntity.class, new ModWidowbirdRenderFactory());
         RenderingRegistry.registerEntityRenderingHandler(ModGetreidewolfEntity.class, new ModGetreidewolfRenderFactory());
+        RenderingRegistry.registerEntityRenderingHandler(ModHowlAttackEntity.class, new ModHowlAttackRenderFactory());
     }
 }

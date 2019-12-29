@@ -1,10 +1,12 @@
 package com.bokmcdok.wheat.entity.feldgeister.getreidewolf;
 
 import com.bokmcdok.wheat.ai.goals.ModDiseaseFarmGoal;
+import com.bokmcdok.wheat.ai.goals.ModRangedAttackGoal;
 import com.bokmcdok.wheat.ai.goals.ModNocturnalGoal;
 import com.bokmcdok.wheat.ai.goals.ModPollinateGoal;
 import com.bokmcdok.wheat.block.ModBlockUtils;
 import com.bokmcdok.wheat.block.ModCropsBlock;
+import com.bokmcdok.wheat.entity.projectile.howl_attack.ModHowlAttackEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 
@@ -12,6 +14,7 @@ import net.minecraft.block.CropsBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.IRangedAttackMob;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -52,7 +55,7 @@ import javax.annotation.Nullable;
 import java.util.Random;
 import java.util.function.Predicate;
 
-public class ModGetreidewolfEntity extends MonsterEntity {
+public class ModGetreidewolfEntity extends MonsterEntity implements IRangedAttackMob {
     public static final Predicate<LivingEntity> IS_CHILD = (entity) -> entity.isChild();
     private static final DataParameter<Boolean> FED = EntityDataManager.createKey(ModGetreidewolfEntity.class, DataSerializers.BOOLEAN);
 
@@ -87,9 +90,9 @@ public class ModGetreidewolfEntity extends MonsterEntity {
         }
 
         for(int l = 0; l < 4; ++l) {
-            int i = MathHelper.floor(this.posX + (double)((float)(l % 2 * 2 - 1) * 0.25F));
-            int j = MathHelper.floor(this.posY);
-            int k = MathHelper.floor(this.posZ + (double)((float)(l / 2 % 2 * 2 - 1) * 0.25F));
+            int i = MathHelper.floor(posX + (double)((float)(l % 2 * 2 - 1) * 0.25F));
+            int j = MathHelper.floor(posY);
+            int k = MathHelper.floor(posZ + (double)((float)(l / 2 % 2 * 2 - 1) * 0.25F));
             BlockPos blockPosition = new BlockPos(i, j, k);
             BlockState blockState = world.getBlockState(blockPosition);
             Block block = blockState.getBlock();
@@ -291,6 +294,23 @@ public class ModGetreidewolfEntity extends MonsterEntity {
     }
 
     /**
+     * Launch a howl attack
+     * @param target The target to attack.
+     * @param v unused.
+     */
+    @Override
+    public void attackEntityWithRangedAttack(LivingEntity target, float v) {
+        ModHowlAttackEntity projectile = new ModHowlAttackEntity(world, this);
+        double d0 = target.posX - posX;
+        double d1 = target.getBoundingBox().minY + (double) (target.getHeight() / 3.0F) - projectile.posY;
+        double d2 = target.posZ - posZ;
+        float f = MathHelper.sqrt(d0 * d0 + d2 * d2) * 0.2F;
+        projectile.shoot(d0, d1 + (double) f, d2, 1.5F, 10.0F);
+        world.playSound(null, posX, posY, posZ, SoundEvents.ENTITY_WOLF_HOWL, getSoundCategory(), 1.0F, 1.0F + (rand.nextFloat() - rand.nextFloat()) * 0.2F);
+        world.addEntity(projectile);
+    }
+
+    /**
      * If a getreidewolf is fed meat they will start to pollinate crops instead of diseasing them.
      * @param player The player interacting with the entity.
      * @param hand The player's hand.
@@ -338,6 +358,7 @@ public class ModGetreidewolfEntity extends MonsterEntity {
         goalSelector.addGoal(1, new SwimGoal(this));
         goalSelector.addGoal(3, new ModNocturnalGoal(this));
         goalSelector.addGoal(4, new LeapAtTargetGoal(this, 0.4f));
+        goalSelector.addGoal(5, new ModRangedAttackGoal(this, 0.3d, 200, 10.0f));
         goalSelector.addGoal(5, new MeleeAttackGoal(this, 1.0d, true));
         goalSelector.addGoal(5, mDiseaseCropsGoal);
         goalSelector.addGoal(8, new WaterAvoidingRandomWalkingGoal(this, 1.0d));
