@@ -132,5 +132,8 @@
   "item.docwheat.widowbird_egg": "Long-Tailed Widowbird Egg",
   "block.docwheat.widowbird_nest": "Long-Tailed Widowbird Nest",
   "item.docwheat.widowbird_spawn_egg": "Long-Tailed Widowbird Spawn Egg",
-  "entity.docwheat.widowbird": "Long-Tailed Widowbird"
+  "entity.docwheat.widowbird": "Long-Tailed Widowbird",
+
+  "item.docwheat.getreidewolf_spawn_egg": "Dread Wolf Spawn Egg",
+  "entity.docwheat.getreidewolf": "Dread Wolf"
 }

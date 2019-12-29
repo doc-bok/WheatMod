@@ -141,12 +141,12 @@ public class ModWidowbirdModel extends EntityModel<ModWidowbirdEntity> {
     /**
      * Set the living animations.
      * @param entity The entity.
-     * @param p_212843_2_
-     * @param p_212843_3_
-     * @param p_212843_4_
+     * @param x Euler angle x.
+     * @param y Euler angle y.
+     * @param z Euler angle z.
      */
     @Override
-    public void setLivingAnimations(ModWidowbirdEntity entity, float p_212843_2_, float p_212843_3_, float p_212843_4_) {
+    public void setLivingAnimations(ModWidowbirdEntity entity, float x, float y, float z) {
         mBody.rotateAngleX = 0.4937F;
 
         mWingLeft.rotateAngleX = -0.6981F;

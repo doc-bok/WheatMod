@@ -64,8 +64,8 @@ public class ModMouseEntity extends AnimalEntity {
 
     protected void registerAttributes() {
         super.registerAttributes();
-        this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(3.0D);
-        this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double)0.3F);
+        this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(3.0d);
+        this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.3d);
     }
 
     protected SoundEvent getAmbientSound() {

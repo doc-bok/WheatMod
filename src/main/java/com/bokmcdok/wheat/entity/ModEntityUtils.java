@@ -7,6 +7,9 @@ import com.bokmcdok.wheat.entity.animal.mouse.ModMouseEntity;
 import com.bokmcdok.wheat.entity.animal.mouse.ModMouseRenderFactory;
 import com.bokmcdok.wheat.entity.animal.widowbird.ModWidowbirdEntity;
 import com.bokmcdok.wheat.entity.animal.widowbird.ModWidowbirdRenderFactory;
+import com.bokmcdok.wheat.entity.feldgeister.getreidewolf.ModGetreidewolfEntity;
+import com.bokmcdok.wheat.entity.feldgeister.getreidewolf.ModGetreidewolfRenderFactory;
+import com.bokmcdok.wheat.item.ModItemUtils;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntitySpawnPlacementRegistry;
 import net.minecraft.entity.EntityType;
@@ -26,6 +29,7 @@ public class ModEntityUtils {
     public static final EntityType<ModMouseEntity> field_mouse = null;
     public static final EntityType<ModButterflyEntity> butterfly = null;
     public static final EntityType<ModWidowbirdEntity> widowbird = null;
+    public static final EntityType<ModGetreidewolfEntity> getreidewolf = null;
 
     /**
      * Register entities used by the mod
@@ -51,8 +55,15 @@ public class ModEntityUtils {
                 EntityType.Builder.create(ModWidowbirdEntity::new, EntityClassification.CREATURE)
                         .size(0.4f, 0.3f)
                         .build("widowbird")
-                        .setRegistryName(WheatMod.MOD_ID, "widowbird")
+                        .setRegistryName(WheatMod.MOD_ID, "widowbird"),
+
+                EntityType.Builder.create(ModGetreidewolfEntity::new, EntityClassification.MONSTER)
+                        .size(0.4f, 0.3f)
+                        .build("getreidewolf")
+                        .setRegistryName(WheatMod.MOD_ID, "getreidewolf")
         );
+
+        ModItemUtils.loadSpawnEggs();
     }
 
     /**
@@ -65,9 +76,11 @@ public class ModEntityUtils {
         EntitySpawnPlacementRegistry.register(field_mouse, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ModMouseEntity::canSpawn);
         EntitySpawnPlacementRegistry.register(butterfly, EntitySpawnPlacementRegistry.PlacementType.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ModButterflyEntity::canSpawn);
         EntitySpawnPlacementRegistry.register(widowbird, EntitySpawnPlacementRegistry.PlacementType.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ModWidowbirdEntity::canSpawn);
+        EntitySpawnPlacementRegistry.register(getreidewolf, EntitySpawnPlacementRegistry.PlacementType.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ModGetreidewolfEntity::canSpawn);
 
         RenderingRegistry.registerEntityRenderingHandler(ModMouseEntity.class, new ModMouseRenderFactory());
         RenderingRegistry.registerEntityRenderingHandler(ModButterflyEntity.class, new ModButterflyRenderFactory());
         RenderingRegistry.registerEntityRenderingHandler(ModWidowbirdEntity.class, new ModWidowbirdRenderFactory());
+        RenderingRegistry.registerEntityRenderingHandler(ModGetreidewolfEntity.class, new ModGetreidewolfRenderFactory());
     }
 }
