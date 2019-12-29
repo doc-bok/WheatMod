@@ -67,9 +67,9 @@ public class ModPollinateGoal extends MoveToBlockGoal {
             Block block = blockstate.getBlock();
             if (mCanPollinate && block instanceof CropsBlock) {
                 CropsBlock crop = (CropsBlock)block;
-                Integer integer = blockstate.get(CropsBlock.AGE);
+                Integer integer = blockstate.get(crop.getAgeProperty());
                 if (integer < crop.getMaxAge()) {
-                    world.setBlockState(blockpos, blockstate.with(CropsBlock.AGE, Integer.valueOf(integer + 1)), 2);
+                    world.setBlockState(blockpos, blockstate.with(crop.getAgeProperty(), Integer.valueOf(integer + 1)), 2);
                     world.playEvent(2001, blockpos, Block.getStateId(blockstate));
                 }
             }

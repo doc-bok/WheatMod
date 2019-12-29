@@ -7,6 +7,7 @@ import net.minecraft.block.CropsBlock;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.ai.goal.MoveToBlockGoal;
 import net.minecraft.entity.passive.AnimalEntity;
+import net.minecraft.state.IntegerProperty;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
@@ -70,13 +71,15 @@ public class ModRaidFarmGoal extends MoveToBlockGoal {
             BlockPos blockpos = destinationBlock.up();
             BlockState blockstate = world.getBlockState(blockpos);
             Block block = blockstate.getBlock();
-            if (mCanRaid && mCropsToRaid.contains(block)) {
-                Integer integer = blockstate.get(CropsBlock.AGE);
+            if (mCanRaid && mCropsToRaid.contains(block) && block instanceof CropsBlock) {
+
+                IntegerProperty ageProperty = ((CropsBlock)block).getAgeProperty();
+                Integer integer = blockstate.get(ageProperty);
                 if (integer == 0) {
                     world.setBlockState(blockpos, Blocks.AIR.getDefaultState(), 2);
                     world.destroyBlock(blockpos, true);
                 } else {
-                    world.setBlockState(blockpos, blockstate.with(CropsBlock.AGE, Integer.valueOf(integer - 1)), 2);
+                    world.setBlockState(blockpos, blockstate.with(ageProperty, Integer.valueOf(integer - 1)), 2);
                     world.playEvent(2001, blockpos, Block.getStateId(blockstate));
                 }
             }
