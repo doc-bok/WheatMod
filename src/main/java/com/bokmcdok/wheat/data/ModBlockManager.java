@@ -72,17 +72,18 @@ public class ModBlockManager extends ModDataManager<IModBlock> {
             return null;
         }
 
-        setIfFalse(properties, json, "block_movement", (x) -> x.doesNotBlockMovement());
-        setFloat(properties, json, "slipperiness", (x, value) -> x.slipperiness(value));
-        setSound(properties, json, "sound", (x, value) -> x.sound(value));
-        setInt(properties, json, "light_value", (x, value) -> x.lightValue(value));
-        setTwoFloats(properties, json, "hardness", "resistance", (x, v1, v2) -> x.hardnessAndResistance(v1, v2));
-        setIfTrue(properties, json, "ticks_randomly", (x) -> x.tickRandomly());
-        setIfTrue(properties, json, "variable_opacity", (x) -> x.variableOpacity());
-        setInt(properties, json, "harvest_level", (x, value) -> x.harvestLevel(value));
-        setToolType(properties, json, "harvest_tool", (x, value) -> x.harvestTool(value));
-        setIfTrue(properties, json, "no_drops", (x) -> x.noDrops());
-        setBlock(properties, json, "loot_from", (x, value) -> x.lootFrom(value));
+        setIfFalse(properties, json, "block_movement", ModBlockImpl.ModBlockProperties::doesNotBlockMovement);
+        setFloat(properties, json, "slipperiness", ModBlockImpl.ModBlockProperties::slipperiness);
+        setSound(properties, json, "sound", ModBlockImpl.ModBlockProperties::sound);
+        setInt(properties, json, "light_value", ModBlockImpl.ModBlockProperties::lightValue);
+        setTwoFloats(properties, json, "hardness", "resistance", ModBlockImpl.ModBlockProperties::hardnessAndResistance);
+        setIfTrue(properties, json, "ticks_randomly", ModBlockImpl.ModBlockProperties::tickRandomly);
+        setIfTrue(properties, json, "variable_opacity", ModBlockImpl.ModBlockProperties::variableOpacity);
+        setInt(properties, json, "harvest_level", ModBlockImpl.ModBlockProperties::harvestLevel);
+        setToolType(properties, json, "harvest_tool", ModBlockImpl.ModBlockProperties::harvestTool);
+        setIfTrue(properties, json, "no_drops", ModBlockImpl.ModBlockProperties::noDrops);
+        setBlock(properties, json, "loot_from", ModBlockImpl.ModBlockProperties::lootFrom);
+        setInt(properties, json, "inventory_size", ModBlockImpl.ModBlockProperties::setInventory);
 
         deserializeColor(json, properties);
         deserializeFire(json, properties);

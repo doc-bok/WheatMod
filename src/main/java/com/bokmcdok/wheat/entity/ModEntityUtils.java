@@ -1,6 +1,7 @@
 package com.bokmcdok.wheat.entity;
 
 import com.bokmcdok.wheat.WheatMod;
+import com.bokmcdok.wheat.block.ModBlockUtils;
 import com.bokmcdok.wheat.entity.animal.butterfly.ModButterflyEntity;
 import com.bokmcdok.wheat.entity.animal.butterfly.ModButterflyRenderFactory;
 import com.bokmcdok.wheat.entity.animal.mouse.ModMouseEntity;
@@ -9,10 +10,12 @@ import com.bokmcdok.wheat.entity.animal.widowbird.ModWidowbirdEntity;
 import com.bokmcdok.wheat.entity.animal.widowbird.ModWidowbirdRenderFactory;
 import com.bokmcdok.wheat.entity.feldgeister.getreidewolf.ModGetreidewolfEntity;
 import com.bokmcdok.wheat.entity.feldgeister.getreidewolf.ModGetreidewolfRenderFactory;
+import com.bokmcdok.wheat.entity.tile.ModInventoryTileEntity;
 import com.bokmcdok.wheat.item.ModItemUtils;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntitySpawnPlacementRegistry;
 import net.minecraft.entity.EntityType;
+import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.world.gen.Heightmap;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -25,11 +28,12 @@ import net.minecraftforge.registries.ObjectHolder;
 @ObjectHolder(WheatMod.MOD_ID)
 public class ModEntityUtils {
 
-    public static final EntityType<ThrownItemEntity> stone_entity = null;
     public static final EntityType<ModMouseEntity> field_mouse = null;
     public static final EntityType<ModButterflyEntity> butterfly = null;
     public static final EntityType<ModWidowbirdEntity> widowbird = null;
     public static final EntityType<ModGetreidewolfEntity> getreidewolf = null;
+
+    public static final TileEntityType<ModInventoryTileEntity> inventory = null;
 
     /**
      * Register entities used by the mod
@@ -64,6 +68,19 @@ public class ModEntityUtils {
         );
 
         ModItemUtils.loadSpawnEggs();
+    }
+
+    /**
+     * Register tile entities.
+     * @param event The tile registry event.
+     */
+    @SubscribeEvent
+    public static void registerTileEntities(final RegistryEvent.Register<TileEntityType<?>> event) {
+        event.getRegistry().registerAll(
+                TileEntityType.Builder.create(ModInventoryTileEntity::new, ModBlockUtils.mouse_trap)
+                        .build(null)
+                        .setRegistryName(WheatMod.MOD_ID, "inventory")
+        );
     }
 
     /**

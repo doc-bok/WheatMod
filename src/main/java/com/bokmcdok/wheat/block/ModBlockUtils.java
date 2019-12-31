@@ -40,6 +40,8 @@ public class ModBlockUtils {
 
     public static final ModBlock widowbird_nest = null;
 
+    public static final ModTrapBlock mouse_trap = null;
+
     public static Set<Block> MUSHROOMS;
     public static Set<Block> CROPS;
     public static Set<Block> WHEAT;

@@ -1,11 +1,15 @@
 package com.bokmcdok.wheat.block;
 
+import com.bokmcdok.wheat.entity.tile.ModInventoryTileEntity;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.client.renderer.color.IBlockColor;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.shapes.VoxelShape;
+import net.minecraft.world.IBlockReader;
 import net.minecraftforge.common.ToolType;
 
 public class ModBlockImpl {
@@ -15,6 +19,7 @@ public class ModBlockImpl {
     private ModCropProperties mCropProperties;
     private VoxelShape mShape;
     private VoxelShape mCollisionShape;
+    private int mInventorySize;
 
     public ModBlockImpl(ModBlockProperties properties) {
         mColor = properties.mColor;
@@ -23,6 +28,7 @@ public class ModBlockImpl {
         mCropProperties = properties.mCropProperties;
         mShape = properties.mShape;
         mCollisionShape = properties.mCollisionShape;
+        mInventorySize = properties.mInventorySize;
     }
 
     /**
@@ -47,8 +53,21 @@ public class ModBlockImpl {
         return  mCollisionShape == null ? mShape : mCollisionShape;
     }
 
+    public boolean hasTileEntity() {
+        return mInventorySize > 0;
+    }
+
+    public TileEntity createTileEntity(BlockState state, IBlockReader world) {
+        if (hasTileEntity()) {
+            return new ModInventoryTileEntity(mInventorySize);
+        }
+
+        return null;
+    }
+
     public static class ModBlockProperties {
         private Block.Properties mBlockProperties;
+        private int mInventorySize = 0;
 
         private IBlockColor mColor = null;
         private int mFireEncouragement = 0;
@@ -134,6 +153,8 @@ public class ModBlockImpl {
         public void setCollisionShape(VoxelShape shape) {
             mCollisionShape = shape;
         }
+
+        public void setInventory(int numSlots) { mInventorySize = numSlots; }
 
         public Block.Properties asBlockProperties() {
             return mBlockProperties;
