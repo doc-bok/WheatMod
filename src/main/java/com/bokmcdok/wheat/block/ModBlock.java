@@ -14,7 +14,7 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 
 public class ModBlock extends Block implements IModBlock {
-    private ModBlockImpl mImpl;
+    protected final ModBlockImpl mImpl;
 
     /**
      * Construction

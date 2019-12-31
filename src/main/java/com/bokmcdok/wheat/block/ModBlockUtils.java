@@ -1,6 +1,5 @@
 package com.bokmcdok.wheat.block;
 
-import com.bokmcdok.wheat.data.ModBlockManager;
 import com.bokmcdok.wheat.WheatMod;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;

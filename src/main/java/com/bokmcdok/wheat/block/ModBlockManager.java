@@ -1,14 +1,9 @@
-package com.bokmcdok.wheat.data;
+package com.bokmcdok.wheat.block;
 
-import com.bokmcdok.wheat.block.IModBlock;
-import com.bokmcdok.wheat.block.ModBlock;
-import com.bokmcdok.wheat.block.ModBlockImpl;
-import com.bokmcdok.wheat.block.ModCropProperties;
-import com.bokmcdok.wheat.block.ModCropsBlock;
-import com.bokmcdok.wheat.block.ModHayBlock;
-import com.bokmcdok.wheat.block.ModMatBlock;
-import com.bokmcdok.wheat.block.ModSmallStoneBlock;
+import com.bokmcdok.wheat.data.ModDataManager;
+import com.bokmcdok.wheat.data.ModMaterialManager;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -22,9 +17,11 @@ import net.minecraft.util.math.shapes.VoxelShapes;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class ModBlockManager extends ModDataManager<IModBlock> {
     private static final String BLOCKS_FOLDER = "blocks";
+    private static final String TRAPS_FOLDER = "traps";
     private static final ModMaterialManager MATERIAL_MANAGER = new ModMaterialManager();
 
     private enum BlockType {
@@ -32,24 +29,48 @@ public class ModBlockManager extends ModDataManager<IModBlock> {
         CROP,
         HAY,
         MAT,
-        SMALL_STONE
+        SMALL_STONE,
+        TRAP
     }
 
+    /**
+     * Get the blocks loaded by this data manager.
+     * @return An array of blocks.
+     */
     public IModBlock[] getBlocks() {
         return getAllEntries().toArray(new IModBlock[0]);
     }
 
+    /**
+     * Get the blocks in vanilla format.
+     * @return An array of vanilla blocks.
+     */
     public Block[] getAsBlocks() {
         List<IModBlock> values = new ArrayList(getAllEntries());
         List<Block> converted = Lists.transform(values, i -> i.asBlock());
         return converted.toArray(new Block[0]);
     }
 
+    /**
+     * Load the blocks from the blocks folder.
+     */
     public void loadBlocks() {
         MATERIAL_MANAGER.loadMaterials();
         loadDataEntries(BLOCKS_FOLDER);
     }
+    /**
+     * Load traps from the traps folder.
+     */
+    public void loadTraps() {
+        loadDataEntries(TRAPS_FOLDER);
+    }
 
+    /**
+     * Deserialize a JSON file into a block.
+     * @param location The location of the resource.
+     * @param json The JSON data to parse.
+     * @return
+     */
     protected IModBlock deserialize(ResourceLocation location, JsonObject json) {
         ModBlockImpl.ModBlockProperties properties = null;
 
@@ -89,6 +110,7 @@ public class ModBlockManager extends ModDataManager<IModBlock> {
         deserializeFire(json, properties);
         properties.setShape(deserializeShape(json, "shape"));
         properties.setCollisionShape(deserializeShape(json, "collision_shape"));
+        properties.setTargets(deserializeTargets(json, "targets"));
 
         ModCropProperties crop = deserializeCropProperties(json);
         if (crop != null) {
@@ -120,6 +142,10 @@ public class ModBlockManager extends ModDataManager<IModBlock> {
                 result = new ModSmallStoneBlock(properties);
                 break;
 
+            case TRAP:
+                result = new ModTrapBlock(properties);
+                break;
+
             default:
                 LOGGER.info("Block type {} not supported", typeValue);
                 return null;
@@ -141,6 +167,11 @@ public class ModBlockManager extends ModDataManager<IModBlock> {
         }
     }
 
+    /**
+     * Deserialize a block's flammable properties.
+     * @param json The JSON object from the file
+     * @param properties The properties to set.
+     */
     private void deserializeFire(JsonObject json, ModBlockImpl.ModBlockProperties properties) {
         if (JSONUtils.hasField(json, "fire")) {
             JsonObject fire = JSONUtils.getJsonObject(json, "fire");
@@ -215,5 +246,27 @@ public class ModBlockManager extends ModDataManager<IModBlock> {
         }
 
         return result;
+    }
+
+    /**
+     * Deserialize a list of targets.
+     * @param json The JSON data from the file.
+     * @param key The key to use.
+     * @return A list of targets for the block.
+     */
+    private Set<ResourceLocation> deserializeTargets(JsonObject json, String key) {
+        if (JSONUtils.hasField(json, key)) {
+            JsonArray entities = JSONUtils.getJsonArray(json, key);
+            if (entities.size() > 0) {
+                Set<ResourceLocation> result = Sets.newHashSet();
+                for (JsonElement i : entities) {
+                    result.add(new ResourceLocation(i.getAsString()));
+                }
+
+                return result;
+            }
+        }
+
+        return null;
     }
 }
