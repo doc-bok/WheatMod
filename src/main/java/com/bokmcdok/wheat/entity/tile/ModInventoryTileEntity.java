@@ -5,6 +5,7 @@ import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.util.NonNullList;
 
 public class ModInventoryTileEntity extends TileEntity {
@@ -22,7 +23,16 @@ public class ModInventoryTileEntity extends TileEntity {
      * @param numSlots The number of slots in the inventory.
      */
     public ModInventoryTileEntity(int numSlots) {
-        super(ModEntityUtils.inventory);
+        this(ModEntityUtils.inventory, numSlots);
+    }
+
+    /**
+     * Construction
+     * @param type The type of this entity.
+     * @param numSlots The number of slots in the inventory.
+     */
+    public ModInventoryTileEntity(TileEntityType<?> type, int numSlots) {
+        super(type);
         mInventory = NonNullList.withSize(numSlots, ItemStack.EMPTY);
     }
 
@@ -63,6 +73,47 @@ public class ModInventoryTileEntity extends TileEntity {
      * @return The item stack in the slot.
      */
     public ItemStack getItemStack(int slot) {
-        return  mInventory.get(0);
+        return  mInventory.get(slot);
+    }
+
+    /**
+     * Check if the inventory is empty.
+     * @return TRUE if the inventory is empty.
+     */
+    public boolean getIsInventoryEmpty() {
+        for (ItemStack i: mInventory) {
+            if (i != ItemStack.EMPTY) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * Attempts to add an item stack to the inventory.
+     * @param stack The item stack to add.
+     * @return Any remaining items that don't fit.
+     */
+    public ItemStack addItemStack(ItemStack stack) {
+        ItemStack copy = stack.copy();
+        for (int i = 0; i < mInventory.size(); ++i) {
+            ItemStack slot = mInventory.get(i);
+            if (slot.isEmpty()) {
+                mInventory.set(i, copy);
+                return ItemStack.EMPTY;
+            } else if (slot.getItem() == copy.getItem()) {
+                if (slot.getCount() + copy.getCount() < slot.getMaxStackSize()) {
+                    slot.grow(copy.getCount());
+                    return ItemStack.EMPTY;
+                } else {
+                    int count = slot.getMaxStackSize() - slot.getCount();
+                    slot.grow(count);
+                    copy.shrink(count);
+                }
+            }
+        }
+
+        return copy;
     }
 }

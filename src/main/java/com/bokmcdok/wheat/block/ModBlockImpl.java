@@ -117,6 +117,14 @@ public class ModBlockImpl {
     }
 
     /**
+     * Get the inventory size.
+     * @return The number of slots in the block's inventory.
+     */
+    public int getInventorySize() {
+        return mInventorySize;
+    }
+
+    /**
      * The properties of a modded block.
      */
     public static class ModBlockProperties {

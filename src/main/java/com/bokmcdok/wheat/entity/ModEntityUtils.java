@@ -11,6 +11,7 @@ import com.bokmcdok.wheat.entity.animal.widowbird.ModWidowbirdRenderFactory;
 import com.bokmcdok.wheat.entity.feldgeister.getreidewolf.ModGetreidewolfEntity;
 import com.bokmcdok.wheat.entity.feldgeister.getreidewolf.ModGetreidewolfRenderFactory;
 import com.bokmcdok.wheat.entity.tile.ModInventoryTileEntity;
+import com.bokmcdok.wheat.entity.tile.ModTrapTileEntity;
 import com.bokmcdok.wheat.item.ModItemUtils;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntitySpawnPlacementRegistry;
@@ -34,6 +35,7 @@ public class ModEntityUtils {
     public static final EntityType<ModGetreidewolfEntity> getreidewolf = null;
 
     public static final TileEntityType<ModInventoryTileEntity> inventory = null;
+    public static final TileEntityType<ModTrapTileEntity> trap = null;
 
     /**
      * Register entities used by the mod
@@ -77,9 +79,12 @@ public class ModEntityUtils {
     @SubscribeEvent
     public static void registerTileEntities(final RegistryEvent.Register<TileEntityType<?>> event) {
         event.getRegistry().registerAll(
-                TileEntityType.Builder.create(ModInventoryTileEntity::new, ModBlockUtils.mouse_trap)
+                /*TileEntityType.Builder.create(ModInventoryTileEntity::new, ModBlockUtils.mouse_trap)
                         .build(null)
-                        .setRegistryName(WheatMod.MOD_ID, "inventory")
+                        .setRegistryName(WheatMod.MOD_ID, "inventory"),*/
+                TileEntityType.Builder.create(ModTrapTileEntity::new, ModBlockUtils.mouse_trap)
+                        .build(null)
+                        .setRegistryName(WheatMod.MOD_ID, "trap")
         );
     }
 
