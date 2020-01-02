@@ -37,6 +37,7 @@ class ModTerrain {
                     biome.getSpawns(EntityClassification.CREATURE).add(new Biome.SpawnListEntry(ModEntityUtils.widowbird, 10, 1, 3));
                     biome.getSpawns(EntityClassification.AMBIENT).add(new Biome.SpawnListEntry(ModEntityUtils.butterfly, 10, 2, 6));
                     biome.getSpawns(EntityClassification.MONSTER).add(new Biome.SpawnListEntry(ModEntityUtils.getreidewolf, 10, 1, 1));
+                    biome.getSpawns(EntityClassification.MONSTER).add(new Biome.SpawnListEntry(ModEntityUtils.weizenbeller, 25, 1, 3));
                     break;
 
                 case FOREST:
@@ -44,6 +45,7 @@ class ModTerrain {
                     biome.getSpawns(EntityClassification.CREATURE).add(new Biome.SpawnListEntry(ModEntityUtils.field_mouse, 10, 2, 6));
                     biome.getSpawns(EntityClassification.AMBIENT).add(new Biome.SpawnListEntry(ModEntityUtils.butterfly, 10, 2, 6));
                     biome.getSpawns(EntityClassification.MONSTER).add(new Biome.SpawnListEntry(ModEntityUtils.getreidewolf, 10, 1, 1));
+                    biome.getSpawns(EntityClassification.MONSTER).add(new Biome.SpawnListEntry(ModEntityUtils.weizenbeller, 25, 1, 3));
                     break;
 
                 case RIVER:
@@ -53,6 +55,7 @@ class ModTerrain {
                     biome.getSpawns(EntityClassification.CREATURE).add(new Biome.SpawnListEntry(ModEntityUtils.widowbird, 10, 1, 3));
                     biome.getSpawns(EntityClassification.AMBIENT).add(new Biome.SpawnListEntry(ModEntityUtils.butterfly, 10, 2, 6));
                     biome.getSpawns(EntityClassification.MONSTER).add(new Biome.SpawnListEntry(ModEntityUtils.getreidewolf, 10, 1, 1));
+                    biome.getSpawns(EntityClassification.MONSTER).add(new Biome.SpawnListEntry(ModEntityUtils.weizenbeller, 25, 1, 3));
                     break;
 
                 case TAIGA:

@@ -8,7 +8,8 @@ import net.minecraft.util.ResourceLocation;
 import javax.annotation.Nullable;
 
 public class ModGetreidewolfRenderer extends MobRenderer<ModGetreidewolfEntity, ModGetreidewolfModel<ModGetreidewolfEntity>> {
-    private static final ResourceLocation GETREIDEWOLF_TEXTURES = new ResourceLocation("docwheat:textures/entity/getreidewolf.png");
+    private static final ResourceLocation GETREIDEWOLF_TEXTURES =
+            new ResourceLocation("docwheat:textures/entity/getreidewolf.png");
 
     /**
      * Construction

@@ -2,6 +2,7 @@
   "replace": false,
   "values": [
     "docwheat:common_flour",
-    "docwheat:spelt_flour"
+    "docwheat:spelt_flour",
+    "docwheat:durum_flour"
   ]
 }

@@ -6,6 +6,7 @@ import com.bokmcdok.wheat.ai.goals.ModNocturnalGoal;
 import com.bokmcdok.wheat.ai.goals.ModPollinateGoal;
 import com.bokmcdok.wheat.block.ModBlockUtils;
 import com.bokmcdok.wheat.block.ModCropsBlock;
+import com.bokmcdok.wheat.entity.feldgeister.ModFeldgeisterEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 
@@ -31,10 +32,6 @@ import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
-import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
@@ -54,11 +51,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Random;
-import java.util.function.Predicate;
 
-public class ModGetreidewolfEntity extends MonsterEntity implements IRangedAttackMob {
-    public static final Predicate<LivingEntity> IS_CHILD = (entity) -> entity.isChild();
-    private static final DataParameter<Boolean> FED = EntityDataManager.createKey(ModGetreidewolfEntity.class, DataSerializers.BOOLEAN);
+public class ModGetreidewolfEntity extends ModFeldgeisterEntity implements IRangedAttackMob {
 
     private Goal mDiseaseCropsGoal;
     private float mHeadRotationCourse;
@@ -78,7 +72,8 @@ public class ModGetreidewolfEntity extends MonsterEntity implements IRangedAttac
     }
 
     /**
-     * Getreidewolves will shake like normal wolves if they get wet.
+     * Getreidewolves will shake like normal wolves if they get wet. They will also cause disease in any wheat they
+     * touch.
      */
     @Override
     public void livingTick() {
@@ -224,7 +219,7 @@ public class ModGetreidewolfEntity extends MonsterEntity implements IRangedAttac
             ((LivingEntity) target).addPotionEffect(new EffectInstance(Effects.NAUSEA, 200));
         }
 
-        return  result;
+        return result;
     }
 
     /**
@@ -272,26 +267,6 @@ public class ModGetreidewolfEntity extends MonsterEntity implements IRangedAttac
      */
     public static boolean canSpawn(EntityType<ModGetreidewolfEntity> entity, IWorld world, SpawnReason reason, BlockPos position, Random random) {
         return world.getCurrentMoonPhaseFactor() > 0.9f && MonsterEntity.func_223325_c(entity, world, reason, position, random);
-    }
-
-    /**
-     * Store NBT data so that status is maintained between saves.
-     * @param data The NBT data.
-     */
-    @Override
-    public void writeAdditional(CompoundNBT data) {
-        super.writeAdditional(data);
-        data.putBoolean("IsFed", getIsFed());
-    }
-
-    /**
-     * Read NBT data so that status is maintained between saves.
-     * @param data The NBT data.
-     */
-    @Override
-    public void readAdditional(CompoundNBT data) {
-        super.readAdditional(data);
-        setIsFed(data.getBoolean("IsFed"));
     }
 
     /**
@@ -344,8 +319,6 @@ public class ModGetreidewolfEntity extends MonsterEntity implements IRangedAttac
                     itemStack.shrink(1);
                 }
 
-                goalSelector.removeGoal(mDiseaseCropsGoal);
-                goalSelector.addGoal(5, new ModPollinateGoal(this));
                 setIsFed(true);
             }
 
@@ -437,27 +410,15 @@ public class ModGetreidewolfEntity extends MonsterEntity implements IRangedAttac
     }
 
     /**
-     * Register data to the data manager.
-     */
-    @Override
-    protected void registerData() {
-        super.registerData();
-        dataManager.register(FED, false);
-    }
-
-    /**
-     * Check whether or not the getreidewolf has been fed.
-     * @return TRUE if the getreidewolf has been fed.
-     */
-    private boolean getIsFed() {
-        return dataManager.get(FED);
-    }
-
-    /**
      * Set whether or not the getreidewolf has been fed.
      * @param value TRUE if the getreidewolf has been fed.
      */
-    private void setIsFed(boolean value) {
-        dataManager.set(FED, value);
+    protected void setIsFed(boolean value) {
+        super.setIsFed(value);
+
+        if (value) {
+            goalSelector.removeGoal(mDiseaseCropsGoal);
+            goalSelector.addGoal(5, new ModPollinateGoal(this));
+        }
     }
 }
