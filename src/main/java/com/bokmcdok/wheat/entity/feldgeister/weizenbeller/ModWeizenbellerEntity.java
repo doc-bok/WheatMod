@@ -1,17 +1,14 @@
 package com.bokmcdok.wheat.entity.feldgeister.weizenbeller;
 
 import com.bokmcdok.wheat.ai.goals.ModNocturnalGoal;
-import com.bokmcdok.wheat.ai.goals.ModPollinateGoal;
 import com.bokmcdok.wheat.entity.animal.mouse.ModMouseEntity;
 import com.bokmcdok.wheat.entity.animal.widowbird.ModWidowbirdEntity;
 import com.bokmcdok.wheat.entity.feldgeister.ModFeldgeisterEntity;
 import com.bokmcdok.wheat.entity.feldgeister.getreidewolf.ModGetreidewolfEntity;
 import com.bokmcdok.wheat.tag.ModTagUtils;
-import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.SpawnReason;
@@ -30,8 +27,6 @@ import net.minecraft.entity.passive.RabbitEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
