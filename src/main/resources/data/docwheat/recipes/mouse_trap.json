@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "A",
+    "#"
+  ],
+  "key": {
+    "#": {
+      "tag": "minecraft:wooden_slabs"
+    },
+    "A": {
+      "item": "minecraft:tripwire_hook"
+    }
+  },
+  "result": {
+    "item": "docwheat:mouse_trap"
+  }
+}

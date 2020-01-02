@@ -1,0 +1,17 @@
+{
+  "replace": false,
+  "values": [
+    "docwheat:common_grain",
+    "docwheat:emmer_grain",
+    "docwheat:spelt_grain",
+    "docwheat:wild_einkorn_grain",
+    "docwheat:einkorn_grain",
+    "docwheat:wild_emmer_grain",
+    "docwheat:durum_grain",
+    "docwheat:tomato_seeds",
+    "minecraft:melon_seeds",
+    "minecraft:pumpkin_seeds",
+    "minecraft:beetroot_seeds",
+    "minecraft:wheat_seeds"
+  ]
+}

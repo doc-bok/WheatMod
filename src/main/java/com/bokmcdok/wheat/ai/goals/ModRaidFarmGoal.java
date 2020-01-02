@@ -1,5 +1,6 @@
 package com.bokmcdok.wheat.ai.goals;
 
+import com.bokmcdok.wheat.block.ModTrapBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -111,6 +112,14 @@ public class ModRaidFarmGoal extends MoveToBlockGoal {
             BlockState blockstate = world.getBlockState(up);
             block = blockstate.getBlock();
             if (mCropsToRaid.contains(block)) {
+
+                //  Traps only work if they are still armed.
+                if (block instanceof ModTrapBlock) {
+                    if (!((ModTrapBlock)block).getIsTrapArmed(world, up)) {
+                        return false;
+                    }
+                }
+
                 mCanRaid = true;
                 return true;
             }

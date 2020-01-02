@@ -16,6 +16,7 @@ import net.minecraftforge.registries.ObjectHolder;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -40,6 +41,7 @@ public class ModBlockUtils {
     public static final ModBlock widowbird_nest = null;
 
     public static final ModTrapBlock mouse_trap = null;
+    public static final ModTrapBlock seeded_mouse_trap = null;
 
     public static Set<Block> MUSHROOMS;
     public static Set<Block> CROPS;
@@ -155,5 +157,13 @@ public class ModBlockUtils {
         }
 
         return false;
+    }
+
+    /**
+     * Get a list of traps loaded by the manager.
+     * @return An array of traps if any are loaded.
+     */
+    public static List<Block> getTraps() {
+        return BLOCK_MANAGER.getTraps();
     }
 }

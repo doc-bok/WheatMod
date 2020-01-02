@@ -1,6 +1,7 @@
 package com.bokmcdok.wheat.entity.tile;
 
 import com.bokmcdok.wheat.entity.ModEntityUtils;
+import com.google.common.collect.Sets;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
 import net.minecraft.item.ItemStack;
@@ -20,7 +21,7 @@ public class ModTrapTileEntity extends ModInventoryTileEntity implements ITickab
      * Construction
      */
     public ModTrapTileEntity() {
-        this(null, 5);
+        this(Sets.newHashSet(), 5);
     }
 
     /**
@@ -32,7 +33,6 @@ public class ModTrapTileEntity extends ModInventoryTileEntity implements ITickab
     public ModTrapTileEntity(Set<ResourceLocation> targets, int inventorySize) {
         super(ModEntityUtils.trap, inventorySize);
         mTargets = targets;
-
     }
 
     /**
@@ -41,8 +41,9 @@ public class ModTrapTileEntity extends ModInventoryTileEntity implements ITickab
     @Override
     public void tick() {
         if (getIsInventoryEmpty()) {
-            AxisAlignedBB boundingBox = new AxisAlignedBB(pos).grow(1);
+            AxisAlignedBB boundingBox = new AxisAlignedBB(pos);
             if (mActivated) {
+                boundingBox = boundingBox.grow(1);
                 List<ItemEntity> entities = world.getEntitiesWithinAABB(ItemEntity.class, boundingBox);
                 for (ItemEntity i : entities) {
                     ItemStack copy = i.getItem().copy();

@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "docwheat:mouse_trap"
+    },
+    {
+      "tag": "docwheat:seeds"
+    }
+  ],
+  "result": {
+    "item": "docwheat:seeded_mouse_trap"
+  }
+}

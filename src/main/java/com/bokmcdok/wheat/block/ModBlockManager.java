@@ -15,13 +15,11 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
 public class ModBlockManager extends ModDataManager<IModBlock> {
     private static final String BLOCKS_FOLDER = "blocks";
-    private static final String TRAPS_FOLDER = "traps";
     private static final ModMaterialManager MATERIAL_MANAGER = new ModMaterialManager();
 
     private enum BlockType {
@@ -46,9 +44,25 @@ public class ModBlockManager extends ModDataManager<IModBlock> {
      * @return An array of vanilla blocks.
      */
     public Block[] getAsBlocks() {
-        List<IModBlock> values = new ArrayList(getAllEntries());
+        List<IModBlock> values = Lists.newArrayList(getAllEntries());
         List<Block> converted = Lists.transform(values, i -> i.asBlock());
         return converted.toArray(new Block[0]);
+    }
+
+    /**
+     * Get a list of traps loaded by the manager.
+     * @return An array of traps if any are loaded.
+     */
+    public List<Block> getTraps() {
+        List<IModBlock> values = Lists.newArrayList(getAllEntries());
+        List<Block> result = Lists.newArrayList();
+        for (IModBlock i : values) {
+            if (i instanceof ModTrapBlock) {
+                result.add(i.asBlock());
+            }
+        }
+
+        return result;
     }
 
     /**
@@ -57,12 +71,6 @@ public class ModBlockManager extends ModDataManager<IModBlock> {
     public void loadBlocks() {
         MATERIAL_MANAGER.loadMaterials();
         loadDataEntries(BLOCKS_FOLDER);
-    }
-    /**
-     * Load traps from the traps folder.
-     */
-    public void loadTraps() {
-        loadDataEntries(TRAPS_FOLDER);
     }
 
     /**
