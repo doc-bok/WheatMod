@@ -114,10 +114,8 @@ public class ModRaidFarmGoal extends MoveToBlockGoal {
             if (mCropsToRaid.contains(block)) {
 
                 //  Traps only work if they are still armed.
-                if (block instanceof ModTrapBlock) {
-                    if (!((ModTrapBlock)block).getIsTrapArmed(world, up)) {
-                        return false;
-                    }
+                if (block instanceof ModTrapBlock && !((ModTrapBlock)block).getIsTrapArmed(world, up)) {
+                    return false;
                 }
 
                 mCanRaid = true;

@@ -97,14 +97,12 @@ public class ModBlock extends Block implements IModBlock {
      */
     @Override
     public void onReplaced(BlockState state, World world, BlockPos position, BlockState newState, boolean isMoving) {
-        if (!world.isRemote()) {
-            if (state.hasTileEntity() && state.getBlock() != newState.getBlock()) {
-                TileEntity tileEntity = world.getTileEntity(position);
-                if (tileEntity instanceof ModInventoryTileEntity) {
-                    ModInventoryTileEntity inventory = (ModInventoryTileEntity) tileEntity;
-                    for (int i = 0; i < inventory.getNumSlots(); i++) {
-                        spawnAsEntity(world, position, inventory.getItemStack(i));
-                    }
+        if (!world.isRemote() && state.hasTileEntity() && state.getBlock() != newState.getBlock()) {
+            TileEntity tileEntity = world.getTileEntity(position);
+            if (tileEntity instanceof ModInventoryTileEntity) {
+                ModInventoryTileEntity inventory = (ModInventoryTileEntity) tileEntity;
+                for (int i = 0; i < inventory.getNumSlots(); i++) {
+                    spawnAsEntity(world, position, inventory.getItemStack(i));
                 }
             }
         }

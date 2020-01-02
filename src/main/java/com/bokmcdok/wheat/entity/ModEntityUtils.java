@@ -27,7 +27,6 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.registries.ObjectHolder;
 
 import java.util.List;
-import java.util.Optional;
 
 @Mod.EventBusSubscriber(modid=WheatMod.MOD_ID, bus=Mod.EventBusSubscriber.Bus.MOD)
 @ObjectHolder(WheatMod.MOD_ID)
