@@ -3,11 +3,14 @@ package com.bokmcdok.wheat.entity.animal.cat;
 import com.bokmcdok.wheat.WheatMod;
 import com.bokmcdok.wheat.ai.goals.CatTemptGoal;
 import com.bokmcdok.wheat.entity.animal.AnimalUtils;
+import com.bokmcdok.wheat.entity.animal.butterfly.ModButterflyEntity;
 import com.bokmcdok.wheat.entity.animal.mouse.ModMouseEntity;
+import com.bokmcdok.wheat.entity.animal.widowbird.ModWidowbirdEntity;
 import com.bokmcdok.wheat.item.ModItemUtils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
+import net.minecraft.entity.ai.goal.NonTamedTargetGoal;
 import net.minecraft.entity.passive.CatEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
@@ -37,6 +40,8 @@ public class CatUtils {
             CatEntity cat = (CatEntity)entity;
             cat.goalSelector.addGoal(3, new CatTemptGoal(cat, 0.6D, ModItemUtils.FISH_ITEMS, true));
             cat.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(cat, ModMouseEntity.class, 10,false, false, null));
+            cat.targetSelector.addGoal(1, new NonTamedTargetGoal<>(cat, ModButterflyEntity.class, false, null));
+            cat.targetSelector.addGoal(1, new NonTamedTargetGoal<>(cat, ModWidowbirdEntity.class, false, null));
 
         }
     }

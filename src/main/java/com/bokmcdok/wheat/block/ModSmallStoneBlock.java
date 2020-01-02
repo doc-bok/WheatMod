@@ -83,6 +83,15 @@ public class ModSmallStoneBlock extends HorizontalFaceBlock implements IModBlock
         }
     }
 
+    /**
+     * Get the implementation.
+     * @return The implementation object.
+     */
+    @Override
+    public ModBlockImpl getImpl() {
+        return mImpl;
+    }
+
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
         builder.add(HORIZONTAL_FACING, FACE);
     }

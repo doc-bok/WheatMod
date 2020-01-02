@@ -3,5 +3,11 @@
     "category": "block",
     "subtitle": "docwheat.subtitle.mill_grind",
     "sounds": [ "docwheat:mill_grind" ]
+  },
+
+  "mouse_trap_activate": {
+    "category": "block",
+    "subtitle": "docwheat.subtitle.mouse_trap_activate",
+    "sounds": [ "docwheat:mouse_trap_activate" ]
   }
 }

@@ -1,14 +1,9 @@
-package com.bokmcdok.wheat.data;
+package com.bokmcdok.wheat.block;
 
-import com.bokmcdok.wheat.block.IModBlock;
-import com.bokmcdok.wheat.block.ModBlock;
-import com.bokmcdok.wheat.block.ModBlockImpl;
-import com.bokmcdok.wheat.block.ModCropProperties;
-import com.bokmcdok.wheat.block.ModCropsBlock;
-import com.bokmcdok.wheat.block.ModHayBlock;
-import com.bokmcdok.wheat.block.ModMatBlock;
-import com.bokmcdok.wheat.block.ModSmallStoneBlock;
+import com.bokmcdok.wheat.data.ModDataManager;
+import com.bokmcdok.wheat.data.ModMaterialManager;
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -20,8 +15,9 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.util.math.shapes.VoxelShapes;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.function.BiConsumer;
 
 public class ModBlockManager extends ModDataManager<IModBlock> {
     private static final String BLOCKS_FOLDER = "blocks";
@@ -32,24 +28,58 @@ public class ModBlockManager extends ModDataManager<IModBlock> {
         CROP,
         HAY,
         MAT,
-        SMALL_STONE
+        SMALL_STONE,
+        TRAP
     }
 
+    /**
+     * Get the blocks loaded by this data manager.
+     * @return An array of blocks.
+     */
     public IModBlock[] getBlocks() {
         return getAllEntries().toArray(new IModBlock[0]);
     }
 
+    /**
+     * Get the blocks in vanilla format.
+     * @return An array of vanilla blocks.
+     */
     public Block[] getAsBlocks() {
-        List<IModBlock> values = new ArrayList(getAllEntries());
+        List<IModBlock> values = Lists.newArrayList(getAllEntries());
         List<Block> converted = Lists.transform(values, i -> i.asBlock());
         return converted.toArray(new Block[0]);
     }
 
+    /**
+     * Get a list of traps loaded by the manager.
+     * @return An array of traps if any are loaded.
+     */
+    public List<Block> getTraps() {
+        List<IModBlock> values = Lists.newArrayList(getAllEntries());
+        List<Block> result = Lists.newArrayList();
+        for (IModBlock i : values) {
+            if (i instanceof ModTrapBlock) {
+                result.add(i.asBlock());
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * Load the blocks from the blocks folder.
+     */
     public void loadBlocks() {
         MATERIAL_MANAGER.loadMaterials();
         loadDataEntries(BLOCKS_FOLDER);
     }
 
+    /**
+     * Deserialize a JSON file into a block.
+     * @param location The location of the resource.
+     * @param json The JSON data to parse.
+     * @return
+     */
     protected IModBlock deserialize(ResourceLocation location, JsonObject json) {
         ModBlockImpl.ModBlockProperties properties = null;
 
@@ -72,27 +102,25 @@ public class ModBlockManager extends ModDataManager<IModBlock> {
             return null;
         }
 
-        setIfFalse(properties, json, "block_movement", (x) -> x.doesNotBlockMovement());
-        setFloat(properties, json, "slipperiness", (x, value) -> x.slipperiness(value));
-        setSound(properties, json, "sound", (x, value) -> x.sound(value));
-        setInt(properties, json, "light_value", (x, value) -> x.lightValue(value));
-        setTwoFloats(properties, json, "hardness", "resistance", (x, v1, v2) -> x.hardnessAndResistance(v1, v2));
-        setIfTrue(properties, json, "ticks_randomly", (x) -> x.tickRandomly());
-        setIfTrue(properties, json, "variable_opacity", (x) -> x.variableOpacity());
-        setInt(properties, json, "harvest_level", (x, value) -> x.harvestLevel(value));
-        setToolType(properties, json, "harvest_tool", (x, value) -> x.harvestTool(value));
-        setIfTrue(properties, json, "no_drops", (x) -> x.noDrops());
-        setBlock(properties, json, "loot_from", (x, value) -> x.lootFrom(value));
+        setIfFalse(properties, json, "block_movement", ModBlockImpl.ModBlockProperties::doesNotBlockMovement);
+        setFloat(properties, json, "slipperiness", ModBlockImpl.ModBlockProperties::slipperiness);
+        setSound(properties, json, "sound", ModBlockImpl.ModBlockProperties::sound);
+        setInt(properties, json, "light_value", ModBlockImpl.ModBlockProperties::lightValue);
+        setTwoFloats(properties, json, "hardness", "resistance", ModBlockImpl.ModBlockProperties::hardnessAndResistance);
+        setIfTrue(properties, json, "ticks_randomly", ModBlockImpl.ModBlockProperties::tickRandomly);
+        setIfTrue(properties, json, "variable_opacity", ModBlockImpl.ModBlockProperties::variableOpacity);
+        setInt(properties, json, "harvest_level", ModBlockImpl.ModBlockProperties::harvestLevel);
+        setToolType(properties, json, "harvest_tool", ModBlockImpl.ModBlockProperties::harvestTool);
+        setIfTrue(properties, json, "no_drops", ModBlockImpl.ModBlockProperties::noDrops);
+        setBlock(properties, json, "loot_from", ModBlockImpl.ModBlockProperties::lootFrom);
+        setInt(properties, json, "inventory_size", ModBlockImpl.ModBlockProperties::setInventory);
 
         deserializeColor(json, properties);
         deserializeFire(json, properties);
-        properties.setShape(deserializeShape(json, "shape"));
-        properties.setCollisionShape(deserializeShape(json, "collision_shape"));
-
-        ModCropProperties crop = deserializeCropProperties(json);
-        if (crop != null) {
-            properties.crop(crop);
-        }
+        setShape(properties, json, "shape", ModBlockImpl.ModBlockProperties::setShape);
+        setShape(properties, json, "collision_shape", ModBlockImpl.ModBlockProperties::setCollisionShape);
+        setTargets(properties, json, "targets", ModBlockImpl.ModBlockProperties::setTargets);
+        setCropProperties(properties, json, ModBlockImpl.ModBlockProperties::crop);
 
         String typeValue = JSONUtils.getString(json, "type");
         BlockType type = BlockType.valueOf(typeValue.toUpperCase());
@@ -119,6 +147,10 @@ public class ModBlockManager extends ModDataManager<IModBlock> {
                 result = new ModSmallStoneBlock(properties);
                 break;
 
+            case TRAP:
+                result = new ModTrapBlock(properties);
+                break;
+
             default:
                 LOGGER.info("Block type {} not supported", typeValue);
                 return null;
@@ -126,6 +158,17 @@ public class ModBlockManager extends ModDataManager<IModBlock> {
 
         result.asBlock().setRegistryName(location);
         return result;
+    }
+
+    /**
+     * Get the mod block for a BlockItem or BlockNamedItem.
+     * @param blockName The registry name of a block.
+     * @return The instance of the block.
+     */
+    @Override
+    protected Block getBlock(String blockName) {
+        Block result = (Block)getEntry(new ResourceLocation(blockName));
+        return result != null ? result : super.getBlock(blockName);
     }
 
     /**
@@ -140,6 +183,11 @@ public class ModBlockManager extends ModDataManager<IModBlock> {
         }
     }
 
+    /**
+     * Deserialize a block's flammable properties.
+     * @param json The JSON object from the file
+     * @param properties The properties to set.
+     */
     private void deserializeFire(JsonObject json, ModBlockImpl.ModBlockProperties properties) {
         if (JSONUtils.hasField(json, "fire")) {
             JsonObject fire = JSONUtils.getJsonObject(json, "fire");
@@ -152,17 +200,17 @@ public class ModBlockManager extends ModDataManager<IModBlock> {
      * @param json The json data to deserialize.
      * @return The crop's properties.
      */
-    private ModCropProperties deserializeCropProperties(JsonObject json) {
+    private <U> void setCropProperties(U properties, JsonObject json, BiConsumer<U, ModCropProperties> consumer) {
         if (JSONUtils.hasField(json, "crop")) {
             JsonObject crop = JSONUtils.getJsonObject(json, "crop");
-            ModCropProperties properties = new ModCropProperties();
+            ModCropProperties cropProperties = new ModCropProperties();
 
-            setResourceLocation(properties, crop, "disease", (x, value) -> x.disease(value));
-            setResourceLocation(properties, crop, "seed", (x, value) -> x.seed(value));
-            setInt(properties, crop, "disease_resistance", (x, value) -> x.diseaseResistance(value));
-            setBoolean(properties, crop, "wild", (x, value) -> x.wild(value));
+            setResourceLocation(cropProperties, crop, "disease", (x, value) -> x.disease(value));
+            setResourceLocation(cropProperties, crop, "seed", (x, value) -> x.seed(value));
+            setInt(cropProperties, crop, "disease_resistance", (x, value) -> x.diseaseResistance(value));
+            setBoolean(cropProperties, crop, "wild", (x, value) -> x.wild(value));
 
-            setArray(properties, crop, "mutations", (x, mutation) -> {
+            setArray(cropProperties, crop, "mutations", (x, mutation) -> {
                 ResourceLocation mutationBlock = new ResourceLocation(JSONUtils.getString(mutation, "mutation"));
 
                 ResourceLocation required = null;
@@ -179,10 +227,8 @@ public class ModBlockManager extends ModDataManager<IModBlock> {
                 x.addMutation(mutationBlock, required, weight);
             });
 
-            return properties;
+            consumer.accept(properties, cropProperties);
         }
-
-        return null;
     }
 
     /**
@@ -191,9 +237,9 @@ public class ModBlockManager extends ModDataManager<IModBlock> {
      * @param key The key of the shape to deserialize.
      * @return A new voxel shape for the block.
      */
-    private VoxelShape deserializeShape(JsonObject json, String key) {
-        VoxelShape result = null;
+    private <U> void setShape(U properties, JsonObject json, String key, BiConsumer<U, VoxelShape> consumer) {
         if (JSONUtils.hasField(json, key)) {
+            VoxelShape result = null;
             JsonArray shapes = JSONUtils.getJsonArray(json, key);
             for(JsonElement i : shapes) {
                 JsonObject shape = i.getAsJsonObject();
@@ -211,8 +257,28 @@ public class ModBlockManager extends ModDataManager<IModBlock> {
                     result = VoxelShapes.or(result, Block.makeCuboidShape(fromX, fromY, fromZ, toX, toY, toZ));
                 }
             }
-        }
 
-        return result;
+            consumer.accept(properties, result);
+        }
+    }
+
+    /**
+     * Deserialize a list of targets.
+     * @param json The JSON data from the file.
+     * @param key The key to use.
+     * @return A list of targets for the block.
+     */
+    private <U> void setTargets(U properties, JsonObject json, String key, BiConsumer<U, Set<ResourceLocation>> consumer) {
+        if (JSONUtils.hasField(json, key)) {
+            JsonArray entities = JSONUtils.getJsonArray(json, key);
+            if (entities.size() > 0) {
+                Set<ResourceLocation> result = Sets.newHashSet();
+                for (JsonElement i : entities) {
+                    result.add(new ResourceLocation(i.getAsString()));
+                }
+
+                consumer.accept(properties, result);
+            }
+        }
     }
 }

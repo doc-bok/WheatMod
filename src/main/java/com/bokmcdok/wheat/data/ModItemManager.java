@@ -88,14 +88,14 @@ public class ModItemManager extends ModDataManager<IModItem> {
     protected IModItem deserialize(ResourceLocation location, JsonObject json) {
         ModItemImpl.ModItemProperties properties = new ModItemImpl.ModItemProperties();
 
-        setInt(properties, json, "max_stack_size", (x, value) -> x.maxStackSize(value));
-        setInt(properties, json, "default_max_damage", (x, value) -> x.defaultMaxDamage(value));
-        setInt(properties, json, "max_damage", (x, value) -> x.maxDamage(value));
+        setInt(properties, json, "max_stack_size", Item.Properties::maxStackSize);
+        setInt(properties, json, "default_max_damage", Item.Properties::defaultMaxDamage);
+        setInt(properties, json, "max_damage", Item.Properties::maxDamage);
         setString(properties, json, "group", (x, value) -> x.group(getItemGroup(value)));
         setString(properties, json, "rarity", (x, value) -> x.rarity(Rarity.valueOf(value)));
-        setIfFalse(properties, json, "repairable", (x) -> x.setNoRepair());
+        setIfFalse(properties, json, "repairable", Item.Properties::setNoRepair);
         setString(properties, json, "container", (x, value) -> x.containerItem(getContainerItem(value)));
-        setFloat(properties, json, "compost_chance", (x, value) -> x.compostChance(value));
+        setFloat(properties, json, "compost_chance", ModItemImpl.ModItemProperties::compostChance);
 
         deserializeTools(json, properties);
         deserializeFood(json, properties);

@@ -4,6 +4,7 @@ import com.bokmcdok.wheat.ai.goals.ModBreedGoal;
 import com.bokmcdok.wheat.ai.goals.ModRaidFarmGoal;
 import com.bokmcdok.wheat.block.ModBlockUtils;
 import com.bokmcdok.wheat.entity.ModEntityUtils;
+import com.google.common.collect.Sets;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.AgeableEntity;
@@ -34,6 +35,7 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 import java.util.Random;
+import java.util.Set;
 
 public class ModMouseEntity extends AnimalEntity {
     public ModMouseEntity(EntityType<? extends AnimalEntity> type, World world) {
@@ -42,6 +44,9 @@ public class ModMouseEntity extends AnimalEntity {
 
     @Override
     protected void registerGoals() {
+        Set<Block> blocksToRaid = Sets.newHashSet(ModBlockUtils.CROPS);
+        blocksToRaid.add(ModBlockUtils.seeded_mouse_trap);
+
         goalSelector.addGoal(1, new SwimGoal(this));
         goalSelector.addGoal(1, new PanicGoal(this, 2.2D));
         goalSelector.addGoal(2, new ModBreedGoal(this, 0.8D));
@@ -51,7 +56,7 @@ public class ModMouseEntity extends AnimalEntity {
         goalSelector.addGoal(4, new AvoidEntityGoal<>(this, MonsterEntity.class, 4.0F, 2.2D, 2.2D));
         goalSelector.addGoal(4, new AvoidEntityGoal<>(this, CatEntity.class, 4.0F, 2.2D, 2.2D));
         goalSelector.addGoal(4, new AvoidEntityGoal<>(this, VillagerEntity.class, 4.0F, 2.2D, 2.2D));
-        goalSelector.addGoal(5, new ModRaidFarmGoal(this, ModBlockUtils.CROPS));
+        goalSelector.addGoal(5, new ModRaidFarmGoal(this, blocksToRaid));
         goalSelector.addGoal(6, new WaterAvoidingRandomWalkingGoal(this, 0.6D));
         goalSelector.addGoal(11, new LookAtGoal(this, PlayerEntity.class, 10.0F));
     }

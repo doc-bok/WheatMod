@@ -1,0 +1,15 @@
+{
+  "type": "trap",
+  "group": "misc",
+  "material": "minecraft:miscellaneous",
+  "inventory_size": 4,
+  "targets": [
+    "docwheat:field_mouse"
+  ],
+  "shape": [
+    {
+      "from": [ 6, 0, 4 ],
+      "to": [ 10, 2, 12 ]
+    }
+  ]
+}

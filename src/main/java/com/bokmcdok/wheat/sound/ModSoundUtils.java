@@ -12,6 +12,8 @@ import net.minecraftforge.registries.ObjectHolder;
 @ObjectHolder(WheatMod.MOD_ID)
 public class ModSoundUtils {
 
+    public static SoundEvent mouse_trap_activate;
+
     /**
      * Register the sounds used by the mod
      * @param event The event containing the sound event registry

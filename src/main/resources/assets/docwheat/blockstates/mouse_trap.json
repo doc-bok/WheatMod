@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "activated=false": { "model": "docwheat:block/mouse_trap" },
+    "activated=true": { "model": "docwheat:block/mouse_trap_activated" }
+  }
+}
