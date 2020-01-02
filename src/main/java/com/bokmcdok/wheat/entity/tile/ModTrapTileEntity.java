@@ -2,7 +2,6 @@ package com.bokmcdok.wheat.entity.tile;
 
 import com.bokmcdok.wheat.block.ModTrapBlock;
 import com.bokmcdok.wheat.entity.ModEntityUtils;
-import com.bokmcdok.wheat.sound.ModSoundUtils;
 import com.google.common.collect.Sets;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
