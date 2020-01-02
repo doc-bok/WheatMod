@@ -1,0 +1,21 @@
+{
+    "type": "spawn_egg",
+    "group": "misc",
+    "entity": "docwheat:weizenbeller",
+
+    "primary_color": {
+        "color": {
+            "r": 89,
+            "g": 244,
+            "b": 89
+        }
+    },
+
+    "secondary_color": {
+        "color": {
+            "r": 89,
+            "g": 192,
+            "b": 89
+        }
+    }
+}

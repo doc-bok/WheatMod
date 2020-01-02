@@ -139,5 +139,8 @@
 
   "block.docwheat.mouse_trap": "Mouse Trap",
   "block.docwheat.seeded_mouse_trap": "Seeded Mouse Trap",
-  "docwheat.subtitle.mouse_trap_activate": "Mouse Trap Activated"
+  "docwheat.subtitle.mouse_trap_activate": "Mouse Trap Activated",
+
+  "item.docwheat.weizenbeller_spawn_egg": "Wild Bellower Spawn Egg",
+  "entity.docwheat.weizenbeller": "Wild Bellower"
 }

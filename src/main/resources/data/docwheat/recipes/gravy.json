@@ -5,7 +5,7 @@
       "item": "minecraft:water_bucket"
     },
     {
-      "tag": "docwheat:flour"
+      "item": "docwheat:common_flour"
     },
     {
       "tag": "docwheat:cooked_meat"
