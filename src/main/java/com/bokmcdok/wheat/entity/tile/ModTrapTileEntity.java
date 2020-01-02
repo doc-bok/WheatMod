@@ -2,6 +2,7 @@ package com.bokmcdok.wheat.entity.tile;
 
 import com.bokmcdok.wheat.block.ModTrapBlock;
 import com.bokmcdok.wheat.entity.ModEntityUtils;
+import com.bokmcdok.wheat.sound.ModSoundUtils;
 import com.google.common.collect.Sets;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
@@ -9,7 +10,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundCategory;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraftforge.registries.GameData;
+import net.minecraftforge.registries.IForgeRegistry;
+import net.minecraftforge.registries.RegistryManager;
 
 import java.util.List;
 import java.util.Set;
@@ -61,6 +67,9 @@ public class ModTrapTileEntity extends ModInventoryTileEntity implements ITickab
                     if (mTargets.contains(i.getType().getRegistryName())) {
                         i.onKillCommand();
                         mActivated = true;
+                        IForgeRegistry<SoundEvent> registry = RegistryManager.ACTIVE.getRegistry(GameData.SOUNDEVENTS);
+                        SoundEvent sound = registry.getValue(new ResourceLocation("docwheat:mouse_trap_activate"));
+                        world.playSound(null, pos, sound, SoundCategory.BLOCKS, 1.0F, 1.0F);
                         world.setBlockState(pos, getBlockState().with(ModTrapBlock.ACTIVATED, true));
                         break;
                     }

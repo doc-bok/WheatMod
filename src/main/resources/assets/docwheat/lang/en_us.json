@@ -135,5 +135,9 @@
   "entity.docwheat.widowbird": "Long-Tailed Widowbird",
 
   "item.docwheat.getreidewolf_spawn_egg": "Dread Wolf Spawn Egg",
-  "entity.docwheat.getreidewolf": "Dread Wolf"
+  "entity.docwheat.getreidewolf": "Dread Wolf",
+
+  "block.docwheat.mouse_trap": "Mouse Trap",
+  "block.docwheat.seeded_mouse_trap": "Seeded Mouse Trap",
+  "docwheat.subtitle.mouse_trap_activate": "Mouse Trap Activated"
 }
