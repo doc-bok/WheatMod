@@ -1,10 +1,4 @@
 {
   "type": "trap",
-  "group": "misc",
-  "material": "minecraft:miscellaneous",
-  "inventory_size": 4,
-  "targets": [
-    "docwheat:field_mouse"
-  ],
-  "block_movement": false
+  "from": "docwheat:mouse_trap"
 }

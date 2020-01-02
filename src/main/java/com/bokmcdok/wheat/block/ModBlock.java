@@ -78,6 +78,7 @@ public class ModBlock extends Block implements IModBlock {
      * @param selectionContext The context the block is being viewed in
      * @return The shape of the block
      */
+    @Override
     public VoxelShape getCollisionShape(BlockState state, IBlockReader world, BlockPos position, ISelectionContext selectionContext) {
         VoxelShape shape = mImpl.getCollisionShape();
         if (shape != null) {
@@ -129,5 +130,14 @@ public class ModBlock extends Block implements IModBlock {
     public TileEntity createTileEntity(BlockState state, IBlockReader world) {
         TileEntity entity = mImpl.createTileEntity(state, world);
         return entity == null ? super.createTileEntity(state, world) : entity;
+    }
+
+    /**
+     * Get the implementation.
+     * @return The implementation object.
+     */
+    @Override
+    public ModBlockImpl getImpl() {
+        return mImpl;
     }
 }

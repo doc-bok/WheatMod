@@ -93,6 +93,15 @@ public class ModCropsBlock extends CropsBlock implements IModBlock {
     }
 
     /**
+     * Get the implementation.
+     * @return The implementation object.
+     */
+    @Override
+    public ModBlockImpl getImpl() {
+        return mImpl;
+    }
+
+    /**
      * Allow wild wheat to also generate and grow on grass blocks.
      * @param state The block state of the ground
      * @param world The world the block is in

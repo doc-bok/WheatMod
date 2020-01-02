@@ -12,6 +12,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.IBlockReader;
 import net.minecraftforge.common.ToolType;
+import net.minecraftforge.fml.common.Mod;
 
 import java.util.Set;
 
@@ -161,6 +162,18 @@ public class ModBlockImpl {
          */
         public ModBlockProperties(Block block) {
             mBlockProperties = Block.Properties.from(block);
+
+            if (block instanceof IModBlock) {
+                ModBlockImpl impl = ((IModBlock)block).getImpl();
+                mTargets = impl.mTargets;
+                mCropProperties = impl.mCropProperties;
+                mShape = impl.mShape;
+                mCollisionShape = impl.mCollisionShape;
+                mColor = impl.mColor;
+                mInventorySize = impl.mInventorySize;
+                mFireEncouragement = impl.mFireEncouragement;
+                mFireFlammability = impl.mFireEncouragement;
+            }
         }
 
         /**

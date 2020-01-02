@@ -101,6 +101,15 @@ public class ModMatBlock extends HorizontalBlock implements IModBlock {
     }
 
     /**
+     * Get the implementation.
+     * @return The implementation object.
+     */
+    @Override
+    public ModBlockImpl getImpl() {
+        return mImpl;
+    }
+
+    /**
      * Add the HORIZONTAL_FACING state to the block.
      * @param builder The state builder for the block.
      */

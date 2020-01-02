@@ -1,5 +1,6 @@
 package com.bokmcdok.wheat.entity.tile;
 
+import com.bokmcdok.wheat.block.ModTrapBlock;
 import com.bokmcdok.wheat.entity.ModEntityUtils;
 import com.google.common.collect.Sets;
 import net.minecraft.entity.LivingEntity;
@@ -60,6 +61,7 @@ public class ModTrapTileEntity extends ModInventoryTileEntity implements ITickab
                     if (mTargets.contains(i.getType().getRegistryName())) {
                         i.onKillCommand();
                         mActivated = true;
+                        world.setBlockState(pos, getBlockState().with(ModTrapBlock.ACTIVATED, true));
                         break;
                     }
                 }

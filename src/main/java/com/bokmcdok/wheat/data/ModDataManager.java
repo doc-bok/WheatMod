@@ -9,6 +9,7 @@ import com.google.gson.JsonParseException;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.MaterialColor;
+import net.minecraft.item.Item;
 import net.minecraft.resources.IResourceManager;
 import net.minecraft.resources.ResourcePackType;
 import net.minecraft.util.JSONUtils;
@@ -17,6 +18,10 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.world.FoliageColors;
 import net.minecraft.world.GrassColors;
 import net.minecraftforge.common.ToolType;
+import net.minecraftforge.registries.ForgeRegistry;
+import net.minecraftforge.registries.GameData;
+import net.minecraftforge.registries.IForgeRegistry;
+import net.minecraftforge.registries.RegistryManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.util.TriConsumer;
@@ -43,7 +48,11 @@ public abstract class ModDataManager<T> {
      * @return A single entry.
      */
     public T getEntry(ResourceLocation location) {
-        return mEntries.get(location);
+        if (mEntries.containsKey(location)) {
+            return mEntries.get(location);
+        }
+
+        return null;
     }
 
     /**
@@ -196,7 +205,8 @@ public abstract class ModDataManager<T> {
      * @return The instance of the block.
      */
     protected Block getBlock(String blockName) {
-        return Registry.BLOCK.getOrDefault(new ResourceLocation(blockName));
+        IForgeRegistry<Block> blockRegistry = RegistryManager.ACTIVE.getRegistry(GameData.BLOCKS);
+        return blockRegistry.getValue(new ResourceLocation(blockName));
     }
 
     /**

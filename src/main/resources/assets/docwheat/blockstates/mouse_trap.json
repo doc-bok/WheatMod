@@ -1,5 +1,6 @@
 {
   "variants": {
-    "": { "model": "docwheat:block/widowbird_nest" }
+    "activated=false": { "model": "docwheat:block/mouse_trap" },
+    "activated=true": { "model": "docwheat:block/mouse_trap_activated" }
   }
 }

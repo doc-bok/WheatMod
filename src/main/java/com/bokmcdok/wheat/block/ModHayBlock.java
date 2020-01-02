@@ -22,4 +22,13 @@ public class ModHayBlock extends HayBlock implements IModBlock {
     public int getFireEncouragement() {
         return mImpl.getFireEncouragement();
     }
+
+    /**
+     * Get the implementation.
+     * @return The implementation object.
+     */
+    @Override
+    public ModBlockImpl getImpl() {
+        return mImpl;
+    }
 }
