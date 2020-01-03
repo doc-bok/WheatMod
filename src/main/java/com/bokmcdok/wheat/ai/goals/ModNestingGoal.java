@@ -58,7 +58,7 @@ public class ModNestingGoal extends MoveToBlockGoal {
         Block block = blockstate.getBlock();
 
         if (mOwner.getHasNest() && block == ModBlockUtils.widowbird_nest && world.rand.nextInt(500) == 0) {
-            mOwner.setNestPosition(Optional.empty());
+            mOwner.resetNestPosition();
             world.setBlockState(destinationBlock, Blocks.AIR.getDefaultState(), 2);
             world.playEvent(2001, destinationBlock, Block.getStateId(blockstate));
 
@@ -86,7 +86,7 @@ public class ModNestingGoal extends MoveToBlockGoal {
             BlockState blockstate = world.getBlockState(destinationBlock);
             Block block = blockstate.getBlock();
             if (block != ModBlockUtils.widowbird_nest) {
-                mOwner.setNestPosition(Optional.empty());
+                mOwner.resetNestPosition();
                 return false;
             }
 
@@ -105,7 +105,7 @@ public class ModNestingGoal extends MoveToBlockGoal {
     protected boolean shouldMoveTo(IWorldReader world, BlockPos position) {
         Block block = world.getBlockState(position).getBlock();
         if (block != ModBlockUtils.widowbird_nest) {
-            mOwner.setNestPosition(Optional.empty());
+            mOwner.resetNestPosition();
             return false;
         }
 

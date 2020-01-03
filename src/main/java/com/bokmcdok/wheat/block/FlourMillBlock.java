@@ -51,6 +51,7 @@ public class FlourMillBlock extends Block {
      * @param hit The result of the ray trace
      * @return TRUE, indicating the right-click action is consumed.
      */
+    @Override
     public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
         player.openContainer(state.getContainer(worldIn, pos));
         //player.addStat(Stats.INTERACT_WITH_CRAFTING_TABLE);
@@ -64,6 +65,7 @@ public class FlourMillBlock extends Block {
      * @param pos The position of the block
      * @return A new instance of a flour mill's container.
      */
+    @Override
     public INamedContainerProvider getContainer(BlockState state, World worldIn, BlockPos pos) {
         return new SimpleNamedContainerProvider((windowId, playerInventory, playerEntity) -> {
             return new FlourMillContainer(windowId, playerInventory, IWorldPosCallable.of(worldIn, pos));
@@ -90,6 +92,7 @@ public class FlourMillBlock extends Block {
      * @param context The context the block is being viewed in
      * @return The shape of the block
      */
+    @Override
     public VoxelShape getShape(BlockState state, IBlockReader worldIn, BlockPos pos, ISelectionContext context) {
         return SHAPE;
     }
