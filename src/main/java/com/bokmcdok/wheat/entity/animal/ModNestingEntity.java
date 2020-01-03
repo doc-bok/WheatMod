@@ -84,8 +84,19 @@ public abstract class ModNestingEntity extends AnimalEntity {
         return dataManager.get(IS_FERTILIZED);
     }
 
-    public void setNestPosition(Optional<BlockPos> position) {
-        dataManager.set(NEST_POSITION, position);
+    /**
+     * Set the entity's nest position.
+     * @param position The position to set.
+     */
+    public void setNestPosition(BlockPos position) {
+        dataManager.set(NEST_POSITION, Optional.of(position));
+    }
+
+    /**
+     * Remove the nest position.
+     */
+    public void resetNestPosition() {
+        dataManager.set(NEST_POSITION, Optional.empty());
     }
 
     /**
@@ -134,7 +145,7 @@ public abstract class ModNestingEntity extends AnimalEntity {
             int x = data.getInt("NestX");
             int y = data.getInt("NestY");
             int z = data.getInt("NestZ");
-            setNestPosition(Optional.of(new BlockPos(x, y, z)));
+            setNestPosition(new BlockPos(x, y, z));
         }
     }
 

@@ -66,7 +66,7 @@ public class ModCreateNestGoal extends MoveToBlockGoal {
             }
 
             mOwner.setIsFertilized(false);
-            mOwner.setNestPosition(Optional.of(destinationBlock.up()));
+            mOwner.setNestPosition(destinationBlock.up());
             runDelay = 10;
         }
     }
