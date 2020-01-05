@@ -263,9 +263,9 @@ public class ModGetreidewolfEntity extends ModFeldgeisterEntity implements IRang
      * @param reason The spawn reason.
      * @param position The block's position.
      * @param random The random number generator.
-     * @return TRUE if a widowbird can spawn here.
+     * @return TRUE if the entity can spawn here.
      */
-    public static boolean canSpawn(EntityType<ModGetreidewolfEntity> entity, IWorld world, SpawnReason reason, BlockPos position, Random random) {
+    public static boolean canGetreideWolfSpawn(EntityType<ModGetreidewolfEntity> entity, IWorld world, SpawnReason reason, BlockPos position, Random random) {
         return world.getCurrentMoonPhaseFactor() > 0.9f && ModFeldgeisterEntity.canSpawn(entity, world, reason, position, random);
     }
 
