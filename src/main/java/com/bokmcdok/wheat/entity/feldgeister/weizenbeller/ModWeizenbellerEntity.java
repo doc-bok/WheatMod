@@ -4,14 +4,12 @@ import com.bokmcdok.wheat.ai.goals.ModNocturnalGoal;
 import com.bokmcdok.wheat.entity.animal.mouse.ModMouseEntity;
 import com.bokmcdok.wheat.entity.animal.widowbird.ModWidowbirdEntity;
 import com.bokmcdok.wheat.entity.feldgeister.ModFeldgeisterEntity;
-import com.bokmcdok.wheat.entity.feldgeister.getreidewolf.ModGetreidewolfEntity;
 import com.bokmcdok.wheat.tag.ModTagUtils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.goal.HurtByTargetGoal;
 import net.minecraft.entity.ai.goal.LeapAtTargetGoal;
@@ -21,7 +19,6 @@ import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.ai.goal.SwimGoal;
 import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
 import net.minecraft.entity.merchant.villager.AbstractVillagerEntity;
-import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.passive.ChickenEntity;
 import net.minecraft.entity.passive.RabbitEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -32,12 +29,9 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
-import java.util.Random;
 
 public class ModWeizenbellerEntity extends ModFeldgeisterEntity {
 
@@ -50,19 +44,6 @@ public class ModWeizenbellerEntity extends ModFeldgeisterEntity {
      */
     public ModWeizenbellerEntity(EntityType<? extends ModFeldgeisterEntity> type, World world) {
         super(type, world);
-    }
-
-    /**
-     * Check if the entity can spawn.
-     * @param entity The entity.
-     * @param world The current world.
-     * @param reason The spawn reason.
-     * @param position The block's position.
-     * @param random The random number generator.
-     * @return TRUE if a widowbird can spawn here.
-     */
-    public static boolean canSpawn(EntityType<ModGetreidewolfEntity> entity, IWorld world, SpawnReason reason, BlockPos position, Random random) {
-        return !world.getWorld().isDaytime() && MonsterEntity.func_223325_c(entity, world, reason, position, random);
     }
 
     /**
