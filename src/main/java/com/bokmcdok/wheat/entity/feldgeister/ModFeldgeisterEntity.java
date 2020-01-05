@@ -1,10 +1,18 @@
 package com.bokmcdok.wheat.entity.feldgeister;
 
+import com.bokmcdok.wheat.ai.goals.ModNocturnalGoal;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.ai.goal.Goal;
+import net.minecraft.entity.ai.goal.HurtByTargetGoal;
+import net.minecraft.entity.ai.goal.LeapAtTargetGoal;
+import net.minecraft.entity.ai.goal.LookRandomlyGoal;
+import net.minecraft.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.entity.ai.goal.SwimGoal;
+import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
@@ -27,6 +35,7 @@ import java.util.function.Predicate;
 public class ModFeldgeisterEntity extends MonsterEntity {
     protected static final DataParameter<Boolean> FED = EntityDataManager.createKey(ModFeldgeisterEntity.class, DataSerializers.BOOLEAN);
     protected static final Predicate<LivingEntity> IS_CHILD = (entity) -> entity.isChild();
+    protected Goal mAttackGoal;
 
     /**
      * Store NBT data so that status is maintained between saves.
@@ -145,5 +154,22 @@ public class ModFeldgeisterEntity extends MonsterEntity {
         }
 
         return result;
+    }
+
+    /**
+     * Register the behaviours of the getreidewolf.
+     */
+    @Override
+    protected void registerGoals() {
+        mAttackGoal = new MeleeAttackGoal(this, 1.0d, true);
+
+        goalSelector.addGoal(1, new SwimGoal(this));
+        goalSelector.addGoal(3, new ModNocturnalGoal(this));
+        goalSelector.addGoal(4, new LeapAtTargetGoal(this, 0.4f));
+        goalSelector.addGoal(5, mAttackGoal);
+        goalSelector.addGoal(8, new WaterAvoidingRandomWalkingGoal(this, 1.0d));
+        goalSelector.addGoal(10, new LookRandomlyGoal(this));
+
+        targetSelector.addGoal(3, new HurtByTargetGoal((this)));
     }
 }

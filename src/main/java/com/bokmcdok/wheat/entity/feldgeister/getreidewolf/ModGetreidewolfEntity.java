@@ -1,8 +1,6 @@
 package com.bokmcdok.wheat.entity.feldgeister.getreidewolf;
 
 import com.bokmcdok.wheat.ai.goals.ModDiseaseFarmGoal;
-import com.bokmcdok.wheat.ai.goals.ModRangedAttackGoal;
-import com.bokmcdok.wheat.ai.goals.ModNocturnalGoal;
 import com.bokmcdok.wheat.ai.goals.ModPollinateGoal;
 import com.bokmcdok.wheat.block.ModBlockUtils;
 import com.bokmcdok.wheat.block.ModCropsBlock;
@@ -11,7 +9,6 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 
 import net.minecraft.block.CropsBlock;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.IRangedAttackMob;
@@ -20,15 +17,8 @@ import net.minecraft.entity.Pose;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.ai.goal.HurtByTargetGoal;
-import net.minecraft.entity.ai.goal.LeapAtTargetGoal;
-import net.minecraft.entity.ai.goal.LookRandomlyGoal;
-import net.minecraft.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
-import net.minecraft.entity.ai.goal.SwimGoal;
-import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
 import net.minecraft.entity.merchant.villager.AbstractVillagerEntity;
-import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -328,18 +318,10 @@ public class ModGetreidewolfEntity extends ModFeldgeisterEntity implements IRang
      */
     @Override
     protected void registerGoals() {
+        super.registerGoals();
+
         mDiseaseCropsGoal = new ModDiseaseFarmGoal(this, ModBlockUtils.WHEAT);
-
-        goalSelector.addGoal(1, new SwimGoal(this));
-        goalSelector.addGoal(3, new ModNocturnalGoal(this));
-        goalSelector.addGoal(4, new LeapAtTargetGoal(this, 0.4f));
-        goalSelector.addGoal(5, new ModRangedAttackGoal(this, 0.3d, 200, 3.0f));
-        goalSelector.addGoal(5, new MeleeAttackGoal(this, 1.0d, true));
         goalSelector.addGoal(5, mDiseaseCropsGoal);
-        goalSelector.addGoal(8, new WaterAvoidingRandomWalkingGoal(this, 1.0d));
-        goalSelector.addGoal(10, new LookRandomlyGoal(this));
-
-        targetSelector.addGoal(3, new HurtByTargetGoal((this)));
         targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, AbstractVillagerEntity.class, 10, false, false, IS_CHILD));
     }
 
