@@ -1,6 +1,12 @@
 package com.bokmcdok.wheat.entity.feldgeister;
 
-import com.bokmcdok.wheat.ai.goals.ModNocturnalGoal;
+//import com.bokmcdok.wheat.ai.goals.ModNocturnalGoal;
+import com.bokmcdok.wheat.ai.goals.ModFindFarmGoal;
+import com.bokmcdok.wheat.block.ModBlockUtils;
+import com.bokmcdok.wheat.block.ModCropsBlock;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.CropsBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -24,6 +30,7 @@ import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
@@ -164,12 +171,48 @@ public class ModFeldgeisterEntity extends MonsterEntity {
         mAttackGoal = new MeleeAttackGoal(this, 1.0d, true);
 
         goalSelector.addGoal(1, new SwimGoal(this));
-        goalSelector.addGoal(3, new ModNocturnalGoal(this));
+        //goalSelector.addGoal(3, new ModNocturnalGoal(this));
         goalSelector.addGoal(4, new LeapAtTargetGoal(this, 0.4f));
         goalSelector.addGoal(5, mAttackGoal);
+        goalSelector.addGoal(5, new ModFindFarmGoal(this, ModBlockUtils.WHEAT, getSpeed(), 16, 1));
         goalSelector.addGoal(8, new WaterAvoidingRandomWalkingGoal(this, 1.0d));
         goalSelector.addGoal(10, new LookRandomlyGoal(this));
 
         targetSelector.addGoal(3, new HurtByTargetGoal((this)));
+    }
+
+    /**
+     * Cause disease in any crops this entity is touching. If the feldgeister has been fed will instead pollinate the
+     * crops.
+     */
+    protected void affectTouchedCrops() {
+        for(int l = 0; l < 4; ++l) {
+            int i = MathHelper.floor(posX + (double)((float)(l % 2 * 2 - 1) * 0.25F));
+            int j = MathHelper.floor(posY);
+            int k = MathHelper.floor(posZ + (double)((float)(l / 2 % 2 * 2 - 1) * 0.25F));
+            BlockPos blockPosition = new BlockPos(i, j, k);
+            BlockState blockState = world.getBlockState(blockPosition);
+            Block block = blockState.getBlock();
+            if (ModBlockUtils.WHEAT.contains(block) && block instanceof ModCropsBlock) {
+                if (getIsFed()) {
+                    CropsBlock crop = (CropsBlock)block;
+                    Integer integer = blockState.get(CropsBlock.AGE);
+                    if (integer < crop.getMaxAge()) {
+                        world.setBlockState(blockPosition, blockState.with(CropsBlock.AGE, Integer.valueOf(integer + 1)), 2);
+                        world.playEvent(2001, blockPosition, Block.getStateId(blockState));
+                    }
+                } else {
+                    ((ModCropsBlock) block).diseaseCrop(world, blockPosition, blockState);
+                }
+            }
+        }
+    }
+
+    /**
+     * Get the speed of the feldgeister.
+     * @return The actual speed of the feldgeister.
+     */
+    protected double getSpeed() {
+        return getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getValue();
     }
 }

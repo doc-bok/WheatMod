@@ -197,7 +197,9 @@ public class ModButterflyEntity extends CreatureEntity {
     @Override
     protected void registerAttributes() {
         super.registerAttributes();
+        getAttributes().registerAttribute(SharedMonsterAttributes.FLYING_SPEED);
         getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(6.0d);
+        getAttribute(SharedMonsterAttributes.FLYING_SPEED).setBaseValue(0.7d);
     }
 
     /**
@@ -288,7 +290,7 @@ public class ModButterflyEntity extends CreatureEntity {
      */
     @Override
     protected void registerGoals() {
-        goalSelector.addGoal(5, new ModPollinateGoal(this));
+        goalSelector.addGoal(5, new ModPollinateGoal(this, getFlyingSpeed(), 16, 8));
     }
 
     /**
@@ -300,9 +302,13 @@ public class ModButterflyEntity extends CreatureEntity {
             goalSelector.addGoal(3, new ModDiurnalGoal(this));
         } else {
             goalSelector.addGoal(3, new ModNocturnalGoal(this));
-            goalSelector.addGoal(4, new ModAttractToLightGoal(this));
+            goalSelector.addGoal(4, new ModAttractToLightGoal(this, getFlyingSpeed(), 16, 8));
         }
 
         dataManager.set(IS_BUTTERFLY, isButterfly);
+    }
+
+    private double getFlyingSpeed() {
+        return getAttribute(SharedMonsterAttributes.FLYING_SPEED).getValue();
     }
 }

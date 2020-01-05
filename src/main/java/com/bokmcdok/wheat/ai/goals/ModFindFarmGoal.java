@@ -8,24 +8,23 @@ import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.ai.goal.MoveToBlockGoal;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorldReader;
-import net.minecraft.world.World;
 
 import java.util.Set;
 
-public class ModDiseaseFarmGoal extends MoveToBlockGoal {
-    private final Set<Block> mCropsToDisease;
+public class ModFindFarmGoal extends MoveToBlockGoal {
+    private final Set<Block> mCropsToFind;
     private final CreatureEntity mEntity;
-    private boolean mWantsToRaid;
-    private boolean mCanRaid;
+    private boolean mWantsToFind;
+    private boolean mCanFind;
 
     /**
      * Construction
      * @param entity The entity that owns this goal
      */
-    public ModDiseaseFarmGoal(CreatureEntity entity, Set<Block> cropsToRaid) {
-        super(entity, 0.7, 16);
+    public ModFindFarmGoal(CreatureEntity entity, Set<Block> cropsToRaid, double moveSpeed, int radius, int height) {
+        super(entity, moveSpeed, radius, height);
         mEntity = entity;
-        mCropsToDisease = cropsToRaid;
+        mCropsToFind = cropsToRaid;
     }
 
     /**
@@ -35,12 +34,8 @@ public class ModDiseaseFarmGoal extends MoveToBlockGoal {
     @Override
     public boolean shouldExecute() {
         if (runDelay <= 0) {
-            if (!net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(mEntity.world, mEntity)) {
-                return false;
-            }
-
-            mCanRaid = false;
-            mWantsToRaid = true;
+            mCanFind = false;
+            mWantsToFind = true;
         }
 
         return super.shouldExecute();
@@ -51,7 +46,7 @@ public class ModDiseaseFarmGoal extends MoveToBlockGoal {
      * @return TRUE if the goal should continue.
      */
     public boolean shouldContinueExecuting() {
-        return mCanRaid && super.shouldContinueExecuting();
+        return mCanFind && super.shouldContinueExecuting();
     }
 
     /**
@@ -65,16 +60,7 @@ public class ModDiseaseFarmGoal extends MoveToBlockGoal {
                 (double)destinationBlock.getZ() + 0.5D,
                 10.0F, (float)mEntity.getVerticalFaceSpeed());
         if (getIsAboveDestination()) {
-            World world = mEntity.world;
-            BlockPos blockpos = destinationBlock.up();
-            BlockState blockstate = world.getBlockState(blockpos);
-            Block block = blockstate.getBlock();
-            if (mCanRaid && mCropsToDisease.contains(block) && block instanceof ModCropsBlock) {
-                ModCropsBlock crop = (ModCropsBlock)block;
-                crop.diseaseCrop(world, blockpos, blockstate);
-            }
-
-            mCanRaid = false;
+            mCanFind = false;
             runDelay = 10;
         }
     }
@@ -87,12 +73,12 @@ public class ModDiseaseFarmGoal extends MoveToBlockGoal {
      */
     protected boolean shouldMoveTo(IWorldReader world, BlockPos position) {
         Block block = world.getBlockState(position).getBlock();
-        if ((block == Blocks.FARMLAND || block == Blocks.GRASS_BLOCK) && mWantsToRaid && !mCanRaid) {
+        if ((block == Blocks.FARMLAND || block == Blocks.GRASS_BLOCK) && mWantsToFind && !mCanFind) {
             BlockPos up = position.up();
             BlockState blockstate = world.getBlockState(up);
             block = blockstate.getBlock();
-            if (mCropsToDisease.contains(block) && block instanceof ModCropsBlock) {
-                mCanRaid = true;
+            if (mCropsToFind.contains(block) && block instanceof ModCropsBlock) {
+                mCanFind = true;
                 return true;
             }
         }
