@@ -2,6 +2,7 @@ package com.bokmcdok.wheat.entity.feldgeister;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
@@ -9,10 +10,13 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.SoundEvents;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import java.util.Random;
 import java.util.function.Predicate;
 
 public class ModFeldgeisterEntity extends MonsterEntity {
@@ -107,5 +111,18 @@ public class ModFeldgeisterEntity extends MonsterEntity {
         } else {
             super.handleStatusUpdate(status);
         }
+    }
+
+    /**
+     * Check if the entity can spawn.
+     * @param entity The entity.
+     * @param world The current world.
+     * @param reason The spawn reason.
+     * @param position The block's position.
+     * @param random The random number generator.
+     * @return TRUE if the entity can spawn here.
+     */
+    public static <T extends ModFeldgeisterEntity> boolean canSpawn(EntityType<T> entity, IWorld world, SpawnReason reason, BlockPos position, Random random) {
+        return MonsterEntity.func_223325_c(entity, world, reason, position, random);
     }
 }
