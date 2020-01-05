@@ -207,22 +207,6 @@ public class ModGetreidewolfEntity extends ModFeldgeisterEntity implements IRang
     }
 
     /**
-     * Getreidewolf attacks cause nausea.
-     * @param target The target of the attack.
-     * @return TRUE if the attack was successful.
-     */
-    @Override
-    public boolean attackEntityAsMob(Entity target) {
-        boolean result = target.attackEntityFrom(DamageSource.causeMobDamage(this), (float)getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getValue());
-
-        if (result && target instanceof LivingEntity) {
-            ((LivingEntity) target).addPotionEffect(new EffectInstance(Effects.NAUSEA, 200));
-        }
-
-        return result;
-    }
-
-    /**
      * Handle the setStatus call from a server.
      * @param id The status ID.
      */

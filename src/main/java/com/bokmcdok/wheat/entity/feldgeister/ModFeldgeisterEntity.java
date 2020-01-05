@@ -1,7 +1,9 @@
 package com.bokmcdok.wheat.entity.feldgeister;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.nbt.CompoundNBT;
@@ -9,6 +11,9 @@ import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.particles.ParticleTypes;
+import net.minecraft.potion.EffectInstance;
+import net.minecraft.potion.Effects;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
@@ -124,5 +129,21 @@ public class ModFeldgeisterEntity extends MonsterEntity {
      */
     public static <T extends ModFeldgeisterEntity> boolean canSpawn(EntityType<T> entity, IWorld world, SpawnReason reason, BlockPos position, Random random) {
         return MonsterEntity.func_223325_c(entity, world, reason, position, random);
+    }
+
+    /**
+     * Feldgeister attacks cause nausea.
+     * @param target The target of the attack.
+     * @return TRUE if the attack was successful.
+     */
+    @Override
+    public boolean attackEntityAsMob(Entity target) {
+        boolean result = target.attackEntityFrom(DamageSource.causeMobDamage(this), (float)getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getValue());
+
+        if (result && target instanceof LivingEntity) {
+            ((LivingEntity) target).addPotionEffect(new EffectInstance(Effects.NAUSEA, 200));
+        }
+
+        return result;
     }
 }
