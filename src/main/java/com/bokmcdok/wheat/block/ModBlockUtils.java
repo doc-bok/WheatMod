@@ -1,9 +1,7 @@
 package com.bokmcdok.wheat.block;
 
 import com.bokmcdok.wheat.WheatMod;
-import com.google.common.collect.Lists;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FireBlock;
 import net.minecraft.client.renderer.color.BlockColors;
