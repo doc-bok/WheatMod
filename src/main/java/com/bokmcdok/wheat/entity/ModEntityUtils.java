@@ -61,32 +61,32 @@ public class ModEntityUtils {
                         .setRegistryName(WheatMod.MOD_ID, "stone_entity"),
 
                 EntityType.Builder.<ModMouseEntity>create(ModMouseEntity::new, EntityClassification.CREATURE)
-                        .size(0.4f, 0.3f)
+                        .size(0.3f, 0.3f)
                         .build("field_mouse")
                         .setRegistryName(WheatMod.MOD_ID, "field_mouse"),
 
                 EntityType.Builder.<ModButterflyEntity>create(ModButterflyEntity::new, EntityClassification.CREATURE)
-                        .size(0.4f, 0.3f)
+                        .size(0.3f, 0.4f)
                         .build("butterfly")
                         .setRegistryName(WheatMod.MOD_ID, "butterfly"),
 
                 EntityType.Builder.create(ModWidowbirdEntity::new, EntityClassification.CREATURE)
-                        .size(0.4f, 0.3f)
+                        .size(0.5f, 0.9f)
                         .build("widowbird")
                         .setRegistryName(WheatMod.MOD_ID, "widowbird"),
 
                 EntityType.Builder.create(ModGetreidewolfEntity::new, EntityClassification.MONSTER)
-                        .size(0.4f, 0.3f)
+                        .size(0.6f, 0.85f)
                         .build("getreidewolf")
                         .setRegistryName(WheatMod.MOD_ID, "getreidewolf"),
 
                 EntityType.Builder.create(ModWeizenbellerEntity::new, EntityClassification.MONSTER)
-                        .size(0.4f, 0.3f)
+                        .size(0.6f, 0.7f)
                         .build("weizenbeller")
                         .setRegistryName(WheatMod.MOD_ID, "weizenbeller"),
 
                 EntityType.Builder.create(ModHeukatzeEntity::new, EntityClassification.MONSTER)
-                        .size(0.4f, 0.3f)
+                        .size(0.6f, 0.7f)
                         .build("heukatze")
                         .setRegistryName(WheatMod.MOD_ID, "heukatze"),
 
