@@ -278,10 +278,10 @@ public class ModWidowbirdEntity extends ModNestingEntity implements IFlyingAnima
         goalSelector.addGoal(0, new PanicGoal(this, 1.25d));
         goalSelector.addGoal(0, new SwimGoal(this));
         goalSelector.addGoal(1, new ModMateGoal(this, 0.8d));
-        goalSelector.addGoal(1, new ModCreateNestGoal(this));
-        goalSelector.addGoal(1, new ModNestingGoal(this));
+        goalSelector.addGoal(1, new ModCreateNestGoal(this, getFlyingSpeed(), 16, 8));
+        goalSelector.addGoal(1, new ModNestingGoal(this, getFlyingSpeed(), 16, 8));
         goalSelector.addGoal(2, new WaterAvoidingRandomFlyingGoal(this, 1.0d));
-        goalSelector.addGoal(5, new ModRaidFarmGoal(this, ModBlockUtils.WHEAT));
+        goalSelector.addGoal(5, new ModRaidFarmGoal(this, ModBlockUtils.WHEAT, getFlyingSpeed(), 16, 8));
         goalSelector.addGoal(9, new OcelotAttackGoal(this));
         goalSelector.addGoal(12, new LookAtGoal(this, ModButterflyEntity.class, 8.0f));
 
@@ -347,5 +347,13 @@ public class ModWidowbirdEntity extends ModNestingEntity implements IFlyingAnima
         }
 
         mFlap += mFlapping * 2.0f;
+    }
+
+    /**
+     * Get the bird's flying speed.
+     * @return The speed at which the widowbird flies.
+     */
+    private double getFlyingSpeed() {
+        return getAttribute(SharedMonsterAttributes.FLYING_SPEED).getValue();
     }
 }

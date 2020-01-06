@@ -19,8 +19,8 @@ public class ModCreateNestGoal extends MoveToBlockGoal {
      * Construction
      * @param owner The owner of this goal.
      */
-    public ModCreateNestGoal(ModNestingEntity owner) {
-        super(owner, 0.7, 16, 8);
+    public ModCreateNestGoal(ModNestingEntity owner, double moveSpeed, int radius, int height) {
+        super(owner, moveSpeed, radius, height);
         mOwner = owner;
     }
 

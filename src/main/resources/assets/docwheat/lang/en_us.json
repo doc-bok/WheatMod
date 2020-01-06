@@ -145,5 +145,8 @@
   "entity.docwheat.weizenbeller": "Wild Bellower",
 
   "item.docwheat.heukatze_spawn_egg": "Hellcat Spawn Egg",
-  "entity.docwheat.heukatze": "Hellcat"
+  "entity.docwheat.heukatze": "Hellcat",
+
+  "item.docwheat.haferbock_spawn_egg": "Half-Buck Spawn Egg",
+  "entity.docwheat.haferbock": "Half-Buck"
 }

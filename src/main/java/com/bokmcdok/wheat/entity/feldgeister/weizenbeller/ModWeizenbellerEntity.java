@@ -1,6 +1,5 @@
 package com.bokmcdok.wheat.entity.feldgeister.weizenbeller;
 
-import com.bokmcdok.wheat.ai.goals.ModNocturnalGoal;
 import com.bokmcdok.wheat.entity.animal.mouse.ModMouseEntity;
 import com.bokmcdok.wheat.entity.animal.widowbird.ModWidowbirdEntity;
 import com.bokmcdok.wheat.entity.feldgeister.ModFeldgeisterEntity;
@@ -10,14 +9,7 @@ import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.ai.goal.HurtByTargetGoal;
-import net.minecraft.entity.ai.goal.LeapAtTargetGoal;
-import net.minecraft.entity.ai.goal.LookRandomlyGoal;
-import net.minecraft.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
-import net.minecraft.entity.ai.goal.SwimGoal;
-import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
 import net.minecraft.entity.merchant.villager.AbstractVillagerEntity;
 import net.minecraft.entity.passive.ChickenEntity;
 import net.minecraft.entity.passive.RabbitEntity;
@@ -34,8 +26,6 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 
 public class ModWeizenbellerEntity extends ModFeldgeisterEntity {
-
-    private Goal mAttackGoal;
 
     /**
      * Construction
@@ -101,16 +91,8 @@ public class ModWeizenbellerEntity extends ModFeldgeisterEntity {
      */
     @Override
     protected void registerGoals() {
-        mAttackGoal = new MeleeAttackGoal(this, 1.0d, true);
+        super.registerGoals();
 
-        goalSelector.addGoal(1, new SwimGoal(this));
-        goalSelector.addGoal(3, new ModNocturnalGoal(this));
-        goalSelector.addGoal(4, new LeapAtTargetGoal(this, 0.4f));
-        goalSelector.addGoal(5, mAttackGoal);
-        goalSelector.addGoal(8, new WaterAvoidingRandomWalkingGoal(this, 1.0d));
-        goalSelector.addGoal(10, new LookRandomlyGoal(this));
-
-        targetSelector.addGoal(3, new HurtByTargetGoal((this)));
         targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, AbstractVillagerEntity.class, 10, false, false, IS_CHILD));
         targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, ChickenEntity.class, 10, false, false, null));
         targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, ModMouseEntity.class, 10, false, false, null));

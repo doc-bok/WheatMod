@@ -10,6 +10,8 @@ import com.bokmcdok.wheat.entity.animal.widowbird.ModWidowbirdEntity;
 import com.bokmcdok.wheat.entity.animal.widowbird.ModWidowbirdRenderFactory;
 import com.bokmcdok.wheat.entity.feldgeister.getreidewolf.ModGetreidewolfEntity;
 import com.bokmcdok.wheat.entity.feldgeister.getreidewolf.ModGetreidewolfRenderFactory;
+import com.bokmcdok.wheat.entity.feldgeister.haferbock.ModHaferbockEntity;
+import com.bokmcdok.wheat.entity.feldgeister.haferbock.ModHaferbockRenderFactory;
 import com.bokmcdok.wheat.entity.feldgeister.heukatze.ModHeukatzeEntity;
 import com.bokmcdok.wheat.entity.feldgeister.heukatze.ModHeukatzeRenderFactory;
 import com.bokmcdok.wheat.entity.feldgeister.weizenbeller.ModWeizenbellerEntity;
@@ -42,6 +44,7 @@ public class ModEntityUtils {
     public static final EntityType<ModGetreidewolfEntity> getreidewolf = null;
     public static final EntityType<ModGetreidewolfEntity> weizenbeller = null;
     public static final EntityType<ModHeukatzeEntity> heukatze = null;
+    public static final EntityType<ModHaferbockEntity> haferbock = null;
 
     public static final TileEntityType<ModInventoryTileEntity> inventory = null;
     public static final TileEntityType<ModTrapTileEntity> trap = null;
@@ -58,34 +61,39 @@ public class ModEntityUtils {
                         .setRegistryName(WheatMod.MOD_ID, "stone_entity"),
 
                 EntityType.Builder.<ModMouseEntity>create(ModMouseEntity::new, EntityClassification.CREATURE)
-                        .size(0.4f, 0.3f)
+                        .size(0.3f, 0.3f)
                         .build("field_mouse")
                         .setRegistryName(WheatMod.MOD_ID, "field_mouse"),
 
                 EntityType.Builder.<ModButterflyEntity>create(ModButterflyEntity::new, EntityClassification.CREATURE)
-                        .size(0.4f, 0.3f)
+                        .size(0.3f, 0.4f)
                         .build("butterfly")
                         .setRegistryName(WheatMod.MOD_ID, "butterfly"),
 
                 EntityType.Builder.create(ModWidowbirdEntity::new, EntityClassification.CREATURE)
-                        .size(0.4f, 0.3f)
+                        .size(0.5f, 0.9f)
                         .build("widowbird")
                         .setRegistryName(WheatMod.MOD_ID, "widowbird"),
 
                 EntityType.Builder.create(ModGetreidewolfEntity::new, EntityClassification.MONSTER)
-                        .size(0.4f, 0.3f)
+                        .size(0.6f, 0.85f)
                         .build("getreidewolf")
                         .setRegistryName(WheatMod.MOD_ID, "getreidewolf"),
 
                 EntityType.Builder.create(ModWeizenbellerEntity::new, EntityClassification.MONSTER)
-                        .size(0.4f, 0.3f)
+                        .size(0.6f, 0.7f)
                         .build("weizenbeller")
                         .setRegistryName(WheatMod.MOD_ID, "weizenbeller"),
 
                 EntityType.Builder.create(ModHeukatzeEntity::new, EntityClassification.MONSTER)
-                        .size(0.4f, 0.3f)
+                        .size(0.6f, 0.7f)
                         .build("heukatze")
-                        .setRegistryName(WheatMod.MOD_ID, "heukatze")
+                        .setRegistryName(WheatMod.MOD_ID, "heukatze"),
+
+                EntityType.Builder.create(ModHaferbockEntity::new, EntityClassification.MONSTER)
+                        .size(0.9f, 1.4f)
+                        .build("haferbock")
+                        .setRegistryName(WheatMod.MOD_ID, "haferbock")
         );
 
         ModItemUtils.loadSpawnEggs();
@@ -122,6 +130,7 @@ public class ModEntityUtils {
         EntitySpawnPlacementRegistry.register(getreidewolf, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ModGetreidewolfEntity::canGetreideWolfSpawn);
         EntitySpawnPlacementRegistry.register(weizenbeller, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ModWeizenbellerEntity::canSpawn);
         EntitySpawnPlacementRegistry.register(heukatze, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ModHeukatzeEntity::canSpawn);
+        EntitySpawnPlacementRegistry.register(haferbock, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ModHaferbockEntity::canSpawn);
 
         RenderingRegistry.registerEntityRenderingHandler(ModMouseEntity.class, new ModMouseRenderFactory());
         RenderingRegistry.registerEntityRenderingHandler(ModButterflyEntity.class, new ModButterflyRenderFactory());
@@ -129,5 +138,6 @@ public class ModEntityUtils {
         RenderingRegistry.registerEntityRenderingHandler(ModGetreidewolfEntity.class, new ModGetreidewolfRenderFactory());
         RenderingRegistry.registerEntityRenderingHandler(ModWeizenbellerEntity.class, new ModWeizenbellerRenderFactory());
         RenderingRegistry.registerEntityRenderingHandler(ModHeukatzeEntity.class, new ModHeukatzeRenderFactory());
+        RenderingRegistry.registerEntityRenderingHandler(ModHaferbockEntity.class, new ModHaferbockRenderFactory());
     }
 }

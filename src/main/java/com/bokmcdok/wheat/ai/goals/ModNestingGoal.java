@@ -20,8 +20,8 @@ public class ModNestingGoal extends MoveToBlockGoal {
      * Construction
      * @param nestingEntity The entity that has the nesting behaviour.
      */
-    public ModNestingGoal(ModNestingEntity nestingEntity) {
-        super(nestingEntity, 0.7, 16, 8);
+    public ModNestingGoal(ModNestingEntity nestingEntity, double moveSpeed, int radius, int height) {
+        super(nestingEntity, moveSpeed, radius, height);
         mOwner = nestingEntity;
     }
 

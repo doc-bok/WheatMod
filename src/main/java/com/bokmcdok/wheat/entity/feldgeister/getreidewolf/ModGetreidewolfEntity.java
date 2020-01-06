@@ -1,17 +1,8 @@
 package com.bokmcdok.wheat.entity.feldgeister.getreidewolf;
 
-import com.bokmcdok.wheat.ai.goals.ModDiseaseFarmGoal;
-import com.bokmcdok.wheat.ai.goals.ModRangedAttackGoal;
-import com.bokmcdok.wheat.ai.goals.ModNocturnalGoal;
-import com.bokmcdok.wheat.ai.goals.ModPollinateGoal;
-import com.bokmcdok.wheat.block.ModBlockUtils;
-import com.bokmcdok.wheat.block.ModCropsBlock;
 import com.bokmcdok.wheat.entity.feldgeister.ModFeldgeisterEntity;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 
-import net.minecraft.block.CropsBlock;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.IRangedAttackMob;
@@ -19,16 +10,8 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.ai.goal.HurtByTargetGoal;
-import net.minecraft.entity.ai.goal.LeapAtTargetGoal;
-import net.minecraft.entity.ai.goal.LookRandomlyGoal;
-import net.minecraft.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
-import net.minecraft.entity.ai.goal.SwimGoal;
-import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
 import net.minecraft.entity.merchant.villager.AbstractVillagerEntity;
-import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -54,7 +37,6 @@ import java.util.Random;
 
 public class ModGetreidewolfEntity extends ModFeldgeisterEntity implements IRangedAttackMob {
 
-    private Goal mDiseaseCropsGoal;
     private float mHeadRotationCourse;
     private float mHeadRotationCourseOld;
     private float mTimeWolfIsShaking;
@@ -85,26 +67,7 @@ public class ModGetreidewolfEntity extends ModFeldgeisterEntity implements IRang
             world.setEntityState(this, (byte)8);
         }
 
-        for(int l = 0; l < 4; ++l) {
-            int i = MathHelper.floor(posX + (double)((float)(l % 2 * 2 - 1) * 0.25F));
-            int j = MathHelper.floor(posY);
-            int k = MathHelper.floor(posZ + (double)((float)(l / 2 % 2 * 2 - 1) * 0.25F));
-            BlockPos blockPosition = new BlockPos(i, j, k);
-            BlockState blockState = world.getBlockState(blockPosition);
-            Block block = blockState.getBlock();
-            if (ModBlockUtils.WHEAT.contains(block) && block instanceof ModCropsBlock) {
-                if (getIsFed()) {
-                    CropsBlock crop = (CropsBlock)block;
-                    Integer integer = blockState.get(CropsBlock.AGE);
-                    if (integer < crop.getMaxAge()) {
-                        world.setBlockState(blockPosition, blockState.with(CropsBlock.AGE, Integer.valueOf(integer + 1)), 2);
-                        world.playEvent(2001, blockPosition, Block.getStateId(blockState));
-                    }
-                } else {
-                    ((ModCropsBlock) block).diseaseCrop(world, blockPosition, blockState);
-                }
-            }
-        }
+        affectTouchedCrops();
     }
 
     /**
@@ -204,22 +167,6 @@ public class ModGetreidewolfEntity extends ModFeldgeisterEntity implements IRang
     @OnlyIn(Dist.CLIENT)
     public float getInterestedAngle(float partialTicks) {
         return MathHelper.lerp(partialTicks, mHeadRotationCourseOld, mHeadRotationCourse) * 0.15f * (float)Math.PI;
-    }
-
-    /**
-     * Getreidewolf attacks cause nausea.
-     * @param target The target of the attack.
-     * @return TRUE if the attack was successful.
-     */
-    @Override
-    public boolean attackEntityAsMob(Entity target) {
-        boolean result = target.attackEntityFrom(DamageSource.causeMobDamage(this), (float)getAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getValue());
-
-        if (result && target instanceof LivingEntity) {
-            ((LivingEntity) target).addPotionEffect(new EffectInstance(Effects.NAUSEA, 200));
-        }
-
-        return result;
     }
 
     /**
@@ -344,18 +291,7 @@ public class ModGetreidewolfEntity extends ModFeldgeisterEntity implements IRang
      */
     @Override
     protected void registerGoals() {
-        mDiseaseCropsGoal = new ModDiseaseFarmGoal(this, ModBlockUtils.WHEAT);
-
-        goalSelector.addGoal(1, new SwimGoal(this));
-        goalSelector.addGoal(3, new ModNocturnalGoal(this));
-        goalSelector.addGoal(4, new LeapAtTargetGoal(this, 0.4f));
-        goalSelector.addGoal(5, new ModRangedAttackGoal(this, 0.3d, 200, 3.0f));
-        goalSelector.addGoal(5, new MeleeAttackGoal(this, 1.0d, true));
-        goalSelector.addGoal(5, mDiseaseCropsGoal);
-        goalSelector.addGoal(8, new WaterAvoidingRandomWalkingGoal(this, 1.0d));
-        goalSelector.addGoal(10, new LookRandomlyGoal(this));
-
-        targetSelector.addGoal(3, new HurtByTargetGoal((this)));
+        super.registerGoals();
         targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, AbstractVillagerEntity.class, 10, false, false, IS_CHILD));
     }
 
@@ -407,18 +343,5 @@ public class ModGetreidewolfEntity extends ModFeldgeisterEntity implements IRang
     @Override
     protected SoundEvent getDeathSound() {
         return SoundEvents.ENTITY_LIGHTNING_BOLT_THUNDER;
-    }
-
-    /**
-     * Set whether or not the getreidewolf has been fed.
-     * @param value TRUE if the getreidewolf has been fed.
-     */
-    protected void setIsFed(boolean value) {
-        super.setIsFed(value);
-
-        if (value) {
-            goalSelector.removeGoal(mDiseaseCropsGoal);
-            goalSelector.addGoal(5, new ModPollinateGoal(this));
-        }
     }
 }

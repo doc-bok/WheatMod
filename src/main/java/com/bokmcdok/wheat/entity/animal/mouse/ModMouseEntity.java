@@ -56,7 +56,7 @@ public class ModMouseEntity extends AnimalEntity {
         goalSelector.addGoal(4, new AvoidEntityGoal<>(this, MonsterEntity.class, 4.0F, 2.2D, 2.2D));
         goalSelector.addGoal(4, new AvoidEntityGoal<>(this, CatEntity.class, 4.0F, 2.2D, 2.2D));
         goalSelector.addGoal(4, new AvoidEntityGoal<>(this, VillagerEntity.class, 4.0F, 2.2D, 2.2D));
-        goalSelector.addGoal(5, new ModRaidFarmGoal(this, blocksToRaid));
+        goalSelector.addGoal(5, new ModRaidFarmGoal(this, blocksToRaid, getSpeed(), 16, 1));
         goalSelector.addGoal(6, new WaterAvoidingRandomWalkingGoal(this, 0.6D));
         goalSelector.addGoal(11, new LookAtGoal(this, PlayerEntity.class, 10.0F));
     }
@@ -92,5 +92,13 @@ public class ModMouseEntity extends AnimalEntity {
     public static boolean canSpawn(EntityType<ModMouseEntity> mouse, IWorld world, SpawnReason reason, BlockPos position, Random random) {
         Block block = world.getBlockState(position.down()).getBlock();
         return block == Blocks.GRASS_BLOCK && world.getLightSubtracted(position, 0) > 8;
+    }
+
+    /**
+     * Get the speed of the mouse.
+     * @return The speed at which the mouse moves.
+     */
+    private double getSpeed() {
+        return getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getValue();
     }
 }

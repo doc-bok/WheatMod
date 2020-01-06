@@ -1,6 +1,5 @@
 package com.bokmcdok.wheat.entity.feldgeister.heukatze;
 
-import com.bokmcdok.wheat.ai.goals.ModNocturnalGoal;
 import com.bokmcdok.wheat.entity.animal.butterfly.ModButterflyEntity;
 import com.bokmcdok.wheat.entity.animal.mouse.ModMouseEntity;
 import com.bokmcdok.wheat.entity.animal.widowbird.ModWidowbirdEntity;
@@ -10,13 +9,7 @@ import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.goal.HurtByTargetGoal;
-import net.minecraft.entity.ai.goal.LeapAtTargetGoal;
-import net.minecraft.entity.ai.goal.LookRandomlyGoal;
-import net.minecraft.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
-import net.minecraft.entity.ai.goal.SwimGoal;
-import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
 import net.minecraft.entity.passive.ChickenEntity;
 import net.minecraft.entity.passive.RabbitEntity;
 import net.minecraft.util.DamageSource;
@@ -65,14 +58,8 @@ public class ModHeukatzeEntity extends ModFeldgeisterEntity {
      */
     @Override
     protected void registerGoals() {
-        goalSelector.addGoal(1, new SwimGoal(this));
-        goalSelector.addGoal(3, new ModNocturnalGoal(this));
-        goalSelector.addGoal(4, new LeapAtTargetGoal(this, 0.4f));
-        goalSelector.addGoal(5, new MeleeAttackGoal(this, 1.0d, true));
-        goalSelector.addGoal(8, new WaterAvoidingRandomWalkingGoal(this, 1.0d));
-        goalSelector.addGoal(10, new LookRandomlyGoal(this));
+        super.registerGoals();
 
-        targetSelector.addGoal(3, new HurtByTargetGoal((this)));
         targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, ChickenEntity.class, 10, false, false, null));
         targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, ModMouseEntity.class, 10, false, false, null));
         targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, ModWidowbirdEntity.class, 10, false, false, null));

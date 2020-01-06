@@ -25,8 +25,8 @@ public class ModRaidFarmGoal extends MoveToBlockGoal {
      * Construction
      * @param entity The entity that owns this goal
      */
-    public ModRaidFarmGoal(CreatureEntity entity, Set<Block> cropsToRaid) {
-        super(entity, 0.7, 16);
+    public ModRaidFarmGoal(CreatureEntity entity, Set<Block> cropsToRaid, double moveSpeed, int radius, int height) {
+        super(entity, moveSpeed, radius, height);
         mEntity = entity;
         mCropsToRaid = cropsToRaid;
     }

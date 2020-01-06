@@ -14,8 +14,8 @@ public class ModAttractToLightGoal extends MoveToBlockGoal {
      * Construction
      * @param owner The owner of this goal.
      */
-    public ModAttractToLightGoal(CreatureEntity owner) {
-        super(owner, 0.7, 16, 8);
+    public ModAttractToLightGoal(CreatureEntity owner, double moveSpeed, int radius, int height) {
+        super(owner, moveSpeed, radius, height);
         mOwner = owner;
     }
 
