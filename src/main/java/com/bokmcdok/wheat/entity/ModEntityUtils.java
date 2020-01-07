@@ -19,6 +19,7 @@ import com.bokmcdok.wheat.entity.feldgeister.weizenbeller.ModWeizenbellerRenderF
 import com.bokmcdok.wheat.entity.tile.ModInventoryTileEntity;
 import com.bokmcdok.wheat.entity.tile.ModTrapTileEntity;
 import com.bokmcdok.wheat.item.ModItemUtils;
+import com.bokmcdok.wheat.render.StoneRenderer;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntitySpawnPlacementRegistry;
@@ -38,11 +39,13 @@ import java.util.List;
 @ObjectHolder(WheatMod.MOD_ID)
 public class ModEntityUtils {
 
+    public static final EntityType<ThrownItemEntity> stone_entity = null;
+
     public static final EntityType<ModMouseEntity> field_mouse = null;
     public static final EntityType<ModButterflyEntity> butterfly = null;
     public static final EntityType<ModWidowbirdEntity> widowbird = null;
     public static final EntityType<ModGetreidewolfEntity> getreidewolf = null;
-    public static final EntityType<ModGetreidewolfEntity> weizenbeller = null;
+    public static final EntityType<ModWeizenbellerEntity> weizenbeller = null;
     public static final EntityType<ModHeukatzeEntity> heukatze = null;
     public static final EntityType<ModHaferbockEntity> haferbock = null;
 
@@ -132,12 +135,13 @@ public class ModEntityUtils {
         EntitySpawnPlacementRegistry.register(heukatze, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ModHeukatzeEntity::canSpawn);
         EntitySpawnPlacementRegistry.register(haferbock, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ModHaferbockEntity::canSpawn);
 
-        RenderingRegistry.registerEntityRenderingHandler(ModMouseEntity.class, new ModMouseRenderFactory());
-        RenderingRegistry.registerEntityRenderingHandler(ModButterflyEntity.class, new ModButterflyRenderFactory());
-        RenderingRegistry.registerEntityRenderingHandler(ModWidowbirdEntity.class, new ModWidowbirdRenderFactory());
-        RenderingRegistry.registerEntityRenderingHandler(ModGetreidewolfEntity.class, new ModGetreidewolfRenderFactory());
-        RenderingRegistry.registerEntityRenderingHandler(ModWeizenbellerEntity.class, new ModWeizenbellerRenderFactory());
-        RenderingRegistry.registerEntityRenderingHandler(ModHeukatzeEntity.class, new ModHeukatzeRenderFactory());
-        RenderingRegistry.registerEntityRenderingHandler(ModHaferbockEntity.class, new ModHaferbockRenderFactory());
+        RenderingRegistry.registerEntityRenderingHandler(stone_entity, new StoneRenderer());
+        RenderingRegistry.registerEntityRenderingHandler(field_mouse, new ModMouseRenderFactory());
+        RenderingRegistry.registerEntityRenderingHandler(butterfly, new ModButterflyRenderFactory());
+        RenderingRegistry.registerEntityRenderingHandler(widowbird, new ModWidowbirdRenderFactory());
+        RenderingRegistry.registerEntityRenderingHandler(getreidewolf, new ModGetreidewolfRenderFactory());
+        RenderingRegistry.registerEntityRenderingHandler(weizenbeller, new ModWeizenbellerRenderFactory());
+        RenderingRegistry.registerEntityRenderingHandler(heukatze, new ModHeukatzeRenderFactory());
+        RenderingRegistry.registerEntityRenderingHandler(haferbock, new ModHaferbockRenderFactory());
     }
 }

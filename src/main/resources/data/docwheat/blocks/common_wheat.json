@@ -16,5 +16,6 @@
         "required": "docwheat:emmer"
       }
     ]
-  }
+  },
+  "render_type": "cutout"
 }

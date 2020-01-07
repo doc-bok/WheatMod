@@ -1,11 +1,25 @@
-/*
-/*/
-!/src/
-!.gitignore
-!gradlew*
-!/gradle/
-!/LICENSE.txt
-!/README.md
-!/COPYING.lesser
-!build.gradle
-!.travis.yml
+# eclipse
+bin
+*.launch
+.settings
+.metadata
+.classpath
+.project
+
+# idea
+out
+*.ipr
+*.iws
+*.iml
+.idea
+
+# gradle
+build
+.gradle
+
+# other
+eclipse
+run
+
+# Files from Forge MDK
+forge*changelog.txt

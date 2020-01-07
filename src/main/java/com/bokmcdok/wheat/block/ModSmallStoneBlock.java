@@ -32,6 +32,15 @@ public class ModSmallStoneBlock extends HorizontalFaceBlock implements IModBlock
         return mImpl.getColor();
     }
 
+    /**
+     * Get the render type's name.
+     * @return The name of the render type.
+     */
+    @Override
+    public String getRenderType() {
+        return mImpl.getRenderType();
+    }
+
     public int getFlammability() {
         return mImpl.getFlammability();
     }

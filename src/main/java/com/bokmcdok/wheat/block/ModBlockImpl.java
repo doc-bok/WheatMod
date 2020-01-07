@@ -21,6 +21,7 @@ public class ModBlockImpl {
     private final VoxelShape mShape;
     private final VoxelShape mCollisionShape;
     private final IBlockColor mColor;
+    private final String mRenderType;
     private final int mInventorySize;
     private final int mFireEncouragement;
     private final int mFireFlammability;
@@ -38,6 +39,7 @@ public class ModBlockImpl {
         mCollisionShape = properties.mCollisionShape;
         mInventorySize = properties.mInventorySize;
         mTargets = properties.mTargets;
+        mRenderType = properties.mRenderType;
     }
 
     /**
@@ -125,6 +127,14 @@ public class ModBlockImpl {
     }
 
     /**
+     * Get the render type of the block.
+     * @return
+     */
+    public String getRenderType() {
+        return mRenderType;
+    }
+
+    /**
      * The properties of a modded block.
      */
     public static class ModBlockProperties {
@@ -134,6 +144,7 @@ public class ModBlockImpl {
         private VoxelShape mShape;
         private VoxelShape mCollisionShape;
         private IBlockColor mColor = null;
+        private String mRenderType = "solid";
         private int mInventorySize = 0;
         private int mFireEncouragement = 0;
         private int mFireFlammability = 0;
@@ -324,6 +335,10 @@ public class ModBlockImpl {
          */
         public Block.Properties asBlockProperties() {
             return mBlockProperties;
+        }
+
+        public void setRenderType(String renderType) {
+            mRenderType = renderType;
         }
     }
 }

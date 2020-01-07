@@ -91,7 +91,7 @@ public class ModMouseEntity extends AnimalEntity {
 
     public static boolean canSpawn(EntityType<ModMouseEntity> mouse, IWorld world, SpawnReason reason, BlockPos position, Random random) {
         Block block = world.getBlockState(position.down()).getBlock();
-        return block == Blocks.GRASS_BLOCK && world.getLightSubtracted(position, 0) > 8;
+        return block == Blocks.GRASS_BLOCK && world.getNeighborAwareLightSubtracted(position, 0) > 8;
     }
 
     /**

@@ -11,6 +11,7 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 
 import java.util.List;
 import java.util.Optional;
@@ -27,14 +28,26 @@ public class ModCropsBlock extends CropsBlock implements IModBlock {
         mCropProperties = mImpl.getCropProperties();
     }
 
+    @Override
     public IBlockColor getColor() {
         return mImpl.getColor();
     }
 
+    /**
+     * Get the render type's name.
+     * @return The name of the render type.
+     */
+    @Override
+    public String getRenderType() {
+        return mImpl.getRenderType();
+    }
+
+    @Override
     public int getFlammability() {
         return mImpl.getFlammability();
     }
 
+    @Override
     public int getFireEncouragement() {
         return mImpl.getFireEncouragement();
     }
@@ -42,39 +55,40 @@ public class ModCropsBlock extends CropsBlock implements IModBlock {
     /**
      * Main update - checks for disease and mutations
      * @param state The current block state
-     * @param worldIn The world the block is in
+     * @param world The world the block is in
      * @param pos The position of the block
      * @param random The current RNG
      */
-    public void tick(BlockState state, World worldIn, BlockPos pos, Random random) {
+    @Override
+    public void func_225534_a_(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         int oldAge = getAge(state);
-        super.tick(state, worldIn, pos, random);
+        super.func_225534_a_(state, world, pos, random);
 
         //  If a crop is generated in the air it will be destroyed during the tick update and replaced with an air
         //  block. In this case we don't want to check for disease/mutation as the crop no longer exists and it will
         //  cause Minecraft to crash when it tries to get the Age property.
-        BlockState newState = worldIn.getBlockState(pos);
+        BlockState newState = world.getBlockState(pos);
         if (newState.getBlock() != Blocks.AIR) {
             int newAge = newState.get(getAgeProperty());
-            checkForDisease(worldIn, pos, random, oldAge, newAge);
-            checkForMutation(worldIn, pos, random, oldAge, newAge, 15);
+            checkForDisease(world, pos, random, oldAge, newAge);
+            checkForMutation(world, pos, random, oldAge, newAge, 15);
         }
     }
 
     /**
      * When grown using bonemeal there is zero chance of disease and a higher chance of mutation.
      * @param worldIn The world the block is in
-     * @param random The current RNG
      * @param pos The position of the block
      * @param state The current block state
      */
-    public void grow(World worldIn, Random random, BlockPos pos, BlockState state) {
+    @Override
+    public void grow(World worldIn, BlockPos pos, BlockState state) {
         int oldAge = getAge(state);
-        super.grow(worldIn, random, pos, state);
+        super.grow(worldIn, pos, state);
         BlockState newState = worldIn.getBlockState(pos);
         if (newState.getBlock() != Blocks.AIR) {
             int newAge = newState.get(getAgeProperty());
-            checkForMutation(worldIn, pos, random, oldAge, newAge, 10);
+            checkForMutation(worldIn, pos, worldIn.getRandom(), oldAge, newAge, 10);
         }
     }
 
@@ -108,6 +122,7 @@ public class ModCropsBlock extends CropsBlock implements IModBlock {
      * @param position The position of the block
      * @return TRUE if the crop can grow
      */
+    @Override
     protected boolean isValidGround(BlockState state, IBlockReader world, BlockPos position)
     {
         if (mCropProperties.getWild()) {

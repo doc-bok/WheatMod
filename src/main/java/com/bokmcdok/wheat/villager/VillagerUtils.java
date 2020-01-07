@@ -86,7 +86,7 @@ public class VillagerUtils {
      * @return True if a farm item is in the inventory
      */
     public static boolean isFarmItemInInventory(VillagerEntity owner) {
-        Inventory inventory = owner.func_213715_ed();
+        Inventory inventory = owner.getVillagerInventory();
         return inventory.hasAny(FARM_ITEMS.keySet());
     }
 
@@ -146,7 +146,7 @@ public class VillagerUtils {
                         ItemStack itemstack = itemEntity.getItem();
                         Item item = itemstack.getItem();
                         if (canPickupItem(villager.getVillagerData().getProfession(), item)) {
-                            Inventory inventory = villager.func_213715_ed();
+                            Inventory inventory = villager.getVillagerInventory();
                             boolean flag = false;
 
                             for (int i = 0; i < inventory.getSizeInventory(); ++i) {
@@ -197,7 +197,7 @@ public class VillagerUtils {
             VillagerTrades.ITrade wheatTrade = null;
             for (VillagerTrades.ITrade trade : noviceTrades) {
                 MerchantOffer offer = trade.getOffer(null, null);
-                if (offer.func_222218_a().getItem() == Items.WHEAT) {
+                if (offer.getSellingStack().getItem() == Items.WHEAT) {
                     wheatTrade = trade;
                     break;
                 }
@@ -227,7 +227,7 @@ public class VillagerUtils {
         VillagerTrades.ITrade seedTrade = null;
         for (VillagerTrades.ITrade trade : genericTrades) {
             MerchantOffer offer = trade.getOffer(null, null);
-            if (offer.func_222200_d().getItem() == Items.WHEAT_SEEDS) {
+            if (offer.getSellingStack().getItem() == Items.WHEAT_SEEDS) {
                 seedTrade = trade;
                 break;
             }

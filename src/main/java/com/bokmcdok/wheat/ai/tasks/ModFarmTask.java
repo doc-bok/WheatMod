@@ -48,7 +48,7 @@ public class ModFarmTask extends Task<VillagerEntity> {
             mHasInventorySpace = mIsFarmItemInInventory;
 
             if (!mHasInventorySpace) {
-                Inventory inventory = owner.func_213715_ed(); // getInventory
+                Inventory inventory = owner.getVillagerInventory(); // getInventory
                 int i = inventory.getSizeInventory();
 
                 for (int j = 0; j < i; ++j) {
@@ -60,13 +60,13 @@ public class ModFarmTask extends Task<VillagerEntity> {
                 }
             }
 
-            BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos(owner.posX, owner.posY, owner.posZ);
+            BlockPos.Mutable blockpos$mutableblockpos = new BlockPos.Mutable(owner);
             mFarmableBlocks.clear();
 
             for (int i1 = -1; i1 <= 1; ++i1) {
                 for (int k = -1; k <= 1; ++k) {
                     for (int l = -1; l <= 1; ++l) {
-                        blockpos$mutableblockpos.setPos(owner.posX + (double) i1, owner.posY + (double) k, owner.posZ + (double) l);
+                        blockpos$mutableblockpos.setPos(owner.func_226277_ct_() + (double)i1, owner.func_226278_cu_() + (double)k, owner.func_226281_cx_() + (double)l);
                         if (isFarmableBlock(blockpos$mutableblockpos, worldIn)) {
                             mFarmableBlocks.add(new BlockPos(blockpos$mutableblockpos));
                         }
@@ -117,7 +117,7 @@ public class ModFarmTask extends Task<VillagerEntity> {
             }
 
             if (blockstate.isAir() && block1 instanceof FarmlandBlock && mIsFarmItemInInventory) {
-                Inventory inventory = owner.func_213715_ed();
+                Inventory inventory = owner.getVillagerInventory();
 
                 for (int i = 0; i < inventory.getSizeInventory(); ++i) {
                     ItemStack itemstack = inventory.getStackInSlot(i);

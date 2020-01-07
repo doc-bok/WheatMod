@@ -118,10 +118,10 @@ public class ModItemImpl {
         if (mThrowingVelocity > 0.0f) {
             ItemStack itemstack = player.getHeldItem(hand);
             ItemStack itemstack1 = player.abilities.isCreativeMode ? itemstack.copy() : itemstack.split(1);
-            world.playSound(null, player.posX, player.posY, player.posZ, mThrowingSound, SoundCategory.PLAYERS, mThrowingVolume, mThrowingPitch / (RNG.nextFloat() * 0.4F + 0.8F));
+            world.playSound(null, player.getPosition(), mThrowingSound, SoundCategory.PLAYERS, mThrowingVolume, mThrowingPitch / (RNG.nextFloat() * 0.4F + 0.8F));
             if (!world.isRemote) {
                 ThrownItemEntity entity = new ThrownItemEntity(world, player);
-                entity.func_213884_b(itemstack1);
+                entity.setItem(itemstack1);
                 entity.shoot(player, player.rotationPitch, player.rotationYaw, mThrowingOffset, mThrowingVelocity, mThrowingInaccuracy);
                 world.addEntity(entity);
             }

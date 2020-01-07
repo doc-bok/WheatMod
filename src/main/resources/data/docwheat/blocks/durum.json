@@ -10,5 +10,6 @@
     "disease": "docwheat:diseased_wheat",
     "seed": "docwheat:durum_grain",
     "disease_resistance": 8
-  }
+  },
+  "render_type": "cutout"
 }

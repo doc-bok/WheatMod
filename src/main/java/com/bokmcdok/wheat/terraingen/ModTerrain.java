@@ -7,9 +7,11 @@ import com.bokmcdok.wheat.entity.ModEntityUtils;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStage;
-import net.minecraft.world.gen.feature.BushConfig;
+import net.minecraft.world.gen.blockplacer.SimpleBlockPlacer;
+import net.minecraft.world.gen.blockstateprovider.SimpleBlockStateProvider;
+import net.minecraft.world.gen.feature.BlockClusterFeatureConfig;
 import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.placement.ChanceConfig;
+import net.minecraft.world.gen.placement.FrequencyConfig;
 import net.minecraft.world.gen.placement.IPlacementConfig;
 import net.minecraft.world.gen.placement.Placement;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -31,8 +33,8 @@ class ModTerrain {
             switch (biome.getCategory()) {
                 case PLAINS:
                     addWildWheatFeature(biome, ModBlockUtils.wild_einkorn);
-                    biome.addStructure(ModFeatureUtils.WINDMILL, new ModWindmillConfig(1));
-                    biome.addFeature(GenerationStage.Decoration.SURFACE_STRUCTURES, Biome.createDecoratedFeature(ModFeatureUtils.WINDMILL, new ModWindmillConfig(1), Placement.NOPE, IPlacementConfig.NO_PLACEMENT_CONFIG));
+                    biome.func_226711_a_(ModFeatureUtils.WINDMILL.func_225566_b_(new ModWindmillConfig(1)));
+                    biome.addFeature(GenerationStage.Decoration.SURFACE_STRUCTURES, ModFeatureUtils.WINDMILL.func_225566_b_(new ModWindmillConfig(1)).func_227228_a_(Placement.NOPE.func_227446_a_(IPlacementConfig.NO_PLACEMENT_CONFIG)));
                     biome.getSpawns(EntityClassification.CREATURE).add(new Biome.SpawnListEntry(ModEntityUtils.field_mouse, 10, 2, 6));
                     biome.getSpawns(EntityClassification.CREATURE).add(new Biome.SpawnListEntry(ModEntityUtils.widowbird, 10, 1, 3));
                     biome.getSpawns(EntityClassification.AMBIENT).add(new Biome.SpawnListEntry(ModEntityUtils.butterfly, 10, 2, 6));
@@ -87,8 +89,9 @@ class ModTerrain {
         //  Chance is equal to 1 / x. The calculation makes age 3 the most commonly generated age, decreasing as the age
         //  gets further away. Age 7 (the final age) is least common.
         for (int i = 0; i < 8; ++i) {
-            biome.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION,
-                    Biome.createDecoratedFeature(Feature.BUSH, new BushConfig(block.withAge(i)), Placement.CHANCE_HEIGHTMAP, new ChanceConfig(Math.abs(i - 3) + 2)));
+            BlockClusterFeatureConfig field_226728_P_ = (new BlockClusterFeatureConfig.Builder(new SimpleBlockStateProvider(block.withAge(i)), new SimpleBlockPlacer())).func_227315_a_(32).func_227322_d_();
+            biome.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Feature.field_227248_z_.func_225566_b_(field_226728_P_).func_227228_a_(Placement.COUNT_HEIGHTMAP_32.func_227446_a_(new FrequencyConfig(Math.abs(i - 3) + 2))));
+            //biome.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Biome.createDecoratedFeature(Feature.BUSH, new BlockClusterFeatureConfig(block.withAge(i)), Placement.CHANCE_HEIGHTMAP, new ChanceConfig(Math.abs(i - 3) + 2)));
         }
     }
 }

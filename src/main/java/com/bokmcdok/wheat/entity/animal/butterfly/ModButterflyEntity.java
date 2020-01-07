@@ -104,10 +104,10 @@ public class ModButterflyEntity extends CreatureEntity {
             if (position.getY() < world.getSeaLevel()) {
                 return false;
             } else {
-                return light >= 4 && MobEntity.func_223315_a(entity, world, reason, position, random);
+                return light >= 4 && MobEntity.canSpawnOn(entity, world, reason, position, random);
             }
         } else {
-            return light < random.nextInt(4) && MobEntity.func_223315_a(entity, world, reason, position, random);
+            return light < random.nextInt(4) && MobEntity.canSpawnOn(entity, world, reason, position, random);
         }
     }
 
@@ -212,16 +212,17 @@ public class ModButterflyEntity extends CreatureEntity {
             mSpawnPosition = null;
         }
 
+        Vec3d position = getPositionVec();
         if (mSpawnPosition == null || rand.nextInt(30) == 0 || mSpawnPosition.withinDistance(getPositionVec(), 2.0d)) {
             mSpawnPosition = new BlockPos(
-                    posX + (double)rand.nextInt(7) - (double)rand.nextInt(7),
-                    posY + (double)rand.nextInt(6) - 2.0d,
-                    posZ + (double)rand.nextInt(7) - (double)rand.nextInt(7));
+                    position.x + (double)rand.nextInt(7) - (double)rand.nextInt(7),
+                    position.y + (double)rand.nextInt(6) - 2.0d,
+                    position.z + (double)rand.nextInt(7) - (double)rand.nextInt(7));
         }
 
-        double x = (double)mSpawnPosition.getX() + 0.5D - this.posX;
-        double y = (double)mSpawnPosition.getY() + 0.1D - this.posY;
-        double z = (double)mSpawnPosition.getZ() + 0.5D - this.posZ;
+        double x = (double)mSpawnPosition.getX() + 0.5D - position.x;
+        double y = (double)mSpawnPosition.getY() + 0.1D - position.y;
+        double z = (double)mSpawnPosition.getZ() + 0.5D - position.z;
         Vec3d motion = getMotion();
         Vec3d newMotion = motion.add(
                 (Math.signum(x) * 0.5D - motion.x) * 0.10000000149011612D,
@@ -239,9 +240,11 @@ public class ModButterflyEntity extends CreatureEntity {
      * @return Always FALSE.
      */
     @Override
-    protected boolean canTriggerWalking() {
+    protected boolean func_225502_at_() {
         return false;
     }
+
+
 
     /**
      * Butterflies can't fall.
@@ -249,8 +252,8 @@ public class ModButterflyEntity extends CreatureEntity {
      * @param damageMultiplier The damage multiplier from the fall.
      */
     @Override
-    public void fall(float distance, float damageMultiplier) {
-        //no-op
+    public boolean func_225503_b_(float distance, float damageMultiplier) {
+        return false;
     }
 
     /**

@@ -10,6 +10,7 @@ import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.minecraft.block.Block;
 import net.minecraft.entity.merchant.villager.VillagerProfession;
 import net.minecraft.entity.merchant.villager.VillagerTrades;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.village.PointOfInterestType;
@@ -24,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Mod.EventBusSubscriber(modid = WheatMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ModVillagerProfessionHelper {
@@ -37,16 +39,9 @@ public class ModVillagerProfessionHelper {
         for (ModVillagerProfession i : professions) {
             Optional<Block> block = Registry.BLOCK.getValue(i.getPOI());
             if (block.isPresent()) {
-                PointOfInterestType poi = new PointOfInterestType(
-                        i.getLocation().getPath(),
-                        ImmutableSet.copyOf(block.get().getStateContainer().getValidStates()),
-                        1, SoundEvents.ENTITY_VILLAGER_WORK_BUTCHER, 1);
-
-                event.getRegistry().registerAll(poi.setRegistryName(i.getLocation()));
-
                 try {
-                    Method func_221052_a = ObfuscationReflectionHelper.findMethod(PointOfInterestType.class, "func_221052_a", PointOfInterestType.class);
-                    func_221052_a.invoke(null, poi);
+                    Method func_226359_a_ = ObfuscationReflectionHelper.findMethod(PointOfInterestType.class, "func_226359_a_", String.class, Set.class, int.class, int.class);
+                   func_226359_a_.invoke(null, i.getLocation().toString(), ImmutableSet.copyOf(block.get().getStateContainer().getValidStates()), 1, 1);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -60,8 +55,13 @@ public class ModVillagerProfessionHelper {
         for (ModVillagerProfession i : professions) {
             Optional<PointOfInterestType> poi = Registry.POINT_OF_INTEREST_TYPE.getValue(i.getLocation());
             if (poi.isPresent()) {
-                VillagerProfession profession = new VillagerProfession(i.getLocation().getPath(), poi.get(), ImmutableSet.of(), ImmutableSet.of());
-                event.getRegistry().registerAll(profession.setRegistryName(i.getLocation()));
+
+                try {
+                    Method func_226557_a_ = ObfuscationReflectionHelper.findMethod(VillagerProfession.class, "func_226557_a_", String.class, PointOfInterestType.class, ImmutableSet.class, ImmutableSet.class, SoundEvent.class);
+                    func_226557_a_.invoke(null, i.getLocation().toString(), poi.get(), ImmutableSet.of(), ImmutableSet.of(), SoundEvents.ENTITY_VILLAGER_WORK_BUTCHER);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
@@ -111,7 +111,7 @@ public class ModVillagerProfessionHelper {
                         4, expertTrades.toArray(new VillagerTrades.ITrade[0]),
                         5, masterTrades.toArray(new VillagerTrades.ITrade[0])));
 
-                VillagerTrades.field_221239_a.put(profession.get(), trades);
+                VillagerTrades.VILLAGER_DEFAULT_TRADES.put(profession.get(), trades);
 
                 ModGiveHeroGiftsTask.GIFTS.put(profession.get(), i.getGifts());
             }

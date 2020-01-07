@@ -14,11 +14,13 @@ public class ModMouseRenderer extends MobRenderer<ModMouseEntity, ModMouseModel<
         super(rendererManager, new ModMouseModel<>(), 0.3f);
     }
 
-    protected float getDeathMaxRotation(ModMouseEntity entity) {
-        return 180.0f;
+    @Override
+    public ResourceLocation getEntityTexture(ModMouseEntity entity) {
+        return MOUSE_TEXTURES;
     }
 
-    protected ResourceLocation getEntityTexture(ModMouseEntity entity) {
-        return MOUSE_TEXTURES;
+    @Override
+    protected float getDeathMaxRotation(ModMouseEntity entity) {
+        return 180.0f;
     }
 }

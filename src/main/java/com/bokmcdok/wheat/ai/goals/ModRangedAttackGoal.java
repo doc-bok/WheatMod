@@ -5,6 +5,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 
 import java.util.EnumSet;
 
@@ -85,7 +86,8 @@ public class ModRangedAttackGoal extends Goal {
      */
     @Override
     public void tick() {
-        double distanceSquared = mOwner.getDistanceSq(mTarget.posX, mTarget.getBoundingBox().minY, mTarget.posZ);
+        Vec3d position = mTarget.getPositionVec();
+        double distanceSquared = mOwner.getDistanceSq(position.x, mTarget.getBoundingBox().minY, position.z);
         boolean canSee = mOwner.getEntitySenses().canSee(mTarget);
         if (canSee) {
             ++mSeeTime;
@@ -106,20 +108,5 @@ public class ModRangedAttackGoal extends Goal {
             mRangedAttackEntity.attackEntityWithRangedAttack(mTarget, clampedDistanceRatio);
             mLastAttackTime = mOwner.world.getGameTime();
         }
-        /*float distanceRatio;
-        if (--mRangedAttackTime == 0) {
-            if (!canSee) {
-                return;
-            }
-
-            distanceRatio = MathHelper.sqrt(distanceSquared) / mRange;
-            float clampedDistanceRatio = MathHelper.clamp(distanceRatio, 0.1F, 1.0F);
-            mRangedAttackEntity.attackEntityWithRangedAttack(mTarget, clampedDistanceRatio);
-            mRangedAttackTime = MathHelper.floor(distanceRatio * (float)(mAttackIntervalMax - mAttackIntervalMin) + (float)mAttackIntervalMin);
-        } else if (mRangedAttackTime < 0) {
-            distanceRatio = MathHelper.sqrt(distanceSquared) / mRange;
-            mRangedAttackTime = MathHelper.floor(distanceRatio * (float)(mAttackIntervalMax - mAttackIntervalMin) + (float)mAttackIntervalMin);
-        }*/
-
     }
 }

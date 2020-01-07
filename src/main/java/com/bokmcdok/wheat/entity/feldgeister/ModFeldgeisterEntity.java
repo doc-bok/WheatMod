@@ -31,6 +31,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
@@ -110,8 +111,14 @@ public class ModFeldgeisterEntity extends MonsterEntity {
         playSound(SoundEvents.ENTITY_ENDERMAN_TELEPORT, 1.0F, 1.0F);
 
         if (world.isRemote) {
+            Vec3d position = getPositionVec();
             for (int i = 0; i < 50; ++i) {
-                world.addParticle(ParticleTypes.PORTAL, posX + (rand.nextDouble() - 0.5D) * (double) getWidth(), posY + rand.nextDouble() * (double) getHeight() - 0.25D, posZ + (rand.nextDouble() - 0.5D) * (double) getWidth(), (rand.nextDouble() - 0.5D) * 2.0D, -rand.nextDouble(), (rand.nextDouble() - 0.5D) * 2.0D);
+                world.addParticle(ParticleTypes.PORTAL,
+                        position.x + (rand.nextDouble() - 0.5D) * (double) getWidth(),
+                        position.y + rand.nextDouble() * (double) getHeight() - 0.25D,
+                        position.z + (rand.nextDouble() - 0.5D) * (double) getWidth(),
+                        (rand.nextDouble() - 0.5D) * 2.0D, -rand.nextDouble(),
+                        (rand.nextDouble() - 0.5D) * 2.0D);
             }
         }
     }
@@ -123,11 +130,15 @@ public class ModFeldgeisterEntity extends MonsterEntity {
     @OnlyIn(Dist.CLIENT)
     public void handleStatusUpdate(byte status) {
         if (status == 18) {
+            Vec3d position = getPositionVec();
             for(int i = 0; i < 7; ++i) {
                 double x = rand.nextGaussian() * 0.02D;
                 double y = rand.nextGaussian() * 0.02D;
                 double z = rand.nextGaussian() * 0.02D;
-                world.addParticle(ParticleTypes.HEART, posX + (double)(rand.nextFloat() * getWidth() * 2.0F) - (double)getWidth(), posY + 0.5D + (double)(rand.nextFloat() * getHeight()), posZ + (double)(rand.nextFloat() * getWidth() * 2.0F) - (double)getWidth(), x, y, z);
+                world.addParticle(ParticleTypes.HEART,
+                        position.x + (double)(rand.nextFloat() * getWidth() * 2.0F) - (double)getWidth(),
+                        position.y + 0.5D + (double)(rand.nextFloat() * getHeight()),
+                        position.z + (double)(rand.nextFloat() * getWidth() * 2.0F) - (double)getWidth(), x, y, z);
             }
         } else {
             super.handleStatusUpdate(status);
@@ -186,10 +197,11 @@ public class ModFeldgeisterEntity extends MonsterEntity {
      * crops.
      */
     protected void affectTouchedCrops() {
+        Vec3d position = getPositionVec();
         for(int l = 0; l < 4; ++l) {
-            int i = MathHelper.floor(posX + (double)((float)(l % 2 * 2 - 1) * 0.25F));
-            int j = MathHelper.floor(posY);
-            int k = MathHelper.floor(posZ + (double)((float)(l / 2 % 2 * 2 - 1) * 0.25F));
+            int i = MathHelper.floor(position.x + (double)((float)(l % 2 * 2 - 1) * 0.25F));
+            int j = MathHelper.floor(position.y);
+            int k = MathHelper.floor(position.z + (double)((float)(l / 2 % 2 * 2 - 1) * 0.25F));
             BlockPos blockPosition = new BlockPos(i, j, k);
             BlockState blockState = world.getBlockState(blockPosition);
             Block block = blockState.getBlock();

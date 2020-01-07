@@ -7,6 +7,7 @@ import net.minecraft.entity.item.ExperienceOrbEntity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.stats.Stats;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.GameRules;
 
 public class ModBreedGoal extends BreedGoal {
@@ -53,12 +54,14 @@ public class ModBreedGoal extends BreedGoal {
                 player = field_75391_e.getLoveCause();
             }
 
+            Vec3d position = animal.getPositionVec();
             if (player != null) {
                 player.addStat(Stats.ANIMALS_BRED);
                 CriteriaTriggers.BRED_ANIMALS.trigger(player, animal, field_75391_e, child);
 
                 if (world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT)) {
-                    world.addEntity(new ExperienceOrbEntity(world, animal.posX, animal.posY, animal.posZ, animal.getRNG().nextInt(7) + 1));
+
+                    world.addEntity(new ExperienceOrbEntity(world, position.x, position.y, position.z, animal.getRNG().nextInt(7) + 1));
                 }
             }
 
@@ -67,7 +70,7 @@ public class ModBreedGoal extends BreedGoal {
             animal.resetInLove();
             field_75391_e.resetInLove();
             child.setGrowingAge(-24000);
-            child.setLocationAndAngles(animal.posX, animal.posY, animal.posZ, 0.0F, 0.0F);
+            child.setLocationAndAngles(position.x, position.y, position.z, 0.0F, 0.0F);
             world.addEntity(child);
             world.setEntityState(animal, (byte)18);
         }

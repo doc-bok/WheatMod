@@ -20,6 +20,7 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 
@@ -143,13 +144,14 @@ public class ModHaferbockEntity extends ModFeldgeisterEntity {
      * Plants wheat on any block the haferbock touches.
      */
     private void plantWheat() {
+        Vec3d position = getPositionVec();
         for (int l = 0; l < 4; ++l) {
-            int i = MathHelper.floor(posX + (double) ((float) (l % 2 * 2 - 1) * 0.25F));
-            int j = MathHelper.floor(posY);
-            int k = MathHelper.floor(posZ + (double) ((float) (l / 2 % 2 * 2 - 1) * 0.25F));
+            int i = MathHelper.floor(position.x + (double) ((float) (l % 2 * 2 - 1) * 0.25F));
+            int j = MathHelper.floor(position.y);
+            int k = MathHelper.floor(position.z + (double) ((float) (l / 2 % 2 * 2 - 1) * 0.25F));
             BlockPos blockPosition = new BlockPos(i, j, k);
 
-            Biome.Category biome = world.getBiome(blockPosition).getCategory();
+            Biome.Category biome = world.func_226691_t_(blockPosition).getCategory();
             if (biome == Biome.Category.PLAINS ||
                 biome == Biome.Category.FOREST ||
                 biome == Biome.Category.RIVER ||
@@ -198,10 +200,11 @@ public class ModHaferbockEntity extends ModFeldgeisterEntity {
      * Finds nearby crops and pollinates them.
      */
     private void pollinateNearbyCrops() {
+        Vec3d position = getPositionVec();
         for (int x = -2; x < 2 + 1; x++) {
             for (int y = -2; y < 2; y++) {
                 for (int z = -2; z < 2; z++) {
-                    attemptPollinate(new BlockPos(posX + x, posY + y, posZ + z));
+                    attemptPollinate(new BlockPos(position.x + x, position.y + y, position.z + z));
                 }
             }
         }

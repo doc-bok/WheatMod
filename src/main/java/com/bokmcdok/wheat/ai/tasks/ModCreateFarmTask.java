@@ -53,13 +53,14 @@ public class ModCreateFarmTask extends Task<VillagerEntity> {
         } else {
 
 
-            BlockPos.MutableBlockPos blockpos$mutableblockpos = new BlockPos.MutableBlockPos(owner.posX, owner.posY, owner.posZ);
+
+            BlockPos.Mutable blockpos$mutableblockpos = new BlockPos.Mutable(owner);
             mFarmableBlocks.clear();
 
             for (int i1 = -1; i1 <= 1; ++i1) {
                 for (int k = -1; k <= 1; ++k) {
                     for (int l = -1; l <= 1; ++l) {
-                        blockpos$mutableblockpos.setPos(owner.posX + (double) i1, owner.posY + (double) k, owner.posZ + (double) l);
+                        blockpos$mutableblockpos.setPos(owner.func_226277_ct_() + (double)i1, owner.func_226278_cu_() + (double)k, owner.func_226281_cx_() + (double)l);
                         if (isFarmableBlock(blockpos$mutableblockpos, world)) {
                             mFarmableBlocks.add(new BlockPos(blockpos$mutableblockpos));
                         }

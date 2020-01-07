@@ -13,6 +13,7 @@ import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -43,8 +44,9 @@ public class ThrownItemEntity extends ProjectileItemEntity {
      * Set the item used by this entity
      * @param stack The item stack to use
      */
+    @Override
     public void setItem(ItemStack stack) {
-        super.func_213884_b(stack);
+        super.setItem(stack);
         stone = stack;
     }
 
@@ -53,12 +55,14 @@ public class ThrownItemEntity extends ProjectileItemEntity {
      * @param id ???
      */
     @OnlyIn(Dist.CLIENT)
+    @Override
     public void handleStatusUpdate(byte id) {
         if (id == 3) {
-            IParticleData iparticledata = this.func_213887_n();
+            IParticleData iparticledata = getParticleData();
 
+            Vec3d position = getPositionVec();
             for(int i = 0; i < 8; ++i) {
-                this.world.addParticle(iparticledata, this.posX, this.posY, this.posZ, 0.0D, 0.0D, 0.0D);
+                this.world.addParticle(iparticledata, position.x, position.y, position.z, 0.0D, 0.0D, 0.0D);
             }
         }
 
@@ -68,7 +72,8 @@ public class ThrownItemEntity extends ProjectileItemEntity {
      * Get the item being thrown
      * @return The type of stone being thrown
      */
-    protected Item func_213885_i() {
+    @Override
+    protected Item getDefaultItem() {
         return stone != null ? stone.getItem() : Items.SNOWBALL;
     }
 
@@ -76,6 +81,7 @@ public class ThrownItemEntity extends ProjectileItemEntity {
      * Called when this EntityThrowable hits a block or entity.
      * @param result The result of the raytrace
      */
+    @Override
     protected void onImpact(RayTraceResult result) {
         if (result.getType() == RayTraceResult.Type.ENTITY) {
             Entity entity = ((EntityRayTraceResult)result).getEntity();
@@ -93,7 +99,7 @@ public class ThrownItemEntity extends ProjectileItemEntity {
      * @return The particles to render on impact
      */
     @OnlyIn(Dist.CLIENT)
-    private IParticleData func_213887_n() {
+    private IParticleData getParticleData() {
         ItemStack itemstack = this.func_213882_k();
         return (itemstack.isEmpty() ? ParticleTypes.ITEM_SNOWBALL : new ItemParticleData(ParticleTypes.ITEM, itemstack));
     }

@@ -4,6 +4,8 @@ import com.bokmcdok.wheat.WheatMod;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FireBlock;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.client.renderer.color.BlockColors;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -48,6 +50,20 @@ public class ModBlockUtils {
     public static Set<Block> WHEAT;
 
     private static final ModBlockManager BLOCK_MANAGER = new ModBlockManager();
+
+    private enum ModRenderType {
+        SOLID,
+        CUTOUT_MIPPED,
+        CUTOUT,
+        TRANSLUCENT,
+        TRANSLUCENT_NO_CRUMBLING,
+        LEASH,
+        WATER_MASK,
+        GLINT,
+        ENTITY_GLINT,
+        LIGHTNING,
+        LINES
+    }
 
     /**
      * Register all the new types of wheat in the game.
@@ -94,6 +110,10 @@ public class ModBlockUtils {
         for (IModBlock i : blocks) {
             if (i.getFlammability() > 0.0f) {
                 fireBlock.setFireInfo(i.asBlock(), i.getFireEncouragement(), i.getFlammability());
+            }
+
+            if (!"solid".equals(i.getRenderType())) {
+                RenderTypeLookup.setRenderLayer(i.asBlock(), getRenderType(i.getRenderType()));
             }
         }
 
@@ -165,5 +185,39 @@ public class ModBlockUtils {
      */
     public static List<Block> getTraps() {
         return BLOCK_MANAGER.getTraps();
+    }
+
+    /**
+     * Helper method to get the render type.
+     * @param renderType The string name of the render type.
+     * @return A RenderType instance.
+     */
+    private static RenderType getRenderType(String renderType) {
+        ModRenderType modRenderType = ModRenderType.valueOf(renderType.toUpperCase());
+        switch (modRenderType) {
+            case CUTOUT_MIPPED:
+                return RenderType.func_228641_d_();
+            case CUTOUT:
+                return RenderType.func_228643_e_();
+            case TRANSLUCENT:
+                return RenderType.func_228645_f_();
+            case TRANSLUCENT_NO_CRUMBLING:
+                return RenderType.func_228647_g_();
+            case LEASH:
+                return RenderType.func_228649_h_();
+            case WATER_MASK:
+                return RenderType.func_228651_i_();
+            case GLINT:
+                return RenderType.func_228653_j_();
+            case ENTITY_GLINT:
+                return RenderType.func_228655_k_();
+            case LIGHTNING:
+                return RenderType.func_228657_l_();
+            case LINES:
+                return RenderType.func_228659_m_();
+            case SOLID:
+            default:
+                return RenderType.func_228639_c_();
+        }
     }
 }
