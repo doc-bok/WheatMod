@@ -1,12 +1,9 @@
 package com.bokmcdok.wheat.entity.feldgeister.getreidewolf;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.client.renderer.entity.model.WolfModel;
-import net.minecraft.entity.passive.WolfEntity;
 import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nullable;

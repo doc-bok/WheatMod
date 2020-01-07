@@ -1,7 +1,6 @@
 package com.bokmcdok.wheat.entity.feldgeister.getreidewolf;
 
 import com.google.common.collect.ImmutableList;
-import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.entity.model.TintedAgeableModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.util.math.MathHelper;
@@ -52,10 +51,12 @@ public class ModGetreidewolfModel<T extends ModGetreidewolfEntity> extends Tinte
         mHead.setTextureOffset(0, 10).func_228301_a_(-0.5F, 0.0F, -5.0F, 3, 3, 4, 0.0F);
     }
 
+    @Override
     protected Iterable<ModelRenderer> func_225602_a_() {
         return ImmutableList.of(mHead);
     }
 
+    @Override
     protected Iterable<ModelRenderer> func_225600_b_() {
         return ImmutableList.of(mBody, mLegBackRight, mLegBackLeft, mLegFrontRight, mLegFrontLeft, mTail, mMane);
     }

@@ -112,6 +112,7 @@ public class ModWeizenbellerModel<T extends ModWeizenbellerEntity> extends Segme
      * @param netHeadYaw The head's yaw angle.
      * @param headPitch The head's pitch angle.
      */
+    @Override
     public void func_225597_a_(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         mHead.rotateAngleX = headPitch * 0.017453292F;
         mHead.rotateAngleY = netHeadYaw * 0.017453292F;
