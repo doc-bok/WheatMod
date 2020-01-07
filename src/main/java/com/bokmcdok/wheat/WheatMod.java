@@ -1,11 +1,8 @@
 package com.bokmcdok.wheat;
 
 import com.bokmcdok.wheat.container.ModContainerUtils;
-import com.bokmcdok.wheat.entity.ThrownItemEntity;
-import com.bokmcdok.wheat.render.StoneRenderer;
 import com.bokmcdok.wheat.screen.FlourMillScreen;
 import net.minecraft.client.gui.ScreenManager;
-import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;

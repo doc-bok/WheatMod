@@ -41,13 +41,7 @@ public class ModVillagerProfessionHelper {
             if (block.isPresent()) {
                 try {
                     Method func_226359_a_ = ObfuscationReflectionHelper.findMethod(PointOfInterestType.class, "func_226359_a_", String.class, Set.class, int.class, int.class);
-                    //PointOfInterestType poi = (PointOfInterestType)
-                    func_226359_a_.invoke(null, i.getLocation().toString(), ImmutableSet.copyOf(block.get().getStateContainer().getValidStates()), 1, 1);
-
-                    //event.getRegistry().registerAll(poi.setRegistryName(i.getLocation()));
-
-                    //Method func_221052_a = ObfuscationReflectionHelper.findMethod(PointOfInterestType.class, "func_221052_a", PointOfInterestType.class);
-                    //func_221052_a.invoke(null, poi);
+                   func_226359_a_.invoke(null, i.getLocation().toString(), ImmutableSet.copyOf(block.get().getStateContainer().getValidStates()), 1, 1);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -64,8 +58,7 @@ public class ModVillagerProfessionHelper {
 
                 try {
                     Method func_226557_a_ = ObfuscationReflectionHelper.findMethod(VillagerProfession.class, "func_226557_a_", String.class, PointOfInterestType.class, ImmutableSet.class, ImmutableSet.class, SoundEvent.class);
-                    VillagerProfession profession = (VillagerProfession)func_226557_a_.invoke(null, i.getLocation().toString(), poi.get(), ImmutableSet.of(), ImmutableSet.of(), SoundEvents.ENTITY_VILLAGER_WORK_BUTCHER);
-                    //event.getRegistry().registerAll(profession.setRegistryName(i.getLocation()));
+                    func_226557_a_.invoke(null, i.getLocation().toString(), poi.get(), ImmutableSet.of(), ImmutableSet.of(), SoundEvents.ENTITY_VILLAGER_WORK_BUTCHER);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
