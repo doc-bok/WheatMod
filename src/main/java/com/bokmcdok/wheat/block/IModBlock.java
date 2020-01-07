@@ -13,6 +13,8 @@ public interface IModBlock {
 
     IBlockColor getColor();
 
+    String getRenderType();
+
     int getFlammability();
     int getFireEncouragement();
 

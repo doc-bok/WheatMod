@@ -28,14 +28,26 @@ public class ModCropsBlock extends CropsBlock implements IModBlock {
         mCropProperties = mImpl.getCropProperties();
     }
 
+    @Override
     public IBlockColor getColor() {
         return mImpl.getColor();
     }
 
+    /**
+     * Get the render type's name.
+     * @return The name of the render type.
+     */
+    @Override
+    public String getRenderType() {
+        return mImpl.getRenderType();
+    }
+
+    @Override
     public int getFlammability() {
         return mImpl.getFlammability();
     }
 
+    @Override
     public int getFireEncouragement() {
         return mImpl.getFireEncouragement();
     }
@@ -110,6 +122,7 @@ public class ModCropsBlock extends CropsBlock implements IModBlock {
      * @param position The position of the block
      * @return TRUE if the crop can grow
      */
+    @Override
     protected boolean isValidGround(BlockState state, IBlockReader world, BlockPos position)
     {
         if (mCropProperties.getWild()) {

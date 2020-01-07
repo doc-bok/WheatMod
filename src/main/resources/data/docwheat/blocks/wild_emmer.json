@@ -20,5 +20,6 @@
         "mutation": "docwheat:durum"
       }
     ]
-  }
+  },
+  "render_type": "cutout"
 }

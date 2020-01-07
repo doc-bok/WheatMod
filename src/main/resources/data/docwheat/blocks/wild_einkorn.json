@@ -20,5 +20,6 @@
         "mutation": "docwheat:common_wheat"
       }
     ]
-  }
+  },
+  "render_type": "cutout"
 }

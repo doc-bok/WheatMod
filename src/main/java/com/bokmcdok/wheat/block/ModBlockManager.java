@@ -114,6 +114,7 @@ public class ModBlockManager extends ModDataManager<IModBlock> {
         setIfTrue(properties, json, "no_drops", ModBlockImpl.ModBlockProperties::noDrops);
         setBlock(properties, json, "loot_from", ModBlockImpl.ModBlockProperties::lootFrom);
         setInt(properties, json, "inventory_size", ModBlockImpl.ModBlockProperties::setInventory);
+        setString(properties, json, "render_type", ModBlockImpl.ModBlockProperties::setRenderType);
 
         deserializeColor(json, properties);
         deserializeFire(json, properties);

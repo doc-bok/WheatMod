@@ -3,5 +3,6 @@
   "from": "minecraft:wheat",
   "crop": {
     "seed": "docwheat:tomato_seeds"
-  }
+  },
+  "render_type": "cutout"
 }

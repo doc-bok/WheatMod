@@ -1,9 +1,12 @@
 package com.bokmcdok.wheat.block;
 
 import com.bokmcdok.wheat.WheatMod;
+import com.sun.javafx.sg.prism.NodeEffectInput;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FireBlock;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.client.renderer.color.BlockColors;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -95,6 +98,10 @@ public class ModBlockUtils {
             if (i.getFlammability() > 0.0f) {
                 fireBlock.setFireInfo(i.asBlock(), i.getFireEncouragement(), i.getFlammability());
             }
+
+            if (!"solid".equals(i.getRenderType())) {
+                RenderTypeLookup.setRenderLayer(i.asBlock(), getRenderType(i.getRenderType()));
+            }
         }
 
         MUSHROOMS = new HashSet<Block>(Arrays.asList(
@@ -165,5 +172,59 @@ public class ModBlockUtils {
      */
     public static List<Block> getTraps() {
         return BLOCK_MANAGER.getTraps();
+    }
+
+    /**
+     * Helper method to get the render type.
+     * @param renderType The string name of the render type.
+     * @return A RenderType instance.
+     */
+    private static RenderType getRenderType(String renderType) {
+        if ("solid".equals(renderType)) {
+            return RenderType.func_228639_c_();
+        }
+
+        if ("cutout_mipped".equals(renderType)) {
+            return RenderType.func_228641_d_();
+        }
+
+        if ("cutout".equals(renderType)) {
+            return RenderType.func_228643_e_();
+        }
+
+        if ("translucent".equals(renderType)) {
+            return RenderType.func_228645_f_();
+        }
+
+        if ("translucent_no_crumbling".equals(renderType)) {
+            return RenderType.func_228647_g_();
+        }
+
+        if ("leash".equals(renderType)) {
+            return RenderType.func_228649_h_();
+        }
+
+        if ("water_mask".equals(renderType)) {
+            return RenderType.func_228651_i_();
+        }
+
+        if ("glint".equals(renderType)) {
+            return RenderType.func_228653_j_();
+        }
+
+        if ("entity_glint".equals(renderType)) {
+            return RenderType.func_228655_k_();
+        }
+
+        if ("lightning".equals(renderType)) {
+            return RenderType.func_228657_l_();
+        }
+
+        if ("lines".equals(renderType)) {
+            return RenderType.func_228659_m_();
+        }
+
+        //  Default to solid render.
+        return RenderType.func_228639_c_();
     }
 }

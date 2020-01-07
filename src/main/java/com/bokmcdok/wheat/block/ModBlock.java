@@ -35,6 +35,15 @@ public class ModBlock extends Block implements IModBlock {
     }
 
     /**
+     * Get the render type's name.
+     * @return The name of the render type.
+     */
+    @Override
+    public String getRenderType() {
+        return mImpl.getRenderType();
+    }
+
+    /**
      * Get the flammability of the block.
      * @return How flammable the block is.
      */
