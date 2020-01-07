@@ -104,11 +104,14 @@ public class ModGetreidewolfEntity extends ModFeldgeisterEntity implements IRang
                 float minY = (float) getBoundingBox().minY;
                 int sin = (int) (MathHelper.sin((mTimeWolfIsShaking - 0.4f) * (float) Math.PI) * 7.0f);
                 Vec3d motion = getMotion();
-
+                Vec3d position = getPositionVec();
                 for (int i = 0; i < sin; ++i) {
                     float f1 = (rand.nextFloat() * 2.0f - 1.0f) - getWidth() * 0.5f;
                     float f2 = (rand.nextFloat() * 2.0f - 1.0f) - getWidth() * 0.5f;
-                    world.addParticle(ParticleTypes.SPLASH, posX + f1, minY + 0.8f, posZ + f2, motion.x, motion.y, motion.z);
+                    world.addParticle(ParticleTypes.SPLASH,
+                            position.x + f1,
+                            minY + 0.8f,
+                            position.z + f2, motion.x, motion.y, motion.z);
                 }
             }
         }
@@ -224,7 +227,8 @@ public class ModGetreidewolfEntity extends ModFeldgeisterEntity implements IRang
     @Override
     public void attackEntityWithRangedAttack(LivingEntity target, float v) {
         //  Play the howl
-        world.playSound(null, posX, posY, posZ, SoundEvents.ENTITY_WOLF_HOWL, getSoundCategory(), 1.0F, 1.0F + (rand.nextFloat() - rand.nextFloat()) * 0.2F);
+        Vec3d position = getPositionVec();
+        world.playSound(null, position.x, position.y, position.z, SoundEvents.ENTITY_WOLF_HOWL, getSoundCategory(), 1.0F, 1.0F + (rand.nextFloat() - rand.nextFloat()) * 0.2F);
 
         //  Get the bounding box
         AxisAlignedBB boundingBox = getBoundingBox();

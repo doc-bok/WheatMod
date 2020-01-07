@@ -26,6 +26,7 @@ public class FlourMillScreen extends ContainerScreen<FlourMillContainer> {
 
     /*** Just tick
      */
+    @Override
     public void tick() {
         super.tick();
     }
@@ -36,6 +37,7 @@ public class FlourMillScreen extends ContainerScreen<FlourMillContainer> {
      * @param mouseY The mouse Y position on the screen
      * @param partialTicks The number of ticks since the last update
      */
+    @Override
     public void render(int mouseX, int mouseY, float partialTicks) {
         renderBackground();
         super.render(mouseX, mouseY, partialTicks);
@@ -47,6 +49,7 @@ public class FlourMillScreen extends ContainerScreen<FlourMillContainer> {
      * @param mouseX The mouse X position on the screen
      * @param mouseY The mouse Y position on the screen
      */
+    @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
         font.drawString(title.getFormattedText(), 28.0F, 6.0F, 4210752);
         font.drawString(playerInventory.getDisplayName().getFormattedText(), 8.0F, (float)(ySize - 96 + 2), 4210752);
@@ -58,8 +61,9 @@ public class FlourMillScreen extends ContainerScreen<FlourMillContainer> {
      * @param mouseY The mouse Y position on the screen
      * @param partialTicks The number of ticks since the last update
      */
+    @Override
     protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-        GlStateManager.color4f(1.0F, 1.0F, 1.0F, 1.0F);
+        GlStateManager.func_227702_d_(1.0F, 1.0F, 1.0F, 1.0F);
         minecraft.getTextureManager().bindTexture(GUI_TEXTURES);
         int i = this.guiLeft;
         int j = (this.height - this.ySize) / 2;

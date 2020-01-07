@@ -28,7 +28,7 @@ public class ModWeizenbellerRenderer extends MobRenderer<ModWeizenbellerEntity, 
      */
     @Nullable
     @Override
-    protected ResourceLocation getEntityTexture(ModWeizenbellerEntity entity) {
+    public ResourceLocation getEntityTexture(ModWeizenbellerEntity entity) {
         return WEIZENBELLER_TEXTURES;
     }
 }

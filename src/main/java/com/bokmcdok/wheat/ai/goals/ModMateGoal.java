@@ -6,6 +6,7 @@ import net.minecraft.entity.ai.goal.BreedGoal;
 import net.minecraft.entity.item.ExperienceOrbEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.stats.Stats;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.GameRules;
 
 import java.util.Random;
@@ -48,7 +49,8 @@ public class ModMateGoal extends BreedGoal {
 
             Random random = animal.getRNG();
             if (world.getGameRules().getBoolean(GameRules.DO_MOB_LOOT)) {
-                world.addEntity(new ExperienceOrbEntity(world, animal.posX, animal.posY, animal.posZ, random.nextInt(7) + 1));
+                Vec3d position = animal.getPositionVec();
+                world.addEntity(new ExperienceOrbEntity(world, position.x, position.y, position.z, random.nextInt(7) + 1));
             }
         }
 

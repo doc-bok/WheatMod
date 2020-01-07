@@ -25,8 +25,6 @@ public class WheatMod
     }
 
     private void clientSetup(final FMLClientSetupEvent event) {
-        RenderingRegistry.registerEntityRenderingHandler(ThrownItemEntity.class, new StoneRenderer());
-
         ScreenManager.registerFactory(ModContainerUtils.flour_mill_container, FlourMillScreen::new);
     }
 }

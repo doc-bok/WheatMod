@@ -7,6 +7,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.MutableBoundingBox;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.BiomeManager;
 import net.minecraft.world.gen.ChunkGenerator;
 import net.minecraft.world.gen.feature.structure.MarginedStructureStart;
 import net.minecraft.world.gen.feature.structure.ScatteredStructure;
@@ -26,17 +27,21 @@ public class ModWindmillStructure extends ScatteredStructure<ModWindmillConfig> 
         super(config);
     }
 
+    @Override
     public String getStructureName() {
         return "windmill";
     }
 
+    @Override
     public int getSize() { return 3; }
 
+    @Override
     public List<Biome.SpawnListEntry> getSpawnList() {
         return SPAWN_LIST;
     }
 
-    public boolean hasStartAt(ChunkGenerator<?> chunkGenerator, Random random, int chunkPosX, int chunkPosZ) {
+    @Override
+    public boolean func_225558_a_(BiomeManager biomeManager, ChunkGenerator<?> chunkGenerator, Random random, int chunkPosX, int chunkPosZ, Biome biome) {
         ChunkPos position = getStartPositionForPosition(chunkGenerator, random, chunkPosX, chunkPosZ, 0, 0);
 
         int newX = random.nextInt(2) < 1 ? position.x - 3 : position.x + 3;
@@ -53,7 +58,6 @@ public class ModWindmillStructure extends ScatteredStructure<ModWindmillConfig> 
                 return false;
             }
 
-            Biome biome = chunkGenerator.getBiomeProvider().getBiome(new BlockPos((chunkPosX << 4) + 9, 0, (chunkPosZ << 4) + 9));
             if (chunkGenerator.hasStructure(biome, ModFeatureUtils.WINDMILL)) {
                 return true;
             }
@@ -62,19 +66,22 @@ public class ModWindmillStructure extends ScatteredStructure<ModWindmillConfig> 
         return false;
     }
 
+    @Override
     public Structure.IStartFactory getStartFactory() {
         return ModWindmillStructure.Start::new;
     }
 
+    @Override
     protected int getSeedModifier() {
         return 10387312;    //  Same as villages
     }
 
     public static class Start extends MarginedStructureStart {
-        public Start(Structure<?> structure, int chunkX, int chunkZ, Biome biome, MutableBoundingBox bounds, int reference, long seed) {
-            super(structure, chunkX, chunkZ, biome, bounds, reference, seed);
+        public Start(Structure<?> structure, int chunkX, int chunkZ, MutableBoundingBox bounds, int reference, long seed) {
+            super(structure, chunkX, chunkZ, bounds, reference, seed);
         }
 
+        @Override
         public void init(ChunkGenerator<?> generator, TemplateManager templateManager, int chunkX, int chunkZ, Biome biome) {
             BlockPos position = new BlockPos(chunkX * 16, 90, chunkZ * 16);
             ModWindmillPiecesHelper.assemble(generator, templateManager, position, components, rand);

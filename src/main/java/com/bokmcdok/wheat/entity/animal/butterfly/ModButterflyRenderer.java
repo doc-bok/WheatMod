@@ -1,5 +1,6 @@
 package com.bokmcdok.wheat.entity.animal.butterfly;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;
@@ -27,7 +28,7 @@ public class ModButterflyRenderer extends MobRenderer<ModButterflyEntity, ModBut
      */
     @Nullable
     @Override
-    protected ResourceLocation getEntityTexture(ModButterflyEntity entity) {
+    public ResourceLocation getEntityTexture(ModButterflyEntity entity) {
         if (entity.getIsButterfly()) {
             return BUTTERFLY_TEXTURE;
         } else {
@@ -41,8 +42,8 @@ public class ModButterflyRenderer extends MobRenderer<ModButterflyEntity, ModBut
      * @param partialTickTime The time delta.
      */
     @Override
-    protected void preRenderCallback(ModButterflyEntity entity, float partialTickTime) {
-        GlStateManager.scalef(0.35F, 0.35F, 0.35F);
+    protected void func_225620_a_(ModButterflyEntity entity, MatrixStack stack, float partialTickTime) {
+        stack.func_227862_a_(0.35F, 0.35F, 0.35F);
     }
 
     /**
@@ -53,11 +54,11 @@ public class ModButterflyRenderer extends MobRenderer<ModButterflyEntity, ModBut
      * @param partialTicks The time delta.
      */
     @Override
-    protected void applyRotations(ModButterflyEntity entity, float ageInTicks, float rotationYaw, float partialTicks) {
-        GlStateManager.translatef(
+    protected void func_225621_a_(ModButterflyEntity entity, MatrixStack stack, float ageInTicks, float rotationYaw, float partialTicks) {
+        stack.func_227861_a_(
                 0.0F,
                 MathHelper.cos(ageInTicks * 0.3F) * 0.1F,
                 0.0F);
-        super.applyRotations(entity, ageInTicks, rotationYaw, partialTicks);
+        super.func_225621_a_(entity, stack, ageInTicks, rotationYaw, partialTicks);
     }
 }

@@ -23,7 +23,7 @@ public class ModHaferbockRenderer extends MobRenderer<ModHaferbockEntity, ModHaf
      * @param entity The entity to get textures for.
      * @return The textures to use.
      */
-    protected ResourceLocation getEntityTexture(ModHaferbockEntity entity) {
+    public ResourceLocation getEntityTexture(ModHaferbockEntity entity) {
         return HAFERBOCK_TEXTURES;
     }
 }

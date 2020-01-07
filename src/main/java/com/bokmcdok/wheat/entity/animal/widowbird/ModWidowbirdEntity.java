@@ -94,7 +94,7 @@ public class ModWidowbirdEntity extends ModNestingEntity implements IFlyingAnima
                 block == Blocks.GRASS_BLOCK ||
                 block instanceof LogBlock ||
                 block == Blocks.AIR) &&
-                world.getLightSubtracted(position, 0) > 8;
+                world.getNeighborAwareLightSubtracted(position, 0) > 8;
     }
 
     /**
@@ -103,8 +103,8 @@ public class ModWidowbirdEntity extends ModNestingEntity implements IFlyingAnima
      * @param damageMultiplier The damage multiplier from the fall.
      */
     @Override
-    public void fall(float distance, float damageMultiplier) {
-        //no-op
+    public boolean func_225503_b_(float distance, float damageMultiplier) {
+        return false;
     }
 
     /**

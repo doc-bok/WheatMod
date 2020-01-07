@@ -30,7 +30,7 @@ public class ModWindmillPiecesHelper {
     }
 
     static {
-        JigsawManager.field_214891_a.register(
+        JigsawManager.REGISTRY.register(
                 new JigsawPattern(
                         new ResourceLocation("docwheat:windmill/windmills"),
                         new ResourceLocation("empty"),

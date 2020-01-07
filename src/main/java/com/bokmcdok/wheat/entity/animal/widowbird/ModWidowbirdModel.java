@@ -1,21 +1,29 @@
 package com.bokmcdok.wheat.entity.animal.widowbird;
 
+import com.google.common.collect.ImmutableList;
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.renderer.entity.model.EntityModel;
-import net.minecraft.client.renderer.entity.model.RendererModel;
+import net.minecraft.client.renderer.entity.model.SegmentedModel;
+import net.minecraft.client.renderer.entity.model.TintedAgeableModel;
+import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.util.math.MathHelper;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import java.util.Arrays;
+
 @OnlyIn(Dist.CLIENT)
-public class ModWidowbirdModel extends EntityModel<ModWidowbirdEntity> {
-    private final RendererModel mBody;
-    private final RendererModel mTail;
-    private final RendererModel mWingLeft;
-    private final RendererModel mWingRight;
-    private final RendererModel mHead;
-    private final RendererModel mLegLeft;
-    private final RendererModel mLegRight;
+public class ModWidowbirdModel extends TintedAgeableModel<ModWidowbirdEntity> {
+    private final ModelRenderer mBody;
+    private final ModelRenderer mTail;
+    private final ModelRenderer mWingLeft;
+    private final ModelRenderer mWingRight;
+    private final ModelRenderer mHead;
+    private final ModelRenderer mLegLeft;
+    private final ModelRenderer mLegRight;
+    private final ImmutableList<ModelRenderer> mRenderers;
 
     /**
      * Construction
@@ -24,75 +32,42 @@ public class ModWidowbirdModel extends EntityModel<ModWidowbirdEntity> {
         textureWidth = 32;
         textureHeight = 32;
 
-        mBody = new RendererModel(this, 2, 8);
-        mBody.addBox(-1.5F, 0.0F, -1.5F, 3, 6, 3);
+        mBody = new ModelRenderer(this, 2, 8);
+        mBody.func_228300_a_(-1.5F, 0.0F, -1.5F, 3, 6, 3);
         mBody.setRotationPoint(0.0F, 16.5F, -3.0F);
 
-        mTail = new RendererModel(this, 22, 1);
-        mTail.addBox(-1.5F, -1.0F, -1.0F, 3, 12, 1);
+        mTail = new ModelRenderer(this, 22, 1);
+        mTail.func_228300_a_(-1.5F, -1.0F, -1.0F, 3, 12, 1);
         mTail.setRotationPoint(0.0F, 21.07F, 1.16F);
 
-        mWingLeft = new RendererModel(this, 11, 22);
-        mWingLeft.addBox(-0.5F, 0.0F, -1.5F, 1, 6, 3);
+        mWingLeft = new ModelRenderer(this, 11, 22);
+        mWingLeft.func_228300_a_(-0.5F, 0.0F, -1.5F, 1, 6, 3);
         mWingLeft.setRotationPoint(1.5F, 16.94F, -2.76F);
 
-        mWingRight = new RendererModel(this, 11, 22);
-        mWingRight.addBox(-0.5F, 0.0F, -1.5F, 1, 6, 3);
+        mWingRight = new ModelRenderer(this, 11, 22);
+        mWingRight.func_228300_a_(-0.5F, 0.0F, -1.5F, 1, 6, 3);
         mWingRight.setRotationPoint(-1.5F, 16.94F, -2.76F);
 
-        mHead = new RendererModel(this, 2, 2);
-        mHead.addBox(-1.0F, -1.5F, -1.0F, 2, 3, 2);
+        mHead = new ModelRenderer(this, 2, 2);
+        mHead.func_228300_a_(-1.0F, -1.5F, -1.0F, 2, 3, 2);
         mHead.setRotationPoint(0.0F, 15.69F, -2.76F);
 
-        RendererModel beak = new RendererModel(this, 11, 7);
-        beak.addBox(-0.5F, -0.5F, -0.5F, 1, 1, 1);
+        ModelRenderer beak = new ModelRenderer(this, 11, 7);
+        beak.func_228300_a_(-0.5F, -0.5F, -0.5F, 1, 1, 1);
         beak.setRotationPoint(0.0F, -0.5F, -1.5F);
         mHead.addChild(beak);
 
-        mLegLeft = new RendererModel(this, 14, 18);
-        mLegLeft.addBox(-0.5F, 0.0F, -0.5F, 1, 2, 1);
+        mLegLeft = new ModelRenderer(this, 14, 18);
+        mLegLeft.func_228300_a_(-0.5F, 0.0F, -0.5F, 1, 2, 1);
         mLegLeft.setRotationPoint(1.0F, 22.0F, -1.05F);
 
-        mLegRight = new RendererModel(this, 14, 18);
-        mLegRight.addBox(-0.5F, 0.0F, -0.5F, 1, 2, 1);
+        mLegRight = new ModelRenderer(this, 14, 18);
+        mLegRight.func_228300_a_(-0.5F, 0.0F, -0.5F, 1, 2, 1);
         mLegRight.setRotationPoint(-1.0F, 22.0F, -1.05F);
-    }
 
-    /**
-     * Render the model.
-     * @param entity The entity.
-     * @param limbSwing The limb swing angle.
-     * @param limbSwingAmount The amount of limb swing.
-     * @param ageInTicks The age of the model.
-     * @param netHeadYaw The head's yaw angle.
-     * @param headPitch The head's pitch angle.
-     * @param scale The size to render the bird.
-     */
-    @Override
-    public void render(ModWidowbirdEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {
-        GlStateManager.pushMatrix();
-        if (entity.isChild()) {
-            GlStateManager.translatef(0.0F, 5.0F * scale, 2.0F * scale);
-        }
-
-        mHead.render(scale);
-
-        GlStateManager.popMatrix();
-        GlStateManager.pushMatrix();
-
-        if (entity.isChild()) {
-            GlStateManager.scalef(0.5F, 0.5F, 0.5F);
-            GlStateManager.translatef(0.0F, 24.0F * scale, 0.0F);
-        }
-
-        mBody.render(scale);
-        mWingLeft.render(scale);
-        mWingRight.render(scale);
-        mTail.render(scale);
-        mLegLeft.render(scale);
-        mLegRight.render(scale);
-
-        GlStateManager.popMatrix();
+        ImmutableList.Builder<ModelRenderer> builder = ImmutableList.builder();
+        builder.addAll(Arrays.asList(mBody, mTail, mWingLeft, mWingRight, mLegLeft, mLegRight));
+        mRenderers = builder.build();
     }
 
     /**
@@ -103,10 +78,10 @@ public class ModWidowbirdModel extends EntityModel<ModWidowbirdEntity> {
      * @param ageInTicks The age of the model.
      * @param netHeadYaw The head's yaw angle.
      * @param headPitch The head's pitch angle.
-     * @param scale The size to render the bird.
      */
     @Override
-    public void setRotationAngles(ModWidowbirdEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch, float scale) {        mHead.rotateAngleX = headPitch * 0.017453292F;
+    public void func_225597_a_(ModWidowbirdEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+        mHead.rotateAngleX = headPitch * 0.017453292F;
         mHead.rotateAngleY = netHeadYaw * 0.017453292F;
         mHead.rotateAngleZ = 0.0F;
         mHead.rotationPointX = 0.0F;
@@ -131,7 +106,7 @@ public class ModWidowbirdModel extends EntityModel<ModWidowbirdEntity> {
             mLegLeft.rotationPointY = 22.0F + frame;
             mLegRight.rotationPointY = 22.0F + frame;
         } else {
-            RendererModel leg = mLegLeft;
+            ModelRenderer leg = mLegLeft;
             leg.rotateAngleX += MathHelper.cos(limbSwing * 0.6662F) * 1.4F * limbSwingAmount;
             leg = mLegRight;
             leg.rotateAngleX += MathHelper.cos(limbSwing * 0.6662F + 3.1415927F) * 1.4F * limbSwingAmount;
@@ -162,10 +137,20 @@ public class ModWidowbirdModel extends EntityModel<ModWidowbirdEntity> {
         mLegRight.rotateAngleZ = 0.0F;
 
         if (entity.isFlying()) {
-            RendererModel var10000 = mLegLeft;
+            ModelRenderer var10000 = mLegLeft;
             var10000.rotateAngleX += 0.6981317F;
             var10000 = mLegRight;
             var10000.rotateAngleX += 0.6981317F;
         }
+    }
+
+    @Override
+    protected Iterable<ModelRenderer> func_225602_a_() {
+        return ImmutableList.of(mHead);
+    }
+
+    @Override
+    protected Iterable<ModelRenderer> func_225600_b_() {
+        return mRenderers;
     }
 }

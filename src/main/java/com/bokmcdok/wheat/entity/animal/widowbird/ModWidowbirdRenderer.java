@@ -42,7 +42,7 @@ public class ModWidowbirdRenderer extends MobRenderer<ModWidowbirdEntity, ModWid
      */
     @Nullable
     @Override
-    protected ResourceLocation getEntityTexture(ModWidowbirdEntity entity) {
+    public ResourceLocation getEntityTexture(ModWidowbirdEntity entity) {
         return entity.getIsMale() && !entity.isChild() ? MALE_TEXTURE : FEMALE_TEXTURE;
     }
 }

@@ -10,6 +10,8 @@ import net.minecraft.block.material.MaterialColor;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.container.INamedContainerProvider;
 import net.minecraft.inventory.container.SimpleNamedContainerProvider;
+import net.minecraft.stats.Stats;
+import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.IWorldPosCallable;
 import net.minecraft.util.math.BlockPos;
@@ -44,18 +46,22 @@ public class FlourMillBlock extends Block {
     /**
      * Called when the player right-clicks on the block. Opens the Flour Mill inventory.
      * @param state State of the block
-     * @param worldIn The world the block is in
-     * @param pos The position of the block
+     * @param world The world the block is in
+     * @param position The position of the block
      * @param player The player entity
-     * @param handIn The hand that is clicking
+     * @param hand The hand that is clicking
      * @param hit The result of the ray trace
      * @return TRUE, indicating the right-click action is consumed.
      */
     @Override
-    public boolean onBlockActivated(BlockState state, World worldIn, BlockPos pos, PlayerEntity player, Hand handIn, BlockRayTraceResult hit) {
-        player.openContainer(state.getContainer(worldIn, pos));
-        //player.addStat(Stats.INTERACT_WITH_CRAFTING_TABLE);
-        return true;
+    public ActionResultType func_225533_a_(BlockState state, World world, BlockPos position, PlayerEntity player, Hand hand, BlockRayTraceResult hit) {
+        if (world.isRemote) {
+            return ActionResultType.SUCCESS;
+        } else {
+            player.openContainer(state.getContainer(world, position));
+            //player.addStat(Stats.INTERACT_WITH_CRAFTING_TABLE);
+            return ActionResultType.SUCCESS;
+        }
     }
 
     /**

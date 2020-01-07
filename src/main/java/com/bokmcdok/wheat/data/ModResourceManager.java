@@ -116,13 +116,13 @@ public class ModResourceManager implements IResourceManager {
      * Add a resource pack to the resource manager.
      * @param resourcePack The resource pack to add.
      */
-    @Override
+    //@Override
     public void addResourcePack(IResourcePack resourcePack) {
         for(String s : resourcePack.getResourceNamespaces(mType)) {
             mResourceNamespaces.add(s);
             FallbackResourceManager fallbackResourceManager = mNamespaceResourceManagers.get(s);
             if (fallbackResourceManager == null) {
-                fallbackResourceManager = new FallbackResourceManager(mType);
+                fallbackResourceManager = new FallbackResourceManager(mType, s);
                 mNamespaceResourceManagers.put(s, fallbackResourceManager);
             }
 

@@ -20,7 +20,7 @@ public class ModHeukatzeRenderer extends MobRenderer<ModHeukatzeEntity, OcelotMo
 
     @Nullable
     @Override
-    protected ResourceLocation getEntityTexture(ModHeukatzeEntity entity) {
+    public ResourceLocation getEntityTexture(ModHeukatzeEntity entity) {
         return HEUKATZE_TEXTURES;
     }
 }

@@ -17,6 +17,7 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
+import net.minecraft.util.math.Vec3d;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -163,10 +164,11 @@ public class AnimalUtils {
 
     private static boolean grow(AnimalEntity animal, int growth) {
         if (animal.isChild() && growth > 0) {
+            Vec3d position = animal.getPositionVec();
             animal.world.addParticle(ParticleTypes.HAPPY_VILLAGER,
-                    animal.posX + (double)(rand.nextFloat() * animal.getWidth() * 2.0F) - (double)animal.getWidth(),
-                    animal.posY + 0.5D + (double)(rand.nextFloat() * animal.getHeight()),
-                    animal.posZ + (double)(rand.nextFloat() * animal.getWidth() * 2.0F) - (double)animal.getWidth(),
+                    position.x + (double)(rand.nextFloat() * animal.getWidth() * 2.0F) - (double)animal.getWidth(),
+                    position.y + 0.5D + (double)(rand.nextFloat() * animal.getHeight()),
+                    position.z + (double)(rand.nextFloat() * animal.getWidth() * 2.0F) - (double)animal.getWidth(),
                     0.0D, 0.0D, 0.0D);
 
             if (!animal.world.isRemote) {
@@ -207,7 +209,8 @@ public class AnimalUtils {
             consumeEvent(event, player, stack);
 
             if (!animal.isSilent()) {
-                animal.world.playSound((PlayerEntity) null, animal.posX, animal.posY, animal.posZ,
+                Vec3d position = animal.getPositionVec();
+                animal.world.playSound(null, position.x, position.y, position.z,
                         eatingSound, animal.getSoundCategory(),
                         1.0F, 1.0F + (rand.nextFloat() - rand.nextFloat()) * 0.2F);
             }
@@ -216,7 +219,7 @@ public class AnimalUtils {
 
     private static boolean cannotEat(AbstractHorseEntity entity, PlayerEntity player) {
         if (entity.isChild()) {
-            if (entity.isTame() && player.isSneaking()) { return true; }
+            if (entity.isTame() && player.isCrouching()) { return true; }
             return entity.isBeingRidden();
         }
 
@@ -247,11 +250,15 @@ public class AnimalUtils {
             iparticledata = ParticleTypes.SMOKE;
         }
 
+        Vec3d position = entity.getPositionVec();
         for(int i = 0; i < 7; ++i) {
             double d0 = rand.nextGaussian() * 0.02D;
             double d1 = rand.nextGaussian() * 0.02D;
             double d2 = rand.nextGaussian() * 0.02D;
-            entity.world.addParticle(iparticledata, entity.posX + (double)(rand.nextFloat() * entity.getWidth() * 2.0F) - (double)entity.getWidth(), entity.posY + 0.5D + (double)(rand.nextFloat() * entity.getHeight()), entity.posZ + (double)(rand.nextFloat() * entity.getWidth() * 2.0F) - (double)entity.getWidth(), d0, d1, d2);
+            entity.world.addParticle(iparticledata,
+                    position.x + (double)(rand.nextFloat() * entity.getWidth() * 2.0F) - (double)entity.getWidth(),
+                    position.y + 0.5D + (double)(rand.nextFloat() * entity.getHeight()),
+                    position.z + (double)(rand.nextFloat() * entity.getWidth() * 2.0F) - (double)entity.getWidth(), d0, d1, d2);
         }
     }
 }
