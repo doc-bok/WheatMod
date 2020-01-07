@@ -2,20 +2,22 @@ package com.bokmcdok.wheat.entity;
 
 import com.bokmcdok.wheat.WheatMod;
 import com.bokmcdok.wheat.block.ModBlockUtils;
-import com.bokmcdok.wheat.entity.animal.butterfly.ModButterflyEntity;
-import com.bokmcdok.wheat.entity.animal.butterfly.ModButterflyRenderFactory;
-import com.bokmcdok.wheat.entity.animal.mouse.ModMouseEntity;
-import com.bokmcdok.wheat.entity.animal.mouse.ModMouseRenderFactory;
-import com.bokmcdok.wheat.entity.animal.widowbird.ModWidowbirdEntity;
-import com.bokmcdok.wheat.entity.animal.widowbird.ModWidowbirdRenderFactory;
-import com.bokmcdok.wheat.entity.feldgeister.getreidewolf.ModGetreidewolfEntity;
-import com.bokmcdok.wheat.entity.feldgeister.getreidewolf.ModGetreidewolfRenderFactory;
-import com.bokmcdok.wheat.entity.feldgeister.haferbock.ModHaferbockEntity;
-import com.bokmcdok.wheat.entity.feldgeister.haferbock.ModHaferbockRenderFactory;
-import com.bokmcdok.wheat.entity.feldgeister.heukatze.ModHeukatzeEntity;
-import com.bokmcdok.wheat.entity.feldgeister.heukatze.ModHeukatzeRenderFactory;
-import com.bokmcdok.wheat.entity.feldgeister.weizenbeller.ModWeizenbellerEntity;
-import com.bokmcdok.wheat.entity.feldgeister.weizenbeller.ModWeizenbellerRenderFactory;
+import com.bokmcdok.wheat.entity.creature.animal.butterfly.ModButterflyEntity;
+import com.bokmcdok.wheat.entity.creature.animal.butterfly.ModButterflyRenderFactory;
+import com.bokmcdok.wheat.entity.creature.animal.mouse.ModMouseEntity;
+import com.bokmcdok.wheat.entity.creature.animal.mouse.ModMouseRenderFactory;
+import com.bokmcdok.wheat.entity.creature.animal.widowbird.ModWidowbirdEntity;
+import com.bokmcdok.wheat.entity.creature.animal.widowbird.ModWidowbirdRenderFactory;
+import com.bokmcdok.wheat.entity.creature.feldgeister.getreidewolf.ModGetreidewolfEntity;
+import com.bokmcdok.wheat.entity.creature.feldgeister.getreidewolf.ModGetreidewolfRenderFactory;
+import com.bokmcdok.wheat.entity.creature.feldgeister.haferbock.ModHaferbockEntity;
+import com.bokmcdok.wheat.entity.creature.feldgeister.haferbock.ModHaferbockRenderFactory;
+import com.bokmcdok.wheat.entity.creature.feldgeister.heukatze.ModHeukatzeEntity;
+import com.bokmcdok.wheat.entity.creature.feldgeister.heukatze.ModHeukatzeRenderFactory;
+import com.bokmcdok.wheat.entity.creature.feldgeister.weizenbeller.ModWeizenbellerEntity;
+import com.bokmcdok.wheat.entity.creature.feldgeister.weizenbeller.ModWeizenbellerRenderFactory;
+import com.bokmcdok.wheat.entity.creature.feldgeister.weizenvogel.ModWeizenvogelEntity;
+import com.bokmcdok.wheat.entity.creature.feldgeister.weizenvogel.ModWeizenvogelRenderFactory;
 import com.bokmcdok.wheat.entity.tile.ModInventoryTileEntity;
 import com.bokmcdok.wheat.entity.tile.ModTrapTileEntity;
 import com.bokmcdok.wheat.item.ModItemUtils;
@@ -48,6 +50,7 @@ public class ModEntityUtils {
     public static final EntityType<ModWeizenbellerEntity> weizenbeller = null;
     public static final EntityType<ModHeukatzeEntity> heukatze = null;
     public static final EntityType<ModHaferbockEntity> haferbock = null;
+    public static final EntityType<ModWeizenvogelEntity> weizenvogel = null;
 
     public static final TileEntityType<ModInventoryTileEntity> inventory = null;
     public static final TileEntityType<ModTrapTileEntity> trap = null;
@@ -96,7 +99,12 @@ public class ModEntityUtils {
                 EntityType.Builder.create(ModHaferbockEntity::new, EntityClassification.MONSTER)
                         .size(0.9f, 1.4f)
                         .build("haferbock")
-                        .setRegistryName(WheatMod.MOD_ID, "haferbock")
+                        .setRegistryName(WheatMod.MOD_ID, "haferbock"),
+
+                EntityType.Builder.create(ModWeizenvogelEntity::new, EntityClassification.MONSTER)
+                        .size(0.9f, 1.4f)
+                        .build("weizenvogel")
+                        .setRegistryName(WheatMod.MOD_ID, "weizenvogel")
         );
 
         ModItemUtils.loadSpawnEggs();
@@ -134,6 +142,7 @@ public class ModEntityUtils {
         EntitySpawnPlacementRegistry.register(weizenbeller, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ModWeizenbellerEntity::canSpawn);
         EntitySpawnPlacementRegistry.register(heukatze, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ModHeukatzeEntity::canSpawn);
         EntitySpawnPlacementRegistry.register(haferbock, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ModHaferbockEntity::canSpawn);
+        EntitySpawnPlacementRegistry.register(weizenvogel, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ModWeizenvogelEntity::canSpawn);
 
         RenderingRegistry.registerEntityRenderingHandler(stone_entity, new StoneRenderer());
         RenderingRegistry.registerEntityRenderingHandler(field_mouse, new ModMouseRenderFactory());
@@ -143,5 +152,6 @@ public class ModEntityUtils {
         RenderingRegistry.registerEntityRenderingHandler(weizenbeller, new ModWeizenbellerRenderFactory());
         RenderingRegistry.registerEntityRenderingHandler(heukatze, new ModHeukatzeRenderFactory());
         RenderingRegistry.registerEntityRenderingHandler(haferbock, new ModHaferbockRenderFactory());
+        RenderingRegistry.registerEntityRenderingHandler(weizenvogel, new ModWeizenvogelRenderFactory());
     }
 }

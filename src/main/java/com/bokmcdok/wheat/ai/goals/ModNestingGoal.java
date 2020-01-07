@@ -1,7 +1,7 @@
 package com.bokmcdok.wheat.ai.goals;
 
 import com.bokmcdok.wheat.block.ModBlockUtils;
-import com.bokmcdok.wheat.entity.animal.ModNestingEntity;
+import com.bokmcdok.wheat.entity.creature.animal.ModNestingEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -10,8 +10,6 @@ import net.minecraft.entity.ai.goal.MoveToBlockGoal;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
-
-import java.util.Optional;
 
 public class ModNestingGoal extends MoveToBlockGoal {
     private final ModNestingEntity mOwner;

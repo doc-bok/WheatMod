@@ -42,6 +42,7 @@ class ModTerrain {
                     biome.getSpawns(EntityClassification.MONSTER).add(new Biome.SpawnListEntry(ModEntityUtils.weizenbeller, 25, 1, 3));
                     biome.getSpawns(EntityClassification.MONSTER).add(new Biome.SpawnListEntry(ModEntityUtils.heukatze, 25, 1, 1));
                     biome.getSpawns(EntityClassification.MONSTER).add(new Biome.SpawnListEntry(ModEntityUtils.haferbock, 25, 1, 1));
+                    biome.getSpawns(EntityClassification.MONSTER).add(new Biome.SpawnListEntry(ModEntityUtils.weizenvogel, 25, 1, 1));
                     break;
 
                 case FOREST:
@@ -52,6 +53,7 @@ class ModTerrain {
                     biome.getSpawns(EntityClassification.MONSTER).add(new Biome.SpawnListEntry(ModEntityUtils.weizenbeller, 25, 1, 3));
                     biome.getSpawns(EntityClassification.MONSTER).add(new Biome.SpawnListEntry(ModEntityUtils.heukatze, 25, 1, 1));
                     biome.getSpawns(EntityClassification.MONSTER).add(new Biome.SpawnListEntry(ModEntityUtils.haferbock, 25, 1, 1));
+                    biome.getSpawns(EntityClassification.MONSTER).add(new Biome.SpawnListEntry(ModEntityUtils.weizenvogel, 25, 1, 1));
                     break;
 
                 case RIVER:
@@ -64,6 +66,7 @@ class ModTerrain {
                     biome.getSpawns(EntityClassification.MONSTER).add(new Biome.SpawnListEntry(ModEntityUtils.weizenbeller, 25, 1, 3));
                     biome.getSpawns(EntityClassification.MONSTER).add(new Biome.SpawnListEntry(ModEntityUtils.heukatze, 25, 1, 1));
                     biome.getSpawns(EntityClassification.MONSTER).add(new Biome.SpawnListEntry(ModEntityUtils.haferbock, 25, 1, 1));
+                    biome.getSpawns(EntityClassification.MONSTER).add(new Biome.SpawnListEntry(ModEntityUtils.weizenvogel, 25, 1, 1));
                     break;
 
                 case TAIGA:
@@ -91,7 +94,6 @@ class ModTerrain {
         for (int i = 0; i < 8; ++i) {
             BlockClusterFeatureConfig field_226728_P_ = (new BlockClusterFeatureConfig.Builder(new SimpleBlockStateProvider(block.withAge(i)), new SimpleBlockPlacer())).func_227315_a_(32).func_227322_d_();
             biome.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Feature.field_227248_z_.func_225566_b_(field_226728_P_).func_227228_a_(Placement.COUNT_HEIGHTMAP_32.func_227446_a_(new FrequencyConfig(Math.abs(i - 3) + 2))));
-            //biome.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Biome.createDecoratedFeature(Feature.BUSH, new BlockClusterFeatureConfig(block.withAge(i)), Placement.CHANCE_HEIGHTMAP, new ChanceConfig(Math.abs(i - 3) + 2)));
         }
     }
 }

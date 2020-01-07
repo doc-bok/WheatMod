@@ -1,6 +1,6 @@
 package com.bokmcdok.wheat.ai.goals;
 
-import com.bokmcdok.wheat.entity.animal.ModNestingEntity;
+import com.bokmcdok.wheat.entity.creature.animal.ModNestingEntity;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.entity.ai.goal.BreedGoal;
 import net.minecraft.entity.item.ExperienceOrbEntity;
