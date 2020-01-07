@@ -8,5 +8,6 @@
   },
   "crop": {
     "wild": true
-  }
+  },
+  "render_type": "cutout"
 }
