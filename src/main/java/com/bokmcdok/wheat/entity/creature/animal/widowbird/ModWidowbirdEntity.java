@@ -20,6 +20,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.ai.controller.FlyingMovementController;
 import net.minecraft.entity.ai.goal.LookAtGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.ai.goal.OcelotAttackGoal;
@@ -52,6 +53,7 @@ public class ModWidowbirdEntity extends ModNestingEntity implements IFlyingAnima
      */
     public ModWidowbirdEntity(EntityType<? extends ModWidowbirdEntity> type, World world) {
         super(type, world);
+        moveController = new FlyingMovementController(this, 10, false);
         mFlappingController = new ModFlappingController(this);
     }
 
@@ -248,6 +250,7 @@ public class ModWidowbirdEntity extends ModNestingEntity implements IFlyingAnima
     protected void registerAttributes() {
         super.registerAttributes();
         getAttributes().registerAttribute(SharedMonsterAttributes.FLYING_SPEED);
+        getAttributes().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
         getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(6.0d);
         getAttribute(SharedMonsterAttributes.FLYING_SPEED).setBaseValue(0.4d);
         getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.2d);
