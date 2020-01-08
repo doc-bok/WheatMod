@@ -8,6 +8,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.controller.FlyingMovementController;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.merchant.villager.VillagerEntity;
 import net.minecraft.entity.merchant.villager.VillagerProfession;
@@ -43,6 +44,7 @@ public class ModWeizenvogelEntity extends ModFeldgeisterEntity implements IFlyin
      */
     public ModWeizenvogelEntity(EntityType<? extends ModWeizenvogelEntity> type, World world) {
         super(type, world);
+        moveController = new FlyingMovementController(this, 10, false);
         mFlappingController = new ModFlappingController(this);
     }
 
