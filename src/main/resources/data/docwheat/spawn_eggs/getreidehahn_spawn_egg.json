@@ -1,0 +1,21 @@
+{
+    "type": "spawn_egg",
+    "group": "misc",
+    "entity": "docwheat:getreidehahn",
+
+    "primary_color": {
+        "color": {
+            "r": 231,
+            "g": 89,
+            "b": 42
+        }
+    },
+
+    "secondary_color": {
+        "color": {
+            "r": 178,
+            "g": 178,
+            "b": 89
+        }
+    }
+}

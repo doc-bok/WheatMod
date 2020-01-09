@@ -1,22 +1,22 @@
-package com.bokmcdok.wheat.entity.creature.feldgeister.weizenvogel;
+package com.bokmcdok.wheat.entity.creature.feldgeister.getreidehahn;
 
-import com.bokmcdok.wheat.entity.creature.ModFlappingBirdModel;
 import com.bokmcdok.wheat.entity.creature.ModFlappingBirdRenderer;
 import com.bokmcdok.wheat.entity.creature.ModFlappingController;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
+import net.minecraft.client.renderer.entity.model.ChickenModel;
 import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nullable;
 
-public class ModWeizenvogelRenderer extends ModFlappingBirdRenderer<ModWeizenvogelEntity, ModFlappingBirdModel<ModWeizenvogelEntity>> {
-    public static final ResourceLocation WEIZENVOGEL_TEXTURE = new ResourceLocation("docwheat:textures/entity/weizenvogel.png");
+public class ModGetreidehahnRenderer extends ModFlappingBirdRenderer<ModGetreidehahnEntity, ChickenModel<ModGetreidehahnEntity>> {
+    public static final ResourceLocation GETREIDEHAHN_TEXTURE = new ResourceLocation("docwheat:textures/entity/getreidehahn.png");
 
     /**
      * Construction
      * @param rendererManager The entity renderer.
      */
-    public ModWeizenvogelRenderer(EntityRendererManager rendererManager) {
-        super(rendererManager, new ModFlappingBirdModel<>());
+    public ModGetreidehahnRenderer(EntityRendererManager rendererManager) {
+        super(rendererManager, new ChickenModel<>());
     }
 
     /**
@@ -24,7 +24,7 @@ public class ModWeizenvogelRenderer extends ModFlappingBirdRenderer<ModWeizenvog
      * @return An instance of a flapping controller
      */
     @Override
-    protected ModFlappingController getFlappingController(ModWeizenvogelEntity entity) {
+    protected ModFlappingController getFlappingController(ModGetreidehahnEntity entity) {
         return entity.getFlappingController();
     }
 
@@ -35,7 +35,7 @@ public class ModWeizenvogelRenderer extends ModFlappingBirdRenderer<ModWeizenvog
      */
     @Nullable
     @Override
-    public ResourceLocation getEntityTexture(ModWeizenvogelEntity entity) {
-        return WEIZENVOGEL_TEXTURE;
+    public ResourceLocation getEntityTexture(ModGetreidehahnEntity entity) {
+        return GETREIDEHAHN_TEXTURE;
     }
 }

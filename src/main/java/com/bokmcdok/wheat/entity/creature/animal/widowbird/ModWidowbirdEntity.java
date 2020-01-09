@@ -58,7 +58,7 @@ public class ModWidowbirdEntity extends ModNestingEntity implements IFlyingAnima
     }
 
     /**
-     * Tick the entity - update the flapping animation.s
+     * Tick the entity - update the flapping animations.
      */
     @Override
     public void livingTick() {

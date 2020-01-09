@@ -19,6 +19,8 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.registries.ForgeRegistries;
 
+import java.util.List;
+
 @Mod.EventBusSubscriber(modid = WheatMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 class ModTerrain {
 
@@ -30,52 +32,77 @@ class ModTerrain {
         Feature.STRUCTURES.put("windmill", ModFeatureUtils.WINDMILL);
 
         for (Biome biome : ForgeRegistries.BIOMES) {
+            List<Biome.SpawnListEntry> creatureSpawns = biome.getSpawns(EntityClassification.CREATURE);
+            List<Biome.SpawnListEntry> ambientSpawns = biome.getSpawns(EntityClassification.AMBIENT);
+            List<Biome.SpawnListEntry> monsterSpawns = biome.getSpawns(EntityClassification.MONSTER);
+
             switch (biome.getCategory()) {
                 case PLAINS:
                     addWildWheatFeature(biome, ModBlockUtils.wild_einkorn);
                     biome.func_226711_a_(ModFeatureUtils.WINDMILL.func_225566_b_(new ModWindmillConfig(1)));
                     biome.addFeature(GenerationStage.Decoration.SURFACE_STRUCTURES, ModFeatureUtils.WINDMILL.func_225566_b_(new ModWindmillConfig(1)).func_227228_a_(Placement.NOPE.func_227446_a_(IPlacementConfig.NO_PLACEMENT_CONFIG)));
-                    biome.getSpawns(EntityClassification.CREATURE).add(new Biome.SpawnListEntry(ModEntityUtils.field_mouse, 10, 2, 6));
-                    biome.getSpawns(EntityClassification.CREATURE).add(new Biome.SpawnListEntry(ModEntityUtils.widowbird, 10, 1, 3));
-                    biome.getSpawns(EntityClassification.AMBIENT).add(new Biome.SpawnListEntry(ModEntityUtils.butterfly, 10, 2, 6));
-                    biome.getSpawns(EntityClassification.MONSTER).add(new Biome.SpawnListEntry(ModEntityUtils.getreidewolf, 10, 1, 1));
-                    biome.getSpawns(EntityClassification.MONSTER).add(new Biome.SpawnListEntry(ModEntityUtils.weizenbeller, 25, 1, 3));
-                    biome.getSpawns(EntityClassification.MONSTER).add(new Biome.SpawnListEntry(ModEntityUtils.heukatze, 25, 1, 1));
-                    biome.getSpawns(EntityClassification.MONSTER).add(new Biome.SpawnListEntry(ModEntityUtils.haferbock, 25, 1, 1));
-                    biome.getSpawns(EntityClassification.MONSTER).add(new Biome.SpawnListEntry(ModEntityUtils.weizenvogel, 25, 1, 1));
+                    creatureSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.field_mouse, 10, 2, 6));
+                    creatureSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.widowbird, 10, 1, 3));
+                    ambientSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.butterfly, 10, 2, 6));
+                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.heukatze, 8, 1, 1));
+                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.haferbock, 8, 1, 1));
+                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.weizenvogel, 40, 1, 1));
+                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.getreidehahn, 8, 1, 1));
                     break;
 
                 case FOREST:
                     addWildWheatFeature(biome, ModBlockUtils.wild_einkorn);
-                    biome.getSpawns(EntityClassification.CREATURE).add(new Biome.SpawnListEntry(ModEntityUtils.field_mouse, 10, 2, 6));
-                    biome.getSpawns(EntityClassification.AMBIENT).add(new Biome.SpawnListEntry(ModEntityUtils.butterfly, 10, 2, 6));
-                    biome.getSpawns(EntityClassification.MONSTER).add(new Biome.SpawnListEntry(ModEntityUtils.getreidewolf, 10, 1, 1));
-                    biome.getSpawns(EntityClassification.MONSTER).add(new Biome.SpawnListEntry(ModEntityUtils.weizenbeller, 25, 1, 3));
-                    biome.getSpawns(EntityClassification.MONSTER).add(new Biome.SpawnListEntry(ModEntityUtils.heukatze, 25, 1, 1));
-                    biome.getSpawns(EntityClassification.MONSTER).add(new Biome.SpawnListEntry(ModEntityUtils.haferbock, 25, 1, 1));
-                    biome.getSpawns(EntityClassification.MONSTER).add(new Biome.SpawnListEntry(ModEntityUtils.weizenvogel, 25, 1, 1));
+                    creatureSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.field_mouse, 10, 2, 6));
+                    ambientSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.butterfly, 10, 2, 6));
+                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.getreidewolf, 5, 1, 1));
+                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.heukatze, 25, 1, 1));
+                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.haferbock, 8, 1, 1));
+                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.weizenvogel, 40, 1, 1));
+                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.getreidehahn, 8, 1, 1));
                     break;
 
                 case RIVER:
                 case SWAMP:
                     addWildWheatFeature(biome, ModBlockUtils.wild_emmer);
-                    biome.getSpawns(EntityClassification.CREATURE).add(new Biome.SpawnListEntry(ModEntityUtils.field_mouse, 10, 2, 6));
-                    biome.getSpawns(EntityClassification.CREATURE).add(new Biome.SpawnListEntry(ModEntityUtils.widowbird, 10, 1, 3));
-                    biome.getSpawns(EntityClassification.AMBIENT).add(new Biome.SpawnListEntry(ModEntityUtils.butterfly, 10, 2, 6));
-                    biome.getSpawns(EntityClassification.MONSTER).add(new Biome.SpawnListEntry(ModEntityUtils.getreidewolf, 10, 1, 1));
-                    biome.getSpawns(EntityClassification.MONSTER).add(new Biome.SpawnListEntry(ModEntityUtils.weizenbeller, 25, 1, 3));
-                    biome.getSpawns(EntityClassification.MONSTER).add(new Biome.SpawnListEntry(ModEntityUtils.heukatze, 25, 1, 1));
-                    biome.getSpawns(EntityClassification.MONSTER).add(new Biome.SpawnListEntry(ModEntityUtils.haferbock, 25, 1, 1));
-                    biome.getSpawns(EntityClassification.MONSTER).add(new Biome.SpawnListEntry(ModEntityUtils.weizenvogel, 25, 1, 1));
+                    creatureSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.field_mouse, 10, 2, 6));
+                    creatureSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.widowbird, 10, 1, 3));
+                    ambientSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.butterfly, 10, 2, 6));
+                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.heukatze, 25, 1, 1));
+                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.haferbock, 8, 1, 1));
+                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.weizenvogel, 40, 1, 1));
+                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.getreidehahn, 8, 1, 1));
                     break;
 
                 case TAIGA:
+                    creatureSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.field_mouse, 10, 2, 3));
+                    ambientSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.butterfly, 10, 2, 3));
+                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.getreidewolf, 8, 1, 1));
+                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.weizenbeller, 8, 1, 3));
+                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.heukatze, 8, 1, 1));
+                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.haferbock, 8, 1, 1));
+                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.getreidehahn, 8, 1, 1));
+                    break;
+
+                case SAVANNA:
+                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.heukatze, 8, 1, 1));
+                    creatureSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.field_mouse, 10, 2, 3));
+                    ambientSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.butterfly, 10, 2, 3));
+                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.haferbock, 8, 1, 1));
+                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.getreidehahn, 8, 1, 1));
+                    break;
+
                 case EXTREME_HILLS:
                 case JUNGLE:
-                case SAVANNA:
+                    creatureSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.field_mouse, 10, 2, 3));
+                    ambientSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.butterfly, 10, 2, 3));
+                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.haferbock, 8, 1, 1));
+                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.getreidehahn, 8, 1, 1));
+                    break;
+
                 case MUSHROOM:
-                    biome.getSpawns(EntityClassification.CREATURE).add(new Biome.SpawnListEntry(ModEntityUtils.field_mouse, 10, 2, 3));
-                    biome.getSpawns(EntityClassification.AMBIENT).add(new Biome.SpawnListEntry(ModEntityUtils.butterfly, 10, 2, 3));
+                    creatureSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.field_mouse, 10, 2, 3));
+                    ambientSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.butterfly, 10, 2, 3));
+                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.getreidehahn, 8, 1, 1));
                     break;
 
                 default:
@@ -93,7 +120,7 @@ class ModTerrain {
         //  gets further away. Age 7 (the final age) is least common.
         for (int i = 0; i < 8; ++i) {
             BlockClusterFeatureConfig field_226728_P_ = (new BlockClusterFeatureConfig.Builder(new SimpleBlockStateProvider(block.withAge(i)), new SimpleBlockPlacer())).func_227315_a_(32).func_227322_d_();
-            biome.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Feature.field_227248_z_.func_225566_b_(field_226728_P_).func_227228_a_(Placement.COUNT_HEIGHTMAP_32.func_227446_a_(new FrequencyConfig(Math.abs(i - 3) + 2))));
+            biome.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, Feature.field_227248_z_.func_225566_b_(field_226728_P_).func_227228_a_(Placement.COUNT_HEIGHTMAP_32.func_227446_a_(new FrequencyConfig(Math.abs(i - 3) + 4))));
         }
     }
 }
