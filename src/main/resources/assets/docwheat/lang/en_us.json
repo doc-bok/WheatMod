@@ -151,5 +151,8 @@
   "entity.docwheat.haferbock": "Half-Buck",
 
   "item.docwheat.weizenvogel_spawn_egg": "Blood Widow Spawn Egg",
-  "entity.docwheat.weizenvogel": "Blood Widow"
+  "entity.docwheat.weizenvogel": "Blood Widow",
+
+  "item.docwheat.getreidehahn_spawn_egg": "Devil Hen Spawn Egg",
+  "entity.docwheat.getreidehahn": "Devil Hen"
 }

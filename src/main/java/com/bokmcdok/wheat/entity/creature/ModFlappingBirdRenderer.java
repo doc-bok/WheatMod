@@ -2,17 +2,18 @@ package com.bokmcdok.wheat.entity.creature;
 
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;
+import net.minecraft.client.renderer.entity.model.AgeableModel;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.util.math.MathHelper;
 
-public abstract class ModFlappingBirdRenderer<T extends CreatureEntity> extends MobRenderer<T, ModFlappingBirdModel<T>> {
+public abstract class ModFlappingBirdRenderer<T extends CreatureEntity, U extends AgeableModel<T>> extends MobRenderer<T, U> {
 
     /**
      * Construction
      * @param rendererManager The entity renderer.
      */
-    public ModFlappingBirdRenderer(EntityRendererManager rendererManager) {
-        super(rendererManager, new ModFlappingBirdModel(), 0.3f);
+    public ModFlappingBirdRenderer(EntityRendererManager rendererManager, U model) {
+        super(rendererManager, model, 0.3f);
     }
 
     /**
