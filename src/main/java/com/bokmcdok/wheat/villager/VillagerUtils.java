@@ -203,7 +203,7 @@ public class VillagerUtils {
                 }
             }
 
-            noviceTrades.add(new ModEmeraldForItemsTrade(ModItemUtils.mouse_tail, 20, 16, 2));
+            noviceTrades.add(new ModEmeraldForItemsTrade(ModItemUtils.mouse_tail, 1, 16, 2));
 
             if (wheatTrade != null) {
                 noviceTrades.remove(wheatTrade);
