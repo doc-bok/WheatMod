@@ -2,7 +2,6 @@ package com.bokmcdok.wheat.item;
 
 import com.bokmcdok.wheat.block.ModBlockUtils;
 import com.bokmcdok.wheat.WheatMod;
-import com.bokmcdok.wheat.data.ModItemManager;
 import com.bokmcdok.wheat.villager.VillagerUtils;
 import net.minecraft.block.ComposterBlock;
 import net.minecraft.client.renderer.color.ItemColors;
