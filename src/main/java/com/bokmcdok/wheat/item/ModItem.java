@@ -64,7 +64,7 @@ public class ModItem extends Item implements IModItem {
      */
     @Override
     public ItemStack getContainerItem(ItemStack stack) {
-        ItemStack result = mImpl.getContainerItem(this, stack);
+        ItemStack result = mImpl.getContainerItem(stack);
         return result != null ? result : super.getContainerItem(stack);
     }
 

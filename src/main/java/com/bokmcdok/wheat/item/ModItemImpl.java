@@ -1,11 +1,13 @@
 package com.bokmcdok.wheat.item;
 
 import com.bokmcdok.wheat.entity.ThrownItemEntity;
+import com.bokmcdok.wheat.spell.IModSpell;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
@@ -21,17 +23,19 @@ public class ModItemImpl {
 
     private static final Random RNG = new Random();
 
-    private SoundEvent mThrowingSound;
-    private float mThrowingVolume;
-    private float mThrowingPitch;
+    private final SoundEvent mThrowingSound;
+    private final float mThrowingVolume;
+    private final float mThrowingPitch;
 
-    private float mThrowingOffset;
-    private float mThrowingVelocity;
-    private float mThrowingInaccuracy;
+    private final float mThrowingOffset;
+    private final float mThrowingVelocity;
+    private final float mThrowingInaccuracy;
 
-    private IItemColor mColor;
+    private final IItemColor mColor;
 
-    private float mCompostChance;
+    private final float mCompostChance;
+
+    private final IModSpell mSpell;
 
     /**
      * Construction
@@ -49,6 +53,8 @@ public class ModItemImpl {
         mColor = properties.mColor;
 
         mCompostChance = properties.mCompostChance;
+
+        mSpell = properties.mSpell;
     }
 
     /**
@@ -76,6 +82,10 @@ public class ModItemImpl {
             return item.getContainerItem(stack);
         }
 
+        if (mSpell != null) {
+            return item.getContainerItem(stack);
+        }
+
         return null;
     }
 
@@ -95,8 +105,8 @@ public class ModItemImpl {
      * @param stack The item stack to check.
      * @return The item to replace the current item with.
      */
-    public ItemStack getContainerItem(Item item, ItemStack stack) {
-        if (item.getMaxDamage(stack) > 0) {
+    public ItemStack getContainerItem(ItemStack stack) {
+        if (stack.getMaxDamage() > 0) {
             ItemStack container = stack.copy();
             container.setDamage(stack.getDamage() + 1);
             if (container.getDamage() < container.getMaxDamage()) {
@@ -108,7 +118,7 @@ public class ModItemImpl {
     }
 
     /**
-     * This will create an entity and throw the item in the world.
+     * Handle thrown items and spellcasting items.
      * @param world The current world.
      * @param player The player that owns the item.
      * @param hand The hand holding the item.
@@ -130,11 +140,26 @@ public class ModItemImpl {
             return new ActionResult<>(ActionResultType.SUCCESS, itemstack);
         }
 
+        if (mSpell != null) {
+            if (mSpell.cast(world, player)) {
+                ItemStack itemStack = player.getHeldItem(hand);
+                itemStack.damageItem(1, player, (x) -> x.sendBreakAnimation(hand));
+                if (itemStack.getDamage() > 0) {
+                    return new ActionResult<>(ActionResultType.SUCCESS, itemStack);
+                } else {
+                    return new ActionResult<>(ActionResultType.SUCCESS, getContainerItem(itemStack));
+                }
+            }
+
+            return new ActionResult<>(ActionResultType.PASS, player.getHeldItem(hand));
+        }
+
         return null;
     }
 
     public static class ModItemProperties extends Item.Properties {
 
+        private IModSpell mSpell = null;
         private SoundEvent mThrowingSound = SoundEvents.ENTITY_SPLASH_POTION_THROW;
         private float mThrowingVolume = 0.5f;
         private float mThrowingPitch = -0.4f;
@@ -164,5 +189,7 @@ public class ModItemImpl {
         }
 
         public void compostChance(float compostChance) { mCompostChance = compostChance; }
+
+        public void spell(IModSpell spell) { mSpell = spell; }
     }
 }

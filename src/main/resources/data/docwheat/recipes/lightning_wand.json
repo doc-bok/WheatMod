@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:birch_planks"
+    },
+    {
+      "item": "docwheat:flint_knife"
+    },
+    {
+      "item": "docwheat:lightning_essence"
+    }
+  ],
+  "result": {
+    "item": "docwheat:lightning_wand"
+  }
+}

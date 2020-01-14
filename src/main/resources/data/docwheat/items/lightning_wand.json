@@ -1,0 +1,8 @@
+{
+    "type": "item",
+    "group": "tools",
+    "max_damage": 50,
+    "repairable": false,
+    "container": "minecraft:stick",
+    "spell": "call_lightning"
+}
