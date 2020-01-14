@@ -154,5 +154,7 @@
   "entity.docwheat.weizenvogel": "Blood Widow",
 
   "item.docwheat.getreidehahn_spawn_egg": "Devil Hen Spawn Egg",
-  "entity.docwheat.getreidehahn": "Devil Hen"
+  "entity.docwheat.getreidehahn": "Devil Hen",
+
+  "item.docwheat.lightning_essence": "Lightning Essence"
 }
