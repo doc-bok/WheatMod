@@ -10,7 +10,7 @@ import javax.annotation.Nullable;
 
 public class ModGetreidewolfRenderer extends MobRenderer<ModGetreidewolfEntity, ModGetreidewolfModel<ModGetreidewolfEntity>> {
     private static final ResourceLocation GETREIDEWOLF_TEXTURES =
-            new ResourceLocation("docwheat:textures/entity/getreidewolf.png");
+            new ResourceLocation("docwheat:textures/entity/feldgeister/getreidewolf.png");
 
     /**
      * Construction

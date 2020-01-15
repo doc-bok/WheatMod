@@ -12,7 +12,7 @@ import javax.annotation.Nullable;
 @OnlyIn(Dist.CLIENT)
 public class ModHeukatzeRenderer extends MobRenderer<ModHeukatzeEntity, OcelotModel<ModHeukatzeEntity>> {
     private static final ResourceLocation HEUKATZE_TEXTURES =
-            new ResourceLocation("docwheat:textures/entity/heukatze.png");
+            new ResourceLocation("docwheat:textures/entity/feldgeister/heukatze.png");
 
     public ModHeukatzeRenderer(EntityRendererManager renderer) {
         super(renderer, new OcelotModel<>(0.0f), 0.4f);

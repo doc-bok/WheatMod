@@ -8,7 +8,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class ModHaferbockRenderer extends MobRenderer<ModHaferbockEntity, ModHaferbockModel<ModHaferbockEntity>> {
-    private static final ResourceLocation HAFERBOCK_TEXTURES = new ResourceLocation("docwheat:textures/entity/haferbock.png");
+    private static final ResourceLocation HAFERBOCK_TEXTURES = new ResourceLocation("docwheat:textures/entity/feldgeister/haferbock.png");
 
     /**
      * Construction

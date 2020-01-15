@@ -43,7 +43,7 @@ public class ModCornsnakeEntity extends ModNestingEntity {
     @Override
     protected void registerGoals() {
         goalSelector.addGoal(1, new SwimGoal(this));
-        goalSelector.addGoal(1, new PanicGoal(this, 2.2D));
+        goalSelector.addGoal(1, new PanicGoal(this, getSpeed()));
         goalSelector.addGoal(1, new ModMateGoal(this, getSpeed()));
         goalSelector.addGoal(1, new ModCreateNestGoal(this, ModBlockUtils.cornsnake_egg, getSpeed(), 16, 8));
         goalSelector.addGoal(5, new MeleeAttackGoal(this, getSpeed(), true));
@@ -72,7 +72,7 @@ public class ModCornsnakeEntity extends ModNestingEntity {
     protected void registerAttributes() {
         super.registerAttributes();
         getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(3.0d);
-        getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.3d);
+        getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.45d);
         getAttributes().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(3.0d);
     }
 

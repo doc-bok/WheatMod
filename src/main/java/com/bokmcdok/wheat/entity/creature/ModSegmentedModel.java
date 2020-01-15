@@ -13,11 +13,14 @@ import java.util.Arrays;
 public abstract class ModSegmentedModel<T extends Entity> extends SegmentedModel<T> {
     private final ModelRenderer[] mSegments;
     private final ImmutableList<ModelRenderer> mRenderers;
+    private final float mWriggleSpeed;
 
     /**
      * Construction
      */
-    public ModSegmentedModel(int[][] segmentSizes, int[][] textureOffsets) {
+    public ModSegmentedModel(int[][] segmentSizes, int[][] textureOffsets, float wriggleSpeed) {
+        mWriggleSpeed = wriggleSpeed;
+
         final float[] zPlacement = new float[segmentSizes.length];
         mSegments = new ModelRenderer[segmentSizes.length];
         float f = -3.5f;
@@ -76,8 +79,8 @@ public abstract class ModSegmentedModel<T extends Entity> extends SegmentedModel
     @Override
     public void func_225597_a_(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         for(int i = 0; i < mSegments.length; ++i) {
-            mSegments[i].rotateAngleY = MathHelper.cos(ageInTicks * 0.9F + (float)i * 0.15F * (float)Math.PI) * (float)Math.PI * 0.05F * (float)(1 + Math.abs(i - 2));
-            mSegments[i].rotationPointX = MathHelper.sin(ageInTicks * 0.9F + (float)i * 0.15F * (float)Math.PI) * (float)Math.PI * 0.2F * (float)Math.abs(i - 2);
+            mSegments[i].rotateAngleY = MathHelper.cos(ageInTicks * mWriggleSpeed + (float)i * 0.15F * (float)Math.PI) * (float)Math.PI * 0.05F * (float)(1 + Math.abs(i - 2));
+            mSegments[i].rotationPointX = MathHelper.sin(ageInTicks * mWriggleSpeed + (float)i * 0.15F * (float)Math.PI) * (float)Math.PI * 0.2F * (float)Math.abs(i - 2);
         }
     }
 

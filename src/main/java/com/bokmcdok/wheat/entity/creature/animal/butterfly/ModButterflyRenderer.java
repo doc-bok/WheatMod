@@ -9,8 +9,8 @@ import net.minecraft.util.math.MathHelper;
 import javax.annotation.Nullable;
 
 public class ModButterflyRenderer extends MobRenderer<ModButterflyEntity, ModButterflyModel> {
-    private static final ResourceLocation BUTTERFLY_TEXTURE = new ResourceLocation("docwheat:textures/entity/butterfly.png");
-    private static final ResourceLocation MOTH_TEXTURE = new ResourceLocation("docwheat:textures/entity/moth.png");
+    private static final ResourceLocation BUTTERFLY_TEXTURE = new ResourceLocation("docwheat:textures/entity/animal/butterfly.png");
+    private static final ResourceLocation MOTH_TEXTURE = new ResourceLocation("docwheat:textures/entity/animal/moth.png");
 
     /**
      * Construction

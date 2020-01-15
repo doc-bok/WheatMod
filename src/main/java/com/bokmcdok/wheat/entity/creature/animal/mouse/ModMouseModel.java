@@ -31,6 +31,6 @@ public class ModMouseModel<T extends Entity> extends ModSegmentedModel<ModMouseE
      * Construction
      */
     public ModMouseModel() {
-        super(SEGMENT_SIZES, TEXTURE_OFFSETS);
+        super(SEGMENT_SIZES, TEXTURE_OFFSETS, 0.9f);
     }
 }

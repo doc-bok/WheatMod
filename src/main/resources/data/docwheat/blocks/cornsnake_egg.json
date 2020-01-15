@@ -1,0 +1,10 @@
+{
+  "type": "nest",
+  "from": "minecraft:turtle_egg",
+  "nest": {
+    "entity": "docwheat:cornsnake",
+    "count": 1,
+    "spawn_chance": 1.0
+  },
+  "ticks_randomly": true
+}

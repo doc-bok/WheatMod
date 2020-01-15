@@ -11,7 +11,7 @@ import javax.annotation.Nullable;
 @OnlyIn(Dist.CLIENT)
 public class ModWeizenbellerRenderer extends MobRenderer<ModWeizenbellerEntity, ModWeizenbellerModel<ModWeizenbellerEntity>> {
     private static final ResourceLocation WEIZENBELLER_TEXTURES =
-            new ResourceLocation("docwheat:textures/entity/weizenbeller.png");
+            new ResourceLocation("docwheat:textures/entity/feldgeister/weizenbeller.png");
 
     /**
      * Construction

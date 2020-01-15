@@ -41,6 +41,7 @@ class ModTerrain {
                     addWildWheatFeature(biome, ModBlockUtils.wild_einkorn);
                     biome.func_226711_a_(ModFeatureUtils.WINDMILL.func_225566_b_(new ModWindmillConfig(1)));
                     biome.addFeature(GenerationStage.Decoration.SURFACE_STRUCTURES, ModFeatureUtils.WINDMILL.func_225566_b_(new ModWindmillConfig(1)).func_227228_a_(Placement.NOPE.func_227446_a_(IPlacementConfig.NO_PLACEMENT_CONFIG)));
+                    creatureSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.cornsnake, 10, 1, 1));
                     creatureSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.field_mouse, 10, 2, 6));
                     creatureSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.widowbird, 10, 1, 3));
                     ambientSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.butterfly, 10, 2, 6));
@@ -52,6 +53,7 @@ class ModTerrain {
 
                 case FOREST:
                     addWildWheatFeature(biome, ModBlockUtils.wild_einkorn);
+                    creatureSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.cornsnake, 10, 1, 1));
                     creatureSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.field_mouse, 10, 2, 6));
                     ambientSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.butterfly, 10, 2, 6));
                     monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.getreidewolf, 5, 1, 1));

@@ -5,9 +5,15 @@ import net.minecraft.entity.Entity;
 
 public class ModCornsnakeModel<T extends Entity> extends ModSegmentedModel<ModCornsnakeEntity> {
     private static final int[][] SEGMENT_SIZES = new int[][] {
-            {1, 1, 1},
             {3, 2, 2},
             {4, 3, 3},
+            {3, 3, 3},
+            {3, 3, 3},
+            {3, 3, 3},
+            {3, 3, 3},
+            {3, 3, 3},
+            {3, 3, 3},
+            {3, 3, 3},
             {3, 3, 3},
             {3, 3, 3},
             {1, 1, 2},
@@ -15,9 +21,15 @@ public class ModCornsnakeModel<T extends Entity> extends ModSegmentedModel<ModCo
     };
 
     private static final int[][] TEXTURE_OFFSETS = new int[][] {
-            {13, 4},
             {0, 0},
             {0, 9},
+            {0, 16},
+            {0, 16},
+            {0, 16},
+            {0, 16},
+            {0, 16},
+            {0, 16},
+            {0, 16},
             {0, 16},
             {0, 16},
             {11, 0},
@@ -28,6 +40,6 @@ public class ModCornsnakeModel<T extends Entity> extends ModSegmentedModel<ModCo
      * Construction
      */
     public ModCornsnakeModel() {
-        super(SEGMENT_SIZES, TEXTURE_OFFSETS);
+        super(SEGMENT_SIZES, TEXTURE_OFFSETS, 0.4f);
     }
 }

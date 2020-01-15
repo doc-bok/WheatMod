@@ -157,5 +157,9 @@
   "entity.docwheat.getreidehahn": "Devil Hen",
 
   "item.docwheat.lightning_essence": "Lightning Essence",
-  "item.docwheat.lightning_wand": "Lightning Wand"
+  "item.docwheat.lightning_wand": "Lightning Wand",
+
+  "block.docwheat.cornsnake_egg": "Corn Snake Egg",
+  "item.docwheat.cornsnake_spawn_egg": "Corn Snake Spawn Egg",
+  "entity.docwheat.cornsnake": "Corn Snake"
 }

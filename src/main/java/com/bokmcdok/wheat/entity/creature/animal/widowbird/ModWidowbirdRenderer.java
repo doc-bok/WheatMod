@@ -12,8 +12,8 @@ import javax.annotation.Nullable;
 
 @OnlyIn(Dist.CLIENT)
 public class ModWidowbirdRenderer extends ModFlappingBirdRenderer<ModWidowbirdEntity, ModFlappingBirdModel<ModWidowbirdEntity>> {
-    public static final ResourceLocation MALE_TEXTURE = new ResourceLocation("docwheat:textures/entity/widowbird/widowbird_male.png");
-    public static final ResourceLocation FEMALE_TEXTURE = new ResourceLocation("docwheat:textures/entity/widowbird/widowbird_female.png");
+    public static final ResourceLocation MALE_TEXTURE = new ResourceLocation("docwheat:textures/entity/animal/widowbird/male.png");
+    public static final ResourceLocation FEMALE_TEXTURE = new ResourceLocation("docwheat:textures/entity/animal/widowbird/female.png");
 
     /**
      * Construction

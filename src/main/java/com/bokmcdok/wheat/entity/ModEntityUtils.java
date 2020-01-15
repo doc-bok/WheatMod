@@ -5,6 +5,7 @@ import com.bokmcdok.wheat.block.ModBlockUtils;
 import com.bokmcdok.wheat.entity.creature.animal.butterfly.ModButterflyEntity;
 import com.bokmcdok.wheat.entity.creature.animal.butterfly.ModButterflyRenderFactory;
 import com.bokmcdok.wheat.entity.creature.animal.cornsnake.ModCornsnakeEntity;
+import com.bokmcdok.wheat.entity.creature.animal.cornsnake.ModCornsnakeRenderFactory;
 import com.bokmcdok.wheat.entity.creature.animal.mouse.ModMouseEntity;
 import com.bokmcdok.wheat.entity.creature.animal.mouse.ModMouseRenderFactory;
 import com.bokmcdok.wheat.entity.creature.animal.widowbird.ModWidowbirdEntity;
@@ -86,6 +87,11 @@ public class ModEntityUtils {
                         .build("widowbird")
                         .setRegistryName(WheatMod.MOD_ID, "widowbird"),
 
+                EntityType.Builder.create(ModCornsnakeEntity::new, EntityClassification.CREATURE)
+                        .size(0.3f, 0.3f)
+                        .build("cornsnake")
+                        .setRegistryName(WheatMod.MOD_ID, "cornsnake"),
+
                 EntityType.Builder.create(ModGetreidewolfEntity::new, EntityClassification.MONSTER)
                         .size(0.6f, 0.85f)
                         .build("getreidewolf")
@@ -147,13 +153,14 @@ public class ModEntityUtils {
     {
         EntitySpawnPlacementRegistry.register(field_mouse, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ModMouseEntity::canSpawn);
         EntitySpawnPlacementRegistry.register(butterfly, EntitySpawnPlacementRegistry.PlacementType.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ModButterflyEntity::canSpawn);
-        EntitySpawnPlacementRegistry.register(widowbird, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ModWidowbirdEntity::canSpawn);
+        EntitySpawnPlacementRegistry.register(widowbird, EntitySpawnPlacementRegistry.PlacementType.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ModWidowbirdEntity::canSpawn);
         EntitySpawnPlacementRegistry.register(getreidewolf, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ModGetreidewolfEntity::canGetreideWolfSpawn);
         EntitySpawnPlacementRegistry.register(weizenbeller, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ModWeizenbellerEntity::canSpawn);
         EntitySpawnPlacementRegistry.register(heukatze, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ModHeukatzeEntity::canSpawn);
         EntitySpawnPlacementRegistry.register(haferbock, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ModHaferbockEntity::canSpawn);
-        EntitySpawnPlacementRegistry.register(weizenvogel, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ModWeizenvogelEntity::canSpawn);
+        EntitySpawnPlacementRegistry.register(weizenvogel, EntitySpawnPlacementRegistry.PlacementType.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ModWeizenvogelEntity::canSpawn);
         EntitySpawnPlacementRegistry.register(getreidehahn, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ModGetreidehahnEntity::canSpawn);
+        EntitySpawnPlacementRegistry.register(cornsnake, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ModCornsnakeEntity::canSpawn);
 
         RenderingRegistry.registerEntityRenderingHandler(stone_entity, new StoneRenderer());
         RenderingRegistry.registerEntityRenderingHandler(field_mouse, new ModMouseRenderFactory());
@@ -165,5 +172,6 @@ public class ModEntityUtils {
         RenderingRegistry.registerEntityRenderingHandler(haferbock, new ModHaferbockRenderFactory());
         RenderingRegistry.registerEntityRenderingHandler(weizenvogel, new ModWeizenvogelRenderFactory());
         RenderingRegistry.registerEntityRenderingHandler(getreidehahn, new ModGetreidehahnRenderFactory());
+        RenderingRegistry.registerEntityRenderingHandler(cornsnake, new ModCornsnakeRenderFactory());
     }
 }
