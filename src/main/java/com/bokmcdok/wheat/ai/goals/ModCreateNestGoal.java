@@ -1,5 +1,6 @@
 package com.bokmcdok.wheat.ai.goals;
 
+import com.bokmcdok.wheat.block.ModBlock;
 import com.bokmcdok.wheat.block.ModBlockUtils;
 import com.bokmcdok.wheat.entity.creature.animal.ModNestingEntity;
 import net.minecraft.block.Block;
@@ -12,14 +13,16 @@ import net.minecraft.world.World;
 
 public class ModCreateNestGoal extends MoveToBlockGoal {
     private final ModNestingEntity mOwner;
+    private final ModBlock mNestBlock;
 
     /**
      * Construction
      * @param owner The owner of this goal.
      */
-    public ModCreateNestGoal(ModNestingEntity owner, double moveSpeed, int radius, int height) {
+    public ModCreateNestGoal(ModNestingEntity owner, ModBlock nestBlock, double moveSpeed, int radius, int height) {
         super(owner, moveSpeed, radius, height);
         mOwner = owner;
+        mNestBlock = nestBlock;
     }
 
     /**
@@ -60,7 +63,7 @@ public class ModCreateNestGoal extends MoveToBlockGoal {
             BlockState blockstate = world.getBlockState(destinationBlock.up());
             Block block = blockstate.getBlock();
             if (mOwner.getIsFertilized() && block instanceof TallGrassBlock) {
-                world.setBlockState(destinationBlock.up(), ModBlockUtils.widowbird_nest.getDefaultState(), 2);
+                world.setBlockState(destinationBlock.up(), mNestBlock.getDefaultState(), 2);
             }
 
             mOwner.setIsFertilized(false);

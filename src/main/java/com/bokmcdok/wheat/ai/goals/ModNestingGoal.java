@@ -1,5 +1,6 @@
 package com.bokmcdok.wheat.ai.goals;
 
+import com.bokmcdok.wheat.block.ModBlock;
 import com.bokmcdok.wheat.block.ModBlockUtils;
 import com.bokmcdok.wheat.entity.creature.animal.ModNestingEntity;
 import net.minecraft.block.Block;
@@ -13,14 +14,16 @@ import net.minecraft.world.World;
 
 public class ModNestingGoal extends MoveToBlockGoal {
     private final ModNestingEntity mOwner;
+    private final ModBlock mNestBlock;
 
     /**
      * Construction
      * @param nestingEntity The entity that has the nesting behaviour.
      */
-    public ModNestingGoal(ModNestingEntity nestingEntity, double moveSpeed, int radius, int height) {
+    public ModNestingGoal(ModNestingEntity nestingEntity, ModBlock nestBlock, double moveSpeed, int radius, int height) {
         super(nestingEntity, moveSpeed, radius, height);
         mOwner = nestingEntity;
+        mNestBlock = nestBlock;
     }
 
     /**
@@ -50,27 +53,6 @@ public class ModNestingGoal extends MoveToBlockGoal {
                 destinationBlock.getY(),
                 (double)destinationBlock.getZ() + 0.5D,
                 10.0F, (float)mOwner.getVerticalFaceSpeed());
-
-        World world = mOwner.world;
-        BlockState blockstate = world.getBlockState(destinationBlock);
-        Block block = blockstate.getBlock();
-
-        if (mOwner.getHasNest() && block == ModBlockUtils.widowbird_nest && world.rand.nextInt(500) == 0) {
-            mOwner.resetNestPosition();
-            world.setBlockState(destinationBlock, Blocks.AIR.getDefaultState(), 2);
-            world.playEvent(2001, destinationBlock, Block.getStateId(blockstate));
-
-            //  Spawn 1-3 babies
-            int numSpawn = world.getRandom().nextInt(3) + 1;
-            for (int i = 0; i < numSpawn; i++) {
-                AgeableEntity child = mOwner.createChild(null);
-                child.setGrowingAge(-24000);
-                child.setLocationAndAngles(destinationBlock.getX(), destinationBlock.getY() + 1, destinationBlock.getZ(), 0.0f, 0.0f);
-                world.addEntity(child);
-            }
-
-            runDelay = 10;
-        }
     }
 
     /**
@@ -83,8 +65,9 @@ public class ModNestingGoal extends MoveToBlockGoal {
             World world = mOwner.world;
             BlockState blockstate = world.getBlockState(destinationBlock);
             Block block = blockstate.getBlock();
-            if (block != ModBlockUtils.widowbird_nest) {
+            if (block != mNestBlock) {
                 mOwner.resetNestPosition();
+                runDelay = 10;
                 return false;
             }
 
@@ -102,8 +85,9 @@ public class ModNestingGoal extends MoveToBlockGoal {
      */
     protected boolean shouldMoveTo(IWorldReader world, BlockPos position) {
         Block block = world.getBlockState(position).getBlock();
-        if (block != ModBlockUtils.widowbird_nest) {
+        if (block != mNestBlock) {
             mOwner.resetNestPosition();
+            runDelay = 10;
             return false;
         }
 

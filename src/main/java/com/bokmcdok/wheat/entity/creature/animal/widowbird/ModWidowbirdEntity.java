@@ -232,9 +232,9 @@ public class ModWidowbirdEntity extends ModNestingEntity implements IFlyingAnima
     protected void registerGoals() {
         goalSelector.addGoal(0, new PanicGoal(this, 1.25d));
         goalSelector.addGoal(0, new SwimGoal(this));
-        goalSelector.addGoal(1, new ModMateGoal(this, 0.8d));
-        goalSelector.addGoal(1, new ModCreateNestGoal(this, getFlyingSpeed(), 16, 8));
-        goalSelector.addGoal(1, new ModNestingGoal(this, getFlyingSpeed(), 16, 8));
+        goalSelector.addGoal(1, new ModMateGoal(this, getFlyingSpeed()));
+        goalSelector.addGoal(1, new ModCreateNestGoal(this, ModBlockUtils.widowbird_nest, getFlyingSpeed(), 16, 8));
+        goalSelector.addGoal(1, new ModNestingGoal(this, ModBlockUtils.widowbird_nest, getFlyingSpeed(), 16, 8));
         goalSelector.addGoal(2, new WaterAvoidingRandomFlyingGoal(this, 1.0d));
         goalSelector.addGoal(5, new ModRaidFarmGoal(this, ModBlockUtils.WHEAT, getFlyingSpeed(), 16, 8));
         goalSelector.addGoal(9, new OcelotAttackGoal(this));

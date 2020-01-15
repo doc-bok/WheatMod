@@ -2,6 +2,7 @@ package com.bokmcdok.wheat.block;
 
 import com.bokmcdok.wheat.data.ModDataManager;
 import com.bokmcdok.wheat.data.ModMaterialManager;
+import com.bokmcdok.wheat.entity.creature.animal.ModNestingEntity;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.google.gson.JsonArray;
@@ -28,6 +29,7 @@ public class ModBlockManager extends ModDataManager<IModBlock> {
         CROP,
         HAY,
         MAT,
+        NEST,
         SMALL_STONE,
         TRAP
     }
@@ -122,6 +124,7 @@ public class ModBlockManager extends ModDataManager<IModBlock> {
         setShape(properties, json, "collision_shape", ModBlockImpl.ModBlockProperties::setCollisionShape);
         setTargets(properties, json, "targets", ModBlockImpl.ModBlockProperties::setTargets);
         setCropProperties(properties, json, ModBlockImpl.ModBlockProperties::crop);
+        setNestProperties(properties, json, ModBlockImpl.ModBlockProperties::setNestProperties);
 
         String typeValue = JSONUtils.getString(json, "type");
         BlockType type = BlockType.valueOf(typeValue.toUpperCase());
@@ -138,6 +141,10 @@ public class ModBlockManager extends ModDataManager<IModBlock> {
 
             case HAY:
                 result = new ModHayBlock(properties);
+                break;
+
+            case NEST:
+                result = new ModNestBlock(properties);
                 break;
 
             case MAT:
@@ -280,6 +287,26 @@ public class ModBlockManager extends ModDataManager<IModBlock> {
 
                 consumer.accept(properties, result);
             }
+        }
+    }
+
+    /**
+     * Deserializes properties for nests.
+     * @param json The json data to deserialize.
+     * @return The crop's properties.
+     */
+    private <U> void setNestProperties(U properties, JsonObject json, BiConsumer<U, ModNestProperties> consumer) {
+        if (JSONUtils.hasField(json, "nest")) {
+            JsonObject nest = JSONUtils.getJsonObject(json, "nest");
+            ModNestProperties nestProperties = new ModNestProperties();
+
+            setResourceLocation(nestProperties, nest, "entity", ModNestProperties::setEntityToSpawn);
+            setInt(nestProperties, nest, "minimum", ModNestProperties::setMinimum);
+            setInt(nestProperties, nest, "maximum", ModNestProperties::setMaximum);
+            setInt(nestProperties, nest, "count", ModNestProperties::setCount);
+            setFloat(nestProperties, nest, "spawn_chance", ModNestProperties::setSpawnChance);
+
+            consumer.accept(properties, nestProperties);
         }
     }
 }
