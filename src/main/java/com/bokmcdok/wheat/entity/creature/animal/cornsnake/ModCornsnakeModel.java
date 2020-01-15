@@ -1,13 +1,10 @@
-package com.bokmcdok.wheat.entity.creature.animal.mouse;
+package com.bokmcdok.wheat.entity.creature.animal.cornsnake;
 
 import com.bokmcdok.wheat.entity.creature.ModSegmentedModel;
 import net.minecraft.entity.Entity;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
-@OnlyIn(Dist.CLIENT)
-public class ModMouseModel<T extends Entity> extends ModSegmentedModel<ModMouseEntity> {
-    private static final int[][] SEGMENT_SIZES = new int[][]{
+public class ModCornsnakeModel<T extends Entity> extends ModSegmentedModel<ModCornsnakeEntity> {
+    private static final int[][] SEGMENT_SIZES = new int[][] {
             {1, 1, 1},
             {3, 2, 2},
             {4, 3, 3},
@@ -17,7 +14,7 @@ public class ModMouseModel<T extends Entity> extends ModSegmentedModel<ModMouseE
             {1, 1, 2}
     };
 
-    private static final int[][] TEXTURE_OFFSETS = new int[][]{
+    private static final int[][] TEXTURE_OFFSETS = new int[][] {
             {13, 4},
             {0, 0},
             {0, 9},
@@ -30,7 +27,7 @@ public class ModMouseModel<T extends Entity> extends ModSegmentedModel<ModMouseE
     /**
      * Construction
      */
-    public ModMouseModel() {
+    public ModCornsnakeModel() {
         super(SEGMENT_SIZES, TEXTURE_OFFSETS);
     }
 }

@@ -4,6 +4,7 @@ import com.bokmcdok.wheat.ai.goals.ModBreedGoal;
 import com.bokmcdok.wheat.ai.goals.ModRaidFarmGoal;
 import com.bokmcdok.wheat.block.ModBlockUtils;
 import com.bokmcdok.wheat.entity.ModEntityUtils;
+import com.bokmcdok.wheat.entity.creature.animal.cornsnake.ModCornsnakeEntity;
 import com.google.common.collect.Sets;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -38,10 +39,19 @@ import java.util.Random;
 import java.util.Set;
 
 public class ModMouseEntity extends AnimalEntity {
+
+    /**
+     * Construction
+     * @param type The type of the entity
+     * @param world The current world
+     */
     public ModMouseEntity(EntityType<? extends AnimalEntity> type, World world) {
         super(type, world);
     }
 
+    /**
+     * Register the AI behaviours of the entity.
+     */
     @Override
     protected void registerGoals() {
         Set<Block> blocksToRaid = Sets.newHashSet(ModBlockUtils.CROPS);
@@ -56,40 +66,80 @@ public class ModMouseEntity extends AnimalEntity {
         goalSelector.addGoal(4, new AvoidEntityGoal<>(this, MonsterEntity.class, 4.0F, 2.2D, 2.2D));
         goalSelector.addGoal(4, new AvoidEntityGoal<>(this, CatEntity.class, 4.0F, 2.2D, 2.2D));
         goalSelector.addGoal(4, new AvoidEntityGoal<>(this, VillagerEntity.class, 4.0F, 2.2D, 2.2D));
+        goalSelector.addGoal(4, new AvoidEntityGoal<>(this, ModCornsnakeEntity.class, 4.0F, 2.2D, 2.2D));
         goalSelector.addGoal(5, new ModRaidFarmGoal(this, blocksToRaid, getSpeed(), 16, 1));
         goalSelector.addGoal(6, new WaterAvoidingRandomWalkingGoal(this, 0.6D));
         goalSelector.addGoal(11, new LookAtGoal(this, PlayerEntity.class, 10.0F));
     }
 
+    /**
+     * Create a child version of the entity
+     * @param ageable The entity to create a child for.
+     * @return The child entity.
+     */
     @Nullable
     @Override
     public AgeableEntity createChild(AgeableEntity ageable) {
         return ModEntityUtils.field_mouse.create(world);
     }
 
+    /**
+     * Register the attributes of the entity.
+     */
+    @Override
     protected void registerAttributes() {
         super.registerAttributes();
-        this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(3.0d);
-        this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.3d);
+        getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(3.0d);
+        getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.3d);
     }
 
+    /**
+     * Get the entity's ambient sound.
+     * @return The ambient sound to play.
+     */
+    @Override
     protected SoundEvent getAmbientSound() {
         return SoundEvents.ENTITY_RABBIT_AMBIENT;
     }
 
-    protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
+    /**
+     * Get the entity's hurt sound.
+     * @param damageSource The source of the damage.
+     * @return The damage sound to play.
+     */
+    @Override
+    protected SoundEvent getHurtSound(DamageSource damageSource) {
         return SoundEvents.ENTITY_RABBIT_HURT;
     }
 
+    /**
+     * Get the entity's death sound.
+     * @return The sound to play on death.
+     */
+    @Override
     protected SoundEvent getDeathSound() {
         return SoundEvents.ENTITY_RABBIT_DEATH;
     }
 
+    /**
+     * Get the sound category for this creature.
+     * @return The sound category for the entity.
+     */
+    @Override
     public SoundCategory getSoundCategory() {
         return SoundCategory.NEUTRAL;
     }
 
-    public static boolean canSpawn(EntityType<ModMouseEntity> mouse, IWorld world, SpawnReason reason, BlockPos position, Random random) {
+    /**
+     * Method to determine if the entity can spawn.
+     * @param entity The entity to try and spawn.
+     * @param world The current world.
+     * @param reason The reason for spawning.
+     * @param position The position to spawn at.
+     * @param random The random number generator.
+     * @return TRUE if the entity can spawn.
+     */
+    public static boolean canSpawn(EntityType<ModMouseEntity> entity, IWorld world, SpawnReason reason, BlockPos position, Random random) {
         Block block = world.getBlockState(position.down()).getBlock();
         return block == Blocks.GRASS_BLOCK && world.getNeighborAwareLightSubtracted(position, 0) > 8;
     }

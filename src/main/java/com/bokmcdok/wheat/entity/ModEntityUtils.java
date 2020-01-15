@@ -4,6 +4,7 @@ import com.bokmcdok.wheat.WheatMod;
 import com.bokmcdok.wheat.block.ModBlockUtils;
 import com.bokmcdok.wheat.entity.creature.animal.butterfly.ModButterflyEntity;
 import com.bokmcdok.wheat.entity.creature.animal.butterfly.ModButterflyRenderFactory;
+import com.bokmcdok.wheat.entity.creature.animal.cornsnake.ModCornsnakeEntity;
 import com.bokmcdok.wheat.entity.creature.animal.mouse.ModMouseEntity;
 import com.bokmcdok.wheat.entity.creature.animal.mouse.ModMouseRenderFactory;
 import com.bokmcdok.wheat.entity.creature.animal.widowbird.ModWidowbirdEntity;
@@ -54,6 +55,7 @@ public class ModEntityUtils {
     public static final EntityType<ModHaferbockEntity> haferbock = null;
     public static final EntityType<ModWeizenvogelEntity> weizenvogel = null;
     public static final EntityType<ModGetreidehahnEntity> getreidehahn = null;
+    public static final EntityType<ModCornsnakeEntity> cornsnake = null;
 
     public static final TileEntityType<ModInventoryTileEntity> inventory = null;
     public static final TileEntityType<ModTrapTileEntity> trap = null;
