@@ -5,7 +5,12 @@ import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.util.ResourceLocation;
 
 public class ModCornsnakeRenderer extends MobRenderer<ModCornsnakeEntity, ModCornsnakeModel<ModCornsnakeEntity>> {
-    private static final ResourceLocation TEXTURES = new ResourceLocation("docwheat:textures/entity/animal/cornsnake/plains.png");
+    private static final ResourceLocation[] TEXTURES = new ResourceLocation[] {
+            new ResourceLocation("docwheat:textures/entity/animal/cornsnake/plains.png"),
+            new ResourceLocation("docwheat:textures/entity/animal/cornsnake/forest.png"),
+            new ResourceLocation("docwheat:textures/entity/animal/cornsnake/player.png"),
+            new ResourceLocation("docwheat:textures/entity/animal/cornsnake/weizenmutter.png")
+    };
 
     /**
      * Construction
@@ -22,7 +27,7 @@ public class ModCornsnakeRenderer extends MobRenderer<ModCornsnakeEntity, ModCor
      */
     @Override
     public ResourceLocation getEntityTexture(ModCornsnakeEntity entity) {
-        return TEXTURES;
+        return TEXTURES[entity.getTextureIndex()];
     }
 
     /**

@@ -10,6 +10,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.AgeableEntity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.ILivingEntityData;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.goal.HurtByTargetGoal;
@@ -19,14 +20,21 @@ import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.ai.goal.PanicGoal;
 import net.minecraft.entity.ai.goal.SwimGoal;
 import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
 
 import javax.annotation.Nullable;
 import java.util.Random;
 
 public class ModCornsnakeEntity extends ModNestingEntity {
+    private static final DataParameter<Integer> TYPE = EntityDataManager.createKey(ModCornsnakeEntity.class, DataSerializers.VARINT);
 
     /**
      * Construction
@@ -77,6 +85,43 @@ public class ModCornsnakeEntity extends ModNestingEntity {
     }
 
     /**
+     * Handle the snake's type on spawning.
+     * @param world The current world.
+     * @param difficulty The current difficulty.
+     * @param reason The reason for spawning.
+     * @param data The spawn data.
+     * @param nbt The NBT data.
+     * @return The new living entity data for the entity.
+     */
+    @Nullable
+    @Override
+    public ILivingEntityData onInitialSpawn(IWorld world, DifficultyInstance difficulty, SpawnReason reason, @Nullable ILivingEntityData data, @Nullable CompoundNBT nbt) {
+        int type = 0;
+        if (data instanceof CornsnakeData) {
+            type = ((CornsnakeData)data).mType;
+        } else {
+            Biome biome = world.func_226691_t_(new BlockPos(this));
+            if (biome.getCategory() == Biome.Category.FOREST) {
+                type = 1;
+            }
+
+            data = new CornsnakeData(type);
+        }
+
+        setType(type);
+
+        return super.onInitialSpawn(world, difficulty, reason, data, nbt);
+    }
+
+    /**
+     * Get the index of the texture to use.
+     * @return The index based on the type of snake this is.
+     */
+    public int getTextureIndex() {
+        return dataManager.get(TYPE);
+    }
+
+    /**
      * Method to determine if the entity can spawn.
      * @param entity The entity to try and spawn.
      * @param world The current world.
@@ -91,10 +136,50 @@ public class ModCornsnakeEntity extends ModNestingEntity {
     }
 
     /**
+     * Register the default snake type.
+     */
+    @Override
+    protected void registerData() {
+        super.registerData();
+        dataManager.register(TYPE, 0);
+    }
+
+    /**
+     * Set the type of the snake.
+     * @param type The type of snake to use.
+     */
+    private void setType(int type) {
+        dataManager.set(TYPE, type);
+    }
+
+    /**
      * Get the speed of the entity.
      * @return The speed at which the entity moves.
      */
     private double getSpeed() {
         return getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getValue();
+    }
+
+    /**
+     * Class to store snake-specific data.
+     */
+    private static class CornsnakeData extends AgeableEntity.AgeableData {
+        private final int mType;
+
+        /**
+         * Construction
+         * @param type The type of this snake.
+         */
+        public CornsnakeData(int type) {
+            mType = type;
+        }
+
+        /**
+         * Get the type of this snake.
+         * @return The type of this snake.
+         */
+        public int getType() {
+            return mType;
+        }
     }
 }
