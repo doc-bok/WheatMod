@@ -1,0 +1,7 @@
+{
+    "variants": {
+        "": [
+            { "model": "docwheat:block/cornsnake_egg" }
+        ]
+    }
+}

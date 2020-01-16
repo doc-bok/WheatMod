@@ -6,5 +6,11 @@
     "count": 1,
     "spawn_chance": 1.0
   },
+  "shape": [
+    {
+      "from": [ 4, 0, 4 ],
+      "to": [ 8, 7, 8 ]
+    }
+  ],
   "ticks_randomly": true
 }

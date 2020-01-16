@@ -9,8 +9,10 @@ import com.bokmcdok.wheat.entity.creature.animal.mouse.ModMouseEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.AgeableEntity;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ILivingEntityData;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.goal.HurtByTargetGoal;
@@ -111,6 +113,22 @@ public class ModCornsnakeEntity extends ModNestingEntity {
         setType(type);
 
         return super.onInitialSpawn(world, difficulty, reason, data, nbt);
+    }
+
+    /**
+     * If the snake eats a mouse they will be ready to breed.
+     * @param entity The entity the snake just killed.
+     */
+    @Override
+    public void onKillEntity(LivingEntity entity) {
+        super.onKillEntity(entity);
+        if (entity instanceof ModMouseEntity) {
+            if (isChild()) {
+                addGrowth(3);
+            } else {
+                setInLove(600);
+            }
+        }
     }
 
     /**

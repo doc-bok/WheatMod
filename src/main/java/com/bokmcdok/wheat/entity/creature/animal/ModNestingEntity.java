@@ -45,13 +45,13 @@ public abstract class ModNestingEntity extends AnimalEntity {
         return dataManager.get(IS_MALE); }
 
     /**
-     * Check if the widowbird can mate with the other animal.
+     * Check if the entity can mate with the other animal.
      * @param animal The animal to try and mate with.
      * @return TRUE if the other animal is a widowbird of the opposite gender.
      */
     @Override
     public boolean canMateWith(AnimalEntity animal) {
-        if (animal instanceof ModNestingEntity) {
+        if (animal.getType() == getType()) {
             ModNestingEntity mate = (ModNestingEntity)animal;
             return mate.getIsMale() != getIsMale() && super.canMateWith(animal);
         }
