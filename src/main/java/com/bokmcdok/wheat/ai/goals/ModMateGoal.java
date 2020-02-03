@@ -26,7 +26,7 @@ public class ModMateGoal extends BreedGoal {
 
     /**
      * Execute this goal if the entity can breed.
-     * @return
+     * @return TRUE if the goal should execute
      */
     @Override
     public boolean shouldExecute() {

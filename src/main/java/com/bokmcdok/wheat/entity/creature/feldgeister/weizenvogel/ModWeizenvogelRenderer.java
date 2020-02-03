@@ -9,7 +9,7 @@ import net.minecraft.util.ResourceLocation;
 import javax.annotation.Nullable;
 
 public class ModWeizenvogelRenderer extends ModFlappingBirdRenderer<ModWeizenvogelEntity, ModFlappingBirdModel<ModWeizenvogelEntity>> {
-    public static final ResourceLocation WEIZENVOGEL_TEXTURE = new ResourceLocation("docwheat:textures/entity/weizenvogel.png");
+    public static final ResourceLocation WEIZENVOGEL_TEXTURE = new ResourceLocation("docwheat:textures/entity/feldgeister/weizenvogel.png");
 
     /**
      * Construction

@@ -9,7 +9,7 @@ import net.minecraft.util.ResourceLocation;
 import javax.annotation.Nullable;
 
 public class ModGetreidehahnRenderer extends ModFlappingBirdRenderer<ModGetreidehahnEntity, ChickenModel<ModGetreidehahnEntity>> {
-    public static final ResourceLocation GETREIDEHAHN_TEXTURE = new ResourceLocation("docwheat:textures/entity/getreidehahn.png");
+    public static final ResourceLocation GETREIDEHAHN_TEXTURE = new ResourceLocation("docwheat:textures/entity/feldgeister/getreidehahn.png");
 
     /**
      * Construction

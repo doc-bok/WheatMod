@@ -1,5 +1,5 @@
 {
-  "type": "block",
+  "type": "nest",
   "from": "minecraft:hay_block",
   "color": {
     "r": 245,
@@ -31,5 +31,12 @@
       "from": [4, 0, 4],
       "to": [12, 1, 12]
     }
-  ]
+  ],
+  "nest": {
+    "entity": "docwheat:widowbird",
+    "minimum": 1,
+    "maximum": 3,
+    "spawn_chance": 1.0
+  },
+  "ticks_randomly": true
 }

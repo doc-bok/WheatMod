@@ -8,8 +8,12 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class ModMouseRenderer extends MobRenderer<ModMouseEntity, ModMouseModel<ModMouseEntity>> {
-    private static final ResourceLocation MOUSE_TEXTURES = new ResourceLocation("docwheat:textures/entity/mouse.png");
+    private static final ResourceLocation MOUSE_TEXTURES = new ResourceLocation("docwheat:textures/entity/animal/mouse.png");
 
+    /**
+     * Construction
+     * @param rendererManager The render manager
+     */
     public ModMouseRenderer(EntityRendererManager rendererManager) {
         super(rendererManager, new ModMouseModel<>(), 0.3f);
     }

@@ -18,6 +18,7 @@ import java.util.Set;
 public class ModBlockImpl {
     private final Set<ResourceLocation> mTargets;
     private final ModCropProperties mCropProperties;
+    private final ModNestProperties mNestProperties;
     private final VoxelShape mShape;
     private final VoxelShape mCollisionShape;
     private final IBlockColor mColor;
@@ -35,6 +36,7 @@ public class ModBlockImpl {
         mFireEncouragement = properties.mFireEncouragement;
         mFireFlammability = properties.mFireFlammability;
         mCropProperties = properties.mCropProperties;
+        mNestProperties = properties.mNestProperties;
         mShape = properties.mShape;
         mCollisionShape = properties.mCollisionShape;
         mInventorySize = properties.mInventorySize;
@@ -135,12 +137,21 @@ public class ModBlockImpl {
     }
 
     /**
+     * Get the nest properties of the block.
+     * @return The nest properties.
+     */
+    public ModNestProperties getNestProperties() {
+        return mNestProperties;
+    }
+
+    /**
      * The properties of a modded block.
      */
     public static class ModBlockProperties {
         private Set<ResourceLocation> mTargets;
         private Block.Properties mBlockProperties;
         private ModCropProperties mCropProperties;
+        private ModNestProperties mNestProperties;
         private VoxelShape mShape;
         private VoxelShape mCollisionShape;
         private IBlockColor mColor = null;
@@ -177,6 +188,7 @@ public class ModBlockImpl {
                 ModBlockImpl impl = ((IModBlock)block).getImpl();
                 mTargets = impl.mTargets;
                 mCropProperties = impl.mCropProperties;
+                mNestProperties = impl.mNestProperties;
                 mShape = impl.mShape;
                 mCollisionShape = impl.mCollisionShape;
                 mColor = impl.mColor;
@@ -339,6 +351,14 @@ public class ModBlockImpl {
 
         public void setRenderType(String renderType) {
             mRenderType = renderType;
+        }
+
+        /**
+         * Set the nest properties
+         * @param properties The properties of the nest.
+         */
+        public void setNestProperties(ModNestProperties properties) {
+            mNestProperties = properties;
         }
     }
 }

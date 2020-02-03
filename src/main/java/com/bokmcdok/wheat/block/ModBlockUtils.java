@@ -40,6 +40,7 @@ public class ModBlockUtils {
 
     public static final FlourMillBlock flour_mill = null;
 
+    public static final ModBlock cornsnake_egg = null;
     public static final ModBlock widowbird_nest = null;
 
     public static final ModTrapBlock mouse_trap = null;
