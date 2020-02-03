@@ -6,10 +6,13 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.goal.TemptGoal;
 import net.minecraft.entity.passive.AnimalEntity;
+import net.minecraft.entity.passive.FoxEntity;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.passive.horse.AbstractHorseEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.particles.IParticleData;
 import net.minecraft.particles.ParticleTypes;
@@ -44,6 +47,11 @@ public class AnimalUtils {
         } else if (entity.getType() == EntityType.CHICKEN) {
             AnimalEntity animal = (AnimalEntity)entity;
             animal.goalSelector.addGoal(3, new TemptGoal(animal, 1.0D, ModItemUtils.SEED_ITEMS, false));
+        } else if (entity.getType() == EntityType.FOX) {
+            FoxEntity fox = (FoxEntity)entity;
+            if (fox.getItemStackFromSlot(EquipmentSlotType.MAINHAND).getItem() == Items.WHEAT) {
+                fox.setItemStackToSlot(EquipmentSlotType.MAINHAND, new ItemStack(ModItemUtils.wild_einkorn_hay));
+            }
         }
     }
 
