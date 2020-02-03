@@ -62,7 +62,7 @@ public class ModNestingGoal extends MoveToBlockGoal {
             World world = mOwner.world;
             BlockState blockstate = world.getBlockState(destinationBlock);
             Block block = blockstate.getBlock();
-            if (block != mNestBlock) {
+            if (!block.equals(mNestBlock)) {
                 mOwner.resetNestPosition();
                 runDelay = 10;
                 return false;
