@@ -1,7 +1,6 @@
 package com.bokmcdok.wheat.ai.goals;
 
 import com.bokmcdok.wheat.block.ModBlock;
-import com.bokmcdok.wheat.block.ModBlockUtils;
 import com.bokmcdok.wheat.entity.creature.animal.ModNestingEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;

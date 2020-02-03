@@ -2,7 +2,6 @@ package com.bokmcdok.wheat.block;
 
 import com.bokmcdok.wheat.data.ModDataManager;
 import com.bokmcdok.wheat.data.ModMaterialManager;
-import com.bokmcdok.wheat.entity.creature.animal.ModNestingEntity;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.google.gson.JsonArray;

@@ -1,6 +1,5 @@
 package com.bokmcdok.wheat.entity.creature.animal.cornsnake;
 
-import com.bokmcdok.wheat.entity.creature.animal.mouse.ModMouseRenderer;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraftforge.fml.client.registry.IRenderFactory;

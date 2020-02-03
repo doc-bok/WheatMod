@@ -1,12 +1,9 @@
 package com.bokmcdok.wheat.ai.goals;
 
 import com.bokmcdok.wheat.block.ModBlock;
-import com.bokmcdok.wheat.block.ModBlockUtils;
 import com.bokmcdok.wheat.entity.creature.animal.ModNestingEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.AgeableEntity;
 import net.minecraft.entity.ai.goal.MoveToBlockGoal;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorldReader;
@@ -85,7 +82,7 @@ public class ModNestingGoal extends MoveToBlockGoal {
      */
     protected boolean shouldMoveTo(IWorldReader world, BlockPos position) {
         Block block = world.getBlockState(position).getBlock();
-        if (block != mNestBlock) {
+        if (!block.equals(mNestBlock)) {
             mOwner.resetNestPosition();
             runDelay = 10;
             return false;

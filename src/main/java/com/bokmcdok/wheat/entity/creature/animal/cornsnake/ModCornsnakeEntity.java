@@ -9,7 +9,6 @@ import com.bokmcdok.wheat.entity.creature.animal.mouse.ModMouseEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.AgeableEntity;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ILivingEntityData;
 import net.minecraft.entity.LivingEntity;
@@ -99,20 +98,22 @@ public class ModCornsnakeEntity extends ModNestingEntity {
     @Override
     public ILivingEntityData onInitialSpawn(IWorld world, DifficultyInstance difficulty, SpawnReason reason, @Nullable ILivingEntityData data, @Nullable CompoundNBT nbt) {
         int type = 0;
+        CornsnakeData cornsnakeData;
         if (data instanceof CornsnakeData) {
-            type = ((CornsnakeData)data).mType;
+            cornsnakeData = (CornsnakeData)data;
+            type = cornsnakeData.mType;
         } else {
             Biome biome = world.func_226691_t_(new BlockPos(this));
             if (biome.getCategory() == Biome.Category.FOREST) {
                 type = 1;
             }
 
-            data = new CornsnakeData(type);
+            cornsnakeData = new CornsnakeData(type);
         }
 
         setType(type);
 
-        return super.onInitialSpawn(world, difficulty, reason, data, nbt);
+        return super.onInitialSpawn(world, difficulty, reason, cornsnakeData, nbt);
     }
 
     /**
