@@ -6,6 +6,7 @@
     "docwheat:diorite_stone",
     "docwheat:andesite_stone",
     "docwheat:small_sandstone",
-    "minecraft:stone_button"
+    "minecraft:stone_button",
+    "docwheat:small_mossy_cobblestone"
   ]
 }
