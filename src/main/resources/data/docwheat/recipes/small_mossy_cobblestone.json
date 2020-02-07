@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:mossy_cobblestone"
+    }
+  ],
+  "result": {
+    "item": "docwheat:small_mossy_cobblestone"
+  }
+}
