@@ -19,7 +19,6 @@ public class ModWeizenmutterModel<T extends ModWeizenmutterEntity> extends Segme
     private final ModelRenderer mLeftLeg;
     private final ModelRenderer mRightArm;
     private final ModelRenderer mLeftArm;
-    private float mItemInUseMaxCount;
 
     /**
      * Construction
@@ -194,7 +193,6 @@ public class ModWeizenmutterModel<T extends ModWeizenmutterEntity> extends Segme
      * @param partialTick The time delta.
      */
     public void setLivingAnimations(T entity, float limbSwing, float limbSwingAmount, float partialTick) {
-        mItemInUseMaxCount = (float)entity.getItemInUseMaxCount();
         super.setLivingAnimations(entity, limbSwing, limbSwingAmount, partialTick);
     }
 
