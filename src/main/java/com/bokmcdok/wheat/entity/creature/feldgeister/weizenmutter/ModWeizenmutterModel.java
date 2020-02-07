@@ -167,27 +167,6 @@ public class ModWeizenmutterModel<T extends ModWeizenmutterEntity> extends Segme
             mRightArm.rotateAngleY = 0.0F;
             mLeftArm.rotateAngleY = 0.0F;
 
-        } else if (abstractillagerentity$armpose == AbstractIllagerEntity.ArmPose.BOW_AND_ARROW) {
-            mRightArm.rotateAngleY = -0.1F + mHead.rotateAngleY;
-            mRightArm.rotateAngleX = (-(float)Math.PI / 2F) + mHead.rotateAngleX;
-            mLeftArm.rotateAngleX = -0.9424779F + mHead.rotateAngleX;
-            mLeftArm.rotateAngleY = mHead.rotateAngleY - 0.4F;
-            mLeftArm.rotateAngleZ = ((float)Math.PI / 2F);
-
-        } else if (abstractillagerentity$armpose == AbstractIllagerEntity.ArmPose.CROSSBOW_HOLD) {
-            mRightArm.rotateAngleY = -0.3F + mHead.rotateAngleY;
-            mLeftArm.rotateAngleY = 0.6F + mHead.rotateAngleY;
-            mRightArm.rotateAngleX = (-(float)Math.PI / 2F) + mHead.rotateAngleX + 0.1F;
-            mLeftArm.rotateAngleX = -1.5F + mHead.rotateAngleX;
-
-        } else if (abstractillagerentity$armpose == AbstractIllagerEntity.ArmPose.CROSSBOW_CHARGE) {
-            mRightArm.rotateAngleY = -0.8F;
-            mRightArm.rotateAngleX = -0.97079635F;
-            mLeftArm.rotateAngleX = -0.97079635F;
-            float f2 = MathHelper.clamp(mItemInUseMaxCount, 0.0F, 25.0F);
-            mLeftArm.rotateAngleY = MathHelper.lerp(f2 / 25.0F, 0.4F, 0.85F);
-            mLeftArm.rotateAngleX = MathHelper.lerp(f2 / 25.0F, mLeftArm.rotateAngleX, (-(float)Math.PI / 2F));
-
         } else if (abstractillagerentity$armpose == AbstractIllagerEntity.ArmPose.CELEBRATING) {
             mRightArm.rotationPointZ = 0.0F;
             mRightArm.rotationPointX = -5.0F;

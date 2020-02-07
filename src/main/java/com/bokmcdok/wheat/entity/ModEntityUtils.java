@@ -21,7 +21,6 @@ import com.bokmcdok.wheat.entity.creature.feldgeister.heukatze.ModHeukatzeRender
 import com.bokmcdok.wheat.entity.creature.feldgeister.weizenbeller.ModWeizenbellerEntity;
 import com.bokmcdok.wheat.entity.creature.feldgeister.weizenbeller.ModWeizenbellerRenderFactory;
 import com.bokmcdok.wheat.entity.creature.feldgeister.weizenmutter.ModWeizenmutterEntity;
-import com.bokmcdok.wheat.entity.creature.feldgeister.weizenmutter.ModWeizenmutterModel;
 import com.bokmcdok.wheat.entity.creature.feldgeister.weizenmutter.ModWeizenmutterRenderFactory;
 import com.bokmcdok.wheat.entity.creature.feldgeister.weizenvogel.ModWeizenvogelEntity;
 import com.bokmcdok.wheat.entity.creature.feldgeister.weizenvogel.ModWeizenvogelRenderFactory;
