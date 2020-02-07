@@ -1,0 +1,21 @@
+{
+    "type": "spawn_egg",
+    "group": "misc",
+    "entity": "docwheat:weizenmutter",
+
+    "primary_color": {
+        "color": {
+            "r": 180,
+            "g": 180,
+            "b": 180
+        }
+    },
+
+    "secondary_color": {
+        "color": {
+            "r": 90,
+            "g": 90,
+            "b": 90
+        }
+    }
+}

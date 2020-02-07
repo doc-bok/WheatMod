@@ -49,6 +49,7 @@ class ModTerrain {
                     monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.haferbock, 8, 1, 1));
                     monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.weizenvogel, 40, 1, 1));
                     monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.getreidehahn, 8, 1, 1));
+                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.weizenmutter, 5, 1, 1));
                     break;
 
                 case FOREST:
@@ -61,6 +62,7 @@ class ModTerrain {
                     monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.haferbock, 8, 1, 1));
                     monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.weizenvogel, 40, 1, 1));
                     monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.getreidehahn, 8, 1, 1));
+                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.weizenmutter, 5, 1, 1));
                     break;
 
                 case RIVER:
@@ -73,6 +75,7 @@ class ModTerrain {
                     monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.haferbock, 8, 1, 1));
                     monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.weizenvogel, 40, 1, 1));
                     monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.getreidehahn, 8, 1, 1));
+                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.weizenmutter, 5, 1, 1));
                     break;
 
                 case TAIGA:
@@ -83,6 +86,7 @@ class ModTerrain {
                     monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.heukatze, 8, 1, 1));
                     monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.haferbock, 8, 1, 1));
                     monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.getreidehahn, 8, 1, 1));
+                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.weizenmutter, 5, 1, 1));
                     break;
 
                 case SAVANNA:
@@ -91,14 +95,22 @@ class ModTerrain {
                     ambientSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.butterfly, 10, 2, 3));
                     monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.haferbock, 8, 1, 1));
                     monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.getreidehahn, 8, 1, 1));
+                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.weizenmutter, 5, 1, 1));
                     break;
 
                 case EXTREME_HILLS:
+                    creatureSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.field_mouse, 10, 2, 3));
+                    ambientSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.butterfly, 10, 2, 3));
+                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.haferbock, 8, 1, 1));
+                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.getreidehahn, 8, 1, 1));
+                    break;
+
                 case JUNGLE:
                     creatureSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.field_mouse, 10, 2, 3));
                     ambientSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.butterfly, 10, 2, 3));
                     monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.haferbock, 8, 1, 1));
                     monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.getreidehahn, 8, 1, 1));
+                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.weizenmutter, 5, 1, 1));
                     break;
 
                 case MUSHROOM:
