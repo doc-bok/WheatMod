@@ -28,6 +28,7 @@ import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -226,5 +227,14 @@ public class ModFeldgeisterEntity extends MonsterEntity {
      */
     protected double getSpeed() {
         return getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getValue();
+    }
+
+    /**
+     * Get the death sound.
+     * @return The sound to play when the entity dies.
+     */
+    @Override
+    protected SoundEvent getDeathSound() {
+        return SoundEvents.ENTITY_LIGHTNING_BOLT_THUNDER;
     }
 }

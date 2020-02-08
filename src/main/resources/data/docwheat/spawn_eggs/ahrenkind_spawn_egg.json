@@ -1,0 +1,21 @@
+{
+    "type": "spawn_egg",
+    "group": "misc",
+    "entity": "docwheat:ahrenkind",
+
+    "primary_color": {
+        "color": {
+            "r": 42,
+            "g": 42,
+            "b": 42
+        }
+    },
+
+    "secondary_color": {
+        "color": {
+            "r": 121,
+            "g": 121,
+            "b": 121
+        }
+    }
+}
