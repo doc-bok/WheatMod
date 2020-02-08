@@ -181,7 +181,6 @@ public class ModAhrenkindEntity extends ModFillagerEntity implements IGetsAngry 
 
     @Override
     protected void updateAITasks() {
-        IAttributeInstance speed = getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED);
         LivingEntity revengeTarget = getRevengeTarget();
         if (isAngry()) {
             --mAngerLevel;
