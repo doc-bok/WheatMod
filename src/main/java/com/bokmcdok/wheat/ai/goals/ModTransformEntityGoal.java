@@ -1,8 +1,10 @@
 package com.bokmcdok.wheat.ai.goals;
 
+import com.bokmcdok.wheat.ai.behaviour.ISpellcaster;
 import net.minecraft.entity.EntityPredicate;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.world.World;
 
@@ -12,11 +14,13 @@ import java.util.function.Predicate;
 public class ModTransformEntityGoal extends Goal {
     private final EntityPredicate mConditions;
 
-    private LivingEntity mTarget = null;
+    private MobEntity mTarget = null;
     private final World mWorld;
-    private final LivingEntity mOwner;
-    private final Class<? extends LivingEntity> mFrom;
-    private final EntityType<? extends LivingEntity> mTo;
+    private final MobEntity mOwner;
+    private final Class<? extends MobEntity> mFrom;
+    private final EntityType<? extends MobEntity> mTo;
+    private final double mSpeed;
+    private int mDelay = 0;
 
     /**
      * Construction
@@ -24,12 +28,25 @@ public class ModTransformEntityGoal extends Goal {
      * @param from The entity to convert from.
      * @param to The entity to convert to.
      */
-    public ModTransformEntityGoal(LivingEntity owner,
-                                  Class<? extends LivingEntity> from,
-                                  EntityType<? extends LivingEntity> to,
+    public ModTransformEntityGoal(MobEntity owner, double speed, Class<? extends MobEntity> from, EntityType<? extends MobEntity> to) {
+        this(owner, speed, from, to, null);
+    }
+
+    /**
+     * Construction
+     * @param owner The owner of this goal.
+     * @param from The entity to convert from.
+     * @param to The entity to convert to.
+     * @param customPredicate Any custom conditions for selecting a target.
+     */
+    public ModTransformEntityGoal(MobEntity owner,
+                                  double speed,
+                                  Class<? extends MobEntity> from,
+                                  EntityType<? extends MobEntity> to,
                                   Predicate<LivingEntity> customPredicate) {
         mWorld = owner.world;
         mOwner = owner;
+        mSpeed = speed;
         mFrom = from;
         mTo = to;
 
@@ -55,7 +72,7 @@ public class ModTransformEntityGoal extends Goal {
      */
     @Override
     public boolean shouldContinueExecuting() {
-        return super.shouldContinueExecuting() && mTarget.isAlive();
+        return super.shouldContinueExecuting() && mDelay < 60 && mTarget.isAlive();
     }
 
     /**
@@ -65,6 +82,7 @@ public class ModTransformEntityGoal extends Goal {
     public void resetTask() {
         super.resetTask();
         mTarget = null;
+        mDelay = 0;
     }
 
     /**
@@ -74,29 +92,52 @@ public class ModTransformEntityGoal extends Goal {
     public void tick() {
         super.tick();
 
-        LivingEntity converted = mTo.create(mWorld);
-        converted.copyLocationAndAnglesFrom(mTarget);
-        mTarget.remove();
-        if (mTarget.hasCustomName()) {
-            converted.setCustomName(mTarget.getCustomName());
-            converted.setCustomNameVisible(mTarget.isCustomNameVisible());
+        mOwner.getLookController().setLookPositionWithEntity(mTarget, 10, mOwner.getVerticalFaceSpeed());
+        mOwner.getNavigator().tryMoveToEntityLiving(mTarget, mSpeed);
+
+        ++mDelay;
+        if (mDelay >= 60 && mOwner.getDistanceSq(mTarget) < 9.0d) {
+            LivingEntity converted = mTo.create(mWorld);
+            converted.copyLocationAndAnglesFrom(mTarget);
+            mTarget.remove();
+            if (mTarget.hasCustomName()) {
+                converted.setCustomName(mTarget.getCustomName());
+                converted.setCustomNameVisible(mTarget.isCustomNameVisible());
+            }
+
+            converted.setInvulnerable(mOwner.isInvulnerable());
+            mWorld.addEntity(converted);
+
+            mTarget = null;
+            mDelay = 0;
+
+            if (mOwner instanceof ISpellcaster) {
+                ((ISpellcaster)mOwner).setCastingSpell(false);
+            }
         }
+    }
 
-        converted.setInvulnerable(mOwner.isInvulnerable());
-        mWorld.addEntity(converted);
+    /**
+     * Tell spellcasters to start casting a spell.
+     */
+    @Override
+    public void startExecuting() {
+        super.startExecuting();
 
-        mTarget = null;
+        if (mOwner instanceof ISpellcaster) {
+            ((ISpellcaster)mOwner).setCastingSpell(true);
+        }
     }
 
     /**
      * Attempt to find a target to transform.
      * @return An entity to target, NULL if there are no nearby targets.
      */
-    private LivingEntity findTarget() {
-        List<LivingEntity> nearbyTargets = mWorld.getTargettableEntitiesWithinAABB(mFrom, mConditions, mOwner, mOwner.getBoundingBox().grow(8.0d));
+    private MobEntity findTarget() {
+        List<MobEntity> nearbyTargets = mWorld.getTargettableEntitiesWithinAABB(mFrom, mConditions, mOwner, mOwner.getBoundingBox().grow(8.0d));
         double minDistanceSquared = Double.MAX_VALUE;
-        LivingEntity target = null;
-        for (LivingEntity i : nearbyTargets) {
+        MobEntity target = null;
+        for (MobEntity i : nearbyTargets) {
             if (mOwner.getDistanceSq(i) < minDistanceSquared) {
                 target = i;
                 minDistanceSquared = mOwner.getDistanceSq(i);
