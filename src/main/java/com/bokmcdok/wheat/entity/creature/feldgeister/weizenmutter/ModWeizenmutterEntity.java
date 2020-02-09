@@ -1,8 +1,12 @@
 package com.bokmcdok.wheat.entity.creature.feldgeister.weizenmutter;
 
+import com.bokmcdok.wheat.ai.goals.ModTransformEntityGoal;
+import com.bokmcdok.wheat.entity.ModEntityUtils;
 import com.bokmcdok.wheat.entity.creature.feldgeister.ModFeldgeisterEntity;
+import net.minecraft.entity.EntityPredicate;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.merchant.villager.VillagerEntity;
 import net.minecraft.entity.monster.AbstractIllagerEntity;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
@@ -72,4 +76,13 @@ public class ModWeizenmutterEntity extends ModFeldgeisterEntity {
         return SoundEvents.ENTITY_LIGHTNING_BOLT_THUNDER;
     }
 
+    /**
+     * Register the custom goals for the Weizenmutter:
+     *  - Convert children into Ahrenkind.
+     */
+    @Override
+    protected void registerGoals() {
+        super.registerGoals();
+        goalSelector.addGoal(6, new ModTransformEntityGoal(this, VillagerEntity.class, ModEntityUtils.ahrenkind, (entity) -> entity.isChild()));
+    }
 }
