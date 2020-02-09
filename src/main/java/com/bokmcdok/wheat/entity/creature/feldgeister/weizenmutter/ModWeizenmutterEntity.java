@@ -1,26 +1,24 @@
 package com.bokmcdok.wheat.entity.creature.feldgeister.weizenmutter;
-
 import com.bokmcdok.wheat.ai.goals.ModTransformEntityGoal;
 import com.bokmcdok.wheat.entity.ModEntityUtils;
 import com.bokmcdok.wheat.entity.creature.feldgeister.ModFeldgeisterEntity;
-import net.minecraft.entity.EntityPredicate;
+import com.bokmcdok.wheat.entity.creature.feldgeister.fillager.ModFillagerEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.merchant.villager.VillagerEntity;
-import net.minecraft.entity.monster.AbstractIllagerEntity;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.world.World;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 import javax.annotation.Nullable;
 
-public class ModWeizenmutterEntity extends ModFeldgeisterEntity {
+public class ModWeizenmutterEntity extends ModFillagerEntity {
+    private static final ResourceLocation TEXTURE = new ResourceLocation("docwheat:textures/entity/feldgeister/weizenmutter.png");
+
     /**
      * Construction
-     *
      * @param type  The type of this entity.
      * @param world The current world.
      */
@@ -29,12 +27,12 @@ public class ModWeizenmutterEntity extends ModFeldgeisterEntity {
     }
 
     /**
-     * Get the arm pose of the WeizenmutterEntity
-     * @return The current arm pose of the weizenmutter.
+     * Get the texture to use with this entity.
+     * @return The resource location of the texture.
      */
-    @OnlyIn(Dist.CLIENT)
-    public AbstractIllagerEntity.ArmPose getArmPose() {
-        return AbstractIllagerEntity.ArmPose.NEUTRAL;
+    @Override
+    public ResourceLocation getTexture() {
+        return TEXTURE;
     }
 
     /**

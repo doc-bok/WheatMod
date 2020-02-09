@@ -1,4 +1,4 @@
-package com.bokmcdok.wheat.entity.creature.feldgeister.weizenmutter;
+package com.bokmcdok.wheat.entity.creature.feldgeister.fillager;
 
 import com.google.common.collect.ImmutableList;
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -10,7 +10,7 @@ import net.minecraft.entity.monster.AbstractIllagerEntity;
 import net.minecraft.util.HandSide;
 import net.minecraft.util.math.MathHelper;
 
-public class ModWeizenmutterModel<T extends ModWeizenmutterEntity> extends SegmentedModel<T> implements IHasArm, IHasHead {
+public class ModFillagerModel<T extends ModFillagerEntity> extends SegmentedModel<T> implements IHasArm, IHasHead {
     private final ModelRenderer mHead;
     private final ModelRenderer mHat;
     private final ModelRenderer mBody;
@@ -27,7 +27,7 @@ public class ModWeizenmutterModel<T extends ModWeizenmutterEntity> extends Segme
      * @param textureWidth The width of the texture
      * @param textureHeight The height of the texture
      */
-    public ModWeizenmutterModel(float scaleFactor, float rotationPointY, int textureWidth, int textureHeight) {
+    public ModFillagerModel(float scaleFactor, float rotationPointY, int textureWidth, int textureHeight) {
         mHead = (new ModelRenderer(this)).setTextureSize(textureWidth, textureHeight);
         mHead.setRotationPoint(0.0F, 0.0F + rotationPointY, 0.0F);
         mHead.setTextureOffset(0, 0).func_228301_a_(-4.0F, -10.0F, -4.0F, 8.0F, 10.0F, 8.0F, scaleFactor);

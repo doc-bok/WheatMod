@@ -165,5 +165,8 @@
   "entity.docwheat.cornsnake": "Corn Snake",
 
   "item.docwheat.weizenmutter_spawn_egg": "Wheat Mother Spawn Egg",
-  "entity.docwheat.weizenmutter": "Wheat Mother"
+  "entity.docwheat.weizenmutter": "Wheat Mother",
+
+  "item.docwheat.ahrenkind_spawn_egg": "Ash Child Spawn Egg",
+  "entity.docwheat.ahrenkind": "Ash Child"
 }
