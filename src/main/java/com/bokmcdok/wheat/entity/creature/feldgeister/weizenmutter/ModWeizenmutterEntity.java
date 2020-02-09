@@ -1,18 +1,29 @@
 package com.bokmcdok.wheat.entity.creature.feldgeister.weizenmutter;
-
+import com.bokmcdok.wheat.ai.behaviour.ISpellcaster;
+import com.bokmcdok.wheat.ai.goals.ModTransformEntityGoal;
+import com.bokmcdok.wheat.entity.ModEntityUtils;
 import com.bokmcdok.wheat.entity.creature.feldgeister.ModFeldgeisterEntity;
 import com.bokmcdok.wheat.entity.creature.feldgeister.fillager.ModFillagerEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.merchant.villager.VillagerEntity;
+import net.minecraft.entity.monster.AbstractIllagerEntity;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
-public class ModWeizenmutterEntity extends ModFillagerEntity {
+public class ModWeizenmutterEntity extends ModFillagerEntity implements ISpellcaster {
+    private static final DataParameter<Boolean> SPELL = EntityDataManager.createKey(ModWeizenmutterEntity.class, DataSerializers.BOOLEAN);
+
     private static final ResourceLocation TEXTURE = new ResourceLocation("docwheat:textures/entity/feldgeister/weizenmutter.png");
 
     /**
@@ -31,6 +42,60 @@ public class ModWeizenmutterEntity extends ModFillagerEntity {
     @Override
     public ResourceLocation getTexture() {
         return TEXTURE;
+    }
+
+    /**
+     * Allow for spellcasting arm pose if casting a spell.
+     * @return The arm pose to use.
+     */
+    @Override
+    public AbstractIllagerEntity.ArmPose getArmPose() {
+        if (isCastingSpell()) {
+            return AbstractIllagerEntity.ArmPose.SPELLCASTING;
+        }
+
+        return super.getArmPose();
+    }
+
+    /**
+     * Check if the Weizenmutter is casting a spell.
+     * @return TRUE if a spell is being cast.
+     */
+    @Override
+    public boolean isCastingSpell() {
+        return dataManager.get(SPELL);
+    }
+
+    /**
+     * Set whether or not the Weizenmutter is casting a spell.
+     * @param castingSpell TRUE if a spell is being cast, false otherwise.
+     */
+    @Override
+    public void setCastingSpell(boolean castingSpell) {
+        dataManager.set(SPELL, castingSpell);
+
+        if (castingSpell) {
+            playSound(SoundEvents.ENTITY_ILLUSIONER_CAST_SPELL, 1.0f, 1.0f);
+        }
+    }
+
+    /**
+     * Add spell particle effects if a spell is being cast.
+     */
+    @Override
+    public void tick() {
+        super.tick();
+
+        if (world.isRemote && isCastingSpell()) {
+            double d0 = 0.3d;
+            double d1 = 0.35d;
+            double d2 = 0.3d;
+            float f = renderYawOffset * ((float)Math.PI / 180F) + MathHelper.cos((float)ticksExisted * 0.6662F) * 0.25F;
+            float f1 = MathHelper.cos(f);
+            float f2 = MathHelper.sin(f);
+            world.addParticle(ParticleTypes.ENTITY_EFFECT, func_226277_ct_() + (double)f1 * 0.6D, func_226278_cu_() + 1.8D, func_226281_cx_() + (double)f2 * 0.6D, d0, d1, d2);
+            world.addParticle(ParticleTypes.ENTITY_EFFECT, func_226277_ct_() - (double)f1 * 0.6D, func_226278_cu_() + 1.8D, func_226281_cx_() - (double)f2 * 0.6D, d0, d1, d2);
+        }
     }
 
     /**
@@ -63,4 +128,31 @@ public class ModWeizenmutterEntity extends ModFillagerEntity {
         return SoundEvents.ENTITY_WITCH_HURT;
     }
 
+    /**
+     * Get the death sound.
+     * @return The sound to play when the entity dies.
+     */
+    @Override
+    protected SoundEvent getDeathSound() {
+        return SoundEvents.ENTITY_LIGHTNING_BOLT_THUNDER;
+    }
+
+    /**
+     * Register the custom goals for the Weizenmutter:
+     *  - Convert children into Ahrenkind.
+     */
+    @Override
+    protected void registerGoals() {
+        super.registerGoals();
+        goalSelector.addGoal(6, new ModTransformEntityGoal(this, 1.0d, VillagerEntity.class, ModEntityUtils.ahrenkind, (entity) -> entity.isChild()));
+    }
+
+    /**
+     * Register a synced parameter for keeping track of spell use.
+     */
+    @Override
+    protected void registerData() {
+        super.registerData();
+        dataManager.register(SPELL, false);
+    }
 }
