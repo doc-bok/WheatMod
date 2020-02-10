@@ -17,15 +17,11 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 public class WheatMod
 {
     public static final String MOD_ID = "docwheat";
-    private final ModForgeEventHandler mForgeEventHandler;
-    private final ModDimensionRegistrar mDimensionRegistrar;
 
     public WheatMod() {
-        mForgeEventHandler = new ModForgeEventHandler();
-        mDimensionRegistrar = new ModDimensionRegistrar();
+        new ModForgeEventHandler();
+        new ModDimensionRegistrar();
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientSetup);
-
-
     }
 
     private void clientSetup(final FMLClientSetupEvent event) {

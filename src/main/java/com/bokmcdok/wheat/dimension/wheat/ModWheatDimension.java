@@ -1,6 +1,8 @@
 package com.bokmcdok.wheat.dimension.wheat;
 
+import com.bokmcdok.wheat.WheatMod;
 import net.minecraft.block.Blocks;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.MathHelper;
@@ -19,6 +21,7 @@ import javax.annotation.Nullable;
 import java.util.Random;
 
 public class ModWheatDimension extends Dimension {
+    public static ResourceLocation NAME = new ResourceLocation(WheatMod.MOD_ID, "wheat_dimension");
 
     /**
      * Construction

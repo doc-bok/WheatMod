@@ -1,14 +1,15 @@
 package com.bokmcdok.wheat;
 
-import com.bokmcdok.wheat.dimension.ModDimensionRegistrar;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.dimension.DimensionType;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.ModDimension;
 import net.minecraftforge.event.world.RegisterDimensionsEvent;
+import net.minecraftforge.registries.ForgeRegistry;
+import net.minecraftforge.registries.GameData;
+import net.minecraftforge.registries.RegistryManager;
 
 public class ModForgeEventHandler {
-    public static final ResourceLocation WHEAT_DIMENSION_TYPE = new ResourceLocation(WheatMod.MOD_ID, "wheat_dimension");
 
     /**
      * Construction
@@ -21,9 +22,12 @@ public class ModForgeEventHandler {
      * Register dimension types.
      * @param event The event.
      */
-    private void onRegisterDimensionsEvent(RegisterDimensionsEvent event) {
-        if (DimensionType.byName(WHEAT_DIMENSION_TYPE) == null) {
-            DimensionManager.registerDimension(WHEAT_DIMENSION_TYPE, ModDimensionRegistrar.WHEAT_DIMENSION, null, true);
+    protected void onRegisterDimensionsEvent(RegisterDimensionsEvent event) {
+        ForgeRegistry<ModDimension> dimensionRegistry = RegistryManager.ACTIVE.getRegistry(GameData.MODDIMENSIONS);
+        for (ModDimension i : dimensionRegistry.getValues()) {
+            if (DimensionType.byName(i.getRegistryName()) == null) {
+                DimensionManager.registerDimension(i.getRegistryName(), i, null, true);
+            }
         }
     }
 }
