@@ -168,5 +168,8 @@
   "entity.docwheat.weizenmutter": "Wheat Mother",
 
   "item.docwheat.ahrenkind_spawn_egg": "Ash Child Spawn Egg",
-  "entity.docwheat.ahrenkind": "Ash Child"
+  "entity.docwheat.ahrenkind": "Ash Child",
+
+  "item.docwheat.bone_water": "Bone in Water",
+  "item.docwheat.bone_broth": "Bone Broth"
 }

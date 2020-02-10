@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smoking",
+  "ingredient": {
+    "item": "docwheat:bone_water"
+  },
+  "result": "docwheat:bone_broth",
+  "experience": 0.35,
+  "cookingtime": 100
+}
