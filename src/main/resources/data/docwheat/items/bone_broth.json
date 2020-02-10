@@ -1,0 +1,16 @@
+{
+    "type": "item",
+    "group": "food",
+    "container": "docwheat:stone_bowl",
+    "food": {
+        "hunger": 1,
+        "saturation": 2,
+        "effects": [
+            {
+                "effect_type": "docwheat:bone_strength",
+                "probability": 1.0
+            }
+        ],
+        "always_edible": true
+    }
+}

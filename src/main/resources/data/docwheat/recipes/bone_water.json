@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:bone"
+    },
+    {
+      "item": "minecraft:water_bucket"
+    },
+    {
+      "item": "docwheat:stone_bowl"
+    }
+  ],
+  "result": {
+    "item": "docwheat:bone_water"
+  }
+}
