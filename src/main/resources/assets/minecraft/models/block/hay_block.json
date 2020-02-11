@@ -1,0 +1,7 @@
+{
+    "parent": "block/cube_column",
+    "textures": {
+        "end": "docwheat:block/hay_block_top",
+        "side": "docwheat:block/hay_block_side"
+    }
+}

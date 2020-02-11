@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:hay_block",
+    "docwheat:common_straw_bale",
+    "docwheat:durum_straw_bale",
+    "docwheat:einkorn_straw_bale",
+    "docwheat:emmer_straw_bale",
+    "docwheat:spelt_straw_bale",
+    "docwheat:wild_einkorn_bale",
+    "docwheat:wild_emmer_bale"
+  ]
+}
