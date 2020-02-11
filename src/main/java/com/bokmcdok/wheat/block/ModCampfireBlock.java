@@ -167,7 +167,7 @@ public class ModCampfireBlock extends CampfireBlock {
                 }
             }
 
-            world.setBlockState(position, state.with(WATERLOGGED, Boolean.valueOf(true)).with(LIT, Boolean.valueOf(false)), 3);
+            world.setBlockState(position, state.with(WATERLOGGED, Boolean.TRUE).with(LIT, Boolean.FALSE), 3);
             world.getPendingFluidTicks().scheduleTick(position, fluidState.getFluid(), fluidState.getFluid().getTickRate(world));
             return true;
         } else {
