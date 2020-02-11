@@ -26,9 +26,11 @@ import com.bokmcdok.wheat.entity.creature.feldgeister.weizenmutter.ModWeizenmutt
 import com.bokmcdok.wheat.entity.creature.feldgeister.weizenmutter.ModWeizenmutterRenderFactory;
 import com.bokmcdok.wheat.entity.creature.feldgeister.weizenvogel.ModWeizenvogelEntity;
 import com.bokmcdok.wheat.entity.creature.feldgeister.weizenvogel.ModWeizenvogelRenderFactory;
+import com.bokmcdok.wheat.entity.tile.ModCampfireTileEntity;
 import com.bokmcdok.wheat.entity.tile.ModInventoryTileEntity;
 import com.bokmcdok.wheat.entity.tile.ModTrapTileEntity;
 import com.bokmcdok.wheat.item.ModItemUtils;
+import com.bokmcdok.wheat.render.ModCampfireTileEntityRenderer;
 import com.bokmcdok.wheat.render.StoneRenderer;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityClassification;
@@ -38,6 +40,7 @@ import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.world.gen.Heightmap;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -66,6 +69,7 @@ public class ModEntityUtils {
 
     public static final TileEntityType<ModInventoryTileEntity> inventory = null;
     public static final TileEntityType<ModTrapTileEntity> trap = null;
+    public static final TileEntityType<ModCampfireTileEntity> campfire = null;
 
     /**
      * Register entities used by the mod
@@ -158,6 +162,11 @@ public class ModEntityUtils {
                             .setRegistryName(WheatMod.MOD_ID, "trap")
             );
         }
+
+        event.getRegistry().registerAll(
+                TileEntityType.Builder.create(ModCampfireTileEntity::new, ModBlockUtils.campfire)
+                    .build(null)
+                    .setRegistryName(WheatMod.MOD_ID, "campfire"));
     }
 
     /**
@@ -193,5 +202,7 @@ public class ModEntityUtils {
         RenderingRegistry.registerEntityRenderingHandler(cornsnake, new ModCornsnakeRenderFactory());
         RenderingRegistry.registerEntityRenderingHandler(weizenmutter, new ModWeizenmutterRenderFactory());
         RenderingRegistry.registerEntityRenderingHandler(ahrenkind, new ModAhrenkindRenderFactory());
+
+        ClientRegistry.bindTileEntityRenderer(campfire, (dispatcher) -> new ModCampfireTileEntityRenderer(dispatcher));
     }
 }

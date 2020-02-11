@@ -4,6 +4,9 @@ import com.bokmcdok.wheat.WheatMod;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FireBlock;
+import net.minecraft.block.SoundType;
+import net.minecraft.block.material.Material;
+import net.minecraft.block.material.MaterialColor;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.client.renderer.color.BlockColors;
@@ -46,6 +49,8 @@ public class ModBlockUtils {
     public static final ModTrapBlock mouse_trap = null;
     public static final ModTrapBlock seeded_mouse_trap = null;
 
+    public static final ModCampfireBlock campfire = null;
+
     public static Set<Block> MUSHROOMS;
     public static Set<Block> CROPS;
     public static Set<Block> WHEAT;
@@ -77,7 +82,16 @@ public class ModBlockUtils {
         event.getRegistry().registerAll(blocks);
 
         event.getRegistry().registerAll(
-                new FlourMillBlock("flour_mill")
+                new FlourMillBlock("flour_mill"),
+
+                new ModCampfireBlock(
+                        Block.Properties.create(Material.WOOD, MaterialColor.OBSIDIAN)
+                                .hardnessAndResistance(2.0F)
+                                .sound(SoundType.WOOD)
+                                .lightValue(15)
+                                .tickRandomly()
+                                .func_226896_b_())
+                        .setRegistryName(WheatMod.MOD_ID, "campfire")
         );
     }
 
@@ -117,6 +131,8 @@ public class ModBlockUtils {
                 RenderTypeLookup.setRenderLayer(i.asBlock(), getRenderType(i.getRenderType()));
             }
         }
+
+        RenderTypeLookup.setRenderLayer(campfire, getRenderType("cutout"));
 
         MUSHROOMS = new HashSet<Block>(Arrays.asList(
             Blocks.BROWN_MUSHROOM_BLOCK,

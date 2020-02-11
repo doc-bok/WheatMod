@@ -21,6 +21,7 @@
   "block.docwheat.wild_emmer": "Wild Emmer",
   "item.docwheat.wild_emmer_grain": "Wild Emmer Grain",
   "item.docwheat.wild_emmer_hay": "Emmer Hay",
+  "block.docwheat.wild_emmer_bale": "Emmer Hay Bale",
 
   "item.docwheat.emmer_grain": "Emmer Grain",
   "item.docwheat.emmer_straw": "Emmer Straw",
@@ -171,5 +172,7 @@
   "entity.docwheat.ahrenkind": "Ash Child",
 
   "item.docwheat.bone_water": "Bone in Water",
-  "item.docwheat.bone_broth": "Bone Broth"
+  "item.docwheat.bone_broth": "Bone Broth",
+
+  "block.docwheat.campfire": "Campfire"
 }
