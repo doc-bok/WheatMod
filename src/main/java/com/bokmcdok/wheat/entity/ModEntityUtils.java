@@ -12,7 +12,6 @@ import com.bokmcdok.wheat.entity.creature.animal.widowbird.ModWidowbirdEntity;
 import com.bokmcdok.wheat.entity.creature.animal.widowbird.ModWidowbirdRenderFactory;
 import com.bokmcdok.wheat.entity.creature.feldgeister.ahrenkind.ModAhrenkindEntity;
 import com.bokmcdok.wheat.entity.creature.feldgeister.ahrenkind.ModAhrenkindRenderFactory;
-import com.bokmcdok.wheat.entity.creature.feldgeister.fillager.ModFillagerRenderer;
 import com.bokmcdok.wheat.entity.creature.feldgeister.getreidehahn.ModGetreidehahnEntity;
 import com.bokmcdok.wheat.entity.creature.feldgeister.getreidehahn.ModGetreidehahnRenderFactory;
 import com.bokmcdok.wheat.entity.creature.feldgeister.getreidewolf.ModGetreidewolfEntity;
