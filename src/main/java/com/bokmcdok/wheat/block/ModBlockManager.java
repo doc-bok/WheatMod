@@ -105,7 +105,7 @@ public class ModBlockManager extends ModDataManager<IModBlock> {
 
         setIfFalse(properties, json, "block_movement", ModBlockImpl.ModBlockProperties::doesNotBlockMovement);
         setFloat(properties, json, "slipperiness", ModBlockImpl.ModBlockProperties::slipperiness);
-        setSound(properties, json, "sound", ModBlockImpl.ModBlockProperties::sound);
+        setSoundType(properties, json, "sound", ModBlockImpl.ModBlockProperties::sound);
         setInt(properties, json, "light_value", ModBlockImpl.ModBlockProperties::lightValue);
         setTwoFloats(properties, json, "hardness", "resistance", ModBlockImpl.ModBlockProperties::hardnessAndResistance);
         setIfTrue(properties, json, "ticks_randomly", ModBlockImpl.ModBlockProperties::tickRandomly);

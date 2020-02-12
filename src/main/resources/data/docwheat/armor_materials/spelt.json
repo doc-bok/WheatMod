@@ -1,0 +1,11 @@
+{
+  "durability": 3,
+  "feet_defense": 0,
+  "legs_defense": 0,
+  "chest_defense": 0,
+  "head_defense": 0,
+  "enchantability": 30,
+  "equip_sound": "minecraft:item.crop.plant",
+  "tougness": 0.0,
+  "repair_item": "docwheat:spelt_straw"
+}

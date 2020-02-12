@@ -2,6 +2,7 @@ package com.bokmcdok.wheat.item;
 
 import com.bokmcdok.wheat.block.ModBlockUtils;
 import com.bokmcdok.wheat.WheatMod;
+import com.bokmcdok.wheat.material.ModArmorMaterialManager;
 import com.bokmcdok.wheat.villager.VillagerUtils;
 import net.minecraft.block.ComposterBlock;
 import net.minecraft.client.renderer.color.ItemColors;
@@ -94,6 +95,7 @@ public class ModItemUtils
     public static Ingredient FISH_ITEMS = null;
     public static Ingredient GRAIN_ITEMS = null;
 
+    private static ModArmorMaterialManager ARMOR_MATERIAL_MANAGER = new ModArmorMaterialManager();
     private static ModItemManager ITEM_MANAGER = new ModItemManager();
 
     /**
@@ -103,6 +105,7 @@ public class ModItemUtils
     @SubscribeEvent
     public static void registerItems(RegistryEvent.Register<Item> event)
     {
+        ARMOR_MATERIAL_MANAGER.loadMaterials();
         ITEM_MANAGER.loadItems();
         event.getRegistry().registerAll(ITEM_MANAGER.getAsItems());
     }

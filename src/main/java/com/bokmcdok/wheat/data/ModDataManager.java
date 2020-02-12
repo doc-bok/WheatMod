@@ -9,10 +9,12 @@ import com.google.gson.JsonParseException;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.MaterialColor;
+import net.minecraft.item.Item;
 import net.minecraft.resources.IResourceManager;
 import net.minecraft.resources.ResourcePackType;
 import net.minecraft.util.JSONUtils;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.world.FoliageColors;
 import net.minecraft.world.GrassColors;
 import net.minecraftforge.common.ToolType;
@@ -85,10 +87,20 @@ public abstract class ModDataManager<T> {
 
         LOGGER.info("Loaded {} entries", mEntries.values().size());
     }
+
+    /**
+     * Load entries from the data pack (needed on server-side).
+     * @param folder The folder to load the entries from.
+     */
     public void loadDataEntries(String folder) {
         loadEntries(DATA_RESOURCE_MANAGER, folder);
     }
 
+    /**
+     * Load the entries.
+     * @param resourceManager The resource manager to use - assets (client only), or data (server and client).
+     * @param folder The folder to load the entries from.
+     */
     protected void loadEntries(ModResourceManager resourceManager, String folder) {
         Map<ResourceLocation, JsonObject> containerResources = JSON_LOADER.loadJsonResources(resourceManager, folder);
         for(Map.Entry<ResourceLocation, JsonObject> i : containerResources.entrySet()) {
@@ -121,13 +133,18 @@ public abstract class ModDataManager<T> {
         mEntries.put(new ResourceLocation(location), entry);
     }
 
+    /**
+     * List resources with the specified extension.
+     * @param resourceManager The resource manager to use - assets (client only), or data (server and client).
+     * @param folder The folder to load the entries from.
+     * @param extension The extension to look for.
+     * @return A list of resource locations.
+     */
     protected List<ResourceLocation> listResources(IResourceManager resourceManager, String folder, String extension) {
         List<ResourceLocation> result = Lists.newArrayList();
         int folderNameLength = folder.length() + 1;
 
-        for (ResourceLocation resourceLocation : resourceManager.getAllResourceLocations(folder, (x) -> {
-            return  x.endsWith(extension);
-        })) {
+        for (ResourceLocation resourceLocation : resourceManager.getAllResourceLocations(folder, (x) -> x.endsWith(extension))) {
             String path = resourceLocation.getPath();
             String namespace = resourceLocation.getNamespace();
             String resourceName = path.substring(folderNameLength, path.length() - extension.length());
@@ -153,22 +170,30 @@ public abstract class ModDataManager<T> {
                 return (r & 255) << 16 | (g & 255) << 8 | b & 255;
             } else {
                 String type = JSONUtils.getString(color, "type");
-                if ("spruce".equals(type)) {
-                    return FoliageColors.getSpruce();
-                } else if ("birch".equals(type)) {
-                    return FoliageColors.getBirch();
-                } else if ("oak".equals(type)) {
-                    return FoliageColors.getDefault();
-                } else if ("foliage".equals(type)) {
-                    float temperature = JSONUtils.getFloat(color, "temperature");
-                    float humidity = JSONUtils.getFloat(color, "humidity");
+                switch (type) {
+                    case "spruce":
+                        return FoliageColors.getSpruce();
 
-                    return FoliageColors.get(temperature, humidity);
-                } else if ("grass".equals(type)) {
-                    float temperature = JSONUtils.getFloat(color, "temperature");
-                    float humidity = JSONUtils.getFloat(color, "humidity");
+                    case "birch":
+                        return FoliageColors.getBirch();
 
-                    return GrassColors.get(temperature, humidity);
+                    case "oak":
+                        return FoliageColors.getDefault();
+
+                    case "foliage": {
+                        float temperature = JSONUtils.getFloat(color, "temperature");
+                        float humidity = JSONUtils.getFloat(color, "humidity");
+                        return FoliageColors.get(temperature, humidity);
+                    }
+
+                    case "grass": {
+                        float temperature = JSONUtils.getFloat(color, "temperature");
+                        float humidity = JSONUtils.getFloat(color, "humidity");
+                        return GrassColors.get(temperature, humidity);
+                    }
+
+                    default:
+                        return -1;
                 }
             }
         }
@@ -214,6 +239,14 @@ public abstract class ModDataManager<T> {
      */
     protected abstract T deserialize(ResourceLocation location, JsonObject json);
 
+    /**
+     * Set an array of values.
+     * @param properties The properties to set the value on.
+     * @param json The JSON data.
+     * @param key The key to look for.
+     * @param consumer The method to call to set the value.
+     * @param <U> The type of builder.
+     */
     protected <U> void setArray(U properties, JsonObject json, String key, BiConsumer<U, JsonObject> consumer) {
         if (JSONUtils.hasField(json, key)) {
             JsonArray mutations = JSONUtils.getJsonArray(json, key);
@@ -224,6 +257,14 @@ public abstract class ModDataManager<T> {
         }
     }
 
+    /**
+     * Set a boolean value.
+     * @param properties The properties to set the value on.
+     * @param json The JSON data.
+     * @param key The key to look for.
+     * @param consumer The method to call to set the value.
+     * @param <U> The type of builder.
+     */
     protected <U> void setBoolean(U properties, JsonObject json, String key, BiConsumer<U, Boolean> consumer) {
         if (JSONUtils.hasField(json, key)) {
             boolean value = JSONUtils.getBoolean(json, key);
@@ -231,24 +272,48 @@ public abstract class ModDataManager<T> {
         }
     }
 
+    /**
+     * Set a boolean value but only if it is false.
+     * @param properties The properties to set the value on.
+     * @param json The JSON data.
+     * @param key The key to look for.
+     * @param consumer The method to call to set the value.
+     * @param <U> The type of builder.
+     */
     protected <U> void setIfFalse(U properties, JsonObject json, String key, Consumer<U> consumer) {
         if (JSONUtils.hasField(json, key)) {
-            Boolean value = JSONUtils.getBoolean(json, key);
+            boolean value = JSONUtils.getBoolean(json, key);
             if (!value) {
                 consumer.accept(properties);
             }
         }
     }
 
+    /**
+     * Set a boolean value but only if it is true.
+     * @param properties The properties to set the value on.
+     * @param json The JSON data.
+     * @param key The key to look for.
+     * @param consumer The method to call to set the value.
+     * @param <U> The type of builder.
+     */
     protected <U> void setIfTrue(U properties, JsonObject json, String key, Consumer<U> consumer) {
         if (JSONUtils.hasField(json, key)) {
-            Boolean value = JSONUtils.getBoolean(json, key);
+            boolean value = JSONUtils.getBoolean(json, key);
             if (value) {
                 consumer.accept(properties);
             }
         }
     }
 
+    /**
+     * Set a float value.
+     * @param properties The properties to set the value on.
+     * @param json The JSON data.
+     * @param key The key to look for.
+     * @param consumer The method to call to set the value.
+     * @param <U> The type of builder.
+     */
     protected <U> void setFloat(U properties, JsonObject json, String key, BiConsumer<U, Float> consumer) {
         if (JSONUtils.hasField(json, key)) {
             float value = JSONUtils.getFloat(json, key);
@@ -256,6 +321,15 @@ public abstract class ModDataManager<T> {
         }
     }
 
+    /**
+     * Set a two float values.
+     * @param properties The properties to set the value on.
+     * @param json The JSON data.
+     * @param key1 The first key to look for.
+     * @param key2 The second key to look for.
+     * @param consumer The method to call to set the value.
+     * @param <U> The type of builder.
+     */
     protected <U> void setTwoFloats(U properties, JsonObject json, String key1, String key2, TriConsumer<U, Float, Float> consumer) {
         if (JSONUtils.hasField(json, key1) &&
                 JSONUtils.hasField(json, key2)) {
@@ -265,6 +339,14 @@ public abstract class ModDataManager<T> {
         }
     }
 
+    /**
+     * Set an integer value.
+     * @param properties The properties to set the value on.
+     * @param json The JSON data.
+     * @param key The key to look for.
+     * @param consumer The method to call to set the value.
+     * @param <U> The type of builder.
+     */
     protected <U> void setInt(U properties, JsonObject json, String key, BiConsumer<U, Integer> consumer) {
         if (JSONUtils.hasField(json, key)) {
             int value = JSONUtils.getInt(json, key);
@@ -272,6 +354,15 @@ public abstract class ModDataManager<T> {
         }
     }
 
+    /**
+     * Set a two integer values.
+     * @param properties The properties to set the value on.
+     * @param json The JSON data.
+     * @param key1 The first key to look for.
+     * @param key2 The second key to look for.
+     * @param consumer The method to call to set the value.
+     * @param <U> The type of builder.
+     */
     protected <U> void setTwoInts(U properties, JsonObject json, String key1, String key2, TriConsumer<U, Integer, Integer> consumer) {
         if (JSONUtils.hasField(json, key1) &&
                 JSONUtils.hasField(json, key2)) {
@@ -281,6 +372,14 @@ public abstract class ModDataManager<T> {
         }
     }
 
+    /**
+     * Set a string value.
+     * @param properties The properties to set the value on.
+     * @param json The JSON data.
+     * @param key The key to look for.
+     * @param consumer The method to call to set the value.
+     * @param <U> The type of builder.
+     */
     protected <U> void setString(U properties, JsonObject json, String key, BiConsumer<U, String> consumer) {
         if (JSONUtils.hasField(json, key)) {
             String value = JSONUtils.getString(json, key);
@@ -288,6 +387,14 @@ public abstract class ModDataManager<T> {
         }
     }
 
+    /**
+     * Set a resource location.
+     * @param properties The properties to set the value on.
+     * @param json The JSON data.
+     * @param key The key to look for.
+     * @param consumer The method to call to set the value.
+     * @param <U> The type of builder.
+     */
     protected <U> void setResourceLocation(U properties, JsonObject json, String key, BiConsumer<U, ResourceLocation> consumer) {
         if (JSONUtils.hasField(json, key)) {
             String value = JSONUtils.getString(json, key);
@@ -295,7 +402,34 @@ public abstract class ModDataManager<T> {
         }
     }
 
-    protected <U> void setSound(U properties, JsonObject json, String key, BiConsumer<U, SoundType> consumer) {
+    /**
+     * Set a sound event.
+     * @param properties The properties to set the value on.
+     * @param json The JSON data.
+     * @param key The key to look for.
+     * @param consumer The method to call to set the value.
+     * @param <U> The type of builder.
+     */
+    protected <U> void setSoundEvent(U properties, JsonObject json, String key, BiConsumer<U, SoundEvent> consumer) {
+        if (JSONUtils.hasField(json, key)) {
+            String name = JSONUtils.getString(json, key);
+
+            IForgeRegistry<SoundEvent> soundEventRegistry = RegistryManager.ACTIVE.getRegistry(GameData.SOUNDEVENTS);
+            SoundEvent soundEvent = soundEventRegistry.getValue(new ResourceLocation(name));
+            consumer.accept(properties, soundEvent);
+        }
+    }
+
+    /**
+     * Set a sound type.
+     * @param properties The properties to set the value on.
+     * @param json The JSON data.
+     * @param key The key to look for.
+     * @param consumer The method to call to set the value.
+     * @param <U> The type of builder.
+     */
+
+    protected <U> void setSoundType(U properties, JsonObject json, String key, BiConsumer<U, SoundType> consumer) {
         if (JSONUtils.hasField(json, key)) {
             String name = JSONUtils.getString(json, key).toUpperCase();
 
@@ -308,6 +442,14 @@ public abstract class ModDataManager<T> {
         }
     }
 
+    /**
+     * Set a tool type.
+     * @param properties The properties to set the value on.
+     * @param json The JSON data.
+     * @param key The key to look for.
+     * @param consumer The method to call to set the value.
+     * @param <U> The type of builder.
+     */
     protected <U> void setToolType(U properties, JsonObject json, String key, BiConsumer<U, ToolType> consumer) {
         if (JSONUtils.hasField(json, key)) {
             String toolType = JSONUtils.getString(json, key);
@@ -316,6 +458,14 @@ public abstract class ModDataManager<T> {
         }
     }
 
+    /**
+     * Set a block.
+     * @param properties The properties to set the value on.
+     * @param json The JSON data.
+     * @param key The key to look for.
+     * @param consumer The method to call to set the value.
+     * @param <U> The type of builder.
+     */
     protected <U> void setBlock(U properties, JsonObject json, String key, BiConsumer<U, Block> consumer) {
         if (JSONUtils.hasField(json, key)) {
             String blockName = JSONUtils.getString(json, key);
