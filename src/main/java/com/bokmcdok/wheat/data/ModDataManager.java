@@ -9,7 +9,6 @@ import com.google.gson.JsonParseException;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.MaterialColor;
-import net.minecraft.item.Item;
 import net.minecraft.resources.IResourceManager;
 import net.minecraft.resources.ResourcePackType;
 import net.minecraft.util.JSONUtils;
