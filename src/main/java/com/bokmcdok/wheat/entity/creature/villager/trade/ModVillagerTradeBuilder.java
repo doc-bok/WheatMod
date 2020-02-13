@@ -1,4 +1,4 @@
-package com.bokmcdok.wheat.villager;
+package com.bokmcdok.wheat.entity.creature.villager.trade;
 
 import com.bokmcdok.wheat.trade.ModEmeraldForItemsTrade;
 import com.bokmcdok.wheat.trade.ModItemsForEmeraldsTrade;
@@ -9,7 +9,7 @@ import net.minecraft.util.registry.Registry;
 
 import java.util.Optional;
 
-public class ModVillagerTrade {
+public class ModVillagerTradeBuilder {
     private TradeType mType;
     private ResourceLocation mItem;
     private int mCost = 1;

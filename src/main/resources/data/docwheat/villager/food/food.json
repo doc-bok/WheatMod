@@ -1,0 +1,24 @@
+{
+  "food": [
+    {
+      "item": "minecraft:bread",
+      "hunger": 4
+    },
+    {
+      "item": "minecraft:potato",
+      "hunger": 1
+    },
+    {
+      "item": "minecraft:carrot",
+      "hunger": 1
+    },
+    {
+      "item": "minecraft:beetroot",
+      "hunger": 1
+    },
+    {
+      "item": "docwheat:tomato",
+      "hunger": 1
+    }
+  ]
+}

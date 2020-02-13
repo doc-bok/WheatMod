@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:wheat",
+    "docwheat:common_straw",
+    "docwheat:einkorn_straw",
+    "docwheat:emmer_straw",
+    "docwheat:wild_einkorn_hay",
+    "docwheat:wild_emmer_hay",
+    "docwheat:durum_straw",
+    "docwheat:spelt_straw"
+  ]
+}

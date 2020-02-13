@@ -217,7 +217,7 @@ public class ModBlockManager extends ModDataManager<IModBlock> {
             setInt(cropProperties, crop, "disease_resistance", (x, value) -> x.diseaseResistance(value));
             setBoolean(cropProperties, crop, "wild", (x, value) -> x.wild(value));
 
-            setArray(cropProperties, crop, "mutations", (x, mutation) -> {
+            setObjectArray(cropProperties, crop, "mutations", (x, mutation) -> {
                 ResourceLocation mutationBlock = new ResourceLocation(JSONUtils.getString(mutation, "mutation"));
 
                 ResourceLocation required = null;

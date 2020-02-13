@@ -1,6 +1,8 @@
 package com.bokmcdok.wheat.data;
 
 import com.bokmcdok.wheat.WheatMod;
+import com.bokmcdok.wheat.entity.creature.villager.profession.ModVillagerProfession;
+import com.bokmcdok.wheat.entity.creature.villager.trade.ModVillagerTradeBuilder;
 import com.google.common.collect.Lists;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -39,6 +41,15 @@ public abstract class ModDataManager<T> {
     private static ModResourceManager DATA_RESOURCE_MANAGER = new ModResourceManager(ResourcePackType.SERVER_DATA, WheatMod.MOD_ID);
 
     private Map<ResourceLocation, T> mEntries = new HashMap<>();
+
+    /**
+     * Get a single entry based on a Resource Location
+     * @param location The location of the entry.
+     * @return A single entry.
+     */
+    public T getEntry(String location) {
+        return getEntry(new ResourceLocation(location));
+    }
 
     /**
      * Get a single entry based on a Resource Location
@@ -246,11 +257,29 @@ public abstract class ModDataManager<T> {
      * @param consumer The method to call to set the value.
      * @param <U> The type of builder.
      */
-    protected <U> void setArray(U properties, JsonObject json, String key, BiConsumer<U, JsonObject> consumer) {
+    protected <U> void setObjectArray(U properties, JsonObject json, String key, BiConsumer<U, JsonObject> consumer) {
         if (JSONUtils.hasField(json, key)) {
             JsonArray mutations = JSONUtils.getJsonArray(json, key);
             for (JsonElement i : mutations) {
                 JsonObject value = i.getAsJsonObject();
+                consumer.accept(properties, value);
+            }
+        }
+    }
+
+    /**
+     * Set an array of values.
+     * @param properties The properties to set the value on.
+     * @param json The JSON data.
+     * @param key The key to look for.
+     * @param consumer The method to call to set the value.
+     * @param <U> The type of builder.
+     */
+    protected <U> void setStringArray(U properties, JsonObject json, String key, BiConsumer<U, String> consumer) {
+        if (JSONUtils.hasField(json, key)) {
+            JsonArray mutations = JSONUtils.getJsonArray(json, key);
+            for (JsonElement i : mutations) {
+                String value = i.getAsString();
                 consumer.accept(properties, value);
             }
         }

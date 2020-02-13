@@ -8,8 +8,8 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 
 @Mod.EventBusSubscriber(modid = WheatMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ModTagUtils {
-    private static ModTagManager ITEM_TAG_MANAGER = new ModTagManager();
-    private static ModTagManager BLOCK_TAG_MANAGER = new ModTagManager();
+    private static ModTagDataManager ITEM_TAG_MANAGER = new ModTagDataManager();
+    private static ModTagDataManager BLOCK_TAG_MANAGER = new ModTagDataManager();
 
     /**
      * Load all the tags.
