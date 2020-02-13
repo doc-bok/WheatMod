@@ -6,12 +6,10 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.shapes.VoxelShape;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 
 public class ModBlockEventHandler {
-    private static final VoxelShape CAMPFIRE_COLLISION_BOX = Block.makeCuboidShape(6.0D, 0.0D, 6.0D, 10.0D, 16.0D, 10.0D);
     private final ModBeehiveBlockEventHandler mBeehiveBlockEventHandler;
 
     /**
