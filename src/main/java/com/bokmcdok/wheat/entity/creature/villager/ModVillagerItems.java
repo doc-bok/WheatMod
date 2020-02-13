@@ -2,7 +2,6 @@ package com.bokmcdok.wheat.entity.creature.villager;
 
 import com.bokmcdok.wheat.entity.creature.villager.crops.ModVillagerCrops;
 import com.bokmcdok.wheat.entity.creature.villager.food.ModVillagerFood;
-import com.bokmcdok.wheat.entity.creature.villager.profession.ModVillagerProfession;
 import com.bokmcdok.wheat.tag.ModTag;
 import com.bokmcdok.wheat.tag.ModTagDataManager;
 import net.minecraft.entity.merchant.villager.VillagerProfession;
