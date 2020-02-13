@@ -1,5 +1,6 @@
 package com.bokmcdok.wheat.material;
 
+import com.bokmcdok.wheat.data.ModIngredientSupplier;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;

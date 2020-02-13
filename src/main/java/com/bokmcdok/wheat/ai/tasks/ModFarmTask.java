@@ -1,6 +1,6 @@
 package com.bokmcdok.wheat.ai.tasks;
 
-import com.bokmcdok.wheat.villager.VillagerUtils;
+import com.bokmcdok.wheat.entity.creature.villager.crops.ModVillagerCrops;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import net.minecraft.block.Block;
@@ -33,9 +33,11 @@ public class ModFarmTask extends Task<VillagerEntity> {
     private long mCooldown;
     private int mDuration;
     private final List<BlockPos> mFarmableBlocks = Lists.newArrayList();
+    private final ModVillagerCrops mVillagerCrops;
 
-    public ModFarmTask() {
+    public ModFarmTask(ModVillagerCrops crops) {
         super(ImmutableMap.of(MemoryModuleType.LOOK_TARGET, MemoryModuleStatus.VALUE_ABSENT, MemoryModuleType.WALK_TARGET, MemoryModuleStatus.VALUE_ABSENT, MemoryModuleType.SECONDARY_JOB_SITE, MemoryModuleStatus.VALUE_PRESENT));
+        mVillagerCrops = crops;
     }
 
     protected boolean shouldExecute(ServerWorld worldIn, VillagerEntity owner) {
@@ -44,7 +46,7 @@ public class ModFarmTask extends Task<VillagerEntity> {
         } else if (owner.getVillagerData().getProfession() != VillagerProfession.FARMER) {
             return false;
         } else {
-            mIsFarmItemInInventory = VillagerUtils.isFarmItemInInventory(owner);
+            mIsFarmItemInInventory = mVillagerCrops.isSeedInInventory(owner);
             mHasInventorySpace = mIsFarmItemInInventory;
 
             if (!mHasInventorySpace) {
@@ -122,7 +124,7 @@ public class ModFarmTask extends Task<VillagerEntity> {
                 for (int i = 0; i < inventory.getSizeInventory(); ++i) {
                     ItemStack itemstack = inventory.getStackInSlot(i);
                     if (!itemstack.isEmpty()) {
-                        Block cropBlock = VillagerUtils.getCropBlock(itemstack.getItem());
+                        Block cropBlock = mVillagerCrops.getCropBlock(itemstack.getItem());
                         if (cropBlock != null) {
                             worldIn.setBlockState(mPosition, cropBlock.getDefaultState(), 3);
                             worldIn.playSound((PlayerEntity) null, (double) mPosition.getX(), (double) mPosition.getY(), (double) mPosition.getZ(), SoundEvents.ITEM_CROP_PLANT, SoundCategory.BLOCKS, 1.0F, 1.0F);

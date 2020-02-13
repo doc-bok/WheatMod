@@ -1,0 +1,53 @@
+{
+  "remove": ["minecraft:wheat_seeds"],
+  "generic": [
+    {
+      "type": "sell",
+      "item": "docwheat:common_grain",
+      "cost": 1,
+      "quantity": 1,
+      "max_trades": 12,
+      "XP": 1
+    },
+    {
+      "type": "sell",
+      "item": "docwheat:einkorn_grain",
+      "cost": 1,
+      "quantity": 1,
+      "max_trades": 12,
+      "XP": 1
+    },
+    {
+      "type": "sell",
+      "item": "docwheat:emmer_grain",
+      "cost": 1,
+      "quantity": 1,
+      "max_trades": 12,
+      "XP": 1
+    },
+    {
+      "type": "sell",
+      "item": "docwheat:durum_grain",
+      "cost": 1,
+      "quantity": 1,
+      "max_trades": 12,
+      "XP": 1
+    },
+    {
+      "type": "sell",
+      "item": "docwheat:spelt_grain",
+      "cost": 2,
+      "quantity": 1,
+      "max_trades": 12,
+      "XP": 2
+    },
+    {
+      "type": "sell",
+      "item": "docwheat:tomato_seeds",
+      "cost": 1,
+      "quantity": 1,
+      "max_trades": 12,
+      "XP": 1
+    }
+  ]
+}

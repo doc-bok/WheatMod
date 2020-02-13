@@ -1,0 +1,56 @@
+{
+  "crops": [
+    {
+      "seed": "minecraft:potato",
+      "crop": "minecraft:potatoes"
+    },
+    {
+      "seed": "minecraft:wheat_seeds",
+      "crop": "minecraft:wheat"
+    },
+    {
+      "seed": "minecraft:carrot",
+      "crop": "minecraft:carrots"
+    },
+    {
+      "seed": "minecraft:beetroot_seeds",
+      "crop": "minecraft:beetroots"
+    },
+    {
+      "seed": "docwheat:common_grain",
+      "crop": "docwheat:common_wheat"
+    },
+    {
+      "seed": "docwheat:einkorn_grain",
+      "crop": "docwheat:einkorn"
+    },
+    {
+      "seed": "docwheat:emmer_grain",
+      "crop": "docwheat:emmer"
+    },
+    {
+      "seed": "docwheat:wild_einkorn_grain",
+      "crop": "docwheat:wild_einkorn"
+    },
+    {
+      "seed": "docwheat:wild_emmer_grain",
+      "crop": "docwheat:wild_emmer"
+    },
+    {
+      "seed": "docwheat:durum_grain",
+      "crop": "docwheat:durum"
+    },
+    {
+      "seed": "docwheat:spelt_grain",
+      "crop": "docwheat:spelt"
+    },
+    {
+      "seed": "docwheat:tomato",
+      "crop": "docwheat:tomato"
+    },
+    {
+      "seed": "minecraft:wheat_seeds",
+      "crop": "docwheat:diseased_wheat"
+    }
+  ]
+}

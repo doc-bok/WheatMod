@@ -1,0 +1,56 @@
+{
+  "remove": ["minecraft:wheat"],
+  "add": {
+    "novice": [
+      {
+        "type": "buy",
+        "item": "docwheat:mouse_tail",
+        "quantity": 20,
+        "max_trades": 16,
+        "XP": 2
+      },
+      {
+        "type": "buy",
+        "item": "docwheat:common_straw",
+        "quantity": 20,
+        "max_trades": 16,
+        "XP": 2
+      },
+      {
+        "type": "buy",
+        "item": "docwheat:emmer_straw",
+        "quantity": 20,
+        "max_trades": 16,
+        "XP": 2
+      },
+      {
+        "type": "buy",
+        "item": "docwheat:einkorn_straw",
+        "quantity": 20,
+        "max_trades": 16,
+        "XP": 2
+      },
+      {
+        "type": "buy",
+        "item": "docwheat:durum_straw",
+        "quantity": 20,
+        "max_trades": 16,
+        "XP": 2
+      },
+      {
+        "type": "buy",
+        "item": "docwheat:spelt_straw",
+        "quantity": 15,
+        "max_trades": 16,
+        "XP": 2
+      },
+      {
+        "type": "buy",
+        "item": "docwheat:tomato",
+        "quantity": 20,
+        "max_trades": 16,
+        "XP": 2
+      }
+    ]
+  }
+}

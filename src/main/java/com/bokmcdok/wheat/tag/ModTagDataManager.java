@@ -10,7 +10,7 @@ import net.minecraft.util.ResourceLocation;
 
 import java.util.Set;
 
-public class ModTagManager extends ModDataManager<ModTag> {
+public class ModTagDataManager extends ModDataManager<ModTag> {
 
     /**
      * Convert the JSON data to a tag.

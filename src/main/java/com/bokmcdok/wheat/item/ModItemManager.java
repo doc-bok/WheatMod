@@ -182,7 +182,7 @@ public class ModItemManager extends ModDataManager<IModItem> {
             setIfTrue(builder, food, "meat", (x) -> x.meat());
             setIfTrue(builder, food, "always_edible", (x) -> x.setAlwaysEdible());
             setIfTrue(builder, food, "fast_to_eat", (x) -> x.fastToEat());
-            setArray(builder, food, "effects", (x, effect) -> {
+            setObjectArray(builder, food, "effects", (x, effect) -> {
                 JsonObject effectAsJsonObject = effect.getAsJsonObject();
 
                 String effectName = JSONUtils.getString(effectAsJsonObject, "effect_type");

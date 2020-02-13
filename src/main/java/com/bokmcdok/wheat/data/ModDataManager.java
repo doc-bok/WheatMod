@@ -45,6 +45,15 @@ public abstract class ModDataManager<T> {
      * @param location The location of the entry.
      * @return A single entry.
      */
+    public T getEntry(String location) {
+        return getEntry(new ResourceLocation(location));
+    }
+
+    /**
+     * Get a single entry based on a Resource Location
+     * @param location The location of the entry.
+     * @return A single entry.
+     */
     public T getEntry(ResourceLocation location) {
         if (mEntries.containsKey(location)) {
             return mEntries.get(location);
@@ -246,11 +255,29 @@ public abstract class ModDataManager<T> {
      * @param consumer The method to call to set the value.
      * @param <U> The type of builder.
      */
-    protected <U> void setArray(U properties, JsonObject json, String key, BiConsumer<U, JsonObject> consumer) {
+    protected <U> void setObjectArray(U properties, JsonObject json, String key, BiConsumer<U, JsonObject> consumer) {
         if (JSONUtils.hasField(json, key)) {
             JsonArray mutations = JSONUtils.getJsonArray(json, key);
             for (JsonElement i : mutations) {
                 JsonObject value = i.getAsJsonObject();
+                consumer.accept(properties, value);
+            }
+        }
+    }
+
+    /**
+     * Set an array of values.
+     * @param properties The properties to set the value on.
+     * @param json The JSON data.
+     * @param key The key to look for.
+     * @param consumer The method to call to set the value.
+     * @param <U> The type of builder.
+     */
+    protected <U> void setStringArray(U properties, JsonObject json, String key, BiConsumer<U, String> consumer) {
+        if (JSONUtils.hasField(json, key)) {
+            JsonArray mutations = JSONUtils.getJsonArray(json, key);
+            for (JsonElement i : mutations) {
+                String value = i.getAsString();
                 consumer.accept(properties, value);
             }
         }
