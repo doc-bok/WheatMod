@@ -26,7 +26,7 @@ public class ModForgeEventHandler {
      */
     public ModForgeEventHandler() {
         ModTagDataManager itemTagManager = new ModTagDataManager();
-        itemTagManager.loadDataEntries("tags/items");
+        itemTagManager.loadDataEntries("tags/items");   
 
         mVillagerEventHandler = new ModVillagerEventHandler(itemTagManager);
         mWanderingTraderEventHandler = new ModWanderingTraderEventHandler();
