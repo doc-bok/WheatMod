@@ -1,4 +1,4 @@
-package com.bokmcdok.wheat.entity.creature.villager.wanderingTrader;
+package com.bokmcdok.wheat.entity.creature.villager.wandering_trader;
 
 import net.minecraftforge.event.village.WandererTradesEvent;
 

@@ -1,7 +1,7 @@
 package com.bokmcdok.wheat;
 
 import com.bokmcdok.wheat.entity.creature.villager.ModVillagerEventHandler;
-import com.bokmcdok.wheat.entity.creature.villager.wanderingTrader.ModWanderingTraderEventHandler;
+import com.bokmcdok.wheat.entity.creature.villager.wandering_trader.ModWanderingTraderEventHandler;
 import com.bokmcdok.wheat.tag.ModTagDataManager;
 import net.minecraft.world.dimension.DimensionType;
 import net.minecraftforge.common.DimensionManager;
@@ -17,8 +17,6 @@ import net.minecraftforge.registries.GameData;
 import net.minecraftforge.registries.RegistryManager;
 
 public class ModForgeEventHandler {
-    private final ModTagDataManager mItemTagDataManager;
-    private final ModTagDataManager mBlockTagDataManager;
 
     private final ModVillagerEventHandler mVillagerEventHandler;
     private final ModWanderingTraderEventHandler mWanderingTraderEventHandler;
@@ -27,13 +25,10 @@ public class ModForgeEventHandler {
      * Construction
      */
     public ModForgeEventHandler() {
-        mItemTagDataManager = new ModTagDataManager();
-        mItemTagDataManager.loadDataEntries("tags/items");
+        ModTagDataManager itemTagManager = new ModTagDataManager();
+        itemTagManager.loadDataEntries("tags/items");
 
-        mBlockTagDataManager = new ModTagDataManager();
-        mBlockTagDataManager.loadDataEntries("tags/blocks");
-
-        mVillagerEventHandler = new ModVillagerEventHandler(mItemTagDataManager);
+        mVillagerEventHandler = new ModVillagerEventHandler(itemTagManager);
         mWanderingTraderEventHandler = new ModWanderingTraderEventHandler();
 
         MinecraftForge.EVENT_BUS.addListener(this::onRegisterDimensionsEvent);

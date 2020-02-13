@@ -1,4 +1,4 @@
-package com.bokmcdok.wheat.entity.creature.villager.wanderingTrader;
+package com.bokmcdok.wheat.entity.creature.villager.wandering_trader;
 
 import com.bokmcdok.wheat.data.ModIngredientSupplier;
 import com.bokmcdok.wheat.entity.creature.villager.trade.ModVillagerTradeBuilder;

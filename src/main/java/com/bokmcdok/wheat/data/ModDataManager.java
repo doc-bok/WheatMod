@@ -1,8 +1,6 @@
 package com.bokmcdok.wheat.data;
 
 import com.bokmcdok.wheat.WheatMod;
-import com.bokmcdok.wheat.entity.creature.villager.profession.ModVillagerProfession;
-import com.bokmcdok.wheat.entity.creature.villager.trade.ModVillagerTradeBuilder;
 import com.google.common.collect.Lists;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
