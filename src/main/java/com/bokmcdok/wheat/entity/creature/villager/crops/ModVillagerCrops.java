@@ -17,7 +17,6 @@ import java.util.Map;
 public class ModVillagerCrops {
     private final Map<ResourceLocation, ResourceLocation> mCrops;
     private final LazyValue<Ingredient> mSeedItems;
-    private final LazyValue<Ingredient> mCropItems;
 
     /**
      * Construction
@@ -28,9 +27,6 @@ public class ModVillagerCrops {
 
         ModIngredientSupplier seedSupplier = new ModIngredientSupplier(mCrops.keySet().toArray(new ResourceLocation[0]));
         mSeedItems = new LazyValue<>(seedSupplier);
-
-        ModIngredientSupplier cropSupplier = new ModIngredientSupplier(mCrops.values().toArray(new ResourceLocation[0]));
-        mCropItems = new LazyValue<>(cropSupplier);
     }
 
     /**
@@ -40,15 +36,6 @@ public class ModVillagerCrops {
      */
     public boolean isSeedItem(ItemStack stack) {
         return mSeedItems.getValue().test(stack);
-    }
-
-    /**
-     * Check if the item is a crop.
-     * @param stack The item to check.
-     * @return TRUE if the item is a crop.
-     */
-    public boolean isCropItem(ItemStack stack) {
-        return mCropItems.getValue().test(stack);
     }
 
     /**

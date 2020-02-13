@@ -47,10 +47,6 @@
     {
       "seed": "docwheat:tomato",
       "crop": "docwheat:tomato"
-    },
-    {
-      "seed": "minecraft:wheat_seeds",
-      "crop": "docwheat:diseased_wheat"
     }
   ]
 }

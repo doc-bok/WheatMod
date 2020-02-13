@@ -43,7 +43,13 @@ public class ModVillagerItems {
             return true;
         }
 
-        tag = mItemTagDataManager.getEntry("docwheat:villager_" + profession.toString() + "_items");
+        //  Fix for modded professions having namespace in their name.
+        String name = profession.toString();
+        if (name.contains(":")) {
+            name = name.split(":")[0];
+        }
+
+        tag = mItemTagDataManager.getEntry("docwheat:villager_" + name + "_items");
         if (tag != null) {
             return tag.contains(stack.getItem().getRegistryName());
         }
