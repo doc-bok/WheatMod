@@ -65,6 +65,10 @@ public class ModVillagerCrops {
         return blockRegistry.getValue(blockRegistryName);
     }
 
+    /**
+     * Get the seed items.
+     * @return An ingredient containing all seed items.
+     */
     public Ingredient getSeedItems() {
         return mSeedItems.getValue();
     }

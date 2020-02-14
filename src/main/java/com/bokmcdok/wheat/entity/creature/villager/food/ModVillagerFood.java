@@ -92,6 +92,10 @@ public class ModVillagerFood {
         modifyFoodLevel(villager, -12);
     }
 
+    /**
+     * Get a set of all food items.
+     * @return A set of food items.
+     */
     public Set<Item> getFoodItems() {
         Set<Item> shareableItems = Sets.newHashSet();
         for (ItemStack i: mFoodItems.getValue().getMatchingStacks()) {
@@ -101,10 +105,20 @@ public class ModVillagerFood {
         return shareableItems;
     }
 
+    /**
+     * Can the villager abandon food items?
+     * @param villager The villager.
+     * @return TRUE if the total food value is more than 24.
+     */
     public boolean canAbandonItems(VillagerEntity villager) {
         return getFoodValueFromInventory(villager) >= 24;
     }
 
+    /**
+     * Does the villager want more food?
+     * @param villager The villager.
+     * @return TRUE if the food value is less than 12.
+     */
     public boolean wantsMoreFood(VillagerEntity villager) {
         return getFoodValueFromInventory(villager) < 12;
     }

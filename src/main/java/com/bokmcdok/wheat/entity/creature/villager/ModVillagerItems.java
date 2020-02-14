@@ -7,14 +7,12 @@ import com.bokmcdok.wheat.tag.ModTagDataManager;
 import com.google.common.collect.Sets;
 import net.minecraft.entity.merchant.villager.VillagerEntity;
 import net.minecraft.entity.merchant.villager.VillagerProfession;
-import net.minecraft.inventory.Inventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.IForgeRegistry;
-import org.lwjgl.system.CallbackI;
 
 import java.util.Set;
 
@@ -62,6 +60,12 @@ public class ModVillagerItems {
         return false;
     }
 
+    /**
+     * Get a list of shareable items.
+     * @param villager The villager.
+     * @param interactionTarget The target .
+     * @return A list of items that can be shared.
+     */
     public Set<Item> getSharableItems(VillagerEntity villager, VillagerEntity interactionTarget) {
         Ingredient seeds = mVillagerCrops.getSeedItems();
 
@@ -100,6 +104,11 @@ public class ModVillagerItems {
         return shareableItems;
     }
 
+    /**
+     * Get profession-specific items.
+     * @param profession The profession to check.
+     * @return A Tag with registry names.
+     */
     private ModTag getProfessionItems(VillagerProfession profession) {
         //  Fix for modded professions having namespace in their name.
         String name = profession.toString();
