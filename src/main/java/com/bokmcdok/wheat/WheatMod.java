@@ -22,7 +22,6 @@ public class WheatMod
     public WheatMod() {
         new ModForgeEventHandler();
         new ModDimensionRegistrar();
-        new ModMemoryModuleRegistrar();
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientSetup);
     }
 

@@ -1,6 +1,7 @@
 package com.bokmcdok.wheat.entity.creature.villager.food;
 
 import com.bokmcdok.wheat.data.ModIngredientSupplier;
+import com.google.common.collect.Sets;
 import net.minecraft.entity.merchant.villager.VillagerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.Item;
@@ -15,6 +16,7 @@ import net.minecraftforge.registries.IForgeRegistry;
 
 import java.lang.reflect.Method;
 import java.util.Map;
+import java.util.Set;
 
 public class ModVillagerFood {
     private final Map<ResourceLocation, Integer> mFoodHungerValues;
@@ -88,6 +90,23 @@ public class ModVillagerFood {
         }
 
         modifyFoodLevel(villager, -12);
+    }
+
+    public Set<Item> getFoodItems() {
+        Set<Item> shareableItems = Sets.newHashSet();
+        for (ItemStack i: mFoodItems.getValue().getMatchingStacks()) {
+            shareableItems.add(i.getItem());
+        }
+
+        return shareableItems;
+    }
+
+    public boolean canAbandonItems(VillagerEntity villager) {
+        return getFoodValueFromInventory(villager) >= 24;
+    }
+
+    public boolean wantsMoreFood(VillagerEntity villager) {
+        return getFoodValueFromInventory(villager) < 12;
     }
 
     /**

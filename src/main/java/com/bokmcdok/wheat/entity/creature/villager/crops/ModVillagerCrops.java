@@ -64,4 +64,8 @@ public class ModVillagerCrops {
         IForgeRegistry<Block> blockRegistry = ForgeRegistries.BLOCKS;
         return blockRegistry.getValue(blockRegistryName);
     }
+
+    public Ingredient getSeedItems() {
+        return mSeedItems.getValue();
+    }
 }

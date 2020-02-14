@@ -7,6 +7,7 @@ import com.bokmcdok.wheat.ai.tasks.ModFarmTask;
 import com.bokmcdok.wheat.ai.tasks.ModGiveHeroGiftsTask;
 import com.bokmcdok.wheat.ai.tasks.ModMultiTask;
 import com.bokmcdok.wheat.ai.tasks.ModPickupFoodTask;
+import com.bokmcdok.wheat.ai.tasks.ModShareItemsTask;
 import com.bokmcdok.wheat.entity.creature.villager.crops.ModVillagerCrops;
 import com.bokmcdok.wheat.entity.creature.villager.crops.ModVillagerCropsDataManager;
 import com.bokmcdok.wheat.entity.creature.villager.food.ModVillagerFood;
@@ -19,6 +20,7 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.brain.Brain;
 import net.minecraft.entity.ai.brain.memory.MemoryModuleType;
@@ -29,7 +31,6 @@ import net.minecraft.entity.ai.brain.task.FindWalkTargetTask;
 import net.minecraft.entity.ai.brain.task.FirstShuffledTask;
 import net.minecraft.entity.ai.brain.task.InteractWithEntityTask;
 import net.minecraft.entity.ai.brain.task.JumpOnBedTask;
-import net.minecraft.entity.ai.brain.task.ShareItemsTask;
 import net.minecraft.entity.ai.brain.task.ShowWaresTask;
 import net.minecraft.entity.ai.brain.task.SpawnGolemTask;
 import net.minecraft.entity.ai.brain.task.Task;
@@ -43,13 +44,10 @@ import net.minecraft.entity.merchant.villager.VillagerProfession;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.village.VillagerTradesEvent;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
-import net.minecraftforge.registries.ForgeRegistries;
-import net.minecraftforge.registries.IForgeRegistry;
 
 import java.lang.reflect.Field;
 import java.util.Map;
@@ -57,6 +55,7 @@ import java.util.Optional;
 
 
 public class ModVillagerEventHandler {
+    private final ModMemoryModuleRegistrar mMemoryModuleRegistrar;
     private final ModVillagerItems mVillagerItems;
     private final ModVillagerCrops mVillagerCrops;
     private final ModVillagerTradeModifierDataManager mTradeModifiers;
@@ -65,7 +64,9 @@ public class ModVillagerEventHandler {
     /**
      * Construction
      */
-    public ModVillagerEventHandler(ModTagDataManager itemTagDataManager) {
+    public ModVillagerEventHandler(ModMemoryModuleRegistrar memoryModuleRegistrar, ModTagDataManager itemTagDataManager) {
+        mMemoryModuleRegistrar = memoryModuleRegistrar;
+
         mTradeModifiers = new ModVillagerTradeModifierDataManager();
         mTradeModifiers.loadDataEntries("villager/trades");
 
@@ -90,8 +91,8 @@ public class ModVillagerEventHandler {
             VillagerProfession profession = villager.getVillagerData().getProfession();
             float speed = (float)villager.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getValue();
 
-            IForgeRegistry<MemoryModuleType<?>> memoryModuleTypeRegistry = ForgeRegistries.MEMORY_MODULE_TYPES;
-            MemoryModuleType<VillagerEntity> breedTarget = (MemoryModuleType<VillagerEntity>)memoryModuleTypeRegistry.getValue(new ResourceLocation("docwheat:breed_target"));
+            MemoryModuleType<VillagerEntity> breedTarget = (MemoryModuleType<VillagerEntity>)mMemoryModuleRegistrar.getMemoryModule(ModMemoryModuleRegistrar.BREED_TARGET);
+            MemoryModuleType<LivingEntity> interactionTarget = (MemoryModuleType<LivingEntity>)mMemoryModuleRegistrar.getMemoryModule(ModMemoryModuleRegistrar.INTERACTION_TARGET);
 
             Brain<VillagerEntity> brain = villager.getBrain();
 
@@ -99,6 +100,7 @@ public class ModVillagerEventHandler {
                 Field memories = ObfuscationReflectionHelper.findField(Brain.class, "memories");
                 Map<MemoryModuleType<?>, Optional<?>> map = (Map<MemoryModuleType<?>, Optional<?>>)memories.get(brain);
                 map.put(breedTarget, Optional.empty());
+                map.put(interactionTarget, Optional.empty());
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -223,23 +225,23 @@ public class ModVillagerEventHandler {
      * @return A list of tasks to add to the Villager's brain.
      */
     private ImmutableList<Pair<Integer, ? extends Task<? super VillagerEntity>>> idle(float speed) {
-        IForgeRegistry<MemoryModuleType<?>> memoryModuleTypeRegistry = ForgeRegistries.MEMORY_MODULE_TYPES;
-        MemoryModuleType<VillagerEntity> breedTarget = (MemoryModuleType<VillagerEntity>)memoryModuleTypeRegistry.getValue(new ResourceLocation("docwheat:breed_target"));
+        MemoryModuleType<VillagerEntity> breedTarget = (MemoryModuleType<VillagerEntity>)mMemoryModuleRegistrar.getMemoryModule(ModMemoryModuleRegistrar.BREED_TARGET);
+        MemoryModuleType<LivingEntity> interactionTarget = (MemoryModuleType<LivingEntity>)mMemoryModuleRegistrar.getMemoryModule(ModMemoryModuleRegistrar.INTERACTION_TARGET);
 
         return ImmutableList.of(
                 Pair.of(1, new FirstShuffledTask<>(
                         ImmutableList.of(
-                                Pair.of(InteractWithEntityTask.func_220445_a(EntityType.VILLAGER, 8, MemoryModuleType.INTERACTION_TARGET, speed, 2), 2),
+                                Pair.of(InteractWithEntityTask.func_220445_a(EntityType.VILLAGER, 8, interactionTarget, speed, 2), 2),
                                 Pair.of(new ModBreedWithVillagerTask(mVillagerFood, 8, breedTarget, speed, 2), 1),
-                                Pair.of(InteractWithEntityTask.func_220445_a(EntityType.CAT, 8, MemoryModuleType.INTERACTION_TARGET, speed, 2), 1),
+                                Pair.of(InteractWithEntityTask.func_220445_a(EntityType.CAT, 8, interactionTarget, speed, 2), 1),
                                 Pair.of(new FindWalkTargetTask(speed), 1), Pair.of(new WalkTowardsLookTargetTask(speed, 2), 1),
                                 Pair.of(new JumpOnBedTask(speed), 1),
                                 Pair.of(new DummyTask(30, 60), 1)))),
                 Pair.of(2, new ModGiveHeroGiftsTask(100)),
                 Pair.of(2, new FindInteractionAndLookTargetTask(EntityType.PLAYER, 4)),
                 Pair.of(2, new ShowWaresTask(400, 1600)),
-                Pair.of(2, new ModMultiTask<>(ImmutableMap.of(), ImmutableSet.of(MemoryModuleType.INTERACTION_TARGET), ModMultiTask.Ordering.ORDERED, ModMultiTask.RunType.RUN_ONE, ImmutableList.of(
-                        Pair.of(new ShareItemsTask(), 1)))),
+                Pair.of(2, new ModMultiTask<>(ImmutableMap.of(), ImmutableSet.of(interactionTarget), ModMultiTask.Ordering.ORDERED, ModMultiTask.RunType.RUN_ONE, ImmutableList.of(
+                        Pair.of(new ModShareItemsTask(mVillagerFood, mVillagerItems, interactionTarget), 1)))),
                 Pair.of(2, new ModMultiTask<>(ImmutableMap.of(), ImmutableSet.of(breedTarget), ModMultiTask.Ordering.ORDERED, ModMultiTask.RunType.RUN_ONE, ImmutableList.of(
                         Pair.of(new ModCreateBabyVillagerTask(mVillagerFood, breedTarget), 1)))));
     }
