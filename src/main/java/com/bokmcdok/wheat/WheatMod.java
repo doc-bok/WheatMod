@@ -2,7 +2,6 @@ package com.bokmcdok.wheat;
 
 import com.bokmcdok.wheat.container.ModContainerUtils;
 import com.bokmcdok.wheat.dimension.ModDimensionRegistrar;
-import com.bokmcdok.wheat.entity.creature.villager.ModMemoryModuleRegistrar;
 import com.bokmcdok.wheat.screen.FlourMillScreen;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraftforge.fml.common.Mod;

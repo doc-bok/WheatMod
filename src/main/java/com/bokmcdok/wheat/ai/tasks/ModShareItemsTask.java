@@ -82,7 +82,7 @@ public class ModShareItemsTask extends Task<VillagerEntity> {
     @Override
     protected void updateTask(ServerWorld world, VillagerEntity villager, long gameTime) {
         VillagerEntity interactionTarget = (VillagerEntity)villager.getBrain().getMemory(mTargetMemory).get();
-        if (!(villager.getDistanceSq(interactionTarget) > 5.0D)) {
+        if (villager.getDistanceSq(interactionTarget) <= 5.0D) {
             BrainUtil.lookApproachEachOther(villager, interactionTarget);
             villager.func_213746_a(interactionTarget, gameTime);
             if (mVillagerFood.canAbandonItems(villager) && (villager.getVillagerData().getProfession() == VillagerProfession.FARMER || mVillagerFood.wantsMoreFood(interactionTarget))) {
@@ -104,41 +104,32 @@ public class ModShareItemsTask extends Task<VillagerEntity> {
      */
     private static void shareItems(VillagerEntity villager, Set<Item> items, LivingEntity interactionTarget) {
         Inventory inventory = villager.getVillagerInventory();
-        ItemStack itemstack = ItemStack.EMPTY;
-        int i = 0;
+        ItemStack itemStackToThrow = ItemStack.EMPTY;
 
-        while(i < inventory.getSizeInventory()) {
-            ItemStack itemstack1;
-            Item item;
-            int j;
-            label28: {
-                itemstack1 = inventory.getStackInSlot(i);
-                if (!itemstack1.isEmpty()) {
-                    item = itemstack1.getItem();
-                    if (items.contains(item)) {
-                        if (itemstack1.getCount() > itemstack1.getMaxStackSize() / 2) {
-                            j = itemstack1.getCount() / 2;
-                            break label28;
-                        }
+        for (int i = 0; i < inventory.getSizeInventory(); ++i) {
+            ItemStack stack = inventory.getStackInSlot(i);
+            if (!stack.isEmpty()) {
+                Item item = stack.getItem();
+                if (items.contains(item)) {
+                    if (stack.getCount() > stack.getMaxStackSize() / 2) {
+                        int numToThrow = stack.getCount() / 2;
+                        itemStackToThrow = new ItemStack(item, numToThrow);
+                        stack.shrink(numToThrow);
+                        break;
+                    }
 
-                        if (itemstack1.getCount() > 24) {
-                            j = itemstack1.getCount() - 24;
-                            break label28;
-                        }
+                    if (stack.getCount() > 24) {
+                        int numToThrow = stack.getCount() - 24;
+                        itemStackToThrow = new ItemStack(item, numToThrow);
+                        stack.shrink(numToThrow);
+                        break;
                     }
                 }
-
-                ++i;
-                continue;
             }
-
-            itemstack1.shrink(j);
-            itemstack = new ItemStack(item, j);
-            break;
         }
 
-        if (!itemstack.isEmpty()) {
-            BrainUtil.throwItemAt(villager, itemstack, interactionTarget);
+        if (!itemStackToThrow.isEmpty()) {
+            BrainUtil.throwItemAt(villager, itemStackToThrow, interactionTarget);
         }
 
     }

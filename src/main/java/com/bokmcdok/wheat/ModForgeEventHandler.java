@@ -20,7 +20,6 @@ import net.minecraftforge.registries.GameData;
 import net.minecraftforge.registries.RegistryManager;
 
 public class ModForgeEventHandler {
-    private final ModMemoryModuleRegistrar modMemoryModuleRegistrar;
     private final ModVillagerEventHandler mVillagerEventHandler;
     private final ModWanderingTraderEventHandler mWanderingTraderEventHandler;
     private final ModBlockEventHandler mBlockEventHandler;
@@ -29,7 +28,7 @@ public class ModForgeEventHandler {
      * Construction
      */
     public ModForgeEventHandler() {
-        modMemoryModuleRegistrar = new ModMemoryModuleRegistrar();
+        ModMemoryModuleRegistrar modMemoryModuleRegistrar = new ModMemoryModuleRegistrar();
 
         ModTagDataManager itemTagManager = new ModTagDataManager();
         itemTagManager.loadDataEntries("tags/items");
