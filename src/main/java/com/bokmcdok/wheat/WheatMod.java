@@ -2,6 +2,7 @@ package com.bokmcdok.wheat;
 
 import com.bokmcdok.wheat.container.ModContainerUtils;
 import com.bokmcdok.wheat.dimension.ModDimensionRegistrar;
+import com.bokmcdok.wheat.entity.creature.villager.ModMemoryModuleRegistrar;
 import com.bokmcdok.wheat.screen.FlourMillScreen;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraftforge.fml.common.Mod;
@@ -21,6 +22,7 @@ public class WheatMod
     public WheatMod() {
         new ModForgeEventHandler();
         new ModDimensionRegistrar();
+        new ModMemoryModuleRegistrar();
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientSetup);
     }
 

@@ -1,7 +1,5 @@
 package com.bokmcdok.wheat.entity.creature.villager.trade;
 
-import com.bokmcdok.wheat.trade.ModEmeraldForItemsTrade;
-import com.bokmcdok.wheat.trade.ModItemsForEmeraldsTrade;
 import net.minecraft.entity.merchant.villager.VillagerTrades;
 import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;

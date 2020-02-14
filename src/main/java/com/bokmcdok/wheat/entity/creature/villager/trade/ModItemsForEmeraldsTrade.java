@@ -1,4 +1,4 @@
-package com.bokmcdok.wheat.trade;
+package com.bokmcdok.wheat.entity.creature.villager.trade;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
