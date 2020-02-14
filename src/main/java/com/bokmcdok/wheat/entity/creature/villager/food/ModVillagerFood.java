@@ -1,6 +1,7 @@
 package com.bokmcdok.wheat.entity.creature.villager.food;
 
 import com.bokmcdok.wheat.data.ModIngredientSupplier;
+import com.google.common.collect.Sets;
 import net.minecraft.entity.merchant.villager.VillagerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.Item;
@@ -15,6 +16,7 @@ import net.minecraftforge.registries.IForgeRegistry;
 
 import java.lang.reflect.Method;
 import java.util.Map;
+import java.util.Set;
 
 public class ModVillagerFood {
     private final Map<ResourceLocation, Integer> mFoodHungerValues;
@@ -88,6 +90,37 @@ public class ModVillagerFood {
         }
 
         modifyFoodLevel(villager, -12);
+    }
+
+    /**
+     * Get a set of all food items.
+     * @return A set of food items.
+     */
+    public Set<Item> getFoodItems() {
+        Set<Item> shareableItems = Sets.newHashSet();
+        for (ItemStack i: mFoodItems.getValue().getMatchingStacks()) {
+            shareableItems.add(i.getItem());
+        }
+
+        return shareableItems;
+    }
+
+    /**
+     * Can the villager abandon food items?
+     * @param villager The villager.
+     * @return TRUE if the total food value is more than 24.
+     */
+    public boolean canAbandonItems(VillagerEntity villager) {
+        return getFoodValueFromInventory(villager) >= 24;
+    }
+
+    /**
+     * Does the villager want more food?
+     * @param villager The villager.
+     * @return TRUE if the food value is less than 12.
+     */
+    public boolean wantsMoreFood(VillagerEntity villager) {
+        return getFoodValueFromInventory(villager) < 12;
     }
 
     /**

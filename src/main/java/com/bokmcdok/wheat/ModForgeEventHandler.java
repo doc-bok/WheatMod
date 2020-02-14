@@ -1,6 +1,7 @@
 package com.bokmcdok.wheat;
 
 import com.bokmcdok.wheat.block.ModBlockEventHandler;
+import com.bokmcdok.wheat.entity.creature.villager.ModMemoryModuleRegistrar;
 import com.bokmcdok.wheat.entity.creature.villager.ModVillagerEventHandler;
 import com.bokmcdok.wheat.entity.creature.villager.wandering_trader.ModWanderingTraderEventHandler;
 import com.bokmcdok.wheat.tag.ModTagDataManager;
@@ -19,7 +20,6 @@ import net.minecraftforge.registries.GameData;
 import net.minecraftforge.registries.RegistryManager;
 
 public class ModForgeEventHandler {
-
     private final ModVillagerEventHandler mVillagerEventHandler;
     private final ModWanderingTraderEventHandler mWanderingTraderEventHandler;
     private final ModBlockEventHandler mBlockEventHandler;
@@ -28,13 +28,15 @@ public class ModForgeEventHandler {
      * Construction
      */
     public ModForgeEventHandler() {
+        ModMemoryModuleRegistrar modMemoryModuleRegistrar = new ModMemoryModuleRegistrar();
+
         ModTagDataManager itemTagManager = new ModTagDataManager();
         itemTagManager.loadDataEntries("tags/items");
 
         ModTagDataManager blockTagManager = new ModTagDataManager();
         blockTagManager.loadDataEntries("tags/blocks");
 
-        mVillagerEventHandler = new ModVillagerEventHandler(itemTagManager);
+        mVillagerEventHandler = new ModVillagerEventHandler(modMemoryModuleRegistrar, itemTagManager);
         mWanderingTraderEventHandler = new ModWanderingTraderEventHandler();
         mBlockEventHandler = new ModBlockEventHandler(blockTagManager);
 
