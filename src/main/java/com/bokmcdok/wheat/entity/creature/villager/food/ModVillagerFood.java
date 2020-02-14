@@ -1,7 +1,6 @@
 package com.bokmcdok.wheat.entity.creature.villager.food;
 
 import com.bokmcdok.wheat.data.ModIngredientSupplier;
-import net.minecraft.entity.ai.brain.task.Task;
 import net.minecraft.entity.merchant.villager.VillagerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.Item;
@@ -10,7 +9,6 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.LazyValue;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
 import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.IForgeRegistry;

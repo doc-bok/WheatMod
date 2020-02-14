@@ -81,7 +81,7 @@ public class ModCreateBabyVillagerTask extends Task<VillagerEntity> {
     @Override
     protected void updateTask(ServerWorld world, VillagerEntity villager, long gameTime) {
         VillagerEntity breedTarget = this.getBreedTarget(villager);
-        if (!(villager.getDistanceSq(breedTarget) > 5.0D)) {
+        if (villager.getDistanceSq(breedTarget) <= 5.0D) {
             BrainUtil.lookApproachEachOther(villager, breedTarget);
             if (gameTime >= mGameTimeEnd) {
                 mVillagerFood.consumeFood(villager);
