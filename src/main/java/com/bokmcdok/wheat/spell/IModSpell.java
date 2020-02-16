@@ -45,4 +45,28 @@ public interface IModSpell {
     default ItemStack getFocus() {
         return ItemStack.EMPTY;
     }
+
+    /**
+     * Get the casting time of the spell (defaults to 6 seconds).
+     * @return The casting time.
+     */
+    default int getCastingTime() {
+        return 120;
+    }
+
+    /**
+     * Get the duration of the spell.
+     * @return The duration of the spell.
+     */
+    default int getDuration() {
+        return 0;
+    }
+
+    /**
+     * Get the range of the spell.
+     * @return The range of the spell.
+     */
+    default int getRange() {
+        return 0;
+    }
 }

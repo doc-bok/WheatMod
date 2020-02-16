@@ -7,6 +7,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.UseAction;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
@@ -73,19 +74,43 @@ public class ModItemImpl {
      * the Item before the action is complete. This is used for food that is contained in a bowl, for example.
      * @param stack The item stack to check.
      * @param world The current world.
-     * @param entityLiving The entity that owns the item.
+     * @param entity The entity that owns the item.
      * @return The item to replace the current one with.
      */
-    public ItemStack onItemUseFinish(Item item, ItemStack stack, World world, LivingEntity entityLiving) {
+    public ItemStack onItemUseFinish(Item item, ItemStack stack, World world, LivingEntity entity) {
         if (item.isFood() && item.hasContainerItem(stack)) {
             return item.getContainerItem(stack);
         }
 
         if (mSpell != null) {
-            return item.getContainerItem(stack);
+            if (mSpell.cast(world, entity)) {
+                Hand activeHand = entity.getActiveHand();
+
+                ItemStack itemStack = entity.getHeldItem(activeHand);
+                itemStack.damageItem(1, entity, (x) -> x.sendBreakAnimation(activeHand));
+                if (itemStack.getDamage() > 0) {
+                    return itemStack;
+                } else {
+                    return item.getContainerItem(itemStack);
+                }
+            }
         }
 
         return null;
+    }
+
+    /**
+     * Get the animation to play as the item is used.
+     * @param stack The item stack being used
+     * @return The relevant use action.
+     */
+    public UseAction getUseAction(ItemStack stack) {
+        Item item = stack.getItem();
+        if (item.isFood()) {
+            return UseAction.EAT;
+        }
+
+        return UseAction.NONE;
     }
 
     /**
@@ -140,20 +165,23 @@ public class ModItemImpl {
         }
 
         if (mSpell != null) {
-            if (mSpell.cast(world, player)) {
-                ItemStack itemStack = player.getHeldItem(hand);
-                itemStack.damageItem(1, player, (x) -> x.sendBreakAnimation(hand));
-                if (itemStack.getDamage() > 0) {
-                    return new ActionResult<>(ActionResultType.SUCCESS, itemStack);
-                } else {
-                    return new ActionResult<>(ActionResultType.SUCCESS, getContainerItem(itemStack));
-                }
-            }
-
-            return new ActionResult<>(ActionResultType.PASS, player.getHeldItem(hand));
+            player.setActiveHand(hand);
+            return new ActionResult<>(ActionResultType.CONSUME, player.getHeldItem(hand));
         }
 
         return null;
+    }
+
+    /**
+     * Get the time it takes to use this item.
+     * @return The time it takes to use this item.
+     */
+    public int getUseDuration() {
+        if (mSpell != null) {
+            return mSpell.getCastingTime();
+        }
+
+        return -1;
     }
 
     public static class ModItemProperties extends Item.Properties {

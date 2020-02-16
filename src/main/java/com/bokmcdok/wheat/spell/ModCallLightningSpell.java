@@ -41,4 +41,13 @@ public class ModCallLightningSpell implements IModSpell {
 
         return false;
     }
+
+    /**
+     * Get the range of the spell.
+     * @return The range of the spell.
+     */
+    @Override
+    public int getRange() {
+        return 40;
+    }
 }
