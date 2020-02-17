@@ -27,14 +27,21 @@ public class ModPlayerEntityEventHandler {
                 ItemStack heldItem = player.getHeldItem(player.getActiveHand());
                 Item item = heldItem.getItem();
                 if (item instanceof ModItem && ((ModItem) item).isSpell()) {
-                    double d0 = 0.3d;
-                    double d1 = 0.35d;
-                    double d2 = 0.3d;
-                    float f = player.renderYawOffset * ((float) Math.PI / 180F) + MathHelper.cos((float) player.ticksExisted * 0.6662F) * 0.25F;
-                    float f2 = MathHelper.cos(f);
-                    float f1 = MathHelper.sin(f);
-                    world.addParticle(ParticleTypes.ENTITY_EFFECT, player.func_226277_ct_() + (double) f1 * 0.6D, player.func_226278_cu_() + 1.0D, player.func_226281_cx_() + (double) f2 * 0.6D, d0, d1, d2);
-                    world.addParticle(ParticleTypes.ENTITY_EFFECT, player.func_226277_ct_() - (double) f1 * 0.6D, player.func_226278_cu_() + 1.0D, player.func_226281_cx_() - (double) f2 * 0.6D, d0, d1, d2);
+                    double dX = 0.3d;
+                    double dY = 0.7d;
+                    double dZ = 0.3d;
+                    float yaw = player.renderYawOffset * ((float) Math.PI / 180F) + MathHelper.cos((float) player.ticksExisted * 0.6662F) * 0.25F;
+                    float cos = MathHelper.cos(yaw);
+                    float sin = MathHelper.sin(yaw);
+
+                    double playerX = player.func_226277_ct_();
+                    double playerY = player.func_226278_cu_();
+                    double playerZ = player.func_226281_cx_();
+
+                    world.addParticle(ParticleTypes.HAPPY_VILLAGER, playerX + (double) sin * 0.6D, playerY + 1.4D, playerZ + (double) cos * 0.6D, dX, dY, dZ);
+                    world.addParticle(ParticleTypes.HAPPY_VILLAGER, playerX - (double) sin * 0.6D, playerY + 1.4D, playerZ - (double) cos * 0.6D, dX, dY, dZ);
+                    world.addParticle(ParticleTypes.HAPPY_VILLAGER, playerX + (double) sin * 0.6D, playerY + 1.4D, playerZ - (double) cos * 0.6D, dX, dY, dZ);
+                    world.addParticle(ParticleTypes.HAPPY_VILLAGER, playerX - (double) sin * 0.6D, playerY + 1.4D, playerZ + (double) cos * 0.6D, dX, dY, dZ);
                 }
             }
         }
