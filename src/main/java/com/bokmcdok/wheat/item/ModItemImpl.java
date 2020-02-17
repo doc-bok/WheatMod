@@ -84,6 +84,8 @@ public class ModItemImpl {
 
         if (mSpell != null) {
             if (mSpell.cast(world, entity)) {
+                world.playSound(null, entity.getPosition(), mSpell.getCastSound(), SoundCategory.PLAYERS, 5.0f, 1.0F);
+
                 Hand activeHand = entity.getActiveHand();
 
                 ItemStack itemStack = entity.getHeldItem(activeHand);
@@ -165,6 +167,7 @@ public class ModItemImpl {
         }
 
         if (mSpell != null) {
+            world.playSound(null, player.getPosition(), mSpell.getPrepareSound(), SoundCategory.PLAYERS, 5.0f, 1.0F);
             player.setActiveHand(hand);
             return new ActionResult<>(ActionResultType.CONSUME, player.getHeldItem(hand));
         }
@@ -182,6 +185,14 @@ public class ModItemImpl {
         }
 
         return -1;
+    }
+
+    /**
+     * Is this a spellcasting item?
+     * @return TRUE if this item has a spell attached.
+     */
+    public boolean isSpell() {
+        return mSpell != null;
     }
 
     public static class ModItemProperties extends Item.Properties {

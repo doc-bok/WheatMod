@@ -23,7 +23,7 @@ public class ModCallLightningSpell implements IModSpell {
     @Override
     public boolean cast(World world, Entity entity) {
         if (!entity.isInWater() && !entity.isInLava()) {
-            RayTraceResult rayTraceResult = entity.pick(20.0d, 1.0f, true);
+            RayTraceResult rayTraceResult = entity.pick(getRange(), 1.0f, true);
             if (rayTraceResult.getType() != RayTraceResult.Type.MISS) {
                 BlockPos position = rayTraceResult.getType() == RayTraceResult.Type.BLOCK ?
                         ((BlockRayTraceResult) rayTraceResult).getPos() :

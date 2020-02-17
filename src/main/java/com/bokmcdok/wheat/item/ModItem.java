@@ -101,4 +101,12 @@ public class ModItem extends Item implements IModItem {
     public UseAction getUseAction(ItemStack stack) {
         return mImpl.getUseAction(stack);
     }
+
+    /**
+     * Is this a spellcasting item?
+     * @return TRUE if this item has a spell attached.
+     */
+    public boolean isSpell() {
+        return mImpl.isSpell();
+    }
 }

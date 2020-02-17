@@ -2,6 +2,8 @@ package com.bokmcdok.wheat.spell;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.SoundEvent;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.world.World;
 
 public interface IModSpell {
@@ -51,7 +53,7 @@ public interface IModSpell {
      * @return The casting time.
      */
     default int getCastingTime() {
-        return 120;
+        return 60;
     }
 
     /**
@@ -68,5 +70,13 @@ public interface IModSpell {
      */
     default int getRange() {
         return 0;
+    }
+
+    default SoundEvent getPrepareSound() {
+        return SoundEvents.ENTITY_EVOKER_PREPARE_SUMMON;
+    }
+
+    default SoundEvent getCastSound() {
+        return SoundEvents.ENTITY_EVOKER_CAST_SPELL;
     }
 }
