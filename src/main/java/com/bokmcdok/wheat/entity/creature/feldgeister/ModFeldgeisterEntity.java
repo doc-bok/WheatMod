@@ -1,6 +1,5 @@
 package com.bokmcdok.wheat.entity.creature.feldgeister;
 
-//import com.bokmcdok.wheat.ai.goals.ModNocturnalGoal;
 import com.bokmcdok.wheat.ai.goals.ModFindFarmGoal;
 import com.bokmcdok.wheat.block.ModBlockUtils;
 import com.bokmcdok.wheat.block.ModCropsBlock;

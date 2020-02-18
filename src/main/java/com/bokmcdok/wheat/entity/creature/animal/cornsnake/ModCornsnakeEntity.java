@@ -167,7 +167,7 @@ public class ModCornsnakeEntity extends ModNestingEntity {
      * Set the type of the snake.
      * @param type The type of snake to use.
      */
-    private void setType(int type) {
+    protected void setType(int type) {
         dataManager.set(TYPE, type);
     }
 
@@ -182,7 +182,7 @@ public class ModCornsnakeEntity extends ModNestingEntity {
     /**
      * Class to store snake-specific data.
      */
-    private static class CornsnakeData extends AgeableEntity.AgeableData {
+    protected static class CornsnakeData extends AgeableEntity.AgeableData {
         private final int mType;
 
         /**
