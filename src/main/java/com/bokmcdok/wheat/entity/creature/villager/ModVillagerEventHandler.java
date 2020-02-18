@@ -63,9 +63,10 @@ public class ModVillagerEventHandler {
 
     /**
      * Construction
+     * @param itemTagDataManager Data manager holding the item tags.
      */
-    public ModVillagerEventHandler(ModMemoryModuleRegistrar memoryModuleRegistrar, ModTagDataManager itemTagDataManager) {
-        mMemoryModuleRegistrar = memoryModuleRegistrar;
+    public ModVillagerEventHandler(ModTagDataManager itemTagDataManager) {
+        mMemoryModuleRegistrar = new ModMemoryModuleRegistrar();
 
         mTradeModifiers = new ModVillagerTradeModifierDataManager();
         mTradeModifiers.loadDataEntries("villager/trades");

@@ -1,8 +1,9 @@
 package com.bokmcdok.wheat.item;
 
+import com.bokmcdok.wheat.WheatMod;
 import com.bokmcdok.wheat.data.ModDataManager;
 import com.bokmcdok.wheat.data.ModEffectManager;
-import com.bokmcdok.wheat.spell.ModSpellManager;
+import com.bokmcdok.wheat.spell.ModSpellRegistrar;
 import com.google.common.collect.Lists;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -30,7 +31,6 @@ public class ModItemManager extends ModDataManager<IModItem> {
     private static final String CONTAINERS_FOLDER = "containers";
     private static final String SPAWN_EGGS_FOLDER = "spawn_eggs";
     private ModEffectManager mEffectManager = new ModEffectManager();
-    private ModSpellManager mSpellManager = new ModSpellManager();
 
     private enum ItemType {
         ITEM,
@@ -94,7 +94,7 @@ public class ModItemManager extends ModDataManager<IModItem> {
         setIfFalse(properties, json, "repairable", Item.Properties::setNoRepair);
         setString(properties, json, "container", (x, value) -> x.containerItem(getContainerItem(value)));
         setFloat(properties, json, "compost_chance", ModItemImpl.ModItemProperties::compostChance);
-        setString(properties, json, "spell", (x, value) -> x.spell(mSpellManager.getSpell(value)));
+        setString(properties, json, "spell", (x, value) -> x.spell(WheatMod.SPELL_REGISTRAR.getSpell(value)));
 
         deserializeTools(json, properties);
         deserializeFood(json, properties);

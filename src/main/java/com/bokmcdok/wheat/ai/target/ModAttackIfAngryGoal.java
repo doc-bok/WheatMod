@@ -1,4 +1,4 @@
-package com.bokmcdok.wheat.ai.goals;
+package com.bokmcdok.wheat.ai.target;
 
 import com.bokmcdok.wheat.ai.behaviour.IGetsAngry;
 import net.minecraft.entity.LivingEntity;

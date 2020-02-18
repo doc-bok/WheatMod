@@ -1,12 +1,12 @@
-package com.bokmcdok.wheat.entity.creature.feldgeister.ahrenkind;
+package com.bokmcdok.wheat.entity.creature.feldgeister.fillager.ahrenkind;
 
 import com.bokmcdok.wheat.ai.behaviour.IGetsAngry;
-import com.bokmcdok.wheat.ai.goals.ModAttackIfAngryGoal;
-import com.bokmcdok.wheat.ai.goals.ModHurtByTargetGoal;
+import com.bokmcdok.wheat.ai.target.ModAttackIfAngryGoal;
+import com.bokmcdok.wheat.ai.target.ModHurtByTargetGoal;
 import com.bokmcdok.wheat.entity.creature.feldgeister.ModFeldgeisterEntity;
 import com.bokmcdok.wheat.entity.creature.feldgeister.fillager.ModFillagerEntity;
 import com.bokmcdok.wheat.entity.creature.feldgeister.getreidewolf.ModGetreidewolfEntity;
-import com.bokmcdok.wheat.entity.creature.feldgeister.weizenmutter.ModWeizenmutterEntity;
+import com.bokmcdok.wheat.entity.creature.feldgeister.fillager.weizenmutter.ModWeizenmutterEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;

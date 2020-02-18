@@ -1,6 +1,6 @@
 package com.bokmcdok.wheat.entity.creature.villager.trade;
 
-import com.bokmcdok.wheat.data.ModIngredientSupplier;
+import com.bokmcdok.wheat.supplier.ModIngredientSupplier;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import net.minecraft.util.LazyValue;

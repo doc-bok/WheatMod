@@ -1,11 +1,14 @@
-package com.bokmcdok.wheat.entity.creature.feldgeister.weizenmutter;
+package com.bokmcdok.wheat.entity.creature.feldgeister.fillager.weizenmutter;
+import com.bokmcdok.wheat.WheatMod;
 import com.bokmcdok.wheat.ai.behaviour.ISpellcaster;
-import com.bokmcdok.wheat.ai.goals.ModTransformEntityGoal;
-import com.bokmcdok.wheat.entity.ModEntityUtils;
+import com.bokmcdok.wheat.ai.goals.ModCastSpellOnAttackTargetGoal;
+import com.bokmcdok.wheat.ai.goals.ModCastSpellOnSelfGoal;
 import com.bokmcdok.wheat.entity.creature.feldgeister.ModFeldgeisterEntity;
 import com.bokmcdok.wheat.entity.creature.feldgeister.fillager.ModFillagerEntity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.merchant.villager.VillagerEntity;
 import net.minecraft.entity.monster.AbstractIllagerEntity;
 import net.minecraft.network.datasync.DataParameter;
@@ -73,10 +76,6 @@ public class ModWeizenmutterEntity extends ModFillagerEntity implements ISpellca
     @Override
     public void setCastingSpell(boolean castingSpell) {
         dataManager.set(SPELL, castingSpell);
-
-        if (castingSpell) {
-            playSound(SoundEvents.ENTITY_ILLUSIONER_CAST_SPELL, 1.0f, 1.0f);
-        }
     }
 
     /**
@@ -144,7 +143,21 @@ public class ModWeizenmutterEntity extends ModFillagerEntity implements ISpellca
     @Override
     protected void registerGoals() {
         super.registerGoals();
-        goalSelector.addGoal(6, new ModTransformEntityGoal(this, 1.0d, VillagerEntity.class, ModEntityUtils.ahrenkind, (entity) -> entity.isChild()));
+        goalSelector.addGoal(3, new ModCastSpellOnSelfGoal(this, WheatMod.SPELL_REGISTRAR.getSpell("true_polymorph_weizenmutter_cornsnake"), (caster, target) -> caster.getHealth() / caster.getMaxHealth() <= 0.2f));
+        goalSelector.addGoal(3, new ModCastSpellOnSelfGoal(this, WheatMod.SPELL_REGISTRAR.getSpell("true_polymorph_weizenmutter_getreidewulf"), (caster, target) -> {
+            LivingEntity attackTarget = caster.getAttackTarget();
+            if (attackTarget != null) {
+                return attackTarget.getHealth() / attackTarget.getMaxHealth() <= 0.2f;
+            }
+
+            return false;
+        }));
+
+        goalSelector.addGoal(6, new ModCastSpellOnAttackTargetGoal(this, WheatMod.SPELL_REGISTRAR.getSpell("true_polymorph_ahrenkind"), 1.0d, (caster, target) -> target instanceof VillagerEntity));
+
+        goalSelector.removeGoal(mAttackGoal);
+
+        targetSelector.addGoal(6, new NearestAttackableTargetGoal<>(this, VillagerEntity.class, 10, true, true, LivingEntity::isChild));
     }
 
     /**

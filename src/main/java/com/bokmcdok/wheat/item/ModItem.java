@@ -5,6 +5,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.UseAction;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
@@ -79,5 +80,33 @@ public class ModItem extends Item implements IModItem {
     public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
         ActionResult<ItemStack> result = mImpl.onItemRightClick(this, world, player, hand);
         return result != null ? result : super.onItemRightClick(world, player, hand);
+    }
+
+    /**
+     * Get the time it takes to use this item.
+     * @return The time it takes to use this item.
+     */
+    @Override
+    public int getUseDuration(ItemStack stack) {
+        int useDuration = mImpl.getUseDuration();
+        return useDuration > 0 ? useDuration : super.getUseDuration(stack);
+    }
+
+    /**
+     * Get the animation to play as the item is used.
+     * @param stack The item stack being used
+     * @return The relevant use action.
+     */
+    @Override
+    public UseAction getUseAction(ItemStack stack) {
+        return mImpl.getUseAction(stack);
+    }
+
+    /**
+     * Is this a spellcasting item?
+     * @return TRUE if this item has a spell attached.
+     */
+    public boolean isSpell() {
+        return mImpl.isSpell();
     }
 }

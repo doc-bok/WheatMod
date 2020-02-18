@@ -1,6 +1,6 @@
 package com.bokmcdok.wheat.entity.creature.villager.crops;
 
-import com.bokmcdok.wheat.data.ModIngredientSupplier;
+import com.bokmcdok.wheat.supplier.ModIngredientSupplier;
 import net.minecraft.block.Block;
 import net.minecraft.entity.merchant.villager.VillagerEntity;
 import net.minecraft.inventory.Inventory;
