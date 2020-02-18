@@ -72,11 +72,27 @@ public interface IModSpell {
         return 0;
     }
 
+    /**
+     * Get the sound made when an entity starts casting the spell.
+     * @return A sound event.
+     */
     default SoundEvent getPrepareSound() {
         return SoundEvents.ENTITY_EVOKER_PREPARE_SUMMON;
     }
 
+    /**
+     * Get the sound made when the spell is successfully cast.
+     * @return A sound event.
+     */
     default SoundEvent getCastSound() {
         return SoundEvents.ENTITY_EVOKER_CAST_SPELL;
+    }
+
+    /**
+     * Get the sound made when a spell fails to cast.
+     * @return A sound event.
+     */
+    default SoundEvent getFailSound() {
+        return SoundEvents.ENTITY_BLAZE_SHOOT;
     }
 }

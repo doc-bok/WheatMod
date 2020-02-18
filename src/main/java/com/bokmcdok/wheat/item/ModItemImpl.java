@@ -95,6 +95,8 @@ public class ModItemImpl {
                 } else {
                     return item.getContainerItem(itemStack);
                 }
+            } else {
+                world.playSound(null, entity.getPosition(), mSpell.getFailSound(), SoundCategory.PLAYERS, 5.0f, 1.0F);
             }
         }
 
