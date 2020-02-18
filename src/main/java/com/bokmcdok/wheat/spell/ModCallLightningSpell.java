@@ -1,14 +1,18 @@
 package com.bokmcdok.wheat.spell;
 
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.LightningBoltEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.entity.projectile.ProjectileHelper;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.EntityRayTraceResult;
+import net.minecraft.util.math.RayTraceContext;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
@@ -23,7 +27,8 @@ public class ModCallLightningSpell implements IModSpell {
     @Override
     public boolean cast(World world, Entity entity) {
         if (!entity.isInWater() && !entity.isInLava()) {
-            RayTraceResult rayTraceResult = entity.pick(getRange(), 1.0f, true);
+
+            RayTraceResult rayTraceResult = ModSpellManager.rayTrace(world, getRange(), true, entity, RayTraceContext.BlockMode.OUTLINE, (x) -> x instanceof LivingEntity);
             if (rayTraceResult.getType() != RayTraceResult.Type.MISS) {
                 BlockPos position = rayTraceResult.getType() == RayTraceResult.Type.BLOCK ?
                         ((BlockRayTraceResult) rayTraceResult).getPos() :
