@@ -83,12 +83,13 @@ public class ModItemImpl {
         }
 
         if (mSpell != null) {
+            Hand activeHand = entity.getActiveHand();
+            ItemStack itemStack = entity.getHeldItem(activeHand);
+            itemStack.getTag().putInt("spell_cooldown", entity.ticksExisted + mSpell.getCooldown());
+
             if (mSpell.cast(entity)) {
                 world.playSound(null, entity.getPosition(), mSpell.getCastSound(), SoundCategory.PLAYERS, 5.0f, 1.0F);
-
-                Hand activeHand = entity.getActiveHand();
-
-                ItemStack itemStack = entity.getHeldItem(activeHand);
+                
                 itemStack.damageItem(1, entity, (x) -> x.sendBreakAnimation(activeHand));
                 if (itemStack.getDamage() > 0) {
                     return itemStack;
@@ -154,24 +155,30 @@ public class ModItemImpl {
      */
     public ActionResult<ItemStack> onItemRightClick(Item item, World world, PlayerEntity player, Hand hand) {
         if (mThrowingVelocity > 0.0f) {
-            ItemStack itemstack = player.getHeldItem(hand);
-            ItemStack itemstack1 = player.abilities.isCreativeMode ? itemstack.copy() : itemstack.split(1);
+            ItemStack heldItem = player.getHeldItem(hand);
+            ItemStack itemToUse = player.abilities.isCreativeMode ? heldItem.copy() : heldItem.split(1);
             world.playSound(null, player.getPosition(), mThrowingSound, SoundCategory.PLAYERS, mThrowingVolume, mThrowingPitch / (RNG.nextFloat() * 0.4F + 0.8F));
             if (!world.isRemote) {
                 ThrownItemEntity entity = new ThrownItemEntity(world, player);
-                entity.setItem(itemstack1);
+                entity.setItem(itemToUse);
                 entity.shoot(player, player.rotationPitch, player.rotationYaw, mThrowingOffset, mThrowingVelocity, mThrowingInaccuracy);
                 world.addEntity(entity);
             }
 
             player.addStat(Stats.ITEM_USED.get(item));
-            return new ActionResult<>(ActionResultType.SUCCESS, itemstack);
+            return new ActionResult<>(ActionResultType.SUCCESS, heldItem);
         }
 
         if (mSpell != null) {
-            world.playSound(null, player.getPosition(), mSpell.getPrepareSound(), SoundCategory.PLAYERS, 5.0f, 1.0F);
-            player.setActiveHand(hand);
-            return new ActionResult<>(ActionResultType.CONSUME, player.getHeldItem(hand));
+            ItemStack heldItem = player.getHeldItem(hand);
+            int cooldown = heldItem.getTag().getInt("spell_cooldown");
+            if (player.ticksExisted > cooldown) {
+                world.playSound(null, player.getPosition(), mSpell.getPrepareSound(), SoundCategory.PLAYERS, 5.0f, 1.0F);
+                player.setActiveHand(hand);
+
+                player.addStat(Stats.ITEM_USED.get(item));
+                return new ActionResult<>(ActionResultType.CONSUME, player.getHeldItem(hand));
+            }
         }
 
         return null;

@@ -45,17 +45,6 @@ public class ModCallLightningSpell extends ModSpell {
     }
 
     /**
-     * If there is a target just cast it at what the caster is looking at.
-     * @param caster The caster of the spell.
-     * @param target The target entity.
-     * @return TRUE if the spell was successfully cast.
-     */
-    @Override
-    public boolean cast(LivingEntity caster, Entity target) {
-        return cast(caster);
-    }
-
-    /**
      * Get the range of the spell.
      * @return The range of the spell.
      */

@@ -16,6 +16,7 @@ public abstract class ModCastSpellGoal extends Goal {
     private final double mSpeed;
     private final BiFunction<MobEntity, LivingEntity, Boolean> mPredicate;
     private int mCastingTime = 0;
+    private int mCooldown = 0;
 
     /**
      * Execute if we have a target.
@@ -23,9 +24,11 @@ public abstract class ModCastSpellGoal extends Goal {
      */
     @Override
     public boolean shouldExecute() {
-        LivingEntity target = getTarget();
-        if (target != null) {
-            return mPredicate == null || mPredicate.apply(mCaster, target);
+        if (mCaster.ticksExisted > mCooldown) {
+            LivingEntity target = getTarget();
+            if (target != null) {
+                return mPredicate == null || mPredicate.apply(mCaster, target);
+            }
         }
 
         return false;
@@ -78,6 +81,8 @@ public abstract class ModCastSpellGoal extends Goal {
                 }
 
                 resetTask();
+
+                mCooldown = mCaster.ticksExisted + mSpell.getCooldown();
             }
         }
     }

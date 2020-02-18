@@ -22,6 +22,8 @@ public class ModItem extends Item implements IModItem {
         mImpl = new ModItemImpl(properties);
     }
 
+
+
     /**
      * Get the item's color
      * @return The color of the item.

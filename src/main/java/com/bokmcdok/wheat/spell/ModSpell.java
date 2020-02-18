@@ -33,7 +33,7 @@ public abstract class ModSpell {
      * @return TRUE if the spell was successfully cast.
      */
     public boolean cast(LivingEntity caster, Entity target) {
-        return false;
+        return cast(caster);
     }
 
     /**
@@ -82,6 +82,14 @@ public abstract class ModSpell {
      */
     public int getDuration() {
         return 0;
+    }
+
+    /**
+     * Get the time until the spell can be cast again after the last attempt.
+     * @return The spell's cooldown.
+     */
+    public int getCooldown() {
+        return 40;
     }
 
     /**
