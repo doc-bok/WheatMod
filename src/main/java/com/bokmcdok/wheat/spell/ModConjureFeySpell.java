@@ -4,7 +4,6 @@ import com.bokmcdok.wheat.ai.goals.ModDespawnAfterTicksGoal;
 import com.bokmcdok.wheat.ai.goals.ModDespawnIfDiesGoal;
 import com.bokmcdok.wheat.ai.target.ModCopyTargetGoal;
 import com.bokmcdok.wheat.supplier.ModEntityTypeSupplier;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MobEntity;

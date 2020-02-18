@@ -6,8 +6,6 @@ import com.bokmcdok.wheat.entity.creature.feldgeister.getreidewolf.ModGetreidewo
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.world.World;
 
 public class ModWeizenmutterGetreidewolfEntity extends ModGetreidewolfEntity {
