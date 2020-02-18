@@ -89,7 +89,7 @@ public class ModItemImpl {
 
             if (mSpell.cast(entity)) {
                 world.playSound(null, entity.getPosition(), mSpell.getCastSound(), SoundCategory.PLAYERS, 5.0f, 1.0F);
-                
+
                 itemStack.damageItem(1, entity, (x) -> x.sendBreakAnimation(activeHand));
                 if (itemStack.getDamage() > 0) {
                     return itemStack;

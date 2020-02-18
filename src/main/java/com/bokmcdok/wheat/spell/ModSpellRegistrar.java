@@ -13,10 +13,11 @@ public class ModSpellRegistrar {
     public ModSpellRegistrar() {
         mSpells = Maps.newHashMap();
         mSpells.put("call_lightning", new ModCallLightningSpell());
+        mSpells.put("conjure_getreidewolf", new ModConjureFeySpell("docwheat:getreidewolf"));
         mSpells.put("true_polymorph_ahrenkind", new ModTruePolymorphSpell("docwheat:ahrenkind"));
         mSpells.put("true_polymorph_weizenmutter", new ModTruePolymorphSpell("docwheat:weizenmutter"));
         mSpells.put("true_polymorph_weizenmutter_cornsnake", new ModTruePolymorphSpell("docwheat:weizenmutter_cornsnake"));
-        mSpells.put("true_polymorph_weizenmutter_getreidewulf", new ModTruePolymorphSpell("docwheat:weizenmutter_getreidewulf"));
+        mSpells.put("true_polymorph_weizenmutter_getreidewolf", new ModTruePolymorphSpell("docwheat:weizenmutter_getreidewolf"));
         mSpells.put("true_polymorph_weizenmutter_turtle", new ModTruePolymorphSpell("minecraft:weizenmutter_turtle"));
     }
 

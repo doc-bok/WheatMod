@@ -10,14 +10,14 @@ import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.world.World;
 
-public class ModWeizenmutterGetreidewulfEntity extends ModGetreidewolfEntity {
+public class ModWeizenmutterGetreidewolfEntity extends ModGetreidewolfEntity {
     /**
      * Construction
      *
      * @param type  The type of this entity.
      * @param world The current world.
      */
-    public ModWeizenmutterGetreidewulfEntity(EntityType<? extends ModGetreidewolfEntity> type, World world) {
+    public ModWeizenmutterGetreidewolfEntity(EntityType<? extends ModGetreidewolfEntity> type, World world) {
         super(type, world);
     }
 

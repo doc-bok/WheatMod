@@ -5,14 +5,14 @@ import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 
-public class ModWeizenmutterGetreidewulfRenderFactory implements IRenderFactory<ModWeizenmutterGetreidewulfEntity> {
+public class ModWeizenmutterGetreidewulfRenderFactory implements IRenderFactory<ModWeizenmutterGetreidewolfEntity> {
     /**
      * Create an entity renderer.
      * @param manager The entity render manager.
      * @return The new entity renderer.
      */
     @Override
-    public EntityRenderer<? super ModWeizenmutterGetreidewulfEntity> createRenderFor(EntityRendererManager manager) {
+    public EntityRenderer<? super ModWeizenmutterGetreidewolfEntity> createRenderFor(EntityRendererManager manager) {
         return new ModGetreidewolfRenderer(manager);
     }
 }

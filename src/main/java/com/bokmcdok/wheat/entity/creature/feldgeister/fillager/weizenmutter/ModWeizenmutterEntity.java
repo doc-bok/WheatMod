@@ -143,8 +143,10 @@ public class ModWeizenmutterEntity extends ModFillagerEntity implements ISpellca
     @Override
     protected void registerGoals() {
         super.registerGoals();
+
+        //  TODO: Some goals only execute when angry.
         goalSelector.addGoal(3, new ModCastSpellOnSelfGoal(this, WheatMod.SPELL_REGISTRAR.getSpell("true_polymorph_weizenmutter_cornsnake"), (caster, target) -> caster.getHealth() / caster.getMaxHealth() <= 0.2f));
-        goalSelector.addGoal(3, new ModCastSpellOnSelfGoal(this, WheatMod.SPELL_REGISTRAR.getSpell("true_polymorph_weizenmutter_getreidewulf"), (caster, target) -> {
+        goalSelector.addGoal(3, new ModCastSpellOnSelfGoal(this, WheatMod.SPELL_REGISTRAR.getSpell("true_polymorph_weizenmutter_getreidewolf"), (caster, target) -> {
             LivingEntity attackTarget = caster.getAttackTarget();
             if (attackTarget != null) {
                 return attackTarget.getHealth() / attackTarget.getMaxHealth() <= 0.2f;
@@ -152,6 +154,8 @@ public class ModWeizenmutterEntity extends ModFillagerEntity implements ISpellca
 
             return false;
         }));
+
+        goalSelector.addGoal(3, new ModCastSpellOnAttackTargetGoal(this, WheatMod.SPELL_REGISTRAR.getSpell("conjure_getreidewolf"), 1.0d, null));
 
         goalSelector.addGoal(6, new ModCastSpellOnAttackTargetGoal(this, WheatMod.SPELL_REGISTRAR.getSpell("true_polymorph_ahrenkind"), 1.0d, (caster, target) -> target instanceof VillagerEntity));
 
