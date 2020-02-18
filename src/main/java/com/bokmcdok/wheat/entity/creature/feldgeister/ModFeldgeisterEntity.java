@@ -181,7 +181,7 @@ public class ModFeldgeisterEntity extends MonsterEntity {
     protected void registerGoals() {
         mAttackGoal = new MeleeAttackGoal(this, 1.0d, true);
 
-        goalSelector.addGoal(1, new SwimGoal(this));
+        goalSelector.addGoal(2, new SwimGoal(this));
         goalSelector.addGoal(5, mAttackGoal);
         goalSelector.addGoal(8, new ModFindFarmGoal(this, ModBlockUtils.WHEAT, 1.0d, 16, 1));
         goalSelector.addGoal(8, new WaterAvoidingRandomWalkingGoal(this, 1.0d));

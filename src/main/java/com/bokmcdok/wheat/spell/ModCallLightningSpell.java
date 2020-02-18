@@ -1,6 +1,5 @@
 package com.bokmcdok.wheat.spell;
 
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.LightningBoltEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -42,17 +41,6 @@ public class ModCallLightningSpell extends ModSpell {
         }
 
         return false;
-    }
-
-    /**
-     * If there is a target just cast it at what the caster is looking at.
-     * @param caster The caster of the spell.
-     * @param target The target entity.
-     * @return TRUE if the spell was successfully cast.
-     */
-    @Override
-    public boolean cast(LivingEntity caster, Entity target) {
-        return cast(caster);
     }
 
     /**

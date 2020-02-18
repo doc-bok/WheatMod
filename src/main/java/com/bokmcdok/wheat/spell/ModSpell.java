@@ -33,7 +33,7 @@ public abstract class ModSpell {
      * @return TRUE if the spell was successfully cast.
      */
     public boolean cast(LivingEntity caster, Entity target) {
-        return false;
+        return cast(caster);
     }
 
     /**
@@ -82,6 +82,14 @@ public abstract class ModSpell {
      */
     public int getDuration() {
         return 0;
+    }
+
+    /**
+     * Get the time until the spell can be cast again after the last attempt.
+     * @return The spell's cooldown.
+     */
+    public int getCooldown() {
+        return 40;
     }
 
     /**
@@ -137,10 +145,10 @@ public abstract class ModSpell {
      * @param checkEntityCollision Can the spell target entities?
      * @param shooter The shooter.
      * @param blockMode The mode to use to raytrace blocks.
-     * @param filter Filter for the kind of entities that can be targeted.
+     * @param entityFilter Filter for the kind of entities that can be targeted.
      * @return The result of the raytrace.
      */
-    protected RayTraceResult rayTrace(World world, double range, boolean checkEntityCollision, @Nullable Entity shooter, RayTraceContext.BlockMode blockMode, Predicate<Entity> filter) {
+    protected RayTraceResult rayTrace(World world, double range, boolean checkEntityCollision, @Nullable Entity shooter, RayTraceContext.BlockMode blockMode, Predicate<Entity> entityFilter) {
         Vec3d eyePosition = shooter.getEyePosition(1.0F);
         Vec3d lookDirection = shooter.getLook(1.0F).scale(range);
         Vec3d lookTarget = eyePosition.add(lookDirection);
@@ -151,7 +159,7 @@ public abstract class ModSpell {
             }
 
             AxisAlignedBB boundingBox = new AxisAlignedBB(shooter.getPosition()).grow(range);
-            RayTraceResult entityRayTraceResult = ProjectileHelper.rayTraceEntities(world, shooter, eyePosition, lookTarget, boundingBox, filter);
+            RayTraceResult entityRayTraceResult = ProjectileHelper.rayTraceEntities(world, shooter, eyePosition, lookTarget, boundingBox, entityFilter);
             if (entityRayTraceResult != null) {
                 rayTraceResult = entityRayTraceResult;
             }
