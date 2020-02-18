@@ -2,8 +2,6 @@ package com.bokmcdok.wheat.entity.creature.feldgeister.fillager.weizenmutter;
 import com.bokmcdok.wheat.WheatMod;
 import com.bokmcdok.wheat.ai.behaviour.ISpellcaster;
 import com.bokmcdok.wheat.ai.goals.ModCastSpellGoal;
-import com.bokmcdok.wheat.ai.goals.ModTransformEntityGoal;
-import com.bokmcdok.wheat.entity.ModEntityUtils;
 import com.bokmcdok.wheat.entity.creature.feldgeister.ModFeldgeisterEntity;
 import com.bokmcdok.wheat.entity.creature.feldgeister.fillager.ModFillagerEntity;
 import net.minecraft.entity.EntityType;
@@ -76,10 +74,6 @@ public class ModWeizenmutterEntity extends ModFillagerEntity implements ISpellca
     @Override
     public void setCastingSpell(boolean castingSpell) {
         dataManager.set(SPELL, castingSpell);
-
-        if (castingSpell) {
-            playSound(SoundEvents.ENTITY_ILLUSIONER_CAST_SPELL, 1.0f, 1.0f);
-        }
     }
 
     /**
@@ -147,8 +141,8 @@ public class ModWeizenmutterEntity extends ModFillagerEntity implements ISpellca
     @Override
     protected void registerGoals() {
         super.registerGoals();
-        //goalSelector.addGoal(6, new ModTransformEntityGoal(this, 1.0d, VillagerEntity.class, ModEntityUtils.ahrenkind, (entity) -> entity.isChild()));
         goalSelector.addGoal(6, new ModCastSpellGoal(this, WheatMod.SPELL_REGISTRAR.getSpell("true_polymorph_other_ahrenkind"), 1.0d));
+        goalSelector.removeGoal(mAttackGoal);
 
         targetSelector.addGoal(6, new NearestAttackableTargetGoal<>(this, VillagerEntity.class, 10, true, true, (entity) -> entity.isChild()));
     }

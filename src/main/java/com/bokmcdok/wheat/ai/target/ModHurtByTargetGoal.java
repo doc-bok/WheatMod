@@ -1,4 +1,4 @@
-package com.bokmcdok.wheat.ai.goals;
+package com.bokmcdok.wheat.ai.target;
 
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.Entity;

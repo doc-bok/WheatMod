@@ -182,7 +182,6 @@ public class ModFeldgeisterEntity extends MonsterEntity {
         mAttackGoal = new MeleeAttackGoal(this, getSpeed(), true);
 
         goalSelector.addGoal(1, new SwimGoal(this));
-        goalSelector.addGoal(4, new LeapAtTargetGoal(this, 0.4f));
         goalSelector.addGoal(5, mAttackGoal);
         goalSelector.addGoal(8, new ModFindFarmGoal(this, ModBlockUtils.WHEAT, getSpeed(), 16, 1));
         goalSelector.addGoal(8, new WaterAvoidingRandomWalkingGoal(this, 1.0d));

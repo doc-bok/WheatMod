@@ -1,7 +1,7 @@
 package com.bokmcdok.wheat.item;
 
 import com.bokmcdok.wheat.entity.ThrownItemEntity;
-import com.bokmcdok.wheat.spell.IModSpell;
+import com.bokmcdok.wheat.spell.ModSpell;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -35,7 +35,7 @@ public class ModItemImpl {
 
     private final float mCompostChance;
 
-    private final IModSpell mSpell;
+    private final ModSpell mSpell;
 
     /**
      * Construction
@@ -83,7 +83,7 @@ public class ModItemImpl {
         }
 
         if (mSpell != null) {
-            if (mSpell.cast(world, entity)) {
+            if (mSpell.cast(entity)) {
                 world.playSound(null, entity.getPosition(), mSpell.getCastSound(), SoundCategory.PLAYERS, 5.0f, 1.0F);
 
                 Hand activeHand = entity.getActiveHand();
@@ -199,7 +199,7 @@ public class ModItemImpl {
 
     public static class ModItemProperties extends Item.Properties {
 
-        private IModSpell mSpell = null;
+        private ModSpell mSpell = null;
         private SoundEvent mThrowingSound = SoundEvents.ENTITY_SPLASH_POTION_THROW;
         private float mThrowingVolume = 0.5f;
         private float mThrowingPitch = -0.4f;
@@ -230,6 +230,6 @@ public class ModItemImpl {
 
         public void compostChance(float compostChance) { mCompostChance = compostChance; }
 
-        public void spell(IModSpell spell) { mSpell = spell; }
+        public void spell(ModSpell spell) { mSpell = spell; }
     }
 }

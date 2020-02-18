@@ -3,6 +3,7 @@ package com.bokmcdok.wheat;
 import com.bokmcdok.wheat.container.ModContainerUtils;
 import com.bokmcdok.wheat.dimension.ModDimensionRegistrar;
 import com.bokmcdok.wheat.screen.FlourMillScreen;
+import com.bokmcdok.wheat.spell.ModSpellRegistrar;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -10,13 +11,13 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 /**
  * The Mod Class
- *
  * Just holds constants used in other places in the mod.
  */
 @Mod(WheatMod.MOD_ID)
 public class WheatMod
 {
     public static final String MOD_ID = "docwheat";
+    public static final ModSpellRegistrar SPELL_REGISTRAR = new ModSpellRegistrar();
 
     public WheatMod() {
         new ModForgeEventHandler();

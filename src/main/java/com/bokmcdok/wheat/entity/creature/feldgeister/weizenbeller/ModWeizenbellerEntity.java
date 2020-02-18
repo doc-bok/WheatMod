@@ -9,6 +9,7 @@ import net.minecraft.entity.EntitySize;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.Pose;
 import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.goal.LeapAtTargetGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.merchant.villager.AbstractVillagerEntity;
 import net.minecraft.entity.passive.ChickenEntity;
@@ -92,6 +93,8 @@ public class ModWeizenbellerEntity extends ModFeldgeisterEntity {
     @Override
     protected void registerGoals() {
         super.registerGoals();
+
+        goalSelector.addGoal(4, new LeapAtTargetGoal(this, 0.4f));
 
         targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, AbstractVillagerEntity.class, 10, false, false, IS_CHILD));
         targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, ChickenEntity.class, 10, false, false, null));

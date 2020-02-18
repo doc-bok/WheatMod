@@ -1,4 +1,4 @@
-package com.bokmcdok.wheat.data;
+package com.bokmcdok.wheat.supplier;
 
 import com.google.common.collect.Lists;
 import net.minecraft.item.Item;
