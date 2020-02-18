@@ -3,6 +3,8 @@ package com.bokmcdok.wheat.ai.goals;
 import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.ai.goal.Goal;
 
+import java.util.EnumSet;
+
 public abstract class ModDespawnGoal extends Goal {
     protected final MobEntity mOwner;
 
@@ -12,6 +14,7 @@ public abstract class ModDespawnGoal extends Goal {
      */
     public ModDespawnGoal(MobEntity owner) {
         mOwner = owner;
+        setMutexFlags(EnumSet.of(Flag.MOVE, Flag.LOOK));
     }
 
     /**

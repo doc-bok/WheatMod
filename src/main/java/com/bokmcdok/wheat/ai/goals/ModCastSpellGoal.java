@@ -7,22 +7,15 @@ import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.util.SoundCategory;
 
-public class ModCastSpellGoal extends Goal {
-    private final MobEntity mCaster;
+import java.util.EnumSet;
+import java.util.function.BiFunction;
+
+public abstract class ModCastSpellGoal extends Goal {
+    protected final MobEntity mCaster;
     private final ModSpell mSpell;
     private final double mSpeed;
+    private final BiFunction<MobEntity, LivingEntity, Boolean> mPredicate;
     private int mCastingTime = 0;
-
-    /**
-     * Construction
-     * @param caster The entity that will cast the spell.
-     * @param spell The spell to cast.
-     */
-    public ModCastSpellGoal(MobEntity caster, ModSpell spell, double speed) {
-        mCaster = caster;
-        mSpell = spell;
-        mSpeed = speed;
-    }
 
     /**
      * Execute if we have a target.
@@ -30,24 +23,12 @@ public class ModCastSpellGoal extends Goal {
      */
     @Override
     public boolean shouldExecute() {
-        return mCaster.getAttackTarget() != null;
-    }
+        LivingEntity target = getTarget();
+        if (target != null) {
+            return mPredicate == null || mPredicate.apply(mCaster, target);
+        }
 
-    /**
-     * Should we continue executing.
-     * @return TRUE if the goal should continue executing.
-     */
-    @Override
-    public boolean shouldContinueExecuting() {
-        return shouldExecute();
-    }
-
-    /**
-     * Start casting the spell.
-     */
-    @Override
-    public void startExecuting() {
-        super.startExecuting();
+        return false;
     }
 
     /**
@@ -69,11 +50,11 @@ public class ModCastSpellGoal extends Goal {
      */
     @Override
     public void tick() {
-        LivingEntity attackTarget = mCaster.getAttackTarget();
-        mCaster.getLookController().setLookPositionWithEntity(attackTarget, 10, mCaster.getVerticalFaceSpeed());
+        LivingEntity target = getTarget();
+        mCaster.getLookController().setLookPositionWithEntity(target, 10, mCaster.getVerticalFaceSpeed());
 
-        if (mCaster.getDistanceSq(attackTarget) > mSpell.getRangeSquared()) {
-            mCaster.getNavigator().tryMoveToEntityLiving(attackTarget, mSpeed);
+        if (mCaster != target && mCaster.getDistanceSq(target) > mSpell.getRangeSquared()) {
+            mCaster.getNavigator().tryMoveToEntityLiving(target, mSpeed);
 
             if (mCastingTime != 0) {
                 mCaster.world.playSound(null, mCaster.getPosition(), mSpell.getFailSound(), SoundCategory.HOSTILE, 5.0f, 1.0F);
@@ -90,7 +71,7 @@ public class ModCastSpellGoal extends Goal {
 
             ++mCastingTime;
             if (mCastingTime >= mSpell.getCastingTime()) {
-                if (mSpell.cast(mCaster, attackTarget)) {
+                if (mSpell.cast(mCaster, target)) {
                     mCaster.world.playSound(null, mCaster.getPosition(), mSpell.getCastSound(), SoundCategory.HOSTILE, 5.0f, 1.0F);
                 } else {
                     mCaster.world.playSound(null, mCaster.getPosition(), mSpell.getFailSound(), SoundCategory.HOSTILE, 5.0f, 1.0F);
@@ -100,4 +81,34 @@ public class ModCastSpellGoal extends Goal {
             }
         }
     }
+
+    /**
+     * Construction
+     * @param caster The entity that will cast the spell.
+     * @param spell The spell to cast.
+     */
+    protected ModCastSpellGoal(MobEntity caster, ModSpell spell, double speed) {
+        this(caster, spell, speed, null);
+    }
+
+    /**
+     * Construction
+     * @param caster The entity that will cast the spell.
+     * @param spell The spell to cast.
+     * @param predicate The conditions under which to cast the spell.
+     */
+    protected ModCastSpellGoal(MobEntity caster, ModSpell spell, double speed,
+                               BiFunction<MobEntity, LivingEntity, Boolean> predicate) {
+        mCaster = caster;
+        mSpell = spell;
+        mSpeed = speed;
+        mPredicate = predicate;
+        setMutexFlags(EnumSet.of(Flag.MOVE, Flag.LOOK));
+    }
+
+    /**
+     * Get a living entity target.
+     * @return The entity being targeted, if any.
+     */
+    protected abstract LivingEntity getTarget();
 }

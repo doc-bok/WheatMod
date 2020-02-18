@@ -4,20 +4,23 @@ import com.bokmcdok.wheat.supplier.ModEntityTypeSupplier;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.MobEntity;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.LazyValue;
+import net.minecraft.world.World;
 
 import java.util.function.Supplier;
 
 
-public class ModTruePolymorphOtherSpell extends ModSpell {
+public class ModTruePolymorphSpell extends ModSpell {
     private final LazyValue<EntityType<?>> mPolymorphTo;
 
     /**
      * Construction
      * @param polymorphTo The registry name of the entity to polymorph to.
      */
-    public ModTruePolymorphOtherSpell(String polymorphTo) {
+    public ModTruePolymorphSpell(String polymorphTo) {
         Supplier supplier = new ModEntityTypeSupplier(polymorphTo);
         mPolymorphTo = new LazyValue<>(supplier);
     }
@@ -34,8 +37,16 @@ public class ModTruePolymorphOtherSpell extends ModSpell {
             return false;
         }
 
-        LivingEntity converted = (LivingEntity)mPolymorphTo.getValue().create(caster.world);
+        World world = caster.world;
+
+        LivingEntity from = (LivingEntity)target;
+
+        LivingEntity converted = (LivingEntity)mPolymorphTo.getValue().create(world);
         converted.copyLocationAndAnglesFrom(target);
+
+        float healthRatio = from.getHealth() / from.getMaxHealth();
+        converted.setHealth(converted.getMaxHealth() * healthRatio);
+
         target.remove();
         if (target.hasCustomName()) {
             converted.setCustomName(target.getCustomName());
@@ -43,6 +54,15 @@ public class ModTruePolymorphOtherSpell extends ModSpell {
         }
 
         converted.setInvulnerable(target.isInvulnerable());
+
+        if (converted instanceof MobEntity) {
+            MobEntity convertedMob = (MobEntity)converted;
+            convertedMob.onInitialSpawn(world, world.getDifficultyForLocation(converted.getPosition()), SpawnReason.CONVERSION, null, null);
+
+            if (from instanceof MobEntity) {
+                convertedMob.setAttackTarget(((MobEntity)from).getAttackTarget());
+            }
+        }
         caster.world.addEntity(converted);
 
         return true;
@@ -50,7 +70,7 @@ public class ModTruePolymorphOtherSpell extends ModSpell {
 
     /**
      * Get the material components of the spell.
-     * TODO: Needs gum arabic (acacia tree sap), drop of mercury (cinnabar ore), wisp of smoke (glass bottle used on campfire)
+     * TODO: Needs gum arabic (acacia tree sap), drop of mercury (from cinnabar ore), wisp of smoke (glass bottle used on/above campfire)
      * @return A list of ingredients.
      */
     @Override

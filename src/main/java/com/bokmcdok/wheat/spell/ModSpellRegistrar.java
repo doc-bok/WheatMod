@@ -1,6 +1,5 @@
 package com.bokmcdok.wheat.spell;
 
-import com.bokmcdok.wheat.entity.ModEntityUtils;
 import com.google.common.collect.Maps;
 
 import java.util.Map;
@@ -14,7 +13,11 @@ public class ModSpellRegistrar {
     public ModSpellRegistrar() {
         mSpells = Maps.newHashMap();
         mSpells.put("call_lightning", new ModCallLightningSpell());
-        mSpells.put("true_polymorph_other_ahrenkind", new ModTruePolymorphOtherSpell("docwheat:ahrenkind"));
+        mSpells.put("true_polymorph_ahrenkind", new ModTruePolymorphSpell("docwheat:ahrenkind"));
+        mSpells.put("true_polymorph_weizenmutter", new ModTruePolymorphSpell("docwheat:weizenmutter"));
+        mSpells.put("true_polymorph_weizenmutter_cornsnake", new ModTruePolymorphSpell("docwheat:weizenmutter_cornsnake"));
+        mSpells.put("true_polymorph_weizenmutter_getreidewulf", new ModTruePolymorphSpell("docwheat:weizenmutter_getreidewulf"));
+        mSpells.put("true_polymorph_weizenmutter_turtle", new ModTruePolymorphSpell("minecraft:weizenmutter_turtle"));
     }
 
     /**

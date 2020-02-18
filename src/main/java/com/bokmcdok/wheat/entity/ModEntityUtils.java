@@ -12,6 +12,10 @@ import com.bokmcdok.wheat.entity.creature.animal.widowbird.ModWidowbirdEntity;
 import com.bokmcdok.wheat.entity.creature.animal.widowbird.ModWidowbirdRenderFactory;
 import com.bokmcdok.wheat.entity.creature.feldgeister.fillager.ahrenkind.ModAhrenkindEntity;
 import com.bokmcdok.wheat.entity.creature.feldgeister.fillager.ahrenkind.ModAhrenkindRenderFactory;
+import com.bokmcdok.wheat.entity.creature.feldgeister.fillager.weizenmutter.ModWeizenmutterCornsnakeEntity;
+import com.bokmcdok.wheat.entity.creature.feldgeister.fillager.weizenmutter.ModWeizenmutterCornsnakeRenderFactory;
+import com.bokmcdok.wheat.entity.creature.feldgeister.fillager.weizenmutter.ModWeizenmutterGetreidewulfEntity;
+import com.bokmcdok.wheat.entity.creature.feldgeister.fillager.weizenmutter.ModWeizenmutterGetreidewulfRenderFactory;
 import com.bokmcdok.wheat.entity.creature.feldgeister.getreidehahn.ModGetreidehahnEntity;
 import com.bokmcdok.wheat.entity.creature.feldgeister.getreidehahn.ModGetreidehahnRenderFactory;
 import com.bokmcdok.wheat.entity.creature.feldgeister.getreidewolf.ModGetreidewolfEntity;
@@ -65,6 +69,8 @@ public class ModEntityUtils {
     public static final EntityType<ModGetreidehahnEntity> getreidehahn = null;
     public static final EntityType<ModCornsnakeEntity> cornsnake = null;
     public static final EntityType<ModWeizenmutterEntity> weizenmutter = null;
+    public static final EntityType<ModWeizenmutterCornsnakeEntity> weizenmutter_cornsnake = null;
+    public static final EntityType<ModWeizenmutterGetreidewulfEntity> weizenmutter_getreidewulf = null;
     public static final EntityType<ModAhrenkindEntity> ahrenkind = null;
 
     public static final TileEntityType<ModInventoryTileEntity> inventory = null;
@@ -137,6 +143,16 @@ public class ModEntityUtils {
                         .build("weizenmutter")
                         .setRegistryName(WheatMod.MOD_ID, "weizenmutter"),
 
+                EntityType.Builder.create(ModWeizenmutterCornsnakeEntity::new, EntityClassification.MONSTER)
+                        .size(0.6f, 1.95f)
+                        .build("weizenmutter_cornsnake")
+                        .setRegistryName(WheatMod.MOD_ID, "weizenmutter_cornsnake"),
+
+                EntityType.Builder.create(ModWeizenmutterGetreidewulfEntity::new, EntityClassification.MONSTER)
+                        .size(0.6f, 1.95f)
+                        .build("weizenmutter_getreidewulf")
+                        .setRegistryName(WheatMod.MOD_ID, "weizenmutter_getreidewulf"),
+
                 EntityType.Builder.create(ModAhrenkindEntity::new, EntityClassification.MONSTER)
                         .size(0.6f, 1.95f)
                         .build("ahrenkind")
@@ -187,6 +203,8 @@ public class ModEntityUtils {
         EntitySpawnPlacementRegistry.register(getreidehahn, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ModGetreidehahnEntity::canSpawn);
         EntitySpawnPlacementRegistry.register(cornsnake, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ModCornsnakeEntity::canSpawn);
         EntitySpawnPlacementRegistry.register(weizenmutter, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ModWeizenmutterEntity::canSpawn);
+        EntitySpawnPlacementRegistry.register(weizenmutter_cornsnake, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ModWeizenmutterCornsnakeEntity::canWeizenmutterSpawn);
+        EntitySpawnPlacementRegistry.register(weizenmutter_getreidewulf, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ModWeizenmutterGetreidewulfEntity::canSpawn);
         EntitySpawnPlacementRegistry.register(ahrenkind, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ModAhrenkindEntity::canSpawn);
 
         RenderingRegistry.registerEntityRenderingHandler(stone_entity, new StoneRenderer());
@@ -201,6 +219,8 @@ public class ModEntityUtils {
         RenderingRegistry.registerEntityRenderingHandler(getreidehahn, new ModGetreidehahnRenderFactory());
         RenderingRegistry.registerEntityRenderingHandler(cornsnake, new ModCornsnakeRenderFactory());
         RenderingRegistry.registerEntityRenderingHandler(weizenmutter, new ModWeizenmutterRenderFactory());
+        RenderingRegistry.registerEntityRenderingHandler(weizenmutter_cornsnake, new ModWeizenmutterCornsnakeRenderFactory());
+        RenderingRegistry.registerEntityRenderingHandler(weizenmutter_getreidewulf, new ModWeizenmutterGetreidewulfRenderFactory());
         RenderingRegistry.registerEntityRenderingHandler(ahrenkind, new ModAhrenkindRenderFactory());
 
         ClientRegistry.bindTileEntityRenderer(campfire, (dispatcher) -> new ModCampfireTileEntityRenderer(dispatcher));
