@@ -52,6 +52,10 @@ public class ModCallLightningSpell extends ModSpell {
         return 40;
     }
 
+    /**
+     * Get the level of the spell (affects stamina cost to use).
+     * @return The level of the spell.
+     */
     @Override
     public int getLevel() {
         return 3;

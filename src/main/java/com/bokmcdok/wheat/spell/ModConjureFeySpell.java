@@ -47,7 +47,7 @@ public class ModConjureFeySpell extends ModSpell {
 
                 if (conjured instanceof MobEntity) {
                     MobEntity conjuredMob = (MobEntity)conjured;
-                    conjuredMob.onInitialSpawn(world, world.getDifficultyForLocation(conjured.getPosition()), SpawnReason.CONVERSION, null, null);
+                    conjuredMob.onInitialSpawn(world, world.getDifficultyForLocation(conjured.getPosition()), SpawnReason.MOB_SUMMONED, null, null);
 
                     conjuredMob.goalSelector.addGoal(1, new ModDespawnAfterTicksGoal(conjuredMob, getDuration()));
                     conjuredMob.goalSelector.addGoal(1, new ModDespawnIfDiesGoal(conjuredMob, caster));
@@ -67,27 +67,46 @@ public class ModConjureFeySpell extends ModSpell {
         return false;
     }
 
-
+    /**
+     * Get the casting time of the spell (defaults to 6 seconds).
+     * @return The casting time.
+     */
     @Override
     public int getCastingTime() {
         return 60;
     }
 
+    /**
+     * Get the time until the spell can be cast again after the last attempt.
+     * @return The spell's cooldown.
+     */
     @Override
     public int getCooldown() {
         return 100;
     }
 
+    /**
+     * Get the level of the spell (affects stamina cost to use).s
+     * @return The level of the spell.
+     */
     @Override
     public int getLevel() {
         return 6;
     }
 
+    /**
+     * Get the range of the spell.
+     * @return The range of the spell.
+     */
     @Override
     public double getRange() {
         return 30;
     }
 
+    /**
+     * Get the duration of the spell.
+     * @return The duration of the spell.
+     */
     @Override
     public int getDuration() {
         return 1200;

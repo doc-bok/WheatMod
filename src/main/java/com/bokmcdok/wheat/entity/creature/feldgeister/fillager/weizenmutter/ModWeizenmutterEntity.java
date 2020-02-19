@@ -6,11 +6,18 @@ import com.bokmcdok.wheat.ai.goals.ModCastSpellOnSelfGoal;
 import com.bokmcdok.wheat.entity.creature.feldgeister.ModFeldgeisterEntity;
 import com.bokmcdok.wheat.entity.creature.feldgeister.fillager.ModFillagerEntity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.ILivingEntityData;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.merchant.villager.VillagerEntity;
 import net.minecraft.entity.monster.AbstractIllagerEntity;
+import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
@@ -20,7 +27,11 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
+import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraftforge.registries.IForgeRegistry;
 
 import javax.annotation.Nullable;
 
@@ -98,6 +109,23 @@ public class ModWeizenmutterEntity extends ModFillagerEntity implements ISpellca
     }
 
     /**
+     * Give the Weizenmutter a lightning wand.
+     * @param world The current world.
+     * @param difficulty The current difficulty.
+     * @param reason The reason for spawning.
+     * @param spawnData The spawn data.
+     * @param dataTag NBT tags.
+     * @return The updated living entity data.
+     */
+    @Nullable
+    @Override
+    public ILivingEntityData onInitialSpawn(IWorld world, DifficultyInstance difficulty, SpawnReason reason, @Nullable ILivingEntityData spawnData, @Nullable CompoundNBT dataTag) {
+        Item lightningWand = ForgeRegistries.ITEMS.getValue(new ResourceLocation("docwheat:lightning_wand"));
+        setItemStackToSlot(EquipmentSlotType.MAINHAND, new ItemStack(lightningWand));
+        return super.onInitialSpawn(world, difficulty, reason, spawnData, dataTag);
+    }
+
+    /**
      * Weizenmutters are similar to witches.
      */
     @Override
@@ -156,6 +184,7 @@ public class ModWeizenmutterEntity extends ModFillagerEntity implements ISpellca
         }));
 
         goalSelector.addGoal(3, new ModCastSpellOnAttackTargetGoal(this, WheatMod.SPELL_REGISTRAR.getSpell("conjure_getreidewolf"), 1.0d, null));
+        goalSelector.addGoal(3, new ModCastSpellOnAttackTargetGoal(this, WheatMod.SPELL_REGISTRAR.getSpell("call_lightning"), 1.0d, null));
 
         goalSelector.addGoal(6, new ModCastSpellOnAttackTargetGoal(this, WheatMod.SPELL_REGISTRAR.getSpell("true_polymorph_ahrenkind"), 1.0d, (caster, target) -> target instanceof VillagerEntity));
 
