@@ -14,7 +14,6 @@ import java.util.List;
 
 import net.minecraft.entity.EntityType;
 import net.minecraft.inventory.EquipmentSlotType;
-import net.minecraft.item.ArmorMaterial;
 import net.minecraft.item.Food;
 import net.minecraft.item.IArmorMaterial;
 import net.minecraft.item.Item;
