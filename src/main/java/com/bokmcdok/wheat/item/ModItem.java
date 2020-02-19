@@ -25,12 +25,14 @@ public class ModItem extends Item implements IModItem {
      * Get the item's color
      * @return The color of the item.
      */
+    @Override
     public IItemColor getColor() { return  mImpl.getColor(); }
 
     /**
      * Get the chance an item will compost in the harvester.
      * @return A probability between 0 and 1
      */
+    @Override
     public float getCompostChance() { return mImpl.getCompostChance(); }
 
     /**
@@ -41,10 +43,23 @@ public class ModItem extends Item implements IModItem {
      * @param entityLiving The entity that owns the item.
      * @return The item to replace the current one with.
      */
+    @Override
     public ItemStack onItemUseFinish(ItemStack stack, World world, LivingEntity entityLiving) {
         ItemStack normalResult = super.onItemUseFinish(stack, world, entityLiving);
         ItemStack overrideResult = mImpl.onItemUseFinish(this, stack, world, entityLiving);
         return  overrideResult != null ? overrideResult : normalResult;
+    }
+
+    /**
+     * Reset the cooldown if you stop using a spell item.
+     * @param stack The item stack to check.
+     * @param world The current world.
+     * @param entity The entity that owns the item.
+     * @param timeLeft The number of remaining ticks left before the item could have been used.
+     */
+    @Override
+    public void onPlayerStoppedUsing(ItemStack stack, World world, LivingEntity entity, int timeLeft) {
+        mImpl.onPlayerStoppedUsing(stack, world, entity, timeLeft);
     }
 
     /**

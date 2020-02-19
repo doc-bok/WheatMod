@@ -7,14 +7,20 @@ import com.bokmcdok.wheat.ai.goals.ModRaidFarmGoal;
 import com.bokmcdok.wheat.block.ModBlockUtils;
 import com.bokmcdok.wheat.entity.creature.feldgeister.ModFeldgeisterEntity;
 import com.bokmcdok.wheat.entity.creature.feldgeister.fillager.ModFillagerEntity;
+import com.bokmcdok.wheat.entity.creature.feldgeister.fillager.ahrenkind.ModAhrenkindEntity;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ILivingEntityData;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.ai.goal.HurtByTargetGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.merchant.villager.VillagerEntity;
 import net.minecraft.entity.monster.AbstractIllagerEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -27,7 +33,9 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
@@ -37,8 +45,8 @@ import javax.annotation.Nullable;
 
 public class ModWeizenmutterEntity extends ModFillagerEntity implements ISpellcaster {
     private static final DataParameter<Boolean> SPELL = EntityDataManager.createKey(ModWeizenmutterEntity.class, DataSerializers.BOOLEAN);
-
     private static final ResourceLocation TEXTURE = new ResourceLocation("docwheat:textures/entity/feldgeister/weizenmutter.png");
+    private boolean mAngry = false;
 
     /**
      * Construction
@@ -126,6 +134,50 @@ public class ModWeizenmutterEntity extends ModFillagerEntity implements ISpellca
     }
 
     /**
+     * Set the revenge target if a player attacks.
+     * @param source The source of the damage.
+     * @param amount The amount of damage.
+     * @return TRUE if damage is inflicted.
+     */
+    @Override
+    public boolean attackEntityFrom(DamageSource source, float amount) {
+        if (isInvulnerableTo(source)) {
+            return false;
+        } else {
+            Entity entity = source.getTrueSource();
+            if (entity instanceof PlayerEntity && !((PlayerEntity)entity).isCreative() && canEntityBeSeen(entity)) {
+                setRevengeTarget((LivingEntity)entity);
+                getAngry();
+            }
+
+            return super.attackEntityFrom(source, amount);
+        }
+    }
+
+    /**
+     * Seeing diseased wheat makes the Wieizenmutter angry.
+     */
+    @Override
+    public void livingTick() {
+        super.livingTick();
+
+        if (!mAngry) {
+            Vec3d position = getPositionVec();
+            for (int l = 0; l < 4; ++l) {
+                int i = MathHelper.floor(position.x + (double) ((float) (l % 2 * 2 - 1) * 0.25F));
+                int j = MathHelper.floor(position.y);
+                int k = MathHelper.floor(position.z + (double) ((float) (l / 2 % 2 * 2 - 1) * 0.25F));
+                BlockPos blockPosition = new BlockPos(i, j, k);
+                BlockState blockState = world.getBlockState(blockPosition);
+                Block block = blockState.getBlock();
+                if (block == ModBlockUtils.diseased_wheat) {
+                    getAngry();
+                }
+            }
+        }
+    }
+
+    /**
      * Weizenmutters are similar to witches.
      */
     @Override
@@ -183,13 +235,12 @@ public class ModWeizenmutterEntity extends ModFillagerEntity implements ISpellca
             return false;
         }));
 
-        goalSelector.addGoal(3, new ModCastSpellOnAttackTargetGoal(this, WheatMod.SPELL_REGISTRAR.getSpell("conjure_getreidewolf"), 1.0d, null));
-        goalSelector.addGoal(3, new ModCastSpellOnAttackTargetGoal(this, WheatMod.SPELL_REGISTRAR.getSpell("call_lightning"), 1.0d, null));
         goalSelector.addGoal(6, new ModCastSpellOnAttackTargetGoal(this, WheatMod.SPELL_REGISTRAR.getSpell("true_polymorph_ahrenkind"), 1.0d, (caster, target) -> target instanceof VillagerEntity));
         goalSelector.addGoal(7, new ModRaidFarmGoal(this, ModBlockUtils.CROPS, 1.0d, 16, 1));
 
         goalSelector.removeGoal(mAttackGoal);
 
+        targetSelector.addGoal(2, new HurtByTargetGoal((this)).setCallsForHelp(ModAhrenkindEntity.class));
         targetSelector.addGoal(6, new NearestAttackableTargetGoal<>(this, VillagerEntity.class, 10, true, true, LivingEntity::isChild));
     }
 
@@ -200,5 +251,18 @@ public class ModWeizenmutterEntity extends ModFillagerEntity implements ISpellca
     protected void registerData() {
         super.registerData();
         dataManager.register(SPELL, false);
+    }
+
+    /**
+     * When the weizenmutter gets angry she becomes more hostile.
+     */
+    private void getAngry() {
+        mAngry = true;
+
+        goalSelector.addGoal(3, new ModCastSpellOnAttackTargetGoal(this, WheatMod.SPELL_REGISTRAR.getSpell("conjure_getreidewolf"), 1.0d, null));
+        goalSelector.addGoal(3, new ModCastSpellOnAttackTargetGoal(this, WheatMod.SPELL_REGISTRAR.getSpell("call_lightning"), 1.0d, null));
+
+        targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, VillagerEntity.class, false));
+        targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, false));
     }
 }
