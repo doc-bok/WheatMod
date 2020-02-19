@@ -7,7 +7,6 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.UseAction;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
@@ -102,20 +101,6 @@ public class ModItemImpl {
         }
 
         return null;
-    }
-
-    /**
-     * Get the animation to play as the item is used.
-     * @param stack The item stack being used
-     * @return The relevant use action.
-     */
-    public UseAction getUseAction(ItemStack stack) {
-        Item item = stack.getItem();
-        if (item.isFood()) {
-            return UseAction.EAT;
-        }
-
-        return UseAction.NONE;
     }
 
     /**
