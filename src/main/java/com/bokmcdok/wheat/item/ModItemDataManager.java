@@ -3,7 +3,7 @@ package com.bokmcdok.wheat.item;
 import com.bokmcdok.wheat.WheatMod;
 import com.bokmcdok.wheat.data.ModDataManager;
 import com.bokmcdok.wheat.data.ModEffectManager;
-import com.bokmcdok.wheat.spell.ModSpellRegistrar;
+import com.bokmcdok.wheat.material.ModArmorMaterialManager;
 import com.google.common.collect.Lists;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -13,7 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.entity.EntityType;
+import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.ArmorMaterial;
 import net.minecraft.item.Food;
+import net.minecraft.item.IArmorMaterial;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.Rarity;
@@ -26,17 +29,19 @@ import net.minecraftforge.common.ToolType;
 
 import java.util.Optional;
 
-public class ModItemManager extends ModDataManager<IModItem> {
+public class ModItemDataManager extends ModDataManager<IModItem> {
     private static final String ITEMS_FOLDER = "items";
     private static final String CONTAINERS_FOLDER = "containers";
     private static final String SPAWN_EGGS_FOLDER = "spawn_eggs";
     private ModEffectManager mEffectManager = new ModEffectManager();
+    private ModArmorMaterialManager mArmorMaterialManager = new ModArmorMaterialManager();
 
     private enum ItemType {
         ITEM,
         BLOCK,
         BLOCK_NAMED,
-        SPAWN_EGG
+        SPAWN_EGG,
+        ARMOR
     }
 
     /**
@@ -62,6 +67,7 @@ public class ModItemManager extends ModDataManager<IModItem> {
      */
     public void loadItems() {
         //  Load effects
+        mArmorMaterialManager.loadMaterials();
         mEffectManager.loadEffects();
 
         //  Load container items
@@ -136,6 +142,15 @@ public class ModItemManager extends ModDataManager<IModItem> {
                     result = new ModSpawnEggItem(entityType.get(), primaryColor, secondaryColor, properties);
                 }
 
+                break;
+            }
+
+            case ARMOR: {
+                String armorMaterial = JSONUtils.getString(json,"armor_material");
+                String armorSlot = JSONUtils.getString(json, "armor_slot");
+                IArmorMaterial material = mArmorMaterialManager.getEntry(armorMaterial);
+                EquipmentSlotType slot = EquipmentSlotType.valueOf(armorSlot.toUpperCase());
+                result = new ModArmorItem(material, slot, properties);
                 break;
             }
 

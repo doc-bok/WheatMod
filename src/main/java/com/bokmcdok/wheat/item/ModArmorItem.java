@@ -3,21 +3,25 @@ package com.bokmcdok.wheat.item;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
+import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.ArmorItem;
+import net.minecraft.item.IArmorMaterial;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 
-public class ModItem extends Item implements IModItem {
+public class ModArmorItem extends ArmorItem implements IModItem {
     private final ModItemImpl mImpl;
 
     /**
      * Construction
-     * @param properties The properties of the item.
+     * @param material The material this armor is made out of.
+     * @param slot The slot this armor is equipped to.
+     * @param properties The properties of this armor item.
      */
-    public ModItem(ModItemImpl.ModItemProperties properties) {
-        super(properties);
+    public ModArmorItem(IArmorMaterial material, EquipmentSlotType slot, ModItemImpl.ModItemProperties properties) {
+        super(material, slot, properties);
         mImpl = new ModItemImpl(properties);
     }
 
