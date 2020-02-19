@@ -3,6 +3,8 @@ import com.bokmcdok.wheat.WheatMod;
 import com.bokmcdok.wheat.ai.behaviour.ISpellcaster;
 import com.bokmcdok.wheat.ai.goals.ModCastSpellOnAttackTargetGoal;
 import com.bokmcdok.wheat.ai.goals.ModCastSpellOnSelfGoal;
+import com.bokmcdok.wheat.ai.goals.ModRaidFarmGoal;
+import com.bokmcdok.wheat.block.ModBlockUtils;
 import com.bokmcdok.wheat.entity.creature.feldgeister.ModFeldgeisterEntity;
 import com.bokmcdok.wheat.entity.creature.feldgeister.fillager.ModFillagerEntity;
 import net.minecraft.entity.EntityType;
@@ -183,8 +185,8 @@ public class ModWeizenmutterEntity extends ModFillagerEntity implements ISpellca
 
         goalSelector.addGoal(3, new ModCastSpellOnAttackTargetGoal(this, WheatMod.SPELL_REGISTRAR.getSpell("conjure_getreidewolf"), 1.0d, null));
         goalSelector.addGoal(3, new ModCastSpellOnAttackTargetGoal(this, WheatMod.SPELL_REGISTRAR.getSpell("call_lightning"), 1.0d, null));
-
         goalSelector.addGoal(6, new ModCastSpellOnAttackTargetGoal(this, WheatMod.SPELL_REGISTRAR.getSpell("true_polymorph_ahrenkind"), 1.0d, (caster, target) -> target instanceof VillagerEntity));
+        goalSelector.addGoal(7, new ModRaidFarmGoal(this, ModBlockUtils.CROPS, 1.0d, 16, 1));
 
         goalSelector.removeGoal(mAttackGoal);
 
