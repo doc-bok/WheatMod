@@ -82,7 +82,7 @@ public class ModItemImpl {
         }
 
         if (mSpell != null) {
-            return castSpell(item, stack, world, entity);
+            return castSpell(item, world, entity);
         }
 
         return null;
@@ -225,12 +225,11 @@ public class ModItemImpl {
     /**
      * Cast a spell.
      * @param item The item containing the spell.
-     * @param stack The item stack.
      * @param world the current world.
      * @param entity The player using the item.
      * @return The result of the action.
      */
-    private ItemStack castSpell(Item item, ItemStack stack, World world, LivingEntity entity) {
+    private ItemStack castSpell(Item item, World world, LivingEntity entity) {
         Hand activeHand = entity.getActiveHand();
         ItemStack itemStack = entity.getHeldItem(activeHand);
         itemStack.getTag().putInt("spell_cooldown", entity.ticksExisted + mSpell.getCooldown());
