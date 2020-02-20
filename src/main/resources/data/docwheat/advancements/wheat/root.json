@@ -1,0 +1,46 @@
+{
+  "display": {
+    "icon": {
+      "item": "docwheat:wild_einkorn_hay"
+    },
+    "title": {
+      "translate": "advancements.wheat.root.title"
+    },
+    "description": {
+      "translate": "advancements.wheat.root.description"
+    },
+    "frame": "task",
+    "show_toast": false,
+    "announce_to_chat": false,
+    "hidden": false,
+    "background": "minecraft:textures/gui/advancements/backgrounds/stone.png"
+  },
+  "criteria": {
+    "wild_einkorn_grain": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "docwheat:wild_einkorn_grain"
+          }
+        ]
+      }
+    },
+    "wild_emmer_grain": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "docwheat:wild_emmer_grain"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "wild_einkorn_grain",
+      "wild_emmer_grain"
+    ]
+  ]
+}
