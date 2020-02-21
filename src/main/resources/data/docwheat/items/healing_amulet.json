@@ -1,0 +1,9 @@
+{
+    "type": "armor",
+    "group": "combat",
+    "armor_material": "docwheat:magic_item",
+    "armor_slot": "head",
+    "on_damaged_effect": "minecraft:regeneration",
+    "on_damaged_effect_duration": 100,
+    "armor_texture": "docwheat:textures/models/armor/healing_amulet.png"
+}

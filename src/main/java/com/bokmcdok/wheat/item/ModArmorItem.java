@@ -1,6 +1,7 @@
 package com.bokmcdok.wheat.item;
 
 import net.minecraft.client.renderer.color.IItemColor;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -10,6 +11,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
+
+import javax.annotation.Nullable;
+import java.util.function.Consumer;
 
 public class ModArmorItem extends ArmorItem implements IModItem {
     private final ModItemImpl mImpl;
@@ -101,5 +105,35 @@ public class ModArmorItem extends ArmorItem implements IModItem {
      */
     public boolean isSpell() {
         return mImpl.isSpell();
+    }
+
+    /**
+     * Triggered when an item is damaged.
+     * @param stack The item being damaged.
+     * @param amount The amount of damage.
+     * @param entity The entity being damaged.
+     * @param onBroken The callback if the item is broken.
+            * @param <T> The type of LivingEntity.
+            * @return The damage done to the item.
+            */
+    @Override
+    public <T extends LivingEntity> int damageItem(ItemStack stack, int amount, T entity, Consumer<T> onBroken) {
+        int finalAmount = super.damageItem(stack, amount, entity, onBroken);
+        mImpl.onDamageItem(finalAmount, entity);
+        return finalAmount;
+    }
+
+    /**
+     * Get the texture to use for this armor.
+     * @param stack The armor item.
+     * @param entity The entity wearing the armor.
+     * @param slot The armor's equipment slot.
+     * @param type The subtype (NULL or 'overlay')
+     * @return The armor texture to use, if any.
+     */
+    @Nullable
+    @Override
+    public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
+        return mImpl.getArmorTexture();
     }
 }

@@ -1,0 +1,10 @@
+{
+  "durability": 30,
+  "feet_defense": 0,
+  "legs_defense": 0,
+  "chest_defense": 0,
+  "head_defense": 0,
+  "enchantability": 0,
+  "equip_sound": "minecraft:item.armor.equip_gold",
+  "tougness": 0.0
+}
