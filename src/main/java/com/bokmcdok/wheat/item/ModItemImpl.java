@@ -7,15 +7,20 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.Effect;
+import net.minecraft.potion.EffectInstance;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 
+import java.util.Optional;
 import java.util.Random;
 
 public class ModItemImpl {
@@ -25,16 +30,16 @@ public class ModItemImpl {
     private final SoundEvent mThrowingSound;
     private final float mThrowingVolume;
     private final float mThrowingPitch;
-
     private final float mThrowingOffset;
     private final float mThrowingVelocity;
     private final float mThrowingInaccuracy;
-
     private final IItemColor mColor;
-
     private final float mCompostChance;
-
     private final ModSpell mSpell;
+    private final Effect mOnDamagedEffect;
+    private final int mOnDamagedEffectDuration;
+    private final int mOnDamagedEffectAmplifier;
+    private final String mArmorTexture;
 
     /**
      * Construction
@@ -54,6 +59,12 @@ public class ModItemImpl {
         mCompostChance = properties.mCompostChance;
 
         mSpell = properties.mSpell;
+
+        mOnDamagedEffect = properties.mOnDamagedEffect;
+        mOnDamagedEffectAmplifier = properties.mOnDamagedEffectAmplifier;
+        mOnDamagedEffectDuration = properties.mOnDamagedEffectDuration;
+
+        mArmorTexture = properties.mArmorTexture;
     }
 
     /**
@@ -172,6 +183,29 @@ public class ModItemImpl {
     }
 
     /**
+     * Apply effects triggered by armour being damaged.
+     * @param amount The amount of damage.
+     * @param entity The entity to apply the effect to.
+     * @param <T> The type of living entity.
+     */
+    public <T extends LivingEntity> void onDamageItem(int amount, T entity) {
+        if (mOnDamagedEffect != null) {
+            int duration = amount * mOnDamagedEffectDuration;
+            if (entity.isPotionActive(mOnDamagedEffect)) {
+                EffectInstance activeInstance = entity.getActivePotionEffect(mOnDamagedEffect);
+                duration += activeInstance.getDuration();
+            }
+
+            EffectInstance effectInstance = new EffectInstance(mOnDamagedEffect, duration, mOnDamagedEffectAmplifier);
+            entity.addPotionEffect(effectInstance);
+        }
+    }
+
+    public String getArmorTexture() {
+        return mArmorTexture;
+    }
+
+    /**
      * Throw an item into the world.
      * @param item The item to throw.
      * @param world the current world.
@@ -256,33 +290,92 @@ public class ModItemImpl {
         private SoundEvent mThrowingSound = SoundEvents.ENTITY_SPLASH_POTION_THROW;
         private float mThrowingVolume = 0.5f;
         private float mThrowingPitch = -0.4f;
-
         private float mThrowingOffset = 0.0f;
         private float mThrowingVelocity = 0.0f;
         private float mThrowingInaccuracy = 0.0f;
-
         private IItemColor mColor = null;
-
         private float mCompostChance = 0.0f;
+        private Effect mOnDamagedEffect = null;
+        private int mOnDamagedEffectDuration = 0;
+        private int mOnDamagedEffectAmplifier = 0;
+        private String mArmorTexture = null;
 
+        /**
+         * This item can be thrown by right-clicking.
+         * @param offset The offset to throw it at.
+         * @param velocity The speed at which the item is thrown.
+         * @param inaccuracy How inaccurate the throw is.
+         */
         public void throwing(float offset, float velocity, float inaccuracy) {
             mThrowingOffset = offset;
             mThrowingVelocity = velocity;
             mThrowingInaccuracy = inaccuracy;
         }
 
+        /**
+         * The sound made when the item is thrown.
+         * @param event The sound to play.
+         * @param volume The volume of the sound.
+         * @param pitch The pitch of the sound.
+         */
         public void throwingSound(SoundEvent event, float volume, float pitch) {
             mThrowingSound = event;
             mThrowingVolume = volume;
             mThrowingPitch = pitch;
         }
 
+        /**
+         * Set the color tint of the item.
+         * @param color The color to tint the item with.
+         */
         public void color(IItemColor color) {
             mColor = color;
         }
 
+        /**
+         * Set the chance the item will compost.
+         * @param compostChance The chance composting is successful.
+         */
         public void compostChance(float compostChance) { mCompostChance = compostChance; }
 
+        /**
+         * The spell cast when this item is used.
+         * @param spell A spell instance.
+         */
         public void spell(ModSpell spell) { mSpell = spell; }
+
+        /**
+         * The effect applied to the owner when this item is damaged.
+         * @param effectName The effect to apply.
+         */
+        public void onDamagedEffect(String effectName) {
+            ResourceLocation effectKey = new ResourceLocation(effectName);
+            Optional<Effect> effect = Registry.EFFECTS.getValue(effectKey);
+            effect.ifPresent(value -> mOnDamagedEffect = value);
+        }
+
+        /**
+         * The duration of the effect applied when this item is damaged.
+         * @param duration The duration in ticks.
+         */
+        public void onDamagedEffectDuration(int duration) {
+            mOnDamagedEffectDuration = duration;
+        }
+
+        /**
+         * The strength of the effect applied when this item is damaged.
+         * @param amplifier The effect amplifier.
+         */
+        public void onDamagedEffectAmplifier(int amplifier) {
+            mOnDamagedEffectAmplifier = amplifier;
+        }
+
+        /**
+         * The texture to apply to armor items.
+         * @param texture The texture's registry name.
+         */
+        public void armorTexture(String texture) {
+            mArmorTexture = texture;
+        }
     }
 }

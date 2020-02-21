@@ -177,5 +177,8 @@
   "block.docwheat.campfire": "Campfire",
 
   "advancements.wheat.root.title": "Wheat",
-  "advancements.wheat.root.description": "It's pretty wild"
+  "advancements.wheat.root.description": "It's pretty wild",
+
+  "item.docwheat.getreidewolf_tooth": "Yellowtooth",
+  "item.docwheat.healing_amulet": "Healing Amulet"
 }

@@ -100,6 +100,10 @@ public class ModItemDataManager extends ModDataManager<IModItem> {
         setString(properties, json, "container", (x, value) -> x.containerItem(getContainerItem(value)));
         setFloat(properties, json, "compost_chance", ModItemImpl.ModItemProperties::compostChance);
         setString(properties, json, "spell", (x, value) -> x.spell(WheatMod.SPELL_REGISTRAR.getSpell(value)));
+        setString(properties, json, "on_damaged_effect", ModItemImpl.ModItemProperties::onDamagedEffect);
+        setInt(properties, json, "on_damaged_effect_duration", ModItemImpl.ModItemProperties::onDamagedEffectDuration);
+        setInt(properties, json, "on_damaged_effect_amplifier", ModItemImpl.ModItemProperties::onDamagedEffectAmplifier);
+        setString(properties, json, "armor_texture", ModItemImpl.ModItemProperties::armorTexture);
 
         deserializeTools(json, properties);
         deserializeFood(json, properties);
@@ -200,14 +204,13 @@ public class ModItemDataManager extends ModDataManager<IModItem> {
                 JsonObject effectAsJsonObject = effect.getAsJsonObject();
 
                 String effectName = JSONUtils.getString(effectAsJsonObject, "effect_type");
-                ResourceLocation location = new ResourceLocation(effectName);
 
                 float probability = 1.0f;
                 if (JSONUtils.hasField(effectAsJsonObject, "probability")) {
                     probability = JSONUtils.getFloat(effectAsJsonObject, "probability");
                 }
 
-                EffectInstance effectInstance = mEffectManager.getEntry(location);
+                EffectInstance effectInstance = mEffectManager.getEntry(effectName);
                 if (effectInstance != null) {
                     x.effect(effectInstance, probability);
                 }
