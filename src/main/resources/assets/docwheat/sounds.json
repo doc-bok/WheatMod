@@ -9,5 +9,23 @@
     "category": "block",
     "subtitle": "docwheat.subtitle.mouse_trap_activate",
     "sounds": [ "docwheat:mouse_trap_activate" ]
+  },
+
+  "cornsnake_ambient": {
+    "category": "block",
+    "subtitle": "docwheat.subtitle.cornsnake_ambient",
+    "sounds": [ "docwheat:cornsnake_ambient" ]
+  },
+
+  "cornsnake_death": {
+    "category": "block",
+    "subtitle": "docwheat.subtitle.cornsnake_death",
+    "sounds": [ "docwheat:cornsnake_death" ]
+  },
+
+  "cornsnake_hurt": {
+    "category": "block",
+    "subtitle": "docwheat.subtitle.cornsnake_hurt",
+    "sounds": [ "docwheat:cornsnake_hurt" ]
   }
 }

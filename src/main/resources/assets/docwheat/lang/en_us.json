@@ -184,5 +184,9 @@
 
   "item.docwheat.bottle_jam": "Bottle of Jam",
   "item.docwheat.uncooked_jam_donut": "Uncooked Jam Donut",
-  "item.docwheat.jam_donut": "Jam Donut"
+  "item.docwheat.jam_donut": "Jam Donut",
+
+  "docwheat.subtitle.cornsnake_ambient": "Cornsnake Rattle",
+  "docwheat.subtitle.cornsnake_death": "Cornsnake Dies",
+  "docwheat.subtitle.cornsnake_hurt": "Cornsnake Hurt"
 }
