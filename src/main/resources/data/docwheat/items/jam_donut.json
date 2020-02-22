@@ -1,0 +1,8 @@
+{
+    "type": "item",
+    "group": "food",
+    "food": {
+        "hunger": 9,
+        "saturation": 6.0
+    }
+}

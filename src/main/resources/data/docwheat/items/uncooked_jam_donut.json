@@ -1,0 +1,14 @@
+{
+    "type": "item",
+    "group": "food",
+    "food": {
+        "hunger": 9,
+        "saturation": 6.0,
+        "effects": [
+            {
+                "effect_type": "docwheat:food_poisoning",
+                "probability": 0.3
+            }
+        ]
+    }
+}
