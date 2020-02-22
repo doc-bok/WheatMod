@@ -6,6 +6,7 @@ import com.bokmcdok.wheat.block.ModBlockUtils;
 import com.bokmcdok.wheat.entity.ModEntityUtils;
 import com.bokmcdok.wheat.entity.creature.animal.ModNestingEntity;
 import com.bokmcdok.wheat.entity.creature.animal.mouse.ModMouseEntity;
+import com.bokmcdok.wheat.supplier.ModSoundEventSupplier;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.AgeableEntity;
@@ -25,6 +26,9 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.util.DamageSource;
+import net.minecraft.util.LazyValue;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IWorld;
@@ -36,6 +40,9 @@ import java.util.Random;
 
 public class ModCornsnakeEntity extends ModNestingEntity {
     private static final DataParameter<Integer> TYPE = EntityDataManager.createKey(ModCornsnakeEntity.class, DataSerializers.VARINT);
+    private static final LazyValue<SoundEvent> AMBIENT_SOUND = new LazyValue<>(new ModSoundEventSupplier("docwheat:cornsnake_ambient"));
+    private static final LazyValue<SoundEvent> DEATH_SOUND = new LazyValue<>(new ModSoundEventSupplier("docwheat:cornsnake_death"));
+    private static final LazyValue<SoundEvent> HURT_SOUND = new LazyValue<>(new ModSoundEventSupplier("docwheat:cornsnake_hurt"));
 
     /**
      * Construction
@@ -154,6 +161,8 @@ public class ModCornsnakeEntity extends ModNestingEntity {
         return block == Blocks.GRASS_BLOCK;
     }
 
+
+
     /**
      * Register the default snake type.
      */
@@ -169,14 +178,6 @@ public class ModCornsnakeEntity extends ModNestingEntity {
      */
     protected void setType(int type) {
         dataManager.set(TYPE, type);
-    }
-
-    /**
-     * Get the speed of the entity.
-     * @return The speed at which the entity moves.
-     */
-    private double getSpeed() {
-        return getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getValue();
     }
 
     /**
@@ -200,5 +201,44 @@ public class ModCornsnakeEntity extends ModNestingEntity {
         public int getType() {
             return mType;
         }
+    }
+
+    /**
+     * Get the cornsnake's ambient sound.
+     * @return The ambient sound event.
+     */
+    @Nullable
+    @Override
+    protected SoundEvent getAmbientSound() {
+        return AMBIENT_SOUND.getValue();
+    }
+
+
+    /**
+     * Get the cornsnake's death sound.
+     * @return The death sound event.
+     */
+    @Nullable
+    @Override
+    protected SoundEvent getDeathSound() {
+        return DEATH_SOUND.getValue();
+    }
+
+    /**
+     * Get the cornsnake's hurt sound.
+     * @return The hurt sound event.
+     */
+    @Nullable
+    @Override
+    protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
+        return HURT_SOUND.getValue();
+    }
+
+    /**
+     * Get the speed of the entity.
+     * @return The speed at which the entity moves.
+     */
+    private double getSpeed() {
+        return getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getValue();
     }
 }
