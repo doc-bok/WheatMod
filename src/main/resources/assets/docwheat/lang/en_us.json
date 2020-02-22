@@ -180,5 +180,9 @@
   "advancements.wheat.root.description": "It's pretty wild",
 
   "item.docwheat.getreidewolf_tooth": "Yellowtooth",
-  "item.docwheat.healing_amulet": "Healing Amulet"
+  "item.docwheat.healing_amulet": "Healing Amulet",
+
+  "item.docwheat.bottle_jam": "Bottle of Jam",
+  "item.docwheat.uncooked_jam_donut": "Uncooked Jam Donut",
+  "item.docwheat.jam_donut": "Jam Donut"
 }

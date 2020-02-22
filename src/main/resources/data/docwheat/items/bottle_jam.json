@@ -1,0 +1,9 @@
+{
+    "type": "item",
+    "group": "food",
+    "food": {
+        "hunger": 2,
+        "saturation": 1.0
+    },
+    "container": "minecraft:glass_bottle"
+}
