@@ -13,7 +13,7 @@
     "show_toast": false,
     "announce_to_chat": false,
     "hidden": false,
-    "background": "minecraft:textures/gui/advancements/backgrounds/stone.png"
+    "background": "docwheat:textures/gui/advancements/backgrounds/hay_block_side.png"
   },
   "criteria": {
     "wild_einkorn_grain": {
