@@ -1,0 +1,10 @@
+{
+    "type": "block",
+    "group": "decorations",
+    "block": "docwheat:small_brick",
+    "throwing": {
+        "velocity": 0.5,
+        "offset": -20.0,
+        "inaccuracy": 1.0
+    }
+}
