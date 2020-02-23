@@ -1,0 +1,114 @@
+{
+  "parent": "docwheat:wheat/root",
+  "display": {
+    "icon": {
+      "item": "docwheat:common_straw"
+    },
+    "title": {
+      "translate": "advancements.wheat.harvester.title"
+    },
+    "description": {
+      "translate": "advancements.wheat.harvester.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "einkorn_straw": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "docwheat:einkorn_straw"
+          }
+        ]
+      }
+    },
+    "einkorn_grain": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "docwheat:einkorn_grain"
+          }
+        ]
+      }
+    },
+    "emmer_straw": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "docwheat:emmer_straw"
+          }
+        ]
+      }
+    },
+    "emmer_grain": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "docwheat:emmer_grain"
+          }
+        ]
+      }
+    },
+    "durum_straw": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "docwheat:durum_straw"
+          }
+        ]
+      }
+    },
+    "durum_grain": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "docwheat:durum_grain"
+          }
+        ]
+      }
+    },
+    "common_straw": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "docwheat:common_straw"
+          }
+        ]
+      }
+    },
+    "common_grain": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "docwheat:common_grain"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "einkorn_grain",
+      "emmer_grain",
+      "common_grain",
+      "durum_grain"
+    ],
+    [
+      "einkorn_straw",
+      "emmer_straw",
+      "common_straw",
+      "durum_straw"
+    ]
+  ]
+}
