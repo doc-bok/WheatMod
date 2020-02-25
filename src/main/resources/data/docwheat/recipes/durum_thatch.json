@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shaped",
+  "group": "thatch",
   "pattern": [
     "#X",
     "X#"
