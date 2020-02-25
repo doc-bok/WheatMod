@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shapeless",
+  "group": "small_stone",
   "ingredients": [
     {
       "item": "minecraft:granite"

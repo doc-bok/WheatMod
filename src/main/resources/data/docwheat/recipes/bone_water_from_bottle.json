@@ -1,0 +1,18 @@
+{
+  "type": "docwheat:crafting_potion",
+  "ingredients": [
+    {
+      "item": "minecraft:bone"
+    },
+    {
+      "type": "docwheat:potion",
+      "potion": "minecraft:water"
+    },
+    {
+      "item": "docwheat:stone_bowl"
+    }
+  ],
+  "result": {
+    "item": "docwheat:bone_water"
+  }
+}

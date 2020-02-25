@@ -1,5 +1,6 @@
 {
   "type": "minecraft:crafting_shapeless",
+  "group": "straw",
   "ingredients": [
     {
       "item": "docwheat:einkorn_straw_bale"
