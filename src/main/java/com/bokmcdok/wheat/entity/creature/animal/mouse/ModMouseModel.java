@@ -7,7 +7,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 
 @OnlyIn(Dist.CLIENT)
 public class ModMouseModel<T extends Entity> extends ModSegmentedModel<ModMouseEntity> {
-    private static final int[][] SEGMENT_SIZES = new int[][]{
+    private static final float[][] SEGMENT_SIZES = new float[][]{
             {1, 1, 1},
             {3, 2, 2},
             {4, 3, 3},
