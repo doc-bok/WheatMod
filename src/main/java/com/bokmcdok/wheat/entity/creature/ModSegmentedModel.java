@@ -18,7 +18,14 @@ public abstract class ModSegmentedModel<T extends Entity> extends SegmentedModel
     /**
      * Construction
      */
-    public ModSegmentedModel(int[][] segmentSizes, int[][] textureOffsets, float wriggleSpeed) {
+    public ModSegmentedModel(float[][] segmentSizes, int[][] textureOffsets, float wriggleSpeed) {
+        this(64, 32, segmentSizes, textureOffsets, wriggleSpeed);
+    }
+
+    public ModSegmentedModel(int uvWidth, int uvHeight, float[][] segmentSizes, int[][] textureOffsets, float wriggleSpeed) {
+        textureWidth = uvWidth;
+        textureHeight = uvHeight;
+
         mWriggleSpeed = wriggleSpeed;
 
         final float[] zPlacement = new float[segmentSizes.length];
