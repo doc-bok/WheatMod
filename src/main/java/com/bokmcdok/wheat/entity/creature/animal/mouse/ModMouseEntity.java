@@ -1,11 +1,13 @@
 package com.bokmcdok.wheat.entity.creature.animal.mouse;
 
+import com.bokmcdok.wheat.WheatMod;
 import com.bokmcdok.wheat.ai.goals.ModBreedGoal;
 import com.bokmcdok.wheat.ai.goals.ModRaidFarmGoal;
 import com.bokmcdok.wheat.block.ModBlockUtils;
 import com.bokmcdok.wheat.entity.ModEntityUtils;
 import com.bokmcdok.wheat.entity.creature.animal.cornsnake.ModCornsnakeEntity;
-import com.google.common.collect.Sets;
+import com.bokmcdok.wheat.supplier.ModTagSupplier;
+import com.bokmcdok.wheat.tag.ModTag;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.AgeableEntity;
@@ -27,6 +29,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.LazyValue;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
@@ -39,6 +42,8 @@ import java.util.Random;
 import java.util.Set;
 
 public class ModMouseEntity extends AnimalEntity {
+    private static final String CROP = "crop";
+    private static final LazyValue<ModTag> CROP_TAG = new LazyValue<>(new ModTagSupplier(WheatMod.MOD_ID, CROP));
 
     /**
      * Construction
@@ -54,7 +59,7 @@ public class ModMouseEntity extends AnimalEntity {
      */
     @Override
     protected void registerGoals() {
-        Set<Block> blocksToRaid = Sets.newHashSet(ModBlockUtils.CROPS);
+        Set<Block> blocksToRaid = CROP_TAG.getValue().getBlocks();
         blocksToRaid.add(ModBlockUtils.seeded_mouse_trap);
 
         goalSelector.addGoal(1, new SwimGoal(this));

@@ -1,8 +1,10 @@
 package com.bokmcdok.wheat.entity.creature.feldgeister;
 
+import com.bokmcdok.wheat.WheatMod;
 import com.bokmcdok.wheat.ai.goals.ModFindFarmGoal;
-import com.bokmcdok.wheat.block.ModBlockUtils;
 import com.bokmcdok.wheat.block.ModCropsBlock;
+import com.bokmcdok.wheat.supplier.ModTagSupplier;
+import com.bokmcdok.wheat.tag.ModTag;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.CropsBlock;
@@ -13,7 +15,6 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.ai.goal.HurtByTargetGoal;
-import net.minecraft.entity.ai.goal.LeapAtTargetGoal;
 import net.minecraft.entity.ai.goal.LookRandomlyGoal;
 import net.minecraft.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.entity.ai.goal.SwimGoal;
@@ -27,6 +28,7 @@ import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.LazyValue;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
@@ -43,6 +45,9 @@ import java.util.function.Predicate;
 public class ModFeldgeisterEntity extends MonsterEntity {
     protected static final DataParameter<Boolean> FED = EntityDataManager.createKey(ModFeldgeisterEntity.class, DataSerializers.BOOLEAN);
     protected static final Predicate<LivingEntity> IS_CHILD = (entity) -> entity.isChild();
+    private static final String WHEAT = "wheat";
+    private static final LazyValue<ModTag> WHEAT_TAG = new LazyValue<>(new ModTagSupplier(WheatMod.MOD_ID, WHEAT));
+
     protected Goal mAttackGoal;
 
     /**
@@ -183,7 +188,7 @@ public class ModFeldgeisterEntity extends MonsterEntity {
 
         goalSelector.addGoal(2, new SwimGoal(this));
         goalSelector.addGoal(5, mAttackGoal);
-        goalSelector.addGoal(8, new ModFindFarmGoal(this, ModBlockUtils.WHEAT, 1.0d, 16, 1));
+        goalSelector.addGoal(8, new ModFindFarmGoal(this, WHEAT_TAG.getValue().getBlocks(), 1.0d, 16, 1));
         goalSelector.addGoal(8, new WaterAvoidingRandomWalkingGoal(this, 1.0d));
         goalSelector.addGoal(10, new LookRandomlyGoal(this));
 
@@ -203,7 +208,7 @@ public class ModFeldgeisterEntity extends MonsterEntity {
             BlockPos blockPosition = new BlockPos(i, j, k);
             BlockState blockState = world.getBlockState(blockPosition);
             Block block = blockState.getBlock();
-            if (ModBlockUtils.WHEAT.contains(block) && block instanceof ModCropsBlock) {
+            if (WHEAT_TAG.getValue().getBlocks().contains(block) && block instanceof ModCropsBlock) {
                 if (getIsFed()) {
                     CropsBlock crop = (CropsBlock)block;
                     Integer integer = blockState.get(CropsBlock.AGE);

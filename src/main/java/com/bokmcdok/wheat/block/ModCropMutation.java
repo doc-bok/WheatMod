@@ -1,38 +1,47 @@
 package com.bokmcdok.wheat.block;
 
+import com.bokmcdok.wheat.supplier.ModBlockSupplier;
+import net.minecraft.block.Block;
+import net.minecraft.util.LazyValue;
 import net.minecraft.util.ResourceLocation;
 
 public class ModCropMutation {
-    private ResourceLocation mMutation;
-    private ResourceLocation mRequired;
+    private LazyValue<Block> mMutation;
+    private LazyValue<Block> mRequired;
     private int mWeight;
 
-    public ModCropMutation(ResourceLocation mutation) {
-        this(mutation, null, 1);
-    }
-
-    public ModCropMutation(ResourceLocation mutation, ResourceLocation required) {
-        this(mutation, required, 1);
-    }
-
-    public ModCropMutation(ResourceLocation mutation, int weight) {
-        this(mutation, null, weight);
-    }
-
+    /**
+     * Construction
+     * @param mutation The crop that can be mutated to.
+     * @param required The crops required for the mutation.
+     * @param weight The likelihood this mutation will be chosen.
+     */
     public ModCropMutation(ResourceLocation mutation, ResourceLocation required, int weight) {
-        mMutation = mutation;
-        mRequired = required;
+        mMutation = new LazyValue<>(new ModBlockSupplier(mutation));
+        mRequired = new LazyValue<>(new ModBlockSupplier(required));
         mWeight = weight;
     }
 
-    public ResourceLocation getMutation() {
-        return mMutation;
+    /**
+     * Get the crop to be mutated into.
+     * @return The mutated crop block.
+     */
+    public Block getMutation() {
+        return mMutation.getValue();
     }
 
-    public ResourceLocation getRequired() {
-        return mRequired;
+    /**
+     * Get the other crop required for this mutation.
+     * @return The other crop block required.
+     */
+    public Block getRequired() {
+        return mRequired.getValue();
     }
 
+    /**
+     * Get the chance this mutation is chosen.
+     * @return The weight.
+     */
     public int getWeight() {
         return mWeight;
     }

@@ -1,24 +1,28 @@
 package com.bokmcdok.wheat.block;
 
+import com.bokmcdok.wheat.WheatMod;
+import com.bokmcdok.wheat.supplier.ModTagSupplier;
+import com.bokmcdok.wheat.tag.ModTag;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.CropsBlock;
 import net.minecraft.client.renderer.color.IBlockColor;
 import net.minecraft.util.IItemProvider;
+import net.minecraft.util.LazyValue;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Random;
 import java.util.Set;
 
 public class ModCropsBlock extends CropsBlock implements IModBlock {
+    private static final String MUSHROOM = "mushroom";
+    private static final LazyValue<ModTag> MUSHROOM_TAG = new LazyValue<>(new ModTagSupplier(WheatMod.MOD_ID, MUSHROOM));
+
     private ModBlockImpl mImpl;
     private ModCropProperties mCropProperties;
 
@@ -99,10 +103,9 @@ public class ModCropsBlock extends CropsBlock implements IModBlock {
      * @param state The state of the crop.
      */
     public void diseaseCrop(World world, BlockPos position, BlockState state) {
-        ResourceLocation disease = mCropProperties.getDiseaseCrop();
+        Block disease = mCropProperties.getDiseaseCrop();
         if (disease != null) {
-            Optional<Block> diseaseBlock = Registry.BLOCK.getValue(disease);
-            world.setBlockState(position, diseaseBlock.get().getDefaultState().with(getAgeProperty(), getAge(state)));
+            world.setBlockState(position, disease.getDefaultState().with(getAgeProperty(), getAge(state)));
         }
     }
 
@@ -159,17 +162,17 @@ public class ModCropsBlock extends CropsBlock implements IModBlock {
                     }
 
                     if (mutation != null) {
-                        if (mutation.getRequired() != null) {
-                            Optional<Block> required = Registry.BLOCK.getValue(mutation.getRequired());
-                            if (required.isPresent() && !ModBlockUtils.isBlockPresent(world, position, required.get(), 2)) {
+                        Block required = mutation.getRequired();
+                        if (required != null) {
+                            if (!ModBlockUtils.isBlockPresent(world, position, required, 2)) {
                                 return;
                             }
                         }
 
                         if (random.nextInt(rarity) < 1) {
-                            Optional<Block> mutated = Registry.BLOCK.getValue(mutation.getMutation());
-                            if (mutated.isPresent()) {
-                                world.setBlockState(position, mutated.get().getDefaultState().with(getAgeProperty(), newAge));
+                            Block mutated = mutation.getMutation();
+                            if (mutated != null) {
+                                world.setBlockState(position, mutated.getDefaultState().with(getAgeProperty(), newAge));
                             }
                         }
                     }
@@ -180,25 +183,20 @@ public class ModCropsBlock extends CropsBlock implements IModBlock {
 
     private void checkForDisease(World world, BlockPos position, Random random, int oldAge, int newAge) {
         if (oldAge != newAge) {
-            ResourceLocation disease = mCropProperties.getDiseaseCrop();
+            Block disease = mCropProperties.getDiseaseCrop();
             if (disease != null) {
-                Optional<Block> diseaseBlock = Registry.BLOCK.getValue(disease);
-                if (diseaseBlock.isPresent()) {
-                    int diseaseResistance = mCropProperties.getDiseaseResistance();
+                int diseaseResistance = mCropProperties.getDiseaseResistance();
 
-                    int diseasedCrops = getTotalBlocksPresent(world, position, diseaseBlock.get(), 1);
-                    if (diseasedCrops > 1) {
-                        diseaseResistance /= (int) Math.pow(2, diseasedCrops);
-                    }
+                int diseasedCrops = getTotalBlocksPresent(world, position, disease, 1);
+                if (diseasedCrops > 1) {
+                    diseaseResistance /= (int) Math.pow(2, diseasedCrops);
+                }
 
-                    diseaseResistance -= 10 * getTotalBlocksPresent(world, position, ModBlockUtils.MUSHROOMS, 1);
-                    diseaseResistance -= getTotalBlocksPresent(world, position, this, 1);
+                diseaseResistance -= 10 * getTotalBlocksPresent(world, position, MUSHROOM_TAG.getValue().getBlocks(), 1);
+                diseaseResistance -= getTotalBlocksPresent(world, position, this, 1);
 
-                    //diseaseResistance *= newAge;
-
-                    if (diseaseResistance <= 1 || random.nextInt(diseaseResistance) < 1) {
-                        world.setBlockState(position, diseaseBlock.get().getDefaultState().with(getAgeProperty(), newAge));
-                    }
+                if (diseaseResistance <= 1 || random.nextInt(diseaseResistance) < 1) {
+                    world.setBlockState(position, disease.getDefaultState().with(getAgeProperty(), newAge));
                 }
             }
         }
@@ -245,11 +243,6 @@ public class ModCropsBlock extends CropsBlock implements IModBlock {
      * @return The seed item used to grow this crop.
      */
     protected  IItemProvider getSeedsItem() {
-        ResourceLocation location = mCropProperties.getSeed();
-        if (location != null) {
-            return Registry.ITEM.getOrDefault(location);
-        }
-
-        return null;
+        return mCropProperties.getSeed();
     }
 }

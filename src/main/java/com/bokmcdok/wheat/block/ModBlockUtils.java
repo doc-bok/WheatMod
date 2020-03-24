@@ -19,10 +19,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.registries.ObjectHolder;
 
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Registers all the blocks used in this mod.
@@ -50,10 +47,6 @@ public class ModBlockUtils {
     public static final ModTrapBlock seeded_mouse_trap = null;
 
     public static final ModCampfireBlock campfire = null;
-
-    public static Set<Block> MUSHROOMS;
-    public static Set<Block> CROPS;
-    public static Set<Block> WHEAT;
 
     private static final ModBlockManager BLOCK_MANAGER = new ModBlockManager();
 
@@ -133,42 +126,6 @@ public class ModBlockUtils {
         }
 
         RenderTypeLookup.setRenderLayer(campfire, getRenderType("cutout"));
-
-        MUSHROOMS = new HashSet<Block>(Arrays.asList(
-            Blocks.BROWN_MUSHROOM_BLOCK,
-            Blocks.RED_MUSHROOM_BLOCK,
-            Blocks.MUSHROOM_STEM,
-            Blocks.BROWN_MUSHROOM,
-            Blocks.RED_MUSHROOM,
-            Blocks.POTTED_BROWN_MUSHROOM,
-            Blocks.POTTED_RED_MUSHROOM
-        ));
-
-        CROPS = new HashSet<>(Arrays.asList(
-           Blocks.WHEAT,
-           Blocks.BEETROOTS,
-           Blocks.CARROTS,
-           Blocks.POTATOES,
-           tomato,
-           wild_einkorn,
-           wild_emmer,
-           emmer,
-           einkorn,
-           common_wheat,
-           durum,
-           spelt
-        ));
-
-        WHEAT = new HashSet<>(Arrays.asList(
-                Blocks.WHEAT,
-                wild_einkorn,
-                wild_emmer,
-                emmer,
-                einkorn,
-                common_wheat,
-                durum,
-                spelt
-        ));
     }
 
     /**

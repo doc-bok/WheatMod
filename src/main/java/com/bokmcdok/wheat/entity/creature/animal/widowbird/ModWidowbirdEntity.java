@@ -1,5 +1,6 @@
 package com.bokmcdok.wheat.entity.creature.animal.widowbird;
 
+import com.bokmcdok.wheat.WheatMod;
 import com.bokmcdok.wheat.ai.goals.ModCreateNestGoal;
 import com.bokmcdok.wheat.ai.goals.ModMateGoal;
 import com.bokmcdok.wheat.ai.goals.ModNestingGoal;
@@ -10,6 +11,8 @@ import com.bokmcdok.wheat.entity.creature.ModFlappingController;
 import com.bokmcdok.wheat.entity.creature.animal.ModNestingEntity;
 import com.bokmcdok.wheat.entity.creature.animal.butterfly.ModButterflyEntity;
 import com.bokmcdok.wheat.item.ModItemUtils;
+import com.bokmcdok.wheat.supplier.ModTagSupplier;
+import com.bokmcdok.wheat.tag.ModTag;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -33,6 +36,7 @@ import net.minecraft.pathfinding.FlyingPathNavigator;
 import net.minecraft.pathfinding.PathNavigator;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.LazyValue;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
@@ -44,6 +48,9 @@ import javax.annotation.Nullable;
 import java.util.Random;
 
 public class ModWidowbirdEntity extends ModNestingEntity implements IFlyingAnimal {
+    private static final String WHEAT = "wheat";
+    private static final LazyValue<ModTag> WHEAT_TAG = new LazyValue<>(new ModTagSupplier(WheatMod.MOD_ID, WHEAT));
+
     private final ModFlappingController mFlappingController;
 
     /**
@@ -236,7 +243,7 @@ public class ModWidowbirdEntity extends ModNestingEntity implements IFlyingAnima
         goalSelector.addGoal(1, new ModCreateNestGoal(this, ModBlockUtils.widowbird_nest, getFlyingSpeed(), 16, 8));
         goalSelector.addGoal(1, new ModNestingGoal(this, ModBlockUtils.widowbird_nest, getFlyingSpeed(), 16, 8));
         goalSelector.addGoal(2, new WaterAvoidingRandomFlyingGoal(this, 1.0d));
-        goalSelector.addGoal(5, new ModRaidFarmGoal(this, ModBlockUtils.WHEAT, getFlyingSpeed(), 16, 8));
+        goalSelector.addGoal(5, new ModRaidFarmGoal(this, WHEAT_TAG.getValue().getBlocks(), getFlyingSpeed(), 16, 8));
         goalSelector.addGoal(9, new OcelotAttackGoal(this));
         goalSelector.addGoal(12, new LookAtGoal(this, ModButterflyEntity.class, 8.0f));
 

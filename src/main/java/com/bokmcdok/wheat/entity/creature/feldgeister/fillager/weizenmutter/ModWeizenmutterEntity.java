@@ -8,6 +8,8 @@ import com.bokmcdok.wheat.block.ModBlockUtils;
 import com.bokmcdok.wheat.entity.creature.feldgeister.ModFeldgeisterEntity;
 import com.bokmcdok.wheat.entity.creature.feldgeister.fillager.ModFillagerEntity;
 import com.bokmcdok.wheat.entity.creature.feldgeister.fillager.ahrenkind.ModAhrenkindEntity;
+import com.bokmcdok.wheat.supplier.ModTagSupplier;
+import com.bokmcdok.wheat.tag.ModTag;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
@@ -30,6 +32,7 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.LazyValue;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
@@ -44,6 +47,9 @@ import net.minecraftforge.registries.ForgeRegistries;
 import javax.annotation.Nullable;
 
 public class ModWeizenmutterEntity extends ModFillagerEntity implements ISpellcaster {
+    private static final String CROP = "crop";
+    private static final LazyValue<ModTag> CROP_TAG = new LazyValue<>(new ModTagSupplier(WheatMod.MOD_ID, CROP));
+
     private static final DataParameter<Boolean> SPELL = EntityDataManager.createKey(ModWeizenmutterEntity.class, DataSerializers.BOOLEAN);
     private static final ResourceLocation TEXTURE = new ResourceLocation("docwheat:textures/entity/feldgeister/weizenmutter.png");
     private boolean mAngry = false;
@@ -236,7 +242,7 @@ public class ModWeizenmutterEntity extends ModFillagerEntity implements ISpellca
         }));
 
         goalSelector.addGoal(6, new ModCastSpellOnAttackTargetGoal(this, WheatMod.SPELL_REGISTRAR.getSpell("true_polymorph_ahrenkind"), 1.0d, (caster, target) -> target instanceof VillagerEntity));
-        goalSelector.addGoal(7, new ModRaidFarmGoal(this, ModBlockUtils.CROPS, 1.0d, 16, 1));
+        goalSelector.addGoal(7, new ModRaidFarmGoal(this, CROP_TAG.getValue().getBlocks(), 1.0d, 16, 1));
 
         goalSelector.removeGoal(mAttackGoal);
 

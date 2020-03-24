@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:wheat",
+    "docwheat:wild_einkorn",
+    "docwheat:wild_emmer",
+    "docwheat:emmer",
+    "docwheat:einkorn",
+    "docwheat:common_wheat",
+    "docwheat:durum",
+    "docwheat:spelt"
+  ]
+}

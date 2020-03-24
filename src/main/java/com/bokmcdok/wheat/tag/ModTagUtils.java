@@ -33,10 +33,19 @@ public class ModTagUtils {
 
     /**
      * Get a block tag.
-     * @param location The location of the tag.
+     * @param resourceName The name of the resource.
      * @return The list of values associated with the tag.
      */
-    public static ModTag getBlockTag(String location) {
-        return BLOCK_TAG_MANAGER.getEntry(new ResourceLocation(location));
+    public static ModTag getBlockTag(String resourceName) {
+        return getBlockTag(new ResourceLocation(resourceName));
+    }
+
+    /**
+     * Get a block tag.
+     * @param resourceLocation The location of the resource.
+     * @return The list of values associated with the tag.
+     */
+    public static ModTag getBlockTag(ResourceLocation resourceLocation) {
+        return BLOCK_TAG_MANAGER.getEntry(resourceLocation);
     }
 }
