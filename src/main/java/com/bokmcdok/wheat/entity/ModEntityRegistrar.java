@@ -93,6 +93,46 @@ public class ModEntityRegistrar {    public static final EntityType<ThrownItemEn
     }
 
     /**
+     * Register spawn entries
+     * @param event The common setup event
+     */
+    protected void commonSetup(FMLCommonSetupEvent event)
+    {
+        EntitySpawnPlacementRegistry.register(field_mouse, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ModMouseEntity::canSpawn);
+        EntitySpawnPlacementRegistry.register(butterfly, EntitySpawnPlacementRegistry.PlacementType.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ModButterflyEntity::canSpawn);
+        EntitySpawnPlacementRegistry.register(widowbird, EntitySpawnPlacementRegistry.PlacementType.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ModWidowbirdEntity::canSpawn);
+        EntitySpawnPlacementRegistry.register(getreidewolf, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ModGetreidewolfEntity::canGetreideWolfSpawn);
+        EntitySpawnPlacementRegistry.register(weizenbeller, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ModWeizenbellerEntity::canSpawn);
+        EntitySpawnPlacementRegistry.register(heukatze, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ModHeukatzeEntity::canSpawn);
+        EntitySpawnPlacementRegistry.register(haferbock, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ModHaferbockEntity::canSpawn);
+        EntitySpawnPlacementRegistry.register(weizenvogel, EntitySpawnPlacementRegistry.PlacementType.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ModWeizenvogelEntity::canSpawn);
+        EntitySpawnPlacementRegistry.register(getreidehahn, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ModGetreidehahnEntity::canSpawn);
+        EntitySpawnPlacementRegistry.register(cornsnake, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ModCornsnakeEntity::canSpawn);
+        EntitySpawnPlacementRegistry.register(weizenmutter, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ModWeizenmutterEntity::canSpawn);
+        EntitySpawnPlacementRegistry.register(weizenmutter_cornsnake, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ModWeizenmutterCornsnakeEntity::canWeizenmutterSpawn);
+        EntitySpawnPlacementRegistry.register(weizenmutter_getreidewolf, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ModWeizenmutterGetreidewolfEntity::canSpawn);
+        EntitySpawnPlacementRegistry.register(ahrenkind, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ModAhrenkindEntity::canSpawn);
+
+        RenderingRegistry.registerEntityRenderingHandler(stone_entity, new StoneRenderer());
+        RenderingRegistry.registerEntityRenderingHandler(field_mouse, new ModMouseRenderFactory());
+        RenderingRegistry.registerEntityRenderingHandler(butterfly, new ModButterflyRenderFactory());
+        RenderingRegistry.registerEntityRenderingHandler(widowbird, new ModWidowbirdRenderFactory());
+        RenderingRegistry.registerEntityRenderingHandler(getreidewolf, new ModGetreidewolfRenderFactory());
+        RenderingRegistry.registerEntityRenderingHandler(weizenbeller, new ModWeizenbellerRenderFactory());
+        RenderingRegistry.registerEntityRenderingHandler(heukatze, new ModHeukatzeRenderFactory());
+        RenderingRegistry.registerEntityRenderingHandler(haferbock, new ModHaferbockRenderFactory());
+        RenderingRegistry.registerEntityRenderingHandler(weizenvogel, new ModWeizenvogelRenderFactory());
+        RenderingRegistry.registerEntityRenderingHandler(getreidehahn, new ModGetreidehahnRenderFactory());
+        RenderingRegistry.registerEntityRenderingHandler(cornsnake, new ModCornsnakeRenderFactory());
+        RenderingRegistry.registerEntityRenderingHandler(weizenmutter, new ModWeizenmutterRenderFactory());
+        RenderingRegistry.registerEntityRenderingHandler(weizenmutter_cornsnake, new ModWeizenmutterCornsnakeRenderFactory());
+        RenderingRegistry.registerEntityRenderingHandler(weizenmutter_getreidewolf, new ModWeizenmutterGetreidewulfRenderFactory());
+        RenderingRegistry.registerEntityRenderingHandler(ahrenkind, new ModAhrenkindRenderFactory());
+
+        ClientRegistry.bindTileEntityRenderer(campfire, ModCampfireTileEntityRenderer::new);
+    }
+
+    /**
      * Register the mod-specific entities.
      * @param event The event data.
      */
@@ -196,45 +236,5 @@ public class ModEntityRegistrar {    public static final EntityType<ThrownItemEn
                 TileEntityType.Builder.create(ModCampfireTileEntity::new, CAMPFIRE.getValue())
                         .build(null)
                         .setRegistryName(WheatMod.MOD_ID, "campfire"));
-    }
-
-    /**
-     * Register spawn entries
-     * @param event The common setup event
-     */
-    private void commonSetup(FMLCommonSetupEvent event)
-    {
-        EntitySpawnPlacementRegistry.register(field_mouse, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ModMouseEntity::canSpawn);
-        EntitySpawnPlacementRegistry.register(butterfly, EntitySpawnPlacementRegistry.PlacementType.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ModButterflyEntity::canSpawn);
-        EntitySpawnPlacementRegistry.register(widowbird, EntitySpawnPlacementRegistry.PlacementType.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ModWidowbirdEntity::canSpawn);
-        EntitySpawnPlacementRegistry.register(getreidewolf, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ModGetreidewolfEntity::canGetreideWolfSpawn);
-        EntitySpawnPlacementRegistry.register(weizenbeller, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ModWeizenbellerEntity::canSpawn);
-        EntitySpawnPlacementRegistry.register(heukatze, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ModHeukatzeEntity::canSpawn);
-        EntitySpawnPlacementRegistry.register(haferbock, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ModHaferbockEntity::canSpawn);
-        EntitySpawnPlacementRegistry.register(weizenvogel, EntitySpawnPlacementRegistry.PlacementType.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ModWeizenvogelEntity::canSpawn);
-        EntitySpawnPlacementRegistry.register(getreidehahn, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ModGetreidehahnEntity::canSpawn);
-        EntitySpawnPlacementRegistry.register(cornsnake, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ModCornsnakeEntity::canSpawn);
-        EntitySpawnPlacementRegistry.register(weizenmutter, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ModWeizenmutterEntity::canSpawn);
-        EntitySpawnPlacementRegistry.register(weizenmutter_cornsnake, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ModWeizenmutterCornsnakeEntity::canWeizenmutterSpawn);
-        EntitySpawnPlacementRegistry.register(weizenmutter_getreidewolf, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ModWeizenmutterGetreidewolfEntity::canSpawn);
-        EntitySpawnPlacementRegistry.register(ahrenkind, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ModAhrenkindEntity::canSpawn);
-
-        RenderingRegistry.registerEntityRenderingHandler(stone_entity, new StoneRenderer());
-        RenderingRegistry.registerEntityRenderingHandler(field_mouse, new ModMouseRenderFactory());
-        RenderingRegistry.registerEntityRenderingHandler(butterfly, new ModButterflyRenderFactory());
-        RenderingRegistry.registerEntityRenderingHandler(widowbird, new ModWidowbirdRenderFactory());
-        RenderingRegistry.registerEntityRenderingHandler(getreidewolf, new ModGetreidewolfRenderFactory());
-        RenderingRegistry.registerEntityRenderingHandler(weizenbeller, new ModWeizenbellerRenderFactory());
-        RenderingRegistry.registerEntityRenderingHandler(heukatze, new ModHeukatzeRenderFactory());
-        RenderingRegistry.registerEntityRenderingHandler(haferbock, new ModHaferbockRenderFactory());
-        RenderingRegistry.registerEntityRenderingHandler(weizenvogel, new ModWeizenvogelRenderFactory());
-        RenderingRegistry.registerEntityRenderingHandler(getreidehahn, new ModGetreidehahnRenderFactory());
-        RenderingRegistry.registerEntityRenderingHandler(cornsnake, new ModCornsnakeRenderFactory());
-        RenderingRegistry.registerEntityRenderingHandler(weizenmutter, new ModWeizenmutterRenderFactory());
-        RenderingRegistry.registerEntityRenderingHandler(weizenmutter_cornsnake, new ModWeizenmutterCornsnakeRenderFactory());
-        RenderingRegistry.registerEntityRenderingHandler(weizenmutter_getreidewolf, new ModWeizenmutterGetreidewulfRenderFactory());
-        RenderingRegistry.registerEntityRenderingHandler(ahrenkind, new ModAhrenkindRenderFactory());
-
-        ClientRegistry.bindTileEntityRenderer(campfire, ModCampfireTileEntityRenderer::new);
     }
 }

@@ -43,6 +43,25 @@ public class ModBlockRegistrar {
     }
 
     /**
+     * Set the flammability and render types of blocks.
+     * @param event The event data.
+     */
+    protected void commonSetup(FMLCommonSetupEvent event) {
+        IModBlock[] blocks = mBlockDataManager.getBlocks();
+        FireBlock fireBlock = (FireBlock) Blocks.FIRE;
+
+        for (IModBlock i : blocks) {
+            if (i.getFlammability() > 0.0f) {
+                fireBlock.setFireInfo(i.asBlock(), i.getFireEncouragement(), i.getFlammability());
+            }
+
+            if (!"solid".equals(i.getRenderType())) {
+                RenderTypeLookup.setRenderLayer(i.asBlock(), getRenderType(i.getRenderType()));
+            }
+        }
+    }
+
+    /**
      * Load and register any mod-specific blocks.
      * @param event The event data.
      */
@@ -67,25 +86,6 @@ public class ModBlockRegistrar {
         for (IModBlock i : blocks) {
             if (i.getColor() != null) {
                 blockColors.register(i.getColor(), i.asBlock());
-            }
-        }
-    }
-
-    /**
-     * Set the flammability and render types of blocks.
-     * @param event The event data.
-     */
-    private void commonSetup(FMLCommonSetupEvent event) {
-        IModBlock[] blocks = mBlockDataManager.getBlocks();
-        FireBlock fireBlock = (FireBlock) Blocks.FIRE;
-
-        for (IModBlock i : blocks) {
-            if (i.getFlammability() > 0.0f) {
-                fireBlock.setFireInfo(i.asBlock(), i.getFireEncouragement(), i.getFlammability());
-            }
-
-            if (!"solid".equals(i.getRenderType())) {
-                RenderTypeLookup.setRenderLayer(i.asBlock(), getRenderType(i.getRenderType()));
             }
         }
     }
