@@ -1,0 +1,46 @@
+{
+  "parent": "docwheat:wheat/harvester",
+  "display": {
+    "icon": {
+      "item": "docwheat:common_flour"
+    },
+    "title": {
+      "translate": "advancements.wheat.grinder.title"
+    },
+    "description": {
+      "translate": "advancements.wheat.grinder.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "common_flour": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "docwheat:common_flour"
+          }
+        ]
+      }
+    },
+    "durum_flour": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "docwheat:durum_flour"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "common_flour",
+      "durum_flour"
+    ]
+  ]
+}
