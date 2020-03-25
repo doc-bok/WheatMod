@@ -1,6 +1,5 @@
 package com.bokmcdok.wheat.entity.creature.feldgeister;
 
-import com.bokmcdok.wheat.WheatMod;
 import com.bokmcdok.wheat.ai.behaviour.IUsesTags;
 import com.bokmcdok.wheat.ai.goals.ModFindFarmGoal;
 import com.bokmcdok.wheat.block.ModCropsBlock;
@@ -29,7 +28,6 @@ import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.LazyValue;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;

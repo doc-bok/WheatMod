@@ -1,12 +1,9 @@
 package com.bokmcdok.wheat;
 
-import com.bokmcdok.wheat.ai.behaviour.IUsesTags;
 import com.bokmcdok.wheat.block.ModBlockEventHandler;
 import com.bokmcdok.wheat.entity.creature.ModLivingEntityEventHandler;
 import com.bokmcdok.wheat.entity.creature.villager.wandering_trader.ModWanderingTraderEventHandler;
-import com.bokmcdok.wheat.tag.ModTagDataManager;
 import com.bokmcdok.wheat.tag.ModTagRegistrar;
-import net.minecraft.entity.Entity;
 import net.minecraft.world.dimension.DimensionType;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.MinecraftForge;

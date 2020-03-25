@@ -1,13 +1,9 @@
 package com.bokmcdok.wheat.block;
 
-import com.bokmcdok.wheat.WheatMod;
 import com.bokmcdok.wheat.tag.ModTagRegistrar;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FireBlock;
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.material.MaterialColor;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.client.renderer.color.BlockColors;
@@ -19,7 +15,6 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 public class ModBlockRegistrar {
     private  final ModBlockDataManager mBlockDataManager;
-    private final ModTagRegistrar mTagRegistrar;
 
     private enum ModRenderType {
         SOLID,
@@ -40,7 +35,6 @@ public class ModBlockRegistrar {
      * @param tagRegistrar The tag registrar.
      */
     public ModBlockRegistrar(ModTagRegistrar tagRegistrar) {
-        mTagRegistrar = tagRegistrar;
         mBlockDataManager = new ModBlockDataManager(tagRegistrar);
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         modEventBus.addGenericListener(Block.class, this::onBlockRegistryEvent);

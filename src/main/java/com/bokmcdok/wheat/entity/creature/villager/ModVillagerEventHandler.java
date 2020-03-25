@@ -14,7 +14,6 @@ import com.bokmcdok.wheat.entity.creature.villager.food.ModVillagerFood;
 import com.bokmcdok.wheat.entity.creature.villager.food.ModVillagerFoodDataManager;
 import com.bokmcdok.wheat.entity.creature.villager.trade.ModVillagerTradeModifier;
 import com.bokmcdok.wheat.entity.creature.villager.trade.ModVillagerTradeModifierDataManager;
-import com.bokmcdok.wheat.tag.ModTagDataManager;
 import com.bokmcdok.wheat.tag.ModTagRegistrar;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
