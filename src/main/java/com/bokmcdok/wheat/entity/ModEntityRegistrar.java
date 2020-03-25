@@ -1,7 +1,6 @@
 package com.bokmcdok.wheat.entity;
 
 import com.bokmcdok.wheat.WheatMod;
-import com.bokmcdok.wheat.block.ModBlockUtils;
 import com.bokmcdok.wheat.entity.creature.animal.butterfly.ModButterflyEntity;
 import com.bokmcdok.wheat.entity.creature.animal.butterfly.ModButterflyRenderFactory;
 import com.bokmcdok.wheat.entity.creature.animal.cornsnake.ModCornsnakeEntity;
@@ -36,12 +35,14 @@ import com.bokmcdok.wheat.entity.tile.ModTrapTileEntity;
 import com.bokmcdok.wheat.item.ModItemUtils;
 import com.bokmcdok.wheat.render.ModCampfireTileEntityRenderer;
 import com.bokmcdok.wheat.render.StoneRenderer;
+import com.bokmcdok.wheat.supplier.ModBlockSupplier;
 import com.bokmcdok.wheat.tag.ModTagRegistrar;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntitySpawnPlacementRegistry;
 import net.minecraft.entity.EntityType;
 import net.minecraft.tileentity.TileEntityType;
+import net.minecraft.util.LazyValue;
 import net.minecraft.world.gen.Heightmap;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -74,6 +75,8 @@ public class ModEntityRegistrar {    public static final EntityType<ThrownItemEn
     public static final TileEntityType<ModInventoryTileEntity> inventory = null;
     public static final TileEntityType<ModTrapTileEntity> trap = null;
     public static final TileEntityType<ModCampfireTileEntity> campfire = null;
+
+    private static LazyValue<Block> CAMPFIRE = new LazyValue<>(new ModBlockSupplier("docwheat:campfire"));
 
     private final ModTagRegistrar mTagRegistrar;
 
@@ -190,7 +193,7 @@ public class ModEntityRegistrar {    public static final EntityType<ThrownItemEn
         }
 
         event.getRegistry().registerAll(
-                TileEntityType.Builder.create(ModCampfireTileEntity::new, ModBlockUtils.campfire)
+                TileEntityType.Builder.create(ModCampfireTileEntity::new, CAMPFIRE.getValue())
                         .build(null)
                         .setRegistryName(WheatMod.MOD_ID, "campfire"));
     }

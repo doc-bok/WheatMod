@@ -58,17 +58,7 @@ public class ModBlockRegistrar {
         event.getRegistry().registerAll(blocks);
 
         event.getRegistry().registerAll(
-                new FlourMillBlock("flour_mill"),
-
-                new ModCampfireBlock(
-                        mTagRegistrar,
-                        Block.Properties.create(Material.WOOD, MaterialColor.OBSIDIAN)
-                                .hardnessAndResistance(2.0F)
-                                .sound(SoundType.WOOD)
-                                .lightValue(15)
-                                .tickRandomly()
-                                .func_226896_b_())
-                        .setRegistryName(WheatMod.MOD_ID, "campfire")
+                new FlourMillBlock("flour_mill")
         );
     }
 
@@ -104,8 +94,6 @@ public class ModBlockRegistrar {
                 RenderTypeLookup.setRenderLayer(i.asBlock(), getRenderType(i.getRenderType()));
             }
         }
-
-        RenderTypeLookup.setRenderLayer(ModBlockUtils.campfire, getRenderType("cutout"));
     }
 
     /**

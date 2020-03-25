@@ -1,0 +1,11 @@
+{
+  "type": "campfire",
+  "from": "minecraft:campfire",
+  "hardness": 2.0,
+  "resistance": 2.0,
+  "sound": "wood",
+  "light_value": 15,
+  "ticks_randomly": true,
+  "blocks_movement": false,
+  "render_type": "cutout"
+}

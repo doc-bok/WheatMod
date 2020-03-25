@@ -33,7 +33,8 @@ public class ModBlockDataManager extends ModDataManager<IModBlock> {
         MAT,
         NEST,
         SMALL_STONE,
-        TRAP
+        TRAP,
+        CAMPFIRE
     }
 
     /**
@@ -74,7 +75,7 @@ public class ModBlockDataManager extends ModDataManager<IModBlock> {
      * Deserialize a JSON file into a block.
      * @param location The location of the resource.
      * @param json The JSON data to parse.
-     * @return
+     * @return The deserialised block.
      */
     protected IModBlock deserialize(ResourceLocation location, JsonObject json) {
         ModBlockImpl.ModBlockProperties properties = null;
@@ -151,6 +152,10 @@ public class ModBlockDataManager extends ModDataManager<IModBlock> {
 
             case TRAP:
                 result = new ModTrapBlock(properties);
+                break;
+
+            case CAMPFIRE:
+                result = new ModCampfireBlock(mTagRegistrar, properties);
                 break;
 
             default:

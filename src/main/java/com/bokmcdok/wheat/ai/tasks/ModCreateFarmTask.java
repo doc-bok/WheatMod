@@ -1,7 +1,6 @@
 package com.bokmcdok.wheat.ai.tasks;
 
 import com.bokmcdok.wheat.block.ModBlock;
-import com.bokmcdok.wheat.block.ModBlockUtils;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
 import net.minecraft.block.Block;

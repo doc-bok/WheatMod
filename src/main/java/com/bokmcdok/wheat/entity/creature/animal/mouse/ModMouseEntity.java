@@ -3,9 +3,9 @@ package com.bokmcdok.wheat.entity.creature.animal.mouse;
 import com.bokmcdok.wheat.ai.behaviour.IUsesTags;
 import com.bokmcdok.wheat.ai.goals.ModBreedGoal;
 import com.bokmcdok.wheat.ai.goals.ModRaidFarmGoal;
-import com.bokmcdok.wheat.block.ModBlockUtils;
 import com.bokmcdok.wheat.entity.ModEntityRegistrar;
 import com.bokmcdok.wheat.entity.creature.animal.cornsnake.ModCornsnakeEntity;
+import com.bokmcdok.wheat.supplier.ModBlockSupplier;
 import com.bokmcdok.wheat.tag.ModTagRegistrar;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -28,6 +28,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.LazyValue;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
@@ -40,6 +41,8 @@ import java.util.Random;
 import java.util.Set;
 
 public class ModMouseEntity extends AnimalEntity implements IUsesTags {
+    private static LazyValue<Block> SEEDED_MOUSE_TRAP = new LazyValue<>(new ModBlockSupplier("docwheat:seeded_mouse_trap"));
+
     private ModTagRegistrar mTagRegistrar;
 
     /**
@@ -57,7 +60,7 @@ public class ModMouseEntity extends AnimalEntity implements IUsesTags {
     @Override
     protected void registerGoals() {
         Set<Block> blocksToRaid = mTagRegistrar.getBlockTag("docwheat:crop").getBlocks();
-        blocksToRaid.add(ModBlockUtils.seeded_mouse_trap);
+        blocksToRaid.add(SEEDED_MOUSE_TRAP.getValue());
 
         goalSelector.addGoal(1, new SwimGoal(this));
         goalSelector.addGoal(1, new PanicGoal(this, getSpeed()));

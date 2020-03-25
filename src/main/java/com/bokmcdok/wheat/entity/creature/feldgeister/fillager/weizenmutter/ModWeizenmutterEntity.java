@@ -1,14 +1,13 @@
 package com.bokmcdok.wheat.entity.creature.feldgeister.fillager.weizenmutter;
 import com.bokmcdok.wheat.WheatMod;
 import com.bokmcdok.wheat.ai.behaviour.ISpellcaster;
-import com.bokmcdok.wheat.ai.behaviour.IUsesTags;
 import com.bokmcdok.wheat.ai.goals.ModCastSpellOnAttackTargetGoal;
 import com.bokmcdok.wheat.ai.goals.ModCastSpellOnSelfGoal;
 import com.bokmcdok.wheat.ai.goals.ModRaidFarmGoal;
-import com.bokmcdok.wheat.block.ModBlockUtils;
 import com.bokmcdok.wheat.entity.creature.feldgeister.ModFeldgeisterEntity;
 import com.bokmcdok.wheat.entity.creature.feldgeister.fillager.ModFillagerEntity;
 import com.bokmcdok.wheat.entity.creature.feldgeister.fillager.ahrenkind.ModAhrenkindEntity;
+import com.bokmcdok.wheat.supplier.ModBlockSupplier;
 import com.bokmcdok.wheat.tag.ModTag;
 import com.bokmcdok.wheat.tag.ModTagRegistrar;
 import net.minecraft.block.Block;
@@ -50,6 +49,7 @@ import javax.annotation.Nullable;
 public class ModWeizenmutterEntity extends ModFillagerEntity implements ISpellcaster {
     private static final DataParameter<Boolean> SPELL = EntityDataManager.createKey(ModWeizenmutterEntity.class, DataSerializers.BOOLEAN);
     private static final ResourceLocation TEXTURE = new ResourceLocation("docwheat:textures/entity/feldgeister/weizenmutter.png");
+    private static LazyValue<Block> DISEASED_WHEAT = new LazyValue<>(new ModBlockSupplier("docwheat:diseased_wheat"));
 
     private ModTag mCropTag;
     private boolean mAngry = false;
@@ -176,7 +176,7 @@ public class ModWeizenmutterEntity extends ModFillagerEntity implements ISpellca
                 BlockPos blockPosition = new BlockPos(i, j, k);
                 BlockState blockState = world.getBlockState(blockPosition);
                 Block block = blockState.getBlock();
-                if (block == ModBlockUtils.diseased_wheat) {
+                if (block == DISEASED_WHEAT.getValue()) {
                     getAngry();
                 }
             }

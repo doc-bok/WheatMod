@@ -1,12 +1,14 @@
 package com.bokmcdok.wheat.recipe;
 
-import com.bokmcdok.wheat.block.ModBlockUtils;
+import com.bokmcdok.wheat.supplier.ModBlockSupplier;
+import net.minecraft.block.Block;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.util.LazyValue;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
@@ -14,8 +16,8 @@ import net.minecraft.world.World;
 import javax.annotation.Nonnull;
 
 public class FlourMillRecipe implements IRecipe<IInventory> {
-
     public static final IRecipeType<FlourMillRecipe> flour_mill = IRecipeType.register("flour_mill");
+    private static LazyValue<Block> FLOUR_MILL = new LazyValue<>(new ModBlockSupplier("docwheat:flour_mill"));
 
     private final IRecipeType<?> type;
     private final ResourceLocation id;
@@ -135,7 +137,7 @@ public class FlourMillRecipe implements IRecipe<IInventory> {
     @Override
     @Nonnull
     public ItemStack getIcon() {
-        return new ItemStack(ModBlockUtils.flour_mill);
+        return new ItemStack(FLOUR_MILL.getValue());
     }
 
     /**
