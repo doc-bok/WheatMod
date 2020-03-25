@@ -2,6 +2,7 @@ package com.bokmcdok.wheat.block;
 
 import com.bokmcdok.wheat.WheatMod;
 import net.minecraft.block.Block;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.Mod;
@@ -33,29 +34,4 @@ public class ModBlockUtils {
     public static final ModTrapBlock seeded_mouse_trap = null;
 
     public static final ModCampfireBlock campfire = null;
-
-    /**
-     * Check if the specified block is present within a certain radius.
-     * @param world The current world.
-     * @param position The position to check.
-     * @param block The block to look for.
-     * @param radius The radius to search.
-     * @return TRUE if the block is within the specified radius.
-     */
-    public static boolean isBlockPresent(World world, BlockPos position, Block block, int radius) {
-        for (int x = (radius * -1); x < radius + 1; x++) {
-            for (int z = (radius * -1); z < radius + 1; z++) {
-                if (x == 0 && z == 0) {
-                    continue;
-                }
-
-                BlockPos posToCheck = position.add(x, 0, z);
-                if(world.getBlockState(posToCheck).getBlock() == block) {
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    }
 }

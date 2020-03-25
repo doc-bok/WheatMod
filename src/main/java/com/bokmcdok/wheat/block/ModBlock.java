@@ -5,6 +5,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.renderer.color.IBlockColor;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.shapes.ISelectionContext;
 import net.minecraft.util.math.shapes.VoxelShape;
@@ -148,5 +149,28 @@ public class ModBlock extends Block implements IModBlock {
     @Override
     public ModBlockImpl getImpl() {
         return mImpl;
+    }
+
+    /**
+     * Check if a block is within the AABB.
+     * @param world The current world.
+     * @param block The block type to check for.
+     * @param bounds The bounding box.
+     * @return TRUE if a block is present.
+     */
+    public static boolean isBlockPresent(World world, Block block, AxisAlignedBB bounds) {
+
+        for (int x = (int)Math.floor(bounds.minX); x <= Math.ceil(bounds.maxX); x++) {
+            for (int y = (int)Math.floor(bounds.minY); y <= Math.ceil(bounds.maxY); y++) {
+                for (int z = (int) Math.floor(bounds.minZ); z <= Math.ceil(bounds.maxZ); z++) {
+                    BlockPos posToCheck = new BlockPos(x, y, z);
+                    if(world.getBlockState(posToCheck).getBlock() == block) {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
     }
 }

@@ -7,6 +7,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.block.CropsBlock;
 import net.minecraft.client.renderer.color.IBlockColor;
 import net.minecraft.util.IItemProvider;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
@@ -160,7 +161,8 @@ public class ModCropsBlock extends CropsBlock implements IModBlock {
                     if (mutation != null) {
                         Block required = mutation.getRequired();
                         if (required != null) {
-                            if (!ModBlockUtils.isBlockPresent(world, position, required, 2)) {
+                            AxisAlignedBB bounds = new AxisAlignedBB(position).grow(2, 1, 2);
+                            if (!ModBlock.isBlockPresent(world, required, bounds)) {
                                 return;
                             }
                         }

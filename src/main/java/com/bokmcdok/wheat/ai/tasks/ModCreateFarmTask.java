@@ -1,5 +1,6 @@
 package com.bokmcdok.wheat.ai.tasks;
 
+import com.bokmcdok.wheat.block.ModBlock;
 import com.bokmcdok.wheat.block.ModBlockUtils;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Lists;
@@ -14,6 +15,7 @@ import net.minecraft.entity.merchant.villager.VillagerEntity;
 import net.minecraft.entity.merchant.villager.VillagerProfession;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockPosWrapper;
 import net.minecraft.world.server.ServerWorld;
@@ -161,7 +163,9 @@ public class ModCreateFarmTask extends Task<VillagerEntity> {
         BlockState blockstate = world.getBlockState(position);
         Block block = blockstate.getBlock();
         BlockState up = world.getBlockState(position.up());
-        return (block == Blocks.GRASS_BLOCK || block == Blocks.DIRT) && up.isAir() &&
-                ModBlockUtils.isBlockPresent(world, position, Blocks.WATER, 4);
+        AxisAlignedBB bounds = new AxisAlignedBB(position).grow(4, 1, 4);
+
+        return (block == Blocks.GRASS_BLOCK || block == Blocks.DIRT) && up.isAir(world, position) &&
+                ModBlock.isBlockPresent(world, Blocks.WATER, bounds);
     }
 }
