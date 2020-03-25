@@ -1,15 +1,12 @@
 package com.bokmcdok.wheat.block;
 
-import com.bokmcdok.wheat.WheatMod;
-import com.bokmcdok.wheat.supplier.ModTagSupplier;
-import com.bokmcdok.wheat.tag.ModTag;
+import com.bokmcdok.wheat.tag.ModTagRegistrar;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.CropsBlock;
 import net.minecraft.client.renderer.color.IBlockColor;
 import net.minecraft.util.IItemProvider;
-import net.minecraft.util.LazyValue;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
@@ -20,14 +17,13 @@ import java.util.Random;
 import java.util.Set;
 
 public class ModCropsBlock extends CropsBlock implements IModBlock {
-    private static final String MUSHROOM = "mushroom";
-    private static final LazyValue<ModTag> MUSHROOM_TAG = new LazyValue<>(new ModTagSupplier(WheatMod.MOD_ID, MUSHROOM));
-
+    private final ModTagRegistrar mTagRegistrar;
     private ModBlockImpl mImpl;
     private ModCropProperties mCropProperties;
 
-    public ModCropsBlock(ModBlockImpl.ModBlockProperties properties) {
+    public ModCropsBlock(ModTagRegistrar tagRegistrar, ModBlockImpl.ModBlockProperties properties) {
         super(properties.asBlockProperties());
+        mTagRegistrar = tagRegistrar;
         mImpl = new ModBlockImpl(properties);
         mCropProperties = mImpl.getCropProperties();
     }
@@ -192,7 +188,7 @@ public class ModCropsBlock extends CropsBlock implements IModBlock {
                     diseaseResistance /= (int) Math.pow(2, diseasedCrops);
                 }
 
-                diseaseResistance -= 10 * getTotalBlocksPresent(world, position, MUSHROOM_TAG.getValue().getBlocks(), 1);
+                diseaseResistance -= 10 * getTotalBlocksPresent(world, position, mTagRegistrar.getBlockTag("docwheat:mushroom").getBlocks(), 1);
                 diseaseResistance -= getTotalBlocksPresent(world, position, this, 1);
 
                 if (diseaseResistance <= 1 || random.nextInt(diseaseResistance) < 1) {

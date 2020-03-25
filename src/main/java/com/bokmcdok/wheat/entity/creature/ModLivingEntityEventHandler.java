@@ -1,23 +1,40 @@
 package com.bokmcdok.wheat.entity.creature;
 
+import com.bokmcdok.wheat.ai.behaviour.IUsesTags;
 import com.bokmcdok.wheat.entity.creature.player.ModPlayerEntityEventHandler;
 import com.bokmcdok.wheat.entity.creature.villager.ModVillagerEventHandler;
-import com.bokmcdok.wheat.tag.ModTagDataManager;
+import com.bokmcdok.wheat.tag.ModTagRegistrar;
+import net.minecraft.entity.Entity;
+import net.minecraftforge.event.entity.EntityEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.village.VillagerTradesEvent;
 
+
 public class ModLivingEntityEventHandler {
     private final ModPlayerEntityEventHandler mPlayerEntityEventHandler;
     private final ModVillagerEventHandler mVillagerEventHandler;
+    private final ModTagRegistrar mTagRegistrar;
 
     /**
      * Construction
-     * @param itemTagDataManager Data manager holding the item tags.
+     * @param tagRegistrar Registrar holding the item tags.
      */
-    public ModLivingEntityEventHandler(ModTagDataManager itemTagDataManager) {
+    public ModLivingEntityEventHandler(ModTagRegistrar tagRegistrar) {
+        mTagRegistrar = tagRegistrar;
         mPlayerEntityEventHandler = new ModPlayerEntityEventHandler();
-        mVillagerEventHandler = new ModVillagerEventHandler(itemTagDataManager);
+        mVillagerEventHandler = new ModVillagerEventHandler(mTagRegistrar);
+    }
+
+    /**
+     * Fired whenever an entity is constructing.
+     * @param event The event data.
+     */
+    public void onEntityConstructing(EntityEvent.EntityConstructing event) {
+        Entity entity = event.getEntity();
+        if (entity instanceof IUsesTags) {
+            ((IUsesTags)entity).setTagRegistrar(mTagRegistrar);
+        }
     }
 
     /**

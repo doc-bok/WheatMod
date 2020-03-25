@@ -2,7 +2,8 @@ package com.bokmcdok.wheat.block;
 
 import com.bokmcdok.wheat.entity.tile.ModCampfireTileEntity;
 import com.bokmcdok.wheat.tag.ModTag;
-import com.bokmcdok.wheat.tag.ModTagUtils;
+import com.bokmcdok.wheat.tag.ModTagDataManager;
+import com.bokmcdok.wheat.tag.ModTagRegistrar;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.CampfireBlock;
@@ -32,13 +33,15 @@ import javax.annotation.Nullable;
 import java.util.Optional;
 
 public class ModCampfireBlock extends CampfireBlock {
+    private final ModTagRegistrar mTagRegistrar;
 
     /**
      * Construction
      * @param properties The block's properties.
      */
-    public ModCampfireBlock(Properties properties) {
+    public ModCampfireBlock(ModTagRegistrar tagRegistrar, Properties properties) {
         super(properties);
+        mTagRegistrar = tagRegistrar;
     }
 
     /**
@@ -181,9 +184,7 @@ public class ModCampfireBlock extends CampfireBlock {
      * @return TRUE if this block is a hay/straw bale.
      */
     private boolean isHayBlock(BlockState state) {
-        ModTag tag = ModTagUtils.getBlockTag("docwheat:hay_bale");
-        Block block = state.getBlock();
-        ResourceLocation registryName = block.getRegistryName();
-        return tag.contains(registryName);
+        ModTag tag = mTagRegistrar.getBlockTag("docwheat:hay_bale");
+        return tag.containsBlock(state.getBlock());
     }
 }

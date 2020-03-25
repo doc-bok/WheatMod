@@ -1,7 +1,7 @@
 package com.bokmcdok.wheat.block.beehive;
 
 import com.bokmcdok.wheat.tag.ModTag;
-import com.bokmcdok.wheat.tag.ModTagDataManager;
+import com.bokmcdok.wheat.tag.ModTagRegistrar;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.BeehiveBlock;
 import net.minecraft.block.Block;
@@ -32,14 +32,14 @@ import java.util.List;
 
 public class ModBeehiveBlockEventHandler {
     private static final VoxelShape CAMPFIRE_COLLISION_BOX = Block.makeCuboidShape(6.0D, 0.0D, 6.0D, 10.0D, 16.0D, 10.0D);
-    private final ModTagDataManager mBlockTagDataManager;
+    private final ModTagRegistrar mTagRegistrar;
 
     /**
      * Construction
-     * @param blockTagDataManager The data manager for block tags.
+     * @param tagRegistrar The registrar for block tags.
      */
-    public ModBeehiveBlockEventHandler(ModTagDataManager blockTagDataManager) {
-        mBlockTagDataManager = blockTagDataManager;
+    public ModBeehiveBlockEventHandler(ModTagRegistrar tagRegistrar) {
+        mTagRegistrar = tagRegistrar;
     }
 
     /**
@@ -128,10 +128,8 @@ public class ModBeehiveBlockEventHandler {
      * @return TRUE if the block is a campfire.
      */
     private boolean isCampfire(BlockState state) {
-        ModTag tag = mBlockTagDataManager.getEntry("docwheat:campfire");
-        Block block = state.getBlock();
-        ResourceLocation registryName = block.getRegistryName();
-        return tag.contains(registryName);
+        ModTag tag = mTagRegistrar.getBlockTag("docwheat:campfire");
+        return tag.containsBlock(state.getBlock());
     }
 
     /**

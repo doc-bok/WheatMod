@@ -3,7 +3,7 @@ package com.bokmcdok.wheat.terraingen;
 import com.bokmcdok.wheat.block.ModBlockUtils;
 import com.bokmcdok.wheat.block.ModCropsBlock;
 import com.bokmcdok.wheat.WheatMod;
-import com.bokmcdok.wheat.entity.ModEntityUtils;
+import com.bokmcdok.wheat.entity.ModEntityRegistrar;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.GenerationStage;
@@ -41,82 +41,82 @@ class ModTerrain {
                     addWildWheatFeature(biome, ModBlockUtils.wild_einkorn);
                     biome.func_226711_a_(ModFeatureUtils.WINDMILL.func_225566_b_(new ModWindmillConfig(1)));
                     biome.addFeature(GenerationStage.Decoration.SURFACE_STRUCTURES, ModFeatureUtils.WINDMILL.func_225566_b_(new ModWindmillConfig(1)).func_227228_a_(Placement.NOPE.func_227446_a_(IPlacementConfig.NO_PLACEMENT_CONFIG)));
-                    creatureSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.cornsnake, 10, 1, 1));
-                    creatureSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.field_mouse, 10, 1, 3));
-                    creatureSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.widowbird, 10, 1, 3));
-                    ambientSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.butterfly, 10, 1, 3));
-                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.heukatze, 8, 1, 1));
-                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.haferbock, 8, 1, 1));
-                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.weizenvogel, 40, 1, 1));
-                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.getreidehahn, 8, 1, 1));
-                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.weizenmutter, 5, 1, 1));
+                    creatureSpawns.add(new Biome.SpawnListEntry(ModEntityRegistrar.cornsnake, 10, 1, 1));
+                    creatureSpawns.add(new Biome.SpawnListEntry(ModEntityRegistrar.field_mouse, 10, 1, 3));
+                    creatureSpawns.add(new Biome.SpawnListEntry(ModEntityRegistrar.widowbird, 10, 1, 3));
+                    ambientSpawns.add(new Biome.SpawnListEntry(ModEntityRegistrar.butterfly, 10, 1, 3));
+                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityRegistrar.heukatze, 8, 1, 1));
+                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityRegistrar.haferbock, 8, 1, 1));
+                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityRegistrar.weizenvogel, 40, 1, 1));
+                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityRegistrar.getreidehahn, 8, 1, 1));
+                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityRegistrar.weizenmutter, 5, 1, 1));
                     break;
 
                 case FOREST:
                     addWildWheatFeature(biome, ModBlockUtils.wild_einkorn);
-                    creatureSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.cornsnake, 10, 1, 1));
-                    creatureSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.field_mouse, 10, 1, 3));
-                    ambientSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.butterfly, 10, 1, 3));
-                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.getreidewolf, 5, 1, 1));
-                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.heukatze, 25, 1, 1));
-                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.haferbock, 8, 1, 1));
-                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.weizenvogel, 40, 1, 1));
-                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.getreidehahn, 8, 1, 1));
-                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.weizenmutter, 5, 1, 1));
+                    creatureSpawns.add(new Biome.SpawnListEntry(ModEntityRegistrar.cornsnake, 10, 1, 1));
+                    creatureSpawns.add(new Biome.SpawnListEntry(ModEntityRegistrar.field_mouse, 10, 1, 3));
+                    ambientSpawns.add(new Biome.SpawnListEntry(ModEntityRegistrar.butterfly, 10, 1, 3));
+                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityRegistrar.getreidewolf, 5, 1, 1));
+                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityRegistrar.heukatze, 25, 1, 1));
+                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityRegistrar.haferbock, 8, 1, 1));
+                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityRegistrar.weizenvogel, 40, 1, 1));
+                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityRegistrar.getreidehahn, 8, 1, 1));
+                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityRegistrar.weizenmutter, 5, 1, 1));
                     break;
 
                 case RIVER:
                 case SWAMP:
                     addWildWheatFeature(biome, ModBlockUtils.wild_emmer);
-                    creatureSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.field_mouse, 10, 1, 3));
-                    creatureSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.widowbird, 10, 1, 3));
-                    ambientSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.butterfly, 10, 1, 3));
-                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.heukatze, 25, 1, 1));
-                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.haferbock, 8, 1, 1));
-                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.weizenvogel, 40, 1, 1));
-                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.getreidehahn, 8, 1, 1));
-                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.weizenmutter, 5, 1, 1));
+                    creatureSpawns.add(new Biome.SpawnListEntry(ModEntityRegistrar.field_mouse, 10, 1, 3));
+                    creatureSpawns.add(new Biome.SpawnListEntry(ModEntityRegistrar.widowbird, 10, 1, 3));
+                    ambientSpawns.add(new Biome.SpawnListEntry(ModEntityRegistrar.butterfly, 10, 1, 3));
+                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityRegistrar.heukatze, 25, 1, 1));
+                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityRegistrar.haferbock, 8, 1, 1));
+                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityRegistrar.weizenvogel, 40, 1, 1));
+                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityRegistrar.getreidehahn, 8, 1, 1));
+                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityRegistrar.weizenmutter, 5, 1, 1));
                     break;
 
                 case TAIGA:
-                    creatureSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.field_mouse, 10, 1, 1));
-                    ambientSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.butterfly, 10, 1, 1));
-                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.getreidewolf, 8, 1, 1));
-                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.weizenbeller, 8, 1, 3));
-                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.heukatze, 8, 1, 1));
-                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.haferbock, 8, 1, 1));
-                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.getreidehahn, 8, 1, 1));
-                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.weizenmutter, 5, 1, 1));
+                    creatureSpawns.add(new Biome.SpawnListEntry(ModEntityRegistrar.field_mouse, 10, 1, 1));
+                    ambientSpawns.add(new Biome.SpawnListEntry(ModEntityRegistrar.butterfly, 10, 1, 1));
+                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityRegistrar.getreidewolf, 8, 1, 1));
+                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityRegistrar.weizenbeller, 8, 1, 3));
+                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityRegistrar.heukatze, 8, 1, 1));
+                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityRegistrar.haferbock, 8, 1, 1));
+                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityRegistrar.getreidehahn, 8, 1, 1));
+                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityRegistrar.weizenmutter, 5, 1, 1));
                     break;
 
                 case SAVANNA:
-                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.heukatze, 8, 1, 1));
-                    creatureSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.field_mouse, 10, 1, 1));
-                    ambientSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.butterfly, 10, 1, 1));
-                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.haferbock, 8, 1, 1));
-                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.getreidehahn, 8, 1, 1));
-                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.weizenmutter, 5, 1, 1));
+                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityRegistrar.heukatze, 8, 1, 1));
+                    creatureSpawns.add(new Biome.SpawnListEntry(ModEntityRegistrar.field_mouse, 10, 1, 1));
+                    ambientSpawns.add(new Biome.SpawnListEntry(ModEntityRegistrar.butterfly, 10, 1, 1));
+                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityRegistrar.haferbock, 8, 1, 1));
+                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityRegistrar.getreidehahn, 8, 1, 1));
+                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityRegistrar.weizenmutter, 5, 1, 1));
                     break;
 
                 case EXTREME_HILLS:
-                    creatureSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.field_mouse, 10, 1, 1));
-                    ambientSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.butterfly, 10, 1, 1));
-                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.haferbock, 8, 1, 1));
-                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.getreidehahn, 8, 1, 1));
+                    creatureSpawns.add(new Biome.SpawnListEntry(ModEntityRegistrar.field_mouse, 10, 1, 1));
+                    ambientSpawns.add(new Biome.SpawnListEntry(ModEntityRegistrar.butterfly, 10, 1, 1));
+                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityRegistrar.haferbock, 8, 1, 1));
+                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityRegistrar.getreidehahn, 8, 1, 1));
                     break;
 
                 case JUNGLE:
-                    creatureSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.field_mouse, 10, 1, 1));
-                    ambientSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.butterfly, 10, 1, 1));
-                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.haferbock, 8, 1, 1));
-                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.getreidehahn, 8, 1, 1));
-                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.weizenmutter, 5, 1, 1));
+                    creatureSpawns.add(new Biome.SpawnListEntry(ModEntityRegistrar.field_mouse, 10, 1, 1));
+                    ambientSpawns.add(new Biome.SpawnListEntry(ModEntityRegistrar.butterfly, 10, 1, 1));
+                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityRegistrar.haferbock, 8, 1, 1));
+                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityRegistrar.getreidehahn, 8, 1, 1));
+                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityRegistrar.weizenmutter, 5, 1, 1));
                     break;
 
                 case MUSHROOM:
-                    creatureSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.field_mouse, 10, 1, 1));
-                    ambientSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.butterfly, 10, 1, 1));
-                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityUtils.getreidehahn, 8, 1, 1));
+                    creatureSpawns.add(new Biome.SpawnListEntry(ModEntityRegistrar.field_mouse, 10, 1, 1));
+                    ambientSpawns.add(new Biome.SpawnListEntry(ModEntityRegistrar.butterfly, 10, 1, 1));
+                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityRegistrar.getreidehahn, 8, 1, 1));
                     break;
 
                 default:

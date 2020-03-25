@@ -56,4 +56,22 @@ public class ModTag {
     public Set<Item> getItems() {
         return mItems.getValue();
     }
+
+    /**
+     * Check if the tag contains a block's registry name.
+     * @param block The block to check.
+     * @return TRUE if the block is in the tag.
+     */
+    public boolean containsBlock(Block block) {
+        return mEntries.contains(block.getRegistryName());
+    }
+
+    /**
+     * Check if the tag contains a item's registry name.
+     * @param item The item to check.
+     * @return TRUE if the item is in the tag.
+     */
+    public boolean containsItem(Item item) {
+        return mEntries.contains(item.getRegistryName());
+    }
 }

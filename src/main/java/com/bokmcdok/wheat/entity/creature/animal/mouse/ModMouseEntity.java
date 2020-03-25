@@ -1,13 +1,12 @@
 package com.bokmcdok.wheat.entity.creature.animal.mouse;
 
-import com.bokmcdok.wheat.WheatMod;
+import com.bokmcdok.wheat.ai.behaviour.IUsesTags;
 import com.bokmcdok.wheat.ai.goals.ModBreedGoal;
 import com.bokmcdok.wheat.ai.goals.ModRaidFarmGoal;
 import com.bokmcdok.wheat.block.ModBlockUtils;
-import com.bokmcdok.wheat.entity.ModEntityUtils;
+import com.bokmcdok.wheat.entity.ModEntityRegistrar;
 import com.bokmcdok.wheat.entity.creature.animal.cornsnake.ModCornsnakeEntity;
-import com.bokmcdok.wheat.supplier.ModTagSupplier;
-import com.bokmcdok.wheat.tag.ModTag;
+import com.bokmcdok.wheat.tag.ModTagRegistrar;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.AgeableEntity;
@@ -29,7 +28,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.LazyValue;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
@@ -41,9 +39,8 @@ import javax.annotation.Nullable;
 import java.util.Random;
 import java.util.Set;
 
-public class ModMouseEntity extends AnimalEntity {
-    private static final String CROP = "crop";
-    private static final LazyValue<ModTag> CROP_TAG = new LazyValue<>(new ModTagSupplier(WheatMod.MOD_ID, CROP));
+public class ModMouseEntity extends AnimalEntity implements IUsesTags {
+    private ModTagRegistrar mTagRegistrar;
 
     /**
      * Construction
@@ -59,7 +56,7 @@ public class ModMouseEntity extends AnimalEntity {
      */
     @Override
     protected void registerGoals() {
-        Set<Block> blocksToRaid = CROP_TAG.getValue().getBlocks();
+        Set<Block> blocksToRaid = mTagRegistrar.getBlockTag("docwheat:crop").getBlocks();
         blocksToRaid.add(ModBlockUtils.seeded_mouse_trap);
 
         goalSelector.addGoal(1, new SwimGoal(this));
@@ -85,7 +82,7 @@ public class ModMouseEntity extends AnimalEntity {
     @Nullable
     @Override
     public AgeableEntity createChild(AgeableEntity ageable) {
-        return ModEntityUtils.field_mouse.create(world);
+        return ModEntityRegistrar.field_mouse.create(world);
     }
 
     /**
@@ -147,6 +144,15 @@ public class ModMouseEntity extends AnimalEntity {
     public static boolean canSpawn(EntityType<ModMouseEntity> entity, IWorld world, SpawnReason reason, BlockPos position, Random random) {
         Block block = world.getBlockState(position.down()).getBlock();
         return block == Blocks.GRASS_BLOCK && world.getNeighborAwareLightSubtracted(position, 0) > 8;
+    }
+
+    /**
+     * Give access to tags
+     * @param tagRegistrar The tag registrar to use.
+     */
+    @Override
+    public void setTagRegistrar(ModTagRegistrar tagRegistrar) {
+        mTagRegistrar = tagRegistrar;
     }
 
     /**

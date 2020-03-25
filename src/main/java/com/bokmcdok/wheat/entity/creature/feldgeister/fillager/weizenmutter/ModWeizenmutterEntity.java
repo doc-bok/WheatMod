@@ -1,6 +1,7 @@
 package com.bokmcdok.wheat.entity.creature.feldgeister.fillager.weizenmutter;
 import com.bokmcdok.wheat.WheatMod;
 import com.bokmcdok.wheat.ai.behaviour.ISpellcaster;
+import com.bokmcdok.wheat.ai.behaviour.IUsesTags;
 import com.bokmcdok.wheat.ai.goals.ModCastSpellOnAttackTargetGoal;
 import com.bokmcdok.wheat.ai.goals.ModCastSpellOnSelfGoal;
 import com.bokmcdok.wheat.ai.goals.ModRaidFarmGoal;
@@ -8,8 +9,8 @@ import com.bokmcdok.wheat.block.ModBlockUtils;
 import com.bokmcdok.wheat.entity.creature.feldgeister.ModFeldgeisterEntity;
 import com.bokmcdok.wheat.entity.creature.feldgeister.fillager.ModFillagerEntity;
 import com.bokmcdok.wheat.entity.creature.feldgeister.fillager.ahrenkind.ModAhrenkindEntity;
-import com.bokmcdok.wheat.supplier.ModTagSupplier;
 import com.bokmcdok.wheat.tag.ModTag;
+import com.bokmcdok.wheat.tag.ModTagRegistrar;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
@@ -47,11 +48,10 @@ import net.minecraftforge.registries.ForgeRegistries;
 import javax.annotation.Nullable;
 
 public class ModWeizenmutterEntity extends ModFillagerEntity implements ISpellcaster {
-    private static final String CROP = "crop";
-    private static final LazyValue<ModTag> CROP_TAG = new LazyValue<>(new ModTagSupplier(WheatMod.MOD_ID, CROP));
-
     private static final DataParameter<Boolean> SPELL = EntityDataManager.createKey(ModWeizenmutterEntity.class, DataSerializers.BOOLEAN);
     private static final ResourceLocation TEXTURE = new ResourceLocation("docwheat:textures/entity/feldgeister/weizenmutter.png");
+
+    private ModTag mCropTag;
     private boolean mAngry = false;
 
     /**
@@ -184,6 +184,16 @@ public class ModWeizenmutterEntity extends ModFillagerEntity implements ISpellca
     }
 
     /**
+     * Get access to tags.
+     * @param tagRegistrar The tag registrar.
+     */
+    @Override
+    public void setTagRegistrar(ModTagRegistrar tagRegistrar) {
+        super.setTagRegistrar(tagRegistrar);
+        mCropTag = tagRegistrar.getBlockTag("docwheat:crop");
+    }
+
+    /**
      * Weizenmutters are similar to witches.
      */
     @Override
@@ -242,7 +252,7 @@ public class ModWeizenmutterEntity extends ModFillagerEntity implements ISpellca
         }));
 
         goalSelector.addGoal(6, new ModCastSpellOnAttackTargetGoal(this, WheatMod.SPELL_REGISTRAR.getSpell("true_polymorph_ahrenkind"), 1.0d, (caster, target) -> target instanceof VillagerEntity));
-        goalSelector.addGoal(7, new ModRaidFarmGoal(this, CROP_TAG.getValue().getBlocks(), 1.0d, 16, 1));
+        goalSelector.addGoal(7, new ModRaidFarmGoal(this, mCropTag.getBlocks(), 1.0d, 16, 1));
 
         goalSelector.removeGoal(mAttackGoal);
 

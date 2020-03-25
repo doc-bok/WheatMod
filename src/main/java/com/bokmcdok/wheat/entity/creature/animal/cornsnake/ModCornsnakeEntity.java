@@ -3,7 +3,7 @@ package com.bokmcdok.wheat.entity.creature.animal.cornsnake;
 import com.bokmcdok.wheat.ai.goals.ModCreateNestGoal;
 import com.bokmcdok.wheat.ai.goals.ModMateGoal;
 import com.bokmcdok.wheat.block.ModBlockUtils;
-import com.bokmcdok.wheat.entity.ModEntityUtils;
+import com.bokmcdok.wheat.entity.ModEntityRegistrar;
 import com.bokmcdok.wheat.entity.creature.animal.ModNestingEntity;
 import com.bokmcdok.wheat.entity.creature.animal.mouse.ModMouseEntity;
 import com.bokmcdok.wheat.supplier.ModSoundEventSupplier;
@@ -78,7 +78,7 @@ public class ModCornsnakeEntity extends ModNestingEntity {
     @Nullable
     @Override
     public AgeableEntity createChild(AgeableEntity ageable) {
-        return ModEntityUtils.cornsnake.create(world);
+        return ModEntityRegistrar.cornsnake.create(world);
     }
 
     /**

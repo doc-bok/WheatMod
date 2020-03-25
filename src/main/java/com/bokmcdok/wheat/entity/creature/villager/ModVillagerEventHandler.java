@@ -15,6 +15,7 @@ import com.bokmcdok.wheat.entity.creature.villager.food.ModVillagerFoodDataManag
 import com.bokmcdok.wheat.entity.creature.villager.trade.ModVillagerTradeModifier;
 import com.bokmcdok.wheat.entity.creature.villager.trade.ModVillagerTradeModifierDataManager;
 import com.bokmcdok.wheat.tag.ModTagDataManager;
+import com.bokmcdok.wheat.tag.ModTagRegistrar;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
@@ -63,9 +64,9 @@ public class ModVillagerEventHandler {
 
     /**
      * Construction
-     * @param itemTagDataManager Data manager holding the item tags.
+     * @param tagRegistrar Data manager holding the item tags.
      */
-    public ModVillagerEventHandler(ModTagDataManager itemTagDataManager) {
+    public ModVillagerEventHandler(ModTagRegistrar tagRegistrar) {
         mMemoryModuleRegistrar = new ModMemoryModuleRegistrar();
 
         mTradeModifiers = new ModVillagerTradeModifierDataManager();
@@ -79,7 +80,7 @@ public class ModVillagerEventHandler {
         cropsDataManager.loadDataEntries("villager/crops");
         mVillagerCrops = cropsDataManager.getEntry("docwheat:crops");
 
-        mVillagerItems = new ModVillagerItems(itemTagDataManager, mVillagerFood, mVillagerCrops);
+        mVillagerItems = new ModVillagerItems(tagRegistrar, mVillagerFood, mVillagerCrops);
     }
 
     /**

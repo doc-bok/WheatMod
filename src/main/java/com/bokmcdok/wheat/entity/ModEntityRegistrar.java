@@ -14,8 +14,10 @@ import com.bokmcdok.wheat.entity.creature.feldgeister.fillager.ahrenkind.ModAhre
 import com.bokmcdok.wheat.entity.creature.feldgeister.fillager.ahrenkind.ModAhrenkindRenderFactory;
 import com.bokmcdok.wheat.entity.creature.feldgeister.fillager.weizenmutter.ModWeizenmutterCornsnakeEntity;
 import com.bokmcdok.wheat.entity.creature.feldgeister.fillager.weizenmutter.ModWeizenmutterCornsnakeRenderFactory;
+import com.bokmcdok.wheat.entity.creature.feldgeister.fillager.weizenmutter.ModWeizenmutterEntity;
 import com.bokmcdok.wheat.entity.creature.feldgeister.fillager.weizenmutter.ModWeizenmutterGetreidewolfEntity;
 import com.bokmcdok.wheat.entity.creature.feldgeister.fillager.weizenmutter.ModWeizenmutterGetreidewulfRenderFactory;
+import com.bokmcdok.wheat.entity.creature.feldgeister.fillager.weizenmutter.ModWeizenmutterRenderFactory;
 import com.bokmcdok.wheat.entity.creature.feldgeister.getreidehahn.ModGetreidehahnEntity;
 import com.bokmcdok.wheat.entity.creature.feldgeister.getreidehahn.ModGetreidehahnRenderFactory;
 import com.bokmcdok.wheat.entity.creature.feldgeister.getreidewolf.ModGetreidewolfEntity;
@@ -26,8 +28,6 @@ import com.bokmcdok.wheat.entity.creature.feldgeister.heukatze.ModHeukatzeEntity
 import com.bokmcdok.wheat.entity.creature.feldgeister.heukatze.ModHeukatzeRenderFactory;
 import com.bokmcdok.wheat.entity.creature.feldgeister.weizenbeller.ModWeizenbellerEntity;
 import com.bokmcdok.wheat.entity.creature.feldgeister.weizenbeller.ModWeizenbellerRenderFactory;
-import com.bokmcdok.wheat.entity.creature.feldgeister.fillager.weizenmutter.ModWeizenmutterEntity;
-import com.bokmcdok.wheat.entity.creature.feldgeister.fillager.weizenmutter.ModWeizenmutterRenderFactory;
 import com.bokmcdok.wheat.entity.creature.feldgeister.weizenvogel.ModWeizenvogelEntity;
 import com.bokmcdok.wheat.entity.creature.feldgeister.weizenvogel.ModWeizenvogelRenderFactory;
 import com.bokmcdok.wheat.entity.tile.ModCampfireTileEntity;
@@ -36,6 +36,7 @@ import com.bokmcdok.wheat.entity.tile.ModTrapTileEntity;
 import com.bokmcdok.wheat.item.ModItemUtils;
 import com.bokmcdok.wheat.render.ModCampfireTileEntityRenderer;
 import com.bokmcdok.wheat.render.StoneRenderer;
+import com.bokmcdok.wheat.tag.ModTagRegistrar;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntitySpawnPlacementRegistry;
@@ -43,20 +44,17 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.world.gen.Heightmap;
 import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
-import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.registries.ObjectHolder;
 
-import java.util.List;
+import java.util.Set;
 
-@Mod.EventBusSubscriber(modid=WheatMod.MOD_ID, bus=Mod.EventBusSubscriber.Bus.MOD)
 @ObjectHolder(WheatMod.MOD_ID)
-public class ModEntityUtils {
-
-    public static final EntityType<ThrownItemEntity> stone_entity = null;
+public class ModEntityRegistrar {    public static final EntityType<ThrownItemEntity> stone_entity = null;
 
     public static final EntityType<ModMouseEntity> field_mouse = null;
     public static final EntityType<ModButterflyEntity> butterfly = null;
@@ -77,12 +75,25 @@ public class ModEntityUtils {
     public static final TileEntityType<ModTrapTileEntity> trap = null;
     public static final TileEntityType<ModCampfireTileEntity> campfire = null;
 
+    private final ModTagRegistrar mTagRegistrar;
+
     /**
-     * Register entities used by the mod
-     * @param event The event containing the Entity Registry
+     * Construction
+     * @param tagRegistrar The tag registrar
      */
-    @SubscribeEvent
-    public static void registerEntities(final RegistryEvent.Register<EntityType<?>> event) {
+    public ModEntityRegistrar(ModTagRegistrar tagRegistrar) {
+        mTagRegistrar = tagRegistrar;
+        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+        modEventBus.addGenericListener(EntityType.class, this::onEntityRegistryEvent);
+        modEventBus.addGenericListener(TileEntityType.class, this::onTileEntityRegistryEvent);
+        modEventBus.addListener(this::commonSetup);
+    }
+
+    /**
+     * Register the mod-specific entities.
+     * @param event The event data.
+     */
+    private void onEntityRegistryEvent(final RegistryEvent.Register<EntityType<?>> event) {
         event.getRegistry().registerAll(
                 EntityType.Builder.<ThrownItemEntity>create(ThrownItemEntity::new, EntityClassification.MISC)
                         .size(0.25f, 0.25f).build("stone_entity")
@@ -163,14 +174,13 @@ public class ModEntityUtils {
     }
 
     /**
-     * Register tile entities.
-     * @param event The tile registry event.
+     * Register the mod-specific tile entities.
+     * @param event The event data.
      */
-    @SubscribeEvent
-    public static void registerTileEntities(final RegistryEvent.Register<TileEntityType<?>> event) {
+    private void onTileEntityRegistryEvent(final RegistryEvent.Register<TileEntityType<?>> event) {
 
         //  Register the trap tile entity with any blocks that have traps.
-        List<Block> traps = ModBlockUtils.getTraps();
+        Set<Block> traps = mTagRegistrar.getBlockTag("docwheat:trap").getBlocks();
         if (!traps.isEmpty()) {
             event.getRegistry().registerAll(
                     TileEntityType.Builder.create(ModTrapTileEntity::new, traps.toArray(new Block[0]))
@@ -181,16 +191,15 @@ public class ModEntityUtils {
 
         event.getRegistry().registerAll(
                 TileEntityType.Builder.create(ModCampfireTileEntity::new, ModBlockUtils.campfire)
-                    .build(null)
-                    .setRegistryName(WheatMod.MOD_ID, "campfire"));
+                        .build(null)
+                        .setRegistryName(WheatMod.MOD_ID, "campfire"));
     }
 
     /**
      * Register spawn entries
      * @param event The common setup event
      */
-    @SubscribeEvent
-    public static void commonSetup(FMLCommonSetupEvent event)
+    private void commonSetup(FMLCommonSetupEvent event)
     {
         EntitySpawnPlacementRegistry.register(field_mouse, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ModMouseEntity::canSpawn);
         EntitySpawnPlacementRegistry.register(butterfly, EntitySpawnPlacementRegistry.PlacementType.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ModButterflyEntity::canSpawn);
@@ -223,6 +232,6 @@ public class ModEntityUtils {
         RenderingRegistry.registerEntityRenderingHandler(weizenmutter_getreidewolf, new ModWeizenmutterGetreidewulfRenderFactory());
         RenderingRegistry.registerEntityRenderingHandler(ahrenkind, new ModAhrenkindRenderFactory());
 
-        ClientRegistry.bindTileEntityRenderer(campfire, (dispatcher) -> new ModCampfireTileEntityRenderer(dispatcher));
+        ClientRegistry.bindTileEntityRenderer(campfire, ModCampfireTileEntityRenderer::new);
     }
 }

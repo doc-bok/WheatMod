@@ -1,6 +1,6 @@
 package com.bokmcdok.wheat.entity.tile;
 
-import com.bokmcdok.wheat.entity.ModEntityUtils;
+import com.bokmcdok.wheat.entity.ModEntityRegistrar;
 import net.minecraft.block.CampfireBlock;
 import net.minecraft.inventory.IClearable;
 import net.minecraft.inventory.IInventory;
@@ -35,7 +35,7 @@ public class ModCampfireTileEntity extends TileEntity implements IClearable, ITi
      * Construction.
      */
     public ModCampfireTileEntity() {
-        super(ModEntityUtils.campfire);
+        super(ModEntityRegistrar.campfire);
     }
 
     /**

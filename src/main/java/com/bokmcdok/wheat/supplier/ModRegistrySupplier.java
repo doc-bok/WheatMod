@@ -14,7 +14,7 @@ public class ModRegistrySupplier<T extends IForgeRegistryEntry<T>> implements Su
     /**
      * Construction
      * @param cls An instance of the class that this supplier returns.
-     * @param namespace The namespace that the resorce belongs to.
+     * @param namespace The namespace that the resource belongs to.
      * @param path The path to the resource location.
      */
     public ModRegistrySupplier(Class<T> cls, String namespace, String path) {

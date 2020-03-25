@@ -1,10 +1,11 @@
 package com.bokmcdok.wheat.entity.creature.feldgeister;
 
 import com.bokmcdok.wheat.WheatMod;
+import com.bokmcdok.wheat.ai.behaviour.IUsesTags;
 import com.bokmcdok.wheat.ai.goals.ModFindFarmGoal;
 import com.bokmcdok.wheat.block.ModCropsBlock;
-import com.bokmcdok.wheat.supplier.ModTagSupplier;
 import com.bokmcdok.wheat.tag.ModTag;
+import com.bokmcdok.wheat.tag.ModTagRegistrar;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.CropsBlock;
@@ -42,13 +43,13 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import java.util.Random;
 import java.util.function.Predicate;
 
-public class ModFeldgeisterEntity extends MonsterEntity {
+public class ModFeldgeisterEntity extends MonsterEntity implements IUsesTags {
     protected static final DataParameter<Boolean> FED = EntityDataManager.createKey(ModFeldgeisterEntity.class, DataSerializers.BOOLEAN);
     protected static final Predicate<LivingEntity> IS_CHILD = (entity) -> entity.isChild();
-    private static final String WHEAT = "wheat";
-    private static final LazyValue<ModTag> WHEAT_TAG = new LazyValue<>(new ModTagSupplier(WheatMod.MOD_ID, WHEAT));
 
     protected Goal mAttackGoal;
+    //private ModTagRegistrar mTagRegistrar;
+    private ModTag mWheatTag;
 
     /**
      * Store NBT data so that status is maintained between saves.
@@ -180,6 +181,15 @@ public class ModFeldgeisterEntity extends MonsterEntity {
     }
 
     /**
+     * Get access to tags.
+     * @param tagRegistrar The tag registrar.
+     */
+    @Override
+    public void setTagRegistrar(ModTagRegistrar tagRegistrar) {
+        mWheatTag = tagRegistrar.getBlockTag("docwheat:wheat");
+    }
+
+    /**
      * Register the behaviours of the getreidewolf.
      */
     @Override
@@ -188,7 +198,7 @@ public class ModFeldgeisterEntity extends MonsterEntity {
 
         goalSelector.addGoal(2, new SwimGoal(this));
         goalSelector.addGoal(5, mAttackGoal);
-        goalSelector.addGoal(8, new ModFindFarmGoal(this, WHEAT_TAG.getValue().getBlocks(), 1.0d, 16, 1));
+        goalSelector.addGoal(8, new ModFindFarmGoal(this, mWheatTag.getBlocks(), 1.0d, 16, 1));
         goalSelector.addGoal(8, new WaterAvoidingRandomWalkingGoal(this, 1.0d));
         goalSelector.addGoal(10, new LookRandomlyGoal(this));
 
@@ -208,7 +218,7 @@ public class ModFeldgeisterEntity extends MonsterEntity {
             BlockPos blockPosition = new BlockPos(i, j, k);
             BlockState blockState = world.getBlockState(blockPosition);
             Block block = blockState.getBlock();
-            if (WHEAT_TAG.getValue().getBlocks().contains(block) && block instanceof ModCropsBlock) {
+            if (mWheatTag.getBlocks().contains(block) && block instanceof ModCropsBlock) {
                 if (getIsFed()) {
                     CropsBlock crop = (CropsBlock)block;
                     Integer integer = blockState.get(CropsBlock.AGE);

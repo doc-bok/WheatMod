@@ -2,6 +2,7 @@ package com.bokmcdok.wheat.block;
 
 import com.bokmcdok.wheat.data.ModDataManager;
 import com.bokmcdok.wheat.data.ModMaterialManager;
+import com.bokmcdok.wheat.tag.ModTagRegistrar;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.google.gson.JsonArray;
@@ -19,9 +20,11 @@ import java.util.List;
 import java.util.Set;
 import java.util.function.BiConsumer;
 
-public class ModBlockManager extends ModDataManager<IModBlock> {
+public class ModBlockDataManager extends ModDataManager<IModBlock> {
     private static final String BLOCKS_FOLDER = "blocks";
     private static final ModMaterialManager MATERIAL_MANAGER = new ModMaterialManager();
+
+    private final ModTagRegistrar mTagRegistrar;
 
     private enum BlockType {
         BLOCK,
@@ -31,6 +34,14 @@ public class ModBlockManager extends ModDataManager<IModBlock> {
         NEST,
         SMALL_STONE,
         TRAP
+    }
+
+    /**
+     * Construction
+     * @param tagRegistrar The tag registrar.
+     */
+    public ModBlockDataManager(ModTagRegistrar tagRegistrar) {
+        mTagRegistrar = tagRegistrar;
     }
 
     /**
@@ -49,22 +60,6 @@ public class ModBlockManager extends ModDataManager<IModBlock> {
         List<IModBlock> values = Lists.newArrayList(getAllEntries());
         List<Block> converted = Lists.transform(values, i -> i.asBlock());
         return converted.toArray(new Block[0]);
-    }
-
-    /**
-     * Get a list of traps loaded by the manager.
-     * @return An array of traps if any are loaded.
-     */
-    public List<Block> getTraps() {
-        List<IModBlock> values = Lists.newArrayList(getAllEntries());
-        List<Block> result = Lists.newArrayList();
-        for (IModBlock i : values) {
-            if (i instanceof ModTrapBlock) {
-                result.add(i.asBlock());
-            }
-        }
-
-        return result;
     }
 
     /**
@@ -135,7 +130,7 @@ public class ModBlockManager extends ModDataManager<IModBlock> {
                 break;
 
             case CROP:
-                result = new ModCropsBlock(properties);
+                result = new ModCropsBlock(mTagRegistrar, properties);
                 break;
 
             case HAY:
