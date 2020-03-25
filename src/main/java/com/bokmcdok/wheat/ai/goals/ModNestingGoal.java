@@ -1,6 +1,5 @@
 package com.bokmcdok.wheat.ai.goals;
 
-import com.bokmcdok.wheat.block.ModBlock;
 import com.bokmcdok.wheat.entity.creature.animal.ModNestingEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -11,13 +10,13 @@ import net.minecraft.world.World;
 
 public class ModNestingGoal extends MoveToBlockGoal {
     private final ModNestingEntity mOwner;
-    private final ModBlock mNestBlock;
+    private final Block mNestBlock;
 
     /**
      * Construction
      * @param nestingEntity The entity that has the nesting behaviour.
      */
-    public ModNestingGoal(ModNestingEntity nestingEntity, ModBlock nestBlock, double moveSpeed, int radius, int height) {
+    public ModNestingGoal(ModNestingEntity nestingEntity, Block nestBlock, double moveSpeed, int radius, int height) {
         super(nestingEntity, moveSpeed, radius, height);
         mOwner = nestingEntity;
         mNestBlock = nestBlock;

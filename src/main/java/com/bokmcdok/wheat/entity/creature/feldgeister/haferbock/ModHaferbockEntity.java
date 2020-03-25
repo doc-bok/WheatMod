@@ -1,10 +1,10 @@
 package com.bokmcdok.wheat.entity.creature.feldgeister.haferbock;
 
+import com.bokmcdok.wheat.ai.behaviour.IUsesTags;
 import com.bokmcdok.wheat.ai.goals.ModMoveToBlockGoal;
-import com.bokmcdok.wheat.block.ModBlockUtils;
-import com.bokmcdok.wheat.block.ModCropsBlock;
 import com.bokmcdok.wheat.entity.creature.feldgeister.ModFeldgeisterEntity;
-import com.bokmcdok.wheat.tag.ModTagUtils;
+import com.bokmcdok.wheat.supplier.ModBlockSupplier;
+import com.bokmcdok.wheat.tag.ModTagRegistrar;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -16,6 +16,7 @@ import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
 import net.minecraft.entity.merchant.villager.AbstractVillagerEntity;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.LazyValue;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
@@ -26,7 +27,16 @@ import net.minecraft.world.biome.Biome;
 
 import javax.annotation.Nullable;
 
-public class ModHaferbockEntity extends ModFeldgeisterEntity {
+public class ModHaferbockEntity extends ModFeldgeisterEntity implements IUsesTags {
+    private static LazyValue<Block> WILD_EINKORN = new LazyValue<>(new ModBlockSupplier("docwheat:wild_einkorn"));
+    private static LazyValue<Block> WILD_EMMER = new LazyValue<>(new ModBlockSupplier("docwheat:wild_emmer"));
+    private static LazyValue<Block> EINKORN = new LazyValue<>(new ModBlockSupplier("docwheat:einkorn"));
+    private static LazyValue<Block> EMMER = new LazyValue<>(new ModBlockSupplier("docwheat:emmer"));
+    private static LazyValue<Block> COMMON_WHEAT = new LazyValue<>(new ModBlockSupplier("docwheat:common_wheat"));
+    private static LazyValue<Block> DURUM = new LazyValue<>(new ModBlockSupplier("docwheat:durum"));
+    private static LazyValue<Block> SPELT = new LazyValue<>(new ModBlockSupplier("docwheat:spelt"));
+
+    private ModTagRegistrar mTagRegistrar;
     private boolean mCried;
 
     /**
@@ -68,6 +78,16 @@ public class ModHaferbockEntity extends ModFeldgeisterEntity {
     }
 
     /**
+     * Provides the entity with access to the tag registrar.
+     * @param tagRegistrar The global tag registrar.
+     */
+    @Override
+    public void setTagRegistrar(ModTagRegistrar tagRegistrar) {
+        super.setTagRegistrar(tagRegistrar);
+        mTagRegistrar = tagRegistrar;
+    }
+
+    /**
      * Get the height of the entity's eyes.
      * @param pose The current pose.
      * @param size The size of the entity.
@@ -84,7 +104,7 @@ public class ModHaferbockEntity extends ModFeldgeisterEntity {
     @Override
     protected void registerGoals() {
         super.registerGoals();
-        goalSelector.addGoal(5, new ModMoveToBlockGoal(this, ModTagUtils.getBlockTag("docwheat:glass_pane"), getSpeed(), 16, 1));
+        goalSelector.addGoal(5, new ModMoveToBlockGoal(this, mTagRegistrar.getBlockTag("docwheat:glass_pane"), getSpeed(), 16, 1));
         targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, AbstractVillagerEntity.class, 10, false, false, IS_CHILD));
     }
 
@@ -160,7 +180,7 @@ public class ModHaferbockEntity extends ModFeldgeisterEntity {
                 BlockState blockState = world.getBlockState(blockPosition);
                 boolean isEinkorn = biome == Biome.Category.PLAINS || biome == Biome.Category.FOREST;
                 if (blockState.isAir(world, blockPosition)) {
-                    plantWheat(blockPosition, isEinkorn ? ModBlockUtils.wild_einkorn : ModBlockUtils.wild_emmer);
+                    plantWheat(blockPosition, isEinkorn ? WILD_EINKORN.getValue() : WILD_EMMER.getValue());
                 } else if (blockState.getBlock() == Blocks.FARMLAND) {
                     plantWheat(blockPosition.up(), getWheatToPlant(isEinkorn));
                 }
@@ -173,14 +193,14 @@ public class ModHaferbockEntity extends ModFeldgeisterEntity {
      * @param isEinkorn      TRUE if we are in a biome that grows wild einkorn.
      * @return The block type to create.
      */
-    private ModCropsBlock getWheatToPlant(boolean isEinkorn) {
+    private Block getWheatToPlant(boolean isEinkorn) {
         int random = world.getRandom().nextInt(12);
         if (random < 2) {
-            return ModBlockUtils.spelt;
+            return SPELT.getValue();
         } else if (random < 6) {
-            return isEinkorn ? ModBlockUtils.einkorn : ModBlockUtils.emmer;
+            return isEinkorn ? EINKORN.getValue() : EMMER.getValue();
         } else {
-            return isEinkorn ? ModBlockUtils.common_wheat : ModBlockUtils.durum;
+            return isEinkorn ? COMMON_WHEAT.getValue() : DURUM.getValue();
         }
     }
 
@@ -190,7 +210,7 @@ public class ModHaferbockEntity extends ModFeldgeisterEntity {
      * @param position The position to update.
      * @param wheat    The wheat block to place.
      */
-    private void plantWheat(BlockPos position, ModCropsBlock wheat) {
+    private void plantWheat(BlockPos position, Block wheat) {
         if (wheat != null) {
             world.setBlockState(position, wheat.getDefaultState().with(CropsBlock.AGE, 0));
         }

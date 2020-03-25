@@ -1,7 +1,7 @@
 package com.bokmcdok.wheat.block;
 
 import com.bokmcdok.wheat.block.beehive.ModBeehiveBlockEventHandler;
-import com.bokmcdok.wheat.tag.ModTagDataManager;
+import com.bokmcdok.wheat.tag.ModTagRegistrar;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -14,10 +14,10 @@ public class ModBlockEventHandler {
 
     /**
      * Construction
-     * @param blockTagDataManager The data manager for block tags.
+     * @param tagRegistrar The registrar for block tags.
      */
-    public ModBlockEventHandler(ModTagDataManager blockTagDataManager) {
-        mBeehiveBlockEventHandler = new ModBeehiveBlockEventHandler(blockTagDataManager);
+    public ModBlockEventHandler(ModTagRegistrar tagRegistrar) {
+        mBeehiveBlockEventHandler = new ModBeehiveBlockEventHandler(tagRegistrar);
     }
 
     /**

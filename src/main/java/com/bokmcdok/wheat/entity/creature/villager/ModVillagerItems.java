@@ -3,7 +3,7 @@ package com.bokmcdok.wheat.entity.creature.villager;
 import com.bokmcdok.wheat.entity.creature.villager.crops.ModVillagerCrops;
 import com.bokmcdok.wheat.entity.creature.villager.food.ModVillagerFood;
 import com.bokmcdok.wheat.tag.ModTag;
-import com.bokmcdok.wheat.tag.ModTagDataManager;
+import com.bokmcdok.wheat.tag.ModTagRegistrar;
 import com.google.common.collect.Sets;
 import net.minecraft.entity.merchant.villager.VillagerEntity;
 import net.minecraft.entity.merchant.villager.VillagerProfession;
@@ -17,17 +17,17 @@ import net.minecraftforge.registries.IForgeRegistry;
 import java.util.Set;
 
 public class ModVillagerItems {
-    private final ModTagDataManager mItemTagDataManager;
+    private final ModTagRegistrar mTagRegistrar;
     private final ModVillagerFood mVillagerFood;
     private final ModVillagerCrops mVillagerCrops;
 
     /**
      * Construction
-     * @param itemTagDataManager The item tag data manager.
+     * @param tagRegistrar The item tag data manager.
      * @param food The villager food instance.
      */
-    public ModVillagerItems(ModTagDataManager itemTagDataManager, ModVillagerFood food, ModVillagerCrops crops) {
-        mItemTagDataManager = itemTagDataManager;
+    public ModVillagerItems(ModTagRegistrar tagRegistrar, ModVillagerFood food, ModVillagerCrops crops) {
+        mTagRegistrar = tagRegistrar;
         mVillagerFood = food;
         mVillagerCrops = crops;
     }
@@ -43,7 +43,7 @@ public class ModVillagerItems {
             return true;
         }
 
-        ModTag tag = mItemTagDataManager.getEntry("docwheat:villager_items");
+        ModTag tag = mTagRegistrar.getItemTag("docwheat:villager_items");
         if (tag != null && tag.contains(stack.getItem().getRegistryName())) {
             return true;
         }
@@ -69,7 +69,7 @@ public class ModVillagerItems {
     public Set<Item> getSharableItems(VillagerEntity villager, VillagerEntity interactionTarget) {
         Ingredient seeds = mVillagerCrops.getSeedItems();
 
-        ModTag villagerItems = mItemTagDataManager.getEntry("docwheat:villager_items");
+        ModTag villagerItems = mTagRegistrar.getItemTag("docwheat:villager_items");
         VillagerProfession villagerProfession = villager.getVillagerData().getProfession();
         VillagerProfession targetProfession = interactionTarget.getVillagerData().getProfession();
         ModTag villagerProfessionItems = getProfessionItems(villagerProfession);
@@ -116,6 +116,6 @@ public class ModVillagerItems {
             name = name.split(":")[0];
         }
 
-        return mItemTagDataManager.getEntry("docwheat:villager_" + name + "_items");
+        return mTagRegistrar.getItemTag("docwheat:villager_" + name + "_items");
     }
 }

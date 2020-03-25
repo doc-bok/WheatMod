@@ -1,9 +1,12 @@
 package com.bokmcdok.wheat;
 
+import com.bokmcdok.wheat.block.ModBlockRegistrar;
 import com.bokmcdok.wheat.container.ModContainerUtils;
 import com.bokmcdok.wheat.dimension.ModDimensionRegistrar;
+import com.bokmcdok.wheat.entity.ModEntityRegistrar;
 import com.bokmcdok.wheat.screen.FlourMillScreen;
 import com.bokmcdok.wheat.spell.ModSpellRegistrar;
+import com.bokmcdok.wheat.tag.ModTagRegistrar;
 import net.minecraft.client.gui.ScreenManager;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -20,8 +23,12 @@ public class WheatMod
     public static final ModSpellRegistrar SPELL_REGISTRAR = new ModSpellRegistrar();
 
     public WheatMod() {
-        new ModForgeEventHandler();
+        ModTagRegistrar tagRegistrar = new ModTagRegistrar();
+        new ModBlockRegistrar(tagRegistrar);
+        new ModEntityRegistrar(tagRegistrar);
+        new ModForgeEventHandler(tagRegistrar);
         new ModDimensionRegistrar();
+
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientSetup);
     }
 

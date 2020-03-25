@@ -2,6 +2,7 @@ package com.bokmcdok.wheat.block;
 
 import com.bokmcdok.wheat.data.ModDataManager;
 import com.bokmcdok.wheat.data.ModMaterialManager;
+import com.bokmcdok.wheat.tag.ModTagRegistrar;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.google.gson.JsonArray;
@@ -19,9 +20,11 @@ import java.util.List;
 import java.util.Set;
 import java.util.function.BiConsumer;
 
-public class ModBlockManager extends ModDataManager<IModBlock> {
+public class ModBlockDataManager extends ModDataManager<IModBlock> {
     private static final String BLOCKS_FOLDER = "blocks";
     private static final ModMaterialManager MATERIAL_MANAGER = new ModMaterialManager();
+
+    private final ModTagRegistrar mTagRegistrar;
 
     private enum BlockType {
         BLOCK,
@@ -30,7 +33,16 @@ public class ModBlockManager extends ModDataManager<IModBlock> {
         MAT,
         NEST,
         SMALL_STONE,
-        TRAP
+        TRAP,
+        CAMPFIRE
+    }
+
+    /**
+     * Construction
+     * @param tagRegistrar The tag registrar.
+     */
+    public ModBlockDataManager(ModTagRegistrar tagRegistrar) {
+        mTagRegistrar = tagRegistrar;
     }
 
     /**
@@ -52,22 +64,6 @@ public class ModBlockManager extends ModDataManager<IModBlock> {
     }
 
     /**
-     * Get a list of traps loaded by the manager.
-     * @return An array of traps if any are loaded.
-     */
-    public List<Block> getTraps() {
-        List<IModBlock> values = Lists.newArrayList(getAllEntries());
-        List<Block> result = Lists.newArrayList();
-        for (IModBlock i : values) {
-            if (i instanceof ModTrapBlock) {
-                result.add(i.asBlock());
-            }
-        }
-
-        return result;
-    }
-
-    /**
      * Load the blocks from the blocks folder.
      */
     public void loadBlocks() {
@@ -79,7 +75,7 @@ public class ModBlockManager extends ModDataManager<IModBlock> {
      * Deserialize a JSON file into a block.
      * @param location The location of the resource.
      * @param json The JSON data to parse.
-     * @return
+     * @return The deserialised block.
      */
     protected IModBlock deserialize(ResourceLocation location, JsonObject json) {
         ModBlockImpl.ModBlockProperties properties = null;
@@ -135,7 +131,7 @@ public class ModBlockManager extends ModDataManager<IModBlock> {
                 break;
 
             case CROP:
-                result = new ModCropsBlock(properties);
+                result = new ModCropsBlock(mTagRegistrar, properties);
                 break;
 
             case HAY:
@@ -156,6 +152,10 @@ public class ModBlockManager extends ModDataManager<IModBlock> {
 
             case TRAP:
                 result = new ModTrapBlock(properties);
+                break;
+
+            case CAMPFIRE:
+                result = new ModCampfireBlock(mTagRegistrar, properties);
                 break;
 
             default:

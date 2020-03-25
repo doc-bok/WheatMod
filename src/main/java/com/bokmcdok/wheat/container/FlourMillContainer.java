@@ -1,8 +1,9 @@
 package com.bokmcdok.wheat.container;
 
-import com.bokmcdok.wheat.block.ModBlockUtils;
 import com.bokmcdok.wheat.item.ModItemUtils;
 import com.bokmcdok.wheat.recipe.FlourMillRecipe;
+import com.bokmcdok.wheat.supplier.ModBlockSupplier;
+import net.minecraft.block.Block;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -16,6 +17,7 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.play.server.SSetSlotPacket;
 import net.minecraft.util.IWorldPosCallable;
+import net.minecraft.util.LazyValue;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
@@ -24,6 +26,7 @@ import java.util.Optional;
 
 
 public class FlourMillContainer extends Container {
+    private static final LazyValue<Block> FLOUR_MILL = new LazyValue<>(new ModBlockSupplier("docwheat:flour_mill"));
 
     private static final int RESULT_SLOT_INDEX = 0;
     private static final int INPUT_SLOT_INDEX = 1;
@@ -128,7 +131,7 @@ public class FlourMillContainer extends Container {
      * @return True if the player can interact
      */
     public boolean canInteractWith(PlayerEntity playerIn) {
-        return isWithinUsableDistance(mCallable, playerIn, ModBlockUtils.flour_mill);
+        return isWithinUsableDistance(mCallable, playerIn, FLOUR_MILL.getValue());
     }
 
     /**

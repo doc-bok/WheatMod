@@ -1,7 +1,7 @@
 package com.bokmcdok.wheat.entity.tile;
 
 import com.bokmcdok.wheat.block.ModTrapBlock;
-import com.bokmcdok.wheat.entity.ModEntityUtils;
+import com.bokmcdok.wheat.entity.ModEntityRegistrar;
 import com.google.common.collect.Sets;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.item.ItemEntity;
@@ -37,7 +37,7 @@ public class ModTrapTileEntity extends ModInventoryTileEntity implements ITickab
      * @param inventorySize The size of the inventory.
      */
     public ModTrapTileEntity(Set<ResourceLocation> targets, int inventorySize) {
-        super(ModEntityUtils.trap, inventorySize);
+        super(ModEntityRegistrar.trap, inventorySize);
         mTargets = targets;
     }
 

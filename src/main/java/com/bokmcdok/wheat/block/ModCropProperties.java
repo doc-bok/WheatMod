@@ -1,13 +1,18 @@
 package com.bokmcdok.wheat.block;
 
+import com.bokmcdok.wheat.supplier.ModBlockSupplier;
+import com.bokmcdok.wheat.supplier.ModItemSupplier;
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
+import net.minecraft.util.LazyValue;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ModCropProperties {
-    private ResourceLocation mDiseaseCrop = null;
-    private ResourceLocation mSeed = null;
+    private LazyValue<Block> mDiseaseCrop = null;
+    private LazyValue<Item> mSeed = null;
     private List<ModCropMutation> mMutations = new ArrayList<>();
     private int mDiseaseResistance = 0;
     private boolean mWild = false;
@@ -17,7 +22,7 @@ public class ModCropProperties {
      * @param disease The block to replace the crop with if it becomes diseased.
      */
     public void disease(ResourceLocation disease) {
-        mDiseaseCrop = disease;
+        mDiseaseCrop = new LazyValue<>(new ModBlockSupplier(disease));
     }
 
     /**
@@ -25,7 +30,7 @@ public class ModCropProperties {
      * @param seed The location of the seed item.
      */
     public void seed(ResourceLocation seed) {
-        mSeed = seed;
+        mSeed = new LazyValue<>(new ModItemSupplier(seed));
     }
 
     /**
@@ -56,16 +61,16 @@ public class ModCropProperties {
      * Get the diseased version of the crop.
      * @return The block to use.
      */
-    public ResourceLocation getDiseaseCrop() {
-        return mDiseaseCrop;
+    public Block getDiseaseCrop() {
+        return mDiseaseCrop != null ? mDiseaseCrop.getValue() : null;
     }
 
     /**
      * The seed for this crop.
      * @return The seed item location.
      */
-    public ResourceLocation getSeed() {
-        return mSeed;
+    public Item getSeed() {
+        return mSeed.getValue();
     }
 
     /**

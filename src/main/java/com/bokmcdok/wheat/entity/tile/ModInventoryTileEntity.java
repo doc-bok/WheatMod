@@ -1,6 +1,6 @@
 package com.bokmcdok.wheat.entity.tile;
 
-import com.bokmcdok.wheat.entity.ModEntityUtils;
+import com.bokmcdok.wheat.entity.ModEntityRegistrar;
 import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
@@ -23,7 +23,7 @@ public class ModInventoryTileEntity extends TileEntity {
      * @param numSlots The number of slots in the inventory.
      */
     public ModInventoryTileEntity(int numSlots) {
-        this(ModEntityUtils.inventory, numSlots);
+        this(ModEntityRegistrar.inventory, numSlots);
     }
 
     /**

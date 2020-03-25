@@ -3,11 +3,12 @@ package com.bokmcdok.wheat;
 import com.bokmcdok.wheat.block.ModBlockEventHandler;
 import com.bokmcdok.wheat.entity.creature.ModLivingEntityEventHandler;
 import com.bokmcdok.wheat.entity.creature.villager.wandering_trader.ModWanderingTraderEventHandler;
-import com.bokmcdok.wheat.tag.ModTagDataManager;
+import com.bokmcdok.wheat.tag.ModTagRegistrar;
 import net.minecraft.world.dimension.DimensionType;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.ModDimension;
+import net.minecraftforge.event.entity.EntityEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -26,19 +27,14 @@ public class ModForgeEventHandler {
     /**
      * Construction
      */
-    public ModForgeEventHandler() {
-        ModTagDataManager itemTagManager = new ModTagDataManager();
-        itemTagManager.loadDataEntries("tags/items");
-
-        ModTagDataManager blockTagManager = new ModTagDataManager();
-        blockTagManager.loadDataEntries("tags/blocks");
-
-        mLivingEntityEventHandler = new ModLivingEntityEventHandler(itemTagManager);
+    public ModForgeEventHandler(ModTagRegistrar tagRegistrar) {
+        mLivingEntityEventHandler = new ModLivingEntityEventHandler(tagRegistrar);
         mWanderingTraderEventHandler = new ModWanderingTraderEventHandler();
-        mBlockEventHandler = new ModBlockEventHandler(blockTagManager);
+        mBlockEventHandler = new ModBlockEventHandler(tagRegistrar);
 
         MinecraftForge.EVENT_BUS.addListener(this::onRegisterDimensionsEvent);
 
+        MinecraftForge.EVENT_BUS.addListener(this::onEntityConstructing);
         MinecraftForge.EVENT_BUS.addListener(this::onEntityJoinWorldEvent);
         MinecraftForge.EVENT_BUS.addListener(this::onLivingUpdateEvent);
         MinecraftForge.EVENT_BUS.addListener(this::onVillagerTradesEvent);
@@ -58,6 +54,14 @@ public class ModForgeEventHandler {
                 DimensionManager.registerDimension(i.getRegistryName(), i, null, true);
             }
         }
+    }
+
+    /**
+     * Fired whenever an entity is constructing.
+     * @param event The event data.
+     */
+    public void onEntityConstructing(EntityEvent.EntityConstructing event) {
+        mLivingEntityEventHandler.onEntityConstructing(event);
     }
 
     /**

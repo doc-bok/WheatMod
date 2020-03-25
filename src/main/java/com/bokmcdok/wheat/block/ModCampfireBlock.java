@@ -2,10 +2,10 @@ package com.bokmcdok.wheat.block;
 
 import com.bokmcdok.wheat.entity.tile.ModCampfireTileEntity;
 import com.bokmcdok.wheat.tag.ModTag;
-import com.bokmcdok.wheat.tag.ModTagUtils;
-import net.minecraft.block.Block;
+import com.bokmcdok.wheat.tag.ModTagRegistrar;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.CampfireBlock;
+import net.minecraft.client.renderer.color.IBlockColor;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.fluid.IFluidState;
@@ -19,7 +19,6 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Direction;
 import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
@@ -31,14 +30,18 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 import java.util.Optional;
 
-public class ModCampfireBlock extends CampfireBlock {
+public class ModCampfireBlock extends CampfireBlock implements IModBlock {
+    protected final ModBlockImpl mImpl;
+    private final ModTagRegistrar mTagRegistrar;
 
     /**
      * Construction
      * @param properties The block's properties.
      */
-    public ModCampfireBlock(Properties properties) {
-        super(properties);
+    public ModCampfireBlock(ModTagRegistrar tagRegistrar, ModBlockImpl.ModBlockProperties properties) {
+        super(properties.asBlockProperties());
+        mTagRegistrar = tagRegistrar;
+        mImpl = new ModBlockImpl(properties);
     }
 
     /**
@@ -176,14 +179,53 @@ public class ModCampfireBlock extends CampfireBlock {
     }
 
     /**
+     * Get the block color.
+     * @return The color of the block.
+     */
+    @Override
+    public IBlockColor getColor() {
+        return mImpl.getColor();
+    }
+
+    /**
+     * Get the render type's name.
+     * @return The name of the render type.
+     */
+    @Override
+    public String getRenderType() {
+        return mImpl.getRenderType();
+    }
+
+    /**
+     * Get the flammability of the block.
+     * @return How flammable the block is.
+     */
+    @Override
+    public int getFlammability() {
+        return mImpl.getFlammability();
+    }
+
+    /**
+     * Get how much fire is encouraged by the block.
+     * @return The fire encouragement.
+     */
+    @Override
+    public int getFireEncouragement() {
+        return mImpl.getFlammability();
+    }
+
+    @Override
+    public ModBlockImpl getImpl() {
+        return mImpl;
+    }
+
+    /**
      * Test if this block is a hay/straw bale.
      * @param state The block state to check.
      * @return TRUE if this block is a hay/straw bale.
      */
     private boolean isHayBlock(BlockState state) {
-        ModTag tag = ModTagUtils.getBlockTag("docwheat:hay_bale");
-        Block block = state.getBlock();
-        ResourceLocation registryName = block.getRegistryName();
-        return tag.contains(registryName);
+        ModTag tag = mTagRegistrar.getBlockTag("docwheat:hay_bale");
+        return tag.containsBlock(state.getBlock());
     }
 }

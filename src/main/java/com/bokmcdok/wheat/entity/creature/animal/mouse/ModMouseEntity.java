@@ -1,11 +1,12 @@
 package com.bokmcdok.wheat.entity.creature.animal.mouse;
 
+import com.bokmcdok.wheat.ai.behaviour.IUsesTags;
 import com.bokmcdok.wheat.ai.goals.ModBreedGoal;
 import com.bokmcdok.wheat.ai.goals.ModRaidFarmGoal;
-import com.bokmcdok.wheat.block.ModBlockUtils;
-import com.bokmcdok.wheat.entity.ModEntityUtils;
+import com.bokmcdok.wheat.entity.ModEntityRegistrar;
 import com.bokmcdok.wheat.entity.creature.animal.cornsnake.ModCornsnakeEntity;
-import com.google.common.collect.Sets;
+import com.bokmcdok.wheat.supplier.ModBlockSupplier;
+import com.bokmcdok.wheat.tag.ModTagRegistrar;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.AgeableEntity;
@@ -27,6 +28,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.LazyValue;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
@@ -38,7 +40,10 @@ import javax.annotation.Nullable;
 import java.util.Random;
 import java.util.Set;
 
-public class ModMouseEntity extends AnimalEntity {
+public class ModMouseEntity extends AnimalEntity implements IUsesTags {
+    private static LazyValue<Block> SEEDED_MOUSE_TRAP = new LazyValue<>(new ModBlockSupplier("docwheat:seeded_mouse_trap"));
+
+    private ModTagRegistrar mTagRegistrar;
 
     /**
      * Construction
@@ -54,8 +59,8 @@ public class ModMouseEntity extends AnimalEntity {
      */
     @Override
     protected void registerGoals() {
-        Set<Block> blocksToRaid = Sets.newHashSet(ModBlockUtils.CROPS);
-        blocksToRaid.add(ModBlockUtils.seeded_mouse_trap);
+        Set<Block> blocksToRaid = mTagRegistrar.getBlockTag("docwheat:crop").getBlocks();
+        blocksToRaid.add(SEEDED_MOUSE_TRAP.getValue());
 
         goalSelector.addGoal(1, new SwimGoal(this));
         goalSelector.addGoal(1, new PanicGoal(this, getSpeed()));
@@ -80,7 +85,7 @@ public class ModMouseEntity extends AnimalEntity {
     @Nullable
     @Override
     public AgeableEntity createChild(AgeableEntity ageable) {
-        return ModEntityUtils.field_mouse.create(world);
+        return ModEntityRegistrar.field_mouse.create(world);
     }
 
     /**
@@ -142,6 +147,15 @@ public class ModMouseEntity extends AnimalEntity {
     public static boolean canSpawn(EntityType<ModMouseEntity> entity, IWorld world, SpawnReason reason, BlockPos position, Random random) {
         Block block = world.getBlockState(position.down()).getBlock();
         return block == Blocks.GRASS_BLOCK && world.getNeighborAwareLightSubtracted(position, 0) > 8;
+    }
+
+    /**
+     * Give access to tags
+     * @param tagRegistrar The tag registrar to use.
+     */
+    @Override
+    public void setTagRegistrar(ModTagRegistrar tagRegistrar) {
+        mTagRegistrar = tagRegistrar;
     }
 
     /**

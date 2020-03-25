@@ -2,10 +2,10 @@ package com.bokmcdok.wheat.entity.creature.animal.cornsnake;
 
 import com.bokmcdok.wheat.ai.goals.ModCreateNestGoal;
 import com.bokmcdok.wheat.ai.goals.ModMateGoal;
-import com.bokmcdok.wheat.block.ModBlockUtils;
-import com.bokmcdok.wheat.entity.ModEntityUtils;
+import com.bokmcdok.wheat.entity.ModEntityRegistrar;
 import com.bokmcdok.wheat.entity.creature.animal.ModNestingEntity;
 import com.bokmcdok.wheat.entity.creature.animal.mouse.ModMouseEntity;
+import com.bokmcdok.wheat.supplier.ModBlockSupplier;
 import com.bokmcdok.wheat.supplier.ModSoundEventSupplier;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -43,6 +43,8 @@ public class ModCornsnakeEntity extends ModNestingEntity {
     private static final LazyValue<SoundEvent> AMBIENT_SOUND = new LazyValue<>(new ModSoundEventSupplier("docwheat:cornsnake_ambient"));
     private static final LazyValue<SoundEvent> DEATH_SOUND = new LazyValue<>(new ModSoundEventSupplier("docwheat:cornsnake_death"));
     private static final LazyValue<SoundEvent> HURT_SOUND = new LazyValue<>(new ModSoundEventSupplier("docwheat:cornsnake_hurt"));
+    private static LazyValue<Block> CORNSNAKE_EGG = new LazyValue<>(new ModBlockSupplier("docwheat:cornsnake_egg"));
+
 
     /**
      * Construction
@@ -61,7 +63,7 @@ public class ModCornsnakeEntity extends ModNestingEntity {
         goalSelector.addGoal(1, new SwimGoal(this));
         goalSelector.addGoal(1, new PanicGoal(this, getSpeed()));
         goalSelector.addGoal(1, new ModMateGoal(this, getSpeed()));
-        goalSelector.addGoal(1, new ModCreateNestGoal(this, ModBlockUtils.cornsnake_egg, getSpeed(), 16, 8));
+        goalSelector.addGoal(1, new ModCreateNestGoal(this, CORNSNAKE_EGG.getValue(), getSpeed(), 16, 8));
         goalSelector.addGoal(5, new MeleeAttackGoal(this, getSpeed(), true));
         goalSelector.addGoal(6, new WaterAvoidingRandomWalkingGoal(this, 0.6D));
         goalSelector.addGoal(11, new LookAtGoal(this, ModMouseEntity.class, 10.0F));
@@ -78,7 +80,7 @@ public class ModCornsnakeEntity extends ModNestingEntity {
     @Nullable
     @Override
     public AgeableEntity createChild(AgeableEntity ageable) {
-        return ModEntityUtils.cornsnake.create(world);
+        return ModEntityRegistrar.cornsnake.create(world);
     }
 
     /**
