@@ -1,6 +1,7 @@
 package com.bokmcdok.wheat.item;
 
 import net.minecraft.client.renderer.color.IItemColor;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -10,9 +11,14 @@ import net.minecraft.item.IArmorMaterial;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import net.minecraftforge.registries.ForgeRegistry;
+import net.minecraftforge.registries.GameData;
+import net.minecraftforge.registries.RegistryManager;
 
 import javax.annotation.Nullable;
+import java.util.Map;
 import java.util.function.Consumer;
 
 public class ModArmorItem extends ArmorItem implements IModItem {
@@ -135,5 +141,28 @@ public class ModArmorItem extends ArmorItem implements IModItem {
     @Override
     public String getArmorTexture(ItemStack stack, Entity entity, EquipmentSlotType slot, String type) {
         return mImpl.getArmorTexture();
+    }
+
+    /**
+     * Add any default enchantments to a newly created item stack.
+     * @param stack The item stack to modify.
+     * @param world The current world.
+     * @param playerEntity The player that created the item.
+     */
+    @Override
+    public void onCreated(ItemStack stack, World world, PlayerEntity playerEntity) {
+        super.onCreated(stack, world, playerEntity);
+
+        Map<ResourceLocation, Integer> enchantments = mImpl.getEnchantments();
+        if (!enchantments.isEmpty()) {
+            ForgeRegistry<Enchantment> registry = RegistryManager.ACTIVE.getRegistry(GameData.ENCHANTMENTS);
+            for (Map.Entry<ResourceLocation, Integer> entry : enchantments.entrySet())
+            {
+                Enchantment enchantment = registry.getValue(entry.getKey());
+                if (enchantment != null) {
+                    stack.addEnchantment(enchantment, entry.getValue());
+                }
+            }
+        }
     }
 }

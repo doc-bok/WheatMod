@@ -2,6 +2,8 @@ package com.bokmcdok.wheat.item;
 
 import com.bokmcdok.wheat.entity.ThrownItemEntity;
 import com.bokmcdok.wheat.spell.ModSpell;
+import com.google.common.collect.Maps;
+import com.mojang.datafixers.util.Pair;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -20,6 +22,7 @@ import net.minecraft.util.SoundEvents;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 
+import java.util.Map;
 import java.util.Optional;
 import java.util.Random;
 
@@ -40,6 +43,7 @@ public class ModItemImpl {
     private final int mOnDamagedEffectDuration;
     private final int mOnDamagedEffectAmplifier;
     private final String mArmorTexture;
+    private final Map<ResourceLocation, Integer> mEnchantments;
 
     /**
      * Construction
@@ -65,6 +69,7 @@ public class ModItemImpl {
         mOnDamagedEffectDuration = properties.mOnDamagedEffectDuration;
 
         mArmorTexture = properties.mArmorTexture;
+        mEnchantments = properties.mEnchantments;
     }
 
     /**
@@ -201,8 +206,20 @@ public class ModItemImpl {
         }
     }
 
+    /**
+     * Get the texture to use with the armor.
+     * @return The registry name of the texture to use.
+     */
     public String getArmorTexture() {
         return mArmorTexture;
+    }
+
+    /**
+     * Get the default enchantments for this item.
+     * @return A map of registry names and enchantment levels.
+     */
+    public Map<ResourceLocation, Integer> getEnchantments() {
+        return  mEnchantments;
     }
 
     /**
@@ -299,6 +316,7 @@ public class ModItemImpl {
         private int mOnDamagedEffectDuration = 0;
         private int mOnDamagedEffectAmplifier = 0;
         private String mArmorTexture = null;
+        private Map<ResourceLocation, Integer> mEnchantments = Maps.newHashMap();
 
         /**
          * This item can be thrown by right-clicking.
@@ -376,6 +394,15 @@ public class ModItemImpl {
          */
         public void armorTexture(String texture) {
             mArmorTexture = texture;
+        }
+
+        /**
+         * An enchantment to apply when an ItemStack is created.
+         * @param registryName The registry name of the enchantment.
+         * @param level The level of the enchantment.
+         */
+        public void addEnchantment(String registryName, int level) {
+            mEnchantments.put(new ResourceLocation(registryName), level);
         }
     }
 }
