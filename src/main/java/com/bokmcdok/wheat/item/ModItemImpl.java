@@ -3,7 +3,6 @@ package com.bokmcdok.wheat.item;
 import com.bokmcdok.wheat.entity.ThrownItemEntity;
 import com.bokmcdok.wheat.spell.ModSpell;
 import com.google.common.collect.Maps;
-import com.mojang.datafixers.util.Pair;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
