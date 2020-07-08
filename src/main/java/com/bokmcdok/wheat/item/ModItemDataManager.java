@@ -57,7 +57,7 @@ public class ModItemDataManager extends ModDataManager<IModItem> {
      */
     public Item[] getAsItems() {
         List<IModItem> values = new ArrayList(getAllEntries());
-        List<Item> converted = Lists.transform(values, i -> i.asItem());
+        List<Item> converted = Lists.transform(values, IModItem::asItem);
         return converted.toArray(new Item[0]);
     }
 
@@ -104,6 +104,7 @@ public class ModItemDataManager extends ModDataManager<IModItem> {
         setInt(properties, json, "on_damaged_effect_duration", ModItemImpl.ModItemProperties::onDamagedEffectDuration);
         setInt(properties, json, "on_damaged_effect_amplifier", ModItemImpl.ModItemProperties::onDamagedEffectAmplifier);
         setString(properties, json, "armor_texture", ModItemImpl.ModItemProperties::armorTexture);
+        setObjectArray(properties, json, "enchantments", this::parseEnchantments);
 
         deserializeTools(json, properties);
         deserializeFood(json, properties);
@@ -188,18 +189,17 @@ public class ModItemDataManager extends ModDataManager<IModItem> {
     /**
      * Convert a JSON object to a Food instance.
      * @param json The JSON object from the item file.
-     * @return A new instance of Food.
      */
     private void deserializeFood(JsonObject json, ModItemImpl.ModItemProperties properties) {
         if (JSONUtils.hasField(json, "food")) {
             JsonObject food = JSONUtils.getJsonObject(json, "food");
             Food.Builder builder = new Food.Builder();
 
-            setInt(builder, food, "hunger", (x, value) -> x.hunger(value));
-            setFloat(builder, food, "saturation", (x, value) -> x.saturation(value));
-            setIfTrue(builder, food, "meat", (x) -> x.meat());
-            setIfTrue(builder, food, "always_edible", (x) -> x.setAlwaysEdible());
-            setIfTrue(builder, food, "fast_to_eat", (x) -> x.fastToEat());
+            setInt(builder, food, "hunger", Food.Builder::hunger);
+            setFloat(builder, food, "saturation", Food.Builder::saturation);
+            setIfTrue(builder, food, "meat", Food.Builder::meat);
+            setIfTrue(builder, food, "always_edible", Food.Builder::setAlwaysEdible);
+            setIfTrue(builder, food, "fast_to_eat", Food.Builder::fastToEat);
             setObjectArray(builder, food, "effects", (x, effect) -> {
                 JsonObject effectAsJsonObject = effect.getAsJsonObject();
 
@@ -294,5 +294,19 @@ public class ModItemDataManager extends ModDataManager<IModItem> {
         }
 
         return getEntry(location).asItem();
+    }
+
+    /**
+     * Parse default enchantment(s) that are applied to this item.
+     * @param properties The item properties being parsed.
+     * @param object The JSON object containing the enchantment data.
+     */
+    private void parseEnchantments(ModItemImpl.ModItemProperties properties, JsonObject object) {
+        if (JSONUtils.hasField(object, "type") &&
+            JSONUtils.hasField(object, "level")) {
+            String type = JSONUtils.getString(object, "type");
+            int level = JSONUtils.getInt(object, "level");
+            properties.addEnchantment(type, level);
+        }
     }
 }
