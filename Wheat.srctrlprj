@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<config>
+    <source_groups>
+        <source_group_9dbb196a-c9a1-49e4-b003-f2bf787e9427>
+            <gradle>
+                <project_file_path>build.gradle</project_file_path>
+                <should_index_tests>0</should_index_tests>
+            </gradle>
+            <java_standard>12</java_standard>
+            <name>Java Source Group from Gradle</name>
+            <source_extensions>
+                <source_extension>.java</source_extension>
+            </source_extensions>
+            <status>enabled</status>
+            <type>Java Source Group from Gradle</type>
+        </source_group_9dbb196a-c9a1-49e4-b003-f2bf787e9427>
+    </source_groups>
+    <version>8</version>
+</config>

@@ -1,0 +1,35 @@
+{
+  "parent": "docwheat:fae_fauna/root",
+  "display": {
+    "icon": {
+      "item": "docwheat:blood_leather"
+    },
+    "title": {
+      "translate": "advancements.wheat.haferbock.title"
+    },
+    "description": {
+      "translate": "advancements.wheat.haferbock.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "blood_leatheer": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "docwheat:blood_leather"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "blood_leather"
+    ]
+  ]
+}

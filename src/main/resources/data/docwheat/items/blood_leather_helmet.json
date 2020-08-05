@@ -1,0 +1,18 @@
+{
+    "type": "armor",
+    "group": "combat",
+    "armor_material": "minecraft:leather",
+    "armor_slot": "head",
+    "armor_texture": "docwheat:textures/models/armor/blood_leather.png",
+    "enchantments": [
+        {
+            "type": "minecraft:thorns",
+            "level": 1
+        }
+    ],
+    "color": {
+        "r": 157,
+        "g": 2,
+        "b": 2
+    }
+}

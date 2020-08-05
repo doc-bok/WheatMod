@@ -6,6 +6,6 @@
   "head_defense": 0,
   "enchantability": 30,
   "equip_sound": "minecraft:item.crop.plant",
-  "tougness": 0.0,
+  "toughness": 0.0,
   "repair_item": "docwheat:spelt_straw"
 }

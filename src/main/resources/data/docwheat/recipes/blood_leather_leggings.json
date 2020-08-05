@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XXX",
+    "X X",
+    "X X"
+  ],
+  "key": {
+    "X": {
+      "item": "docwheat:blood_leather"
+    }
+  },
+  "result": {
+    "item": "docwheat:blood_leather_leggings"
+  }
+}
