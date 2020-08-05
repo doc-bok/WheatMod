@@ -186,6 +186,10 @@
 
   "advancements.fae_fauna.root.title": "Fae and Fauna",
   "advancements.fae_fauna.root.description": "Some creatures are mythical...",
+  "advancements.haferbock.root.title": "Bloody Hide",
+  "advancements.haferbock.root.description": "Obtain some Haferbock Leather",
+  "advancements.blood_leather_armor.root.title": "Bloody Thorns",
+  "advancements.blood_leather_armor.root.description": "Obtain some Blood Leather Armor",
 
   "item.docwheat.getreidewolf_tooth": "Yellowtooth",
   "item.docwheat.healing_amulet": "Healing Amulet",
@@ -196,5 +200,11 @@
 
   "docwheat.subtitle.cornsnake_ambient": "Cornsnake Rattle",
   "docwheat.subtitle.cornsnake_death": "Cornsnake Dies",
-  "docwheat.subtitle.cornsnake_hurt": "Cornsnake Hurt"
+  "docwheat.subtitle.cornsnake_hurt": "Cornsnake Hurt",
+
+  "item.docwheat.blood_leather": "Haferbock Leather",
+  "item.docwheat.blood_leather_helmet": "Blood Helmet",
+  "item.docwheat.blood_leather_chestplate": "Blood Chestplate",
+  "item.docwheat.blood_leather_leggings": "Blood Leggings",
+  "item.docwheat.blood_leather_boots": "Blood Boots"
 }
