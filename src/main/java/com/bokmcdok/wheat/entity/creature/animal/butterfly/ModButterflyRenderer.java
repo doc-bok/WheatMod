@@ -9,7 +9,15 @@ import net.minecraft.util.math.MathHelper;
 import javax.annotation.Nullable;
 
 public class ModButterflyRenderer extends MobRenderer<ModButterflyEntity, ModButterflyModel> {
-    private static final ResourceLocation BUTTERFLY_TEXTURE = new ResourceLocation("docwheat:textures/entity/animal/butterfly.png");
+    private static final ResourceLocation[] BUTTERFLY_TEXTURE = {
+            new ResourceLocation("docwheat:textures/entity/animal/butterfly/butterfly.png"),
+            new ResourceLocation("docwheat:textures/entity/animal/butterfly/butterfly02.png"),
+            new ResourceLocation("docwheat:textures/entity/animal/butterfly/butterfly03.png"),
+            new ResourceLocation("docwheat:textures/entity/animal/butterfly/butterfly04.png"),
+            new ResourceLocation("docwheat:textures/entity/animal/butterfly/butterfly05.png"),
+            new ResourceLocation("docwheat:textures/entity/animal/butterfly/butterfly06.png"),
+            new ResourceLocation("docwheat:textures/entity/animal/butterfly/butterfly07.png")
+    };
     private static final ResourceLocation MOTH_TEXTURE = new ResourceLocation("docwheat:textures/entity/animal/moth.png");
 
     /**
@@ -29,7 +37,7 @@ public class ModButterflyRenderer extends MobRenderer<ModButterflyEntity, ModBut
     @Override
     public ResourceLocation getEntityTexture(ModButterflyEntity entity) {
         if (entity.getIsButterfly()) {
-            return BUTTERFLY_TEXTURE;
+            return BUTTERFLY_TEXTURE[entity.getVariety()];
         } else {
             return MOTH_TEXTURE;
         }

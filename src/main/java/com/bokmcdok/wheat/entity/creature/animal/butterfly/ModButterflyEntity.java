@@ -31,7 +31,10 @@ import javax.annotation.Nullable;
 import java.util.Random;
 
 public class ModButterflyEntity extends CreatureEntity {
+    private static final int MAX_VARIETIES = 7;
+
     private static final DataParameter<Boolean> IS_BUTTERFLY = EntityDataManager.createKey(ModButterflyEntity.class, DataSerializers.BOOLEAN);
+    private static final DataParameter<Integer> VARIETY = EntityDataManager.createKey(ModButterflyEntity.class, DataSerializers.VARINT);
     private BlockPos mSpawnPosition;
 
     /**
@@ -120,6 +123,14 @@ public class ModButterflyEntity extends CreatureEntity {
     }
 
     /**
+     * Get the variety of butterfly.
+     * @return The index of the texture to use for the butterfly.
+     */
+    public int getVariety() {
+        return dataManager.get(VARIETY);
+    }
+
+    /**
      * On spawn check for day/night to determine if this is a moth or a butterfly.
      * @param world The current world.
      * @param difficulty The difficulty setting.
@@ -132,6 +143,7 @@ public class ModButterflyEntity extends CreatureEntity {
     @Override
     public ILivingEntityData onInitialSpawn(IWorld world, DifficultyInstance difficulty, SpawnReason reason, @Nullable ILivingEntityData data, @Nullable CompoundNBT nbt) {
         setIsButterfly(world.getWorld().isDaytime());
+        setVariety(rand.nextInt(MAX_VARIETIES));
         return super.onInitialSpawn(world, difficulty, reason, data, nbt);
     }
 
@@ -153,6 +165,7 @@ public class ModButterflyEntity extends CreatureEntity {
     public void writeAdditional(CompoundNBT data) {
         super.writeAdditional(data);
         data.putBoolean("IsButterfly", getIsButterfly());
+        data.putInt("Variety", getVariety());
     }
 
     /**
@@ -163,6 +176,7 @@ public class ModButterflyEntity extends CreatureEntity {
     public void readAdditional(CompoundNBT data) {
         super.readAdditional(data);
         setIsButterfly(data.getBoolean("IsButterfly"));
+        setVariety(data.getInt("Variety"));
     }
 
     /**
@@ -223,6 +237,7 @@ public class ModButterflyEntity extends CreatureEntity {
         double x = (double)mSpawnPosition.getX() + 0.5D - position.x;
         double y = (double)mSpawnPosition.getY() + 0.1D - position.y;
         double z = (double)mSpawnPosition.getZ() + 0.5D - position.z;
+
         Vec3d motion = getMotion();
         Vec3d newMotion = motion.add(
                 (Math.signum(x) * 0.5D - motion.x) * 0.10000000149011612D,
@@ -243,8 +258,6 @@ public class ModButterflyEntity extends CreatureEntity {
     protected boolean func_225502_at_() {
         return false;
     }
-
-
 
     /**
      * Butterflies can't fall.
@@ -286,6 +299,7 @@ public class ModButterflyEntity extends CreatureEntity {
     protected void registerData() {
         super.registerData();
         dataManager.register(IS_BUTTERFLY, true);
+        dataManager.register(VARIETY, 0);
     }
 
     /**
@@ -309,6 +323,14 @@ public class ModButterflyEntity extends CreatureEntity {
         }
 
         dataManager.set(IS_BUTTERFLY, isButterfly);
+    }
+
+    /**
+     * Set the variety of this butterfly.
+     * @param variety The variety of this butterfly.
+     */
+    private void setVariety(int variety) {
+        dataManager.set(VARIETY, variety);
     }
 
     private double getFlyingSpeed() {
