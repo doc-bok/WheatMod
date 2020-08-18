@@ -10,8 +10,13 @@ import javax.annotation.Nullable;
 
 public class ModButterflyRenderer extends MobRenderer<ModButterflyEntity, ModButterflyModel> {
     private static final ResourceLocation[] BUTTERFLY_TEXTURE = {
-            new ResourceLocation("docwheat:textures/entity/animal/butterfly.png"),
-            new ResourceLocation("docwheat:textures/entity/animal/butterfly02.png")
+            new ResourceLocation("docwheat:textures/entity/animal/butterfly/butterfly.png"),
+            new ResourceLocation("docwheat:textures/entity/animal/butterfly/butterfly02.png"),
+            new ResourceLocation("docwheat:textures/entity/animal/butterfly/butterfly03.png"),
+            new ResourceLocation("docwheat:textures/entity/animal/butterfly/butterfly04.png"),
+            new ResourceLocation("docwheat:textures/entity/animal/butterfly/butterfly05.png"),
+            new ResourceLocation("docwheat:textures/entity/animal/butterfly/butterfly06.png"),
+            new ResourceLocation("docwheat:textures/entity/animal/butterfly/butterfly07.png")
     };
     private static final ResourceLocation MOTH_TEXTURE = new ResourceLocation("docwheat:textures/entity/animal/moth.png");
 

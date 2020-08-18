@@ -31,7 +31,7 @@ import javax.annotation.Nullable;
 import java.util.Random;
 
 public class ModButterflyEntity extends CreatureEntity {
-    private static int MAX_VARIETIES = 2;
+    private static final int MAX_VARIETIES = 7;
 
     private static final DataParameter<Boolean> IS_BUTTERFLY = EntityDataManager.createKey(ModButterflyEntity.class, DataSerializers.BOOLEAN);
     private static final DataParameter<Integer> VARIETY = EntityDataManager.createKey(ModButterflyEntity.class, DataSerializers.VARINT);
@@ -237,6 +237,7 @@ public class ModButterflyEntity extends CreatureEntity {
         double x = (double)mSpawnPosition.getX() + 0.5D - position.x;
         double y = (double)mSpawnPosition.getY() + 0.1D - position.y;
         double z = (double)mSpawnPosition.getZ() + 0.5D - position.z;
+
         Vec3d motion = getMotion();
         Vec3d newMotion = motion.add(
                 (Math.signum(x) * 0.5D - motion.x) * 0.10000000149011612D,
