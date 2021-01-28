@@ -1,27 +1,27 @@
 {
-  "parent": "docwheat:fae_fauna/root",
+  "parent": "docwheat:wheat/baker",
   "display": {
     "icon": {
-      "item": "docwheat:blood_leather"
+      "item": "docwheat:tomato_burger"
     },
     "title": {
-      "translate": "advancements.fae_fauna.haferbock.title"
+      "translate": "advancements.wheat.baker.title"
     },
     "description": {
-      "translate": "advancements.fae_fauna.haferbock.description"
+      "translate": "advancements.wheat.baker.description"
     },
-    "frame": "task",
+    "frame": "goal",
     "show_toast": true,
     "announce_to_chat": true,
     "hidden": false
   },
   "criteria": {
-    "blood_leather": {
+    "burger": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "item": "docwheat:blood_leather"
+            "item": "docwheat:tomato_burger"
           }
         ]
       }
@@ -29,7 +29,7 @@
   },
   "requirements": [
     [
-      "blood_leather"
+      "burger"
     ]
   ]
 }
