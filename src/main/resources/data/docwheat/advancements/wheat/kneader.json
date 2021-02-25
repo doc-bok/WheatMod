@@ -1,0 +1,46 @@
+{
+  "parent": "docwheat:wheat/grinder",
+  "display": {
+    "icon": {
+      "item": "docwheat:dough"
+    },
+    "title": {
+      "translate": "advancements.wheat.kneader.title"
+    },
+    "description": {
+      "translate": "advancements.wheat.kneader.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "dough": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "docwheat:dough"
+          }
+        ]
+      }
+    },
+    "bread_dough": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "docwheat:bread_dough"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "dough",
+      "bread_dough"
+    ]
+  ]
+}

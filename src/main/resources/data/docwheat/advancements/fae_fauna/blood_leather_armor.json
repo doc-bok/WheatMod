@@ -1,11 +1,11 @@
 {
-  "parent": "docwheat:wheat/root",
+  "parent": "docwheat:fae_fauna/haferbock",
   "display": {
     "icon": {
       "item": "docwheat:blood_leather_chestplate"
     },
     "title": {
-      "translate": "advancements.wheat.blood_leather_armor.title"
+      "translate": "advancements.fae_fauna.blood_leather_armor.title"
     },
     "description": {
       "translate": "advancements.wheat.blood_leather_armor.description"
