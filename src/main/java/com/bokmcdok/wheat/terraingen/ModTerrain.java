@@ -126,6 +126,8 @@ class ModTerrain {
                 default:
                     break;
             }
+
+            creatureSpawns.add(new Biome.SpawnListEntry(ModEntityRegistrar.moth, 10, 1, 1));
         }
     }
 
