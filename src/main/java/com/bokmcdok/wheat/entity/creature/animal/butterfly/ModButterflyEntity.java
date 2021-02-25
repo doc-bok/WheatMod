@@ -1,8 +1,5 @@
 package com.bokmcdok.wheat.entity.creature.animal.butterfly;
 
-import com.bokmcdok.wheat.ai.goals.ModAttractToLightGoal;
-import com.bokmcdok.wheat.ai.goals.ModDiurnalGoal;
-import com.bokmcdok.wheat.ai.goals.ModNocturnalGoal;
 import com.bokmcdok.wheat.ai.goals.ModPollinateGoal;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.CreatureEntity;
@@ -33,7 +30,6 @@ import java.util.Random;
 public class ModButterflyEntity extends CreatureEntity {
     private static final int MAX_VARIETIES = 7;
 
-    private static final DataParameter<Boolean> IS_BUTTERFLY = EntityDataManager.createKey(ModButterflyEntity.class, DataSerializers.BOOLEAN);
     private static final DataParameter<Integer> VARIETY = EntityDataManager.createKey(ModButterflyEntity.class, DataSerializers.VARINT);
     private BlockPos mSpawnPosition;
 
@@ -109,9 +105,9 @@ public class ModButterflyEntity extends CreatureEntity {
             } else {
                 return light >= 4 && MobEntity.canSpawnOn(entity, world, reason, position, random);
             }
-        } else {
-            return light < random.nextInt(4) && MobEntity.canSpawnOn(entity, world, reason, position, random);
         }
+
+        return false;
     }
 
     /**
@@ -119,7 +115,7 @@ public class ModButterflyEntity extends CreatureEntity {
      * @return TRUE if this is a butterfly, false if it is a moth.
      */
     public boolean getIsButterfly() {
-        return dataManager.get(IS_BUTTERFLY);
+        return true;
     }
 
     /**
@@ -142,7 +138,6 @@ public class ModButterflyEntity extends CreatureEntity {
     @Nullable
     @Override
     public ILivingEntityData onInitialSpawn(IWorld world, DifficultyInstance difficulty, SpawnReason reason, @Nullable ILivingEntityData data, @Nullable CompoundNBT nbt) {
-        setIsButterfly(world.getWorld().isDaytime());
         setVariety(rand.nextInt(MAX_VARIETIES));
         return super.onInitialSpawn(world, difficulty, reason, data, nbt);
     }
@@ -164,7 +159,6 @@ public class ModButterflyEntity extends CreatureEntity {
     @Override
     public void writeAdditional(CompoundNBT data) {
         super.writeAdditional(data);
-        data.putBoolean("IsButterfly", getIsButterfly());
         data.putInt("Variety", getVariety());
     }
 
@@ -175,7 +169,6 @@ public class ModButterflyEntity extends CreatureEntity {
     @Override
     public void readAdditional(CompoundNBT data) {
         super.readAdditional(data);
-        setIsButterfly(data.getBoolean("IsButterfly"));
         setVariety(data.getInt("Variety"));
     }
 
@@ -298,7 +291,6 @@ public class ModButterflyEntity extends CreatureEntity {
     @Override
     protected void registerData() {
         super.registerData();
-        dataManager.register(IS_BUTTERFLY, true);
         dataManager.register(VARIETY, 0);
     }
 
@@ -311,21 +303,6 @@ public class ModButterflyEntity extends CreatureEntity {
     }
 
     /**
-     * Set whether or not this is a butterfly.
-     * @param isButterfly TRUE if this is a butterfly, FALSE if this is a moth.
-     */
-    private void setIsButterfly(boolean isButterfly) {
-        if (isButterfly) {
-            goalSelector.addGoal(3, new ModDiurnalGoal(this));
-        } else {
-            goalSelector.addGoal(3, new ModNocturnalGoal(this));
-            goalSelector.addGoal(4, new ModAttractToLightGoal(this, getFlyingSpeed(), 16, 8));
-        }
-
-        dataManager.set(IS_BUTTERFLY, isButterfly);
-    }
-
-    /**
      * Set the variety of this butterfly.
      * @param variety The variety of this butterfly.
      */
@@ -333,7 +310,7 @@ public class ModButterflyEntity extends CreatureEntity {
         dataManager.set(VARIETY, variety);
     }
 
-    private double getFlyingSpeed() {
+    protected double getFlyingSpeed() {
         return getAttribute(SharedMonsterAttributes.FLYING_SPEED).getValue();
     }
 }

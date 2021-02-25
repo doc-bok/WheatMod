@@ -3,6 +3,7 @@ package com.bokmcdok.wheat.entity;
 import com.bokmcdok.wheat.WheatMod;
 import com.bokmcdok.wheat.entity.creature.animal.butterfly.ModButterflyEntity;
 import com.bokmcdok.wheat.entity.creature.animal.butterfly.ModButterflyRenderFactory;
+import com.bokmcdok.wheat.entity.creature.animal.butterfly.ModMothEntity;
 import com.bokmcdok.wheat.entity.creature.animal.cornsnake.ModCornsnakeEntity;
 import com.bokmcdok.wheat.entity.creature.animal.cornsnake.ModCornsnakeRenderFactory;
 import com.bokmcdok.wheat.entity.creature.animal.mouse.ModMouseEntity;
@@ -59,6 +60,7 @@ public class ModEntityRegistrar {    public static final EntityType<ThrownItemEn
 
     public static final EntityType<ModMouseEntity> field_mouse = null;
     public static final EntityType<ModButterflyEntity> butterfly = null;
+    public static final EntityType<ModMothEntity> moth = null;
     public static final EntityType<ModWidowbirdEntity> widowbird = null;
     public static final EntityType<ModGetreidewolfEntity> getreidewolf = null;
     public static final EntityType<ModWeizenbellerEntity> weizenbeller = null;
@@ -100,6 +102,7 @@ public class ModEntityRegistrar {    public static final EntityType<ThrownItemEn
     {
         EntitySpawnPlacementRegistry.register(field_mouse, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ModMouseEntity::canSpawn);
         EntitySpawnPlacementRegistry.register(butterfly, EntitySpawnPlacementRegistry.PlacementType.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ModButterflyEntity::canSpawn);
+        EntitySpawnPlacementRegistry.register(moth, EntitySpawnPlacementRegistry.PlacementType.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ModMothEntity::canMothSpawn);
         EntitySpawnPlacementRegistry.register(widowbird, EntitySpawnPlacementRegistry.PlacementType.NO_RESTRICTIONS, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ModWidowbirdEntity::canSpawn);
         EntitySpawnPlacementRegistry.register(getreidewolf, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ModGetreidewolfEntity::canGetreideWolfSpawn);
         EntitySpawnPlacementRegistry.register(weizenbeller, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ModWeizenbellerEntity::canSpawn);
@@ -116,6 +119,7 @@ public class ModEntityRegistrar {    public static final EntityType<ThrownItemEn
         RenderingRegistry.registerEntityRenderingHandler(stone_entity, new StoneRenderer());
         RenderingRegistry.registerEntityRenderingHandler(field_mouse, new ModMouseRenderFactory());
         RenderingRegistry.registerEntityRenderingHandler(butterfly, new ModButterflyRenderFactory());
+        RenderingRegistry.registerEntityRenderingHandler(moth, new ModButterflyRenderFactory());
         RenderingRegistry.registerEntityRenderingHandler(widowbird, new ModWidowbirdRenderFactory());
         RenderingRegistry.registerEntityRenderingHandler(getreidewolf, new ModGetreidewolfRenderFactory());
         RenderingRegistry.registerEntityRenderingHandler(weizenbeller, new ModWeizenbellerRenderFactory());
@@ -151,6 +155,11 @@ public class ModEntityRegistrar {    public static final EntityType<ThrownItemEn
                         .size(0.3f, 0.4f)
                         .build("butterfly")
                         .setRegistryName(WheatMod.MOD_ID, "butterfly"),
+
+                EntityType.Builder.<ModMothEntity>create(ModMothEntity::new, EntityClassification.CREATURE)
+                        .size(0.3f, 0.4f)
+                        .build("moth")
+                        .setRegistryName(WheatMod.MOD_ID, "moth"),
 
                 EntityType.Builder.create(ModWidowbirdEntity::new, EntityClassification.CREATURE)
                         .size(0.5f, 0.9f)
