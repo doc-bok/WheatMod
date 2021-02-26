@@ -27,5 +27,11 @@
     "category": "block",
     "subtitle": "docwheat.subtitle.cornsnake_hurt",
     "sounds": [ "docwheat:cornsnake_hurt" ]
+  },
+
+  "widowbird_ambient": {
+    "category": "block",
+    "subtitle": "docwheat.subtitle.widowbird_ambient",
+    "sounds": [ "docwheat:widowbird_ambient" ]
   }
 }
