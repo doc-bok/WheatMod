@@ -11,6 +11,7 @@ import com.bokmcdok.wheat.entity.creature.animal.ModNestingEntity;
 import com.bokmcdok.wheat.entity.creature.animal.butterfly.ModButterflyEntity;
 import com.bokmcdok.wheat.item.ModItemUtils;
 import com.bokmcdok.wheat.supplier.ModBlockSupplier;
+import com.bokmcdok.wheat.supplier.ModSoundEventSupplier;
 import com.bokmcdok.wheat.tag.ModTagRegistrar;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -48,6 +49,8 @@ import java.util.Random;
 
 public class ModWidowbirdEntity extends ModNestingEntity implements IFlyingAnimal, IUsesTags {
     private static LazyValue<Block> WIDOWBIRD_NEST = new LazyValue<>(new ModBlockSupplier("docwheat:widowbird_nest"));
+
+    private static final LazyValue<SoundEvent> AMBIENT_SOUND = new LazyValue<>(new ModSoundEventSupplier("docwheat:widowbird_ambient"));
 
     private final ModFlappingController mFlappingController;
     private ModTagRegistrar mTagRegistrar;
@@ -164,7 +167,7 @@ public class ModWidowbirdEntity extends ModNestingEntity implements IFlyingAnima
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.ENTITY_PARROT_AMBIENT;
+        return AMBIENT_SOUND.getValue();
     }
 
     /**
@@ -180,7 +183,7 @@ public class ModWidowbirdEntity extends ModNestingEntity implements IFlyingAnima
 
     /**
      * Get the death sound
-     * TODO: Add custom sounds for widowbird.
+     * TODO: Add custom sounds forc widowbird.
      * @return The death sound event.
      */
     @Nullable
