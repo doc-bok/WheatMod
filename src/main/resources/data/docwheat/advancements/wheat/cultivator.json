@@ -1,0 +1,48 @@
+{
+  "parent": "docwheat:wheat/root",
+  "display": {
+    "icon": {
+      "item": "docwheat:spelt_straw"
+    },
+    "title": {
+      "translate": "advancements.wheat.cultivator.title"
+    },
+    "description": {
+      "translate": "advancements.wheat.cultivator.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "spelt_straw": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "docwheat:spelt_straw"
+          }
+        ]
+      }
+    },
+    "spelt_grain": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "docwheat:spelt_grain"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "spelt_grain"
+    ],
+    [
+      "spelt_straw"
+    ]
+  ]
+}
