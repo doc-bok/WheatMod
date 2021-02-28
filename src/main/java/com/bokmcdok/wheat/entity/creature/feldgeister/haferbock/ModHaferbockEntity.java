@@ -1,6 +1,5 @@
 package com.bokmcdok.wheat.entity.creature.feldgeister.haferbock;
 
-import com.bokmcdok.wheat.ai.behaviour.IUsesTags;
 import com.bokmcdok.wheat.ai.goals.ModMoveToBlockGoal;
 import com.bokmcdok.wheat.entity.creature.feldgeister.ModFeldgeisterEntity;
 import com.bokmcdok.wheat.supplier.ModBlockSupplier;
@@ -27,7 +26,7 @@ import net.minecraft.world.biome.Biome;
 
 import javax.annotation.Nullable;
 
-public class ModHaferbockEntity extends ModFeldgeisterEntity implements IUsesTags {
+public class ModHaferbockEntity extends ModFeldgeisterEntity {
     private static LazyValue<Block> WILD_EINKORN = new LazyValue<>(new ModBlockSupplier("docwheat:wild_einkorn"));
     private static LazyValue<Block> WILD_EMMER = new LazyValue<>(new ModBlockSupplier("docwheat:wild_emmer"));
     private static LazyValue<Block> EINKORN = new LazyValue<>(new ModBlockSupplier("docwheat:einkorn"));
@@ -78,16 +77,6 @@ public class ModHaferbockEntity extends ModFeldgeisterEntity implements IUsesTag
     }
 
     /**
-     * Provides the entity with access to the tag registrar.
-     * @param tagRegistrar The global tag registrar.
-     */
-    @Override
-    public void setTagRegistrar(ModTagRegistrar tagRegistrar) {
-        super.setTagRegistrar(tagRegistrar);
-        mTagRegistrar = tagRegistrar;
-    }
-
-    /**
      * Get the height of the entity's eyes.
      * @param pose The current pose.
      * @param size The size of the entity.
@@ -104,7 +93,7 @@ public class ModHaferbockEntity extends ModFeldgeisterEntity implements IUsesTag
     @Override
     protected void registerGoals() {
         super.registerGoals();
-        goalSelector.addGoal(5, new ModMoveToBlockGoal(this, mTagRegistrar.getBlockTag("docwheat:glass_pane"), getSpeed(), 16, 1));
+        goalSelector.addGoal(5, new ModMoveToBlockGoal(this, "docwheat:glass_pane", getSpeed(), 16, 1));
         targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, AbstractVillagerEntity.class, 10, false, false, IS_CHILD));
     }
 

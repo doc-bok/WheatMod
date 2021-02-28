@@ -1,6 +1,8 @@
 package com.bokmcdok.wheat.ai.goals;
 
 import com.bokmcdok.wheat.block.ModTrapBlock;
+import com.bokmcdok.wheat.supplier.ModTagSupplier;
+import com.bokmcdok.wheat.tag.ModTag;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -9,6 +11,7 @@ import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.ai.goal.MoveToBlockGoal;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.state.IntegerProperty;
+import net.minecraft.util.LazyValue;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
@@ -16,7 +19,7 @@ import net.minecraft.world.World;
 import java.util.Set;
 
 public class ModRaidFarmGoal extends MoveToBlockGoal {
-    private final Set<Block> mCropsToRaid;
+    private final LazyValue<ModTag> mCropsToRaid;
     private final CreatureEntity mEntity;
     private boolean mWantsToRaid;
     private boolean mCanRaid;
@@ -25,10 +28,10 @@ public class ModRaidFarmGoal extends MoveToBlockGoal {
      * Construction
      * @param entity The entity that owns this goal
      */
-    public ModRaidFarmGoal(CreatureEntity entity, Set<Block> cropsToRaid, double moveSpeed, int radius, int height) {
+    public ModRaidFarmGoal(CreatureEntity entity, String blockTag, double moveSpeed, int radius, int height) {
         super(entity, moveSpeed, radius, height);
         mEntity = entity;
-        mCropsToRaid = cropsToRaid;
+        mCropsToRaid = new LazyValue<>(new ModTagSupplier(ModTagSupplier.TagType.BLOCK, blockTag));;
     }
 
     /**
@@ -72,15 +75,15 @@ public class ModRaidFarmGoal extends MoveToBlockGoal {
             BlockPos blockpos = destinationBlock.up();
             BlockState blockstate = world.getBlockState(blockpos);
             Block block = blockstate.getBlock();
-            if (mCanRaid && mCropsToRaid.contains(block) && block instanceof CropsBlock) {
+            if (mCanRaid && mCropsToRaid.getValue().containsBlock(block) && block instanceof CropsBlock) {
 
                 IntegerProperty ageProperty = ((CropsBlock)block).getAgeProperty();
-                Integer integer = blockstate.get(ageProperty);
+                int integer = blockstate.get(ageProperty);
                 if (integer == 0) {
                     world.setBlockState(blockpos, Blocks.AIR.getDefaultState(), 2);
                     world.destroyBlock(blockpos, true);
                 } else {
-                    world.setBlockState(blockpos, blockstate.with(ageProperty, Integer.valueOf(integer - 1)), 2);
+                    world.setBlockState(blockpos, blockstate.with(ageProperty, integer - 1), 2);
                     world.playEvent(2001, blockpos, Block.getStateId(blockstate));
                 }
             }
@@ -111,7 +114,7 @@ public class ModRaidFarmGoal extends MoveToBlockGoal {
             BlockPos up = position.up();
             BlockState blockstate = world.getBlockState(up);
             block = blockstate.getBlock();
-            if (mCropsToRaid.contains(block)) {
+            if (mCropsToRaid.getValue().containsBlock(block)) {
 
                 //  Traps only work if they are still armed.
                 if (block instanceof ModTrapBlock && !((ModTrapBlock)block).getIsTrapArmed(world, up)) {

@@ -1,6 +1,5 @@
 package com.bokmcdok.wheat.entity.creature;
 
-import com.bokmcdok.wheat.ai.behaviour.IUsesTags;
 import com.bokmcdok.wheat.entity.creature.player.ModPlayerEntityEventHandler;
 import com.bokmcdok.wheat.entity.creature.villager.ModVillagerEventHandler;
 import com.bokmcdok.wheat.tag.ModTagRegistrar;
@@ -24,17 +23,6 @@ public class ModLivingEntityEventHandler {
         mTagRegistrar = tagRegistrar;
         mPlayerEntityEventHandler = new ModPlayerEntityEventHandler();
         mVillagerEventHandler = new ModVillagerEventHandler(mTagRegistrar);
-    }
-
-    /**
-     * Fired whenever an entity is constructing.
-     * @param event The event data.
-     */
-    public void onEntityConstructing(EntityEvent.EntityConstructing event) {
-        Entity entity = event.getEntity();
-        if (entity instanceof IUsesTags) {
-            ((IUsesTags)entity).setTagRegistrar(mTagRegistrar);
-        }
     }
 
     /**
