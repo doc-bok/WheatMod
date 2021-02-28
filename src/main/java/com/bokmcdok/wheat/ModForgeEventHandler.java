@@ -34,7 +34,6 @@ public class ModForgeEventHandler {
 
         MinecraftForge.EVENT_BUS.addListener(this::onRegisterDimensionsEvent);
 
-        MinecraftForge.EVENT_BUS.addListener(this::onEntityConstructing);
         MinecraftForge.EVENT_BUS.addListener(this::onEntityJoinWorldEvent);
         MinecraftForge.EVENT_BUS.addListener(this::onLivingUpdateEvent);
         MinecraftForge.EVENT_BUS.addListener(this::onVillagerTradesEvent);
@@ -54,14 +53,6 @@ public class ModForgeEventHandler {
                 DimensionManager.registerDimension(i.getRegistryName(), i, null, true);
             }
         }
-    }
-
-    /**
-     * Fired whenever an entity is constructing.
-     * @param event The event data.
-     */
-    public void onEntityConstructing(EntityEvent.EntityConstructing event) {
-        mLivingEntityEventHandler.onEntityConstructing(event);
     }
 
     /**

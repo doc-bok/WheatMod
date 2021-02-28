@@ -21,12 +21,12 @@ public class WheatMod
 {
     public static final String MOD_ID = "docwheat";
     public static final ModSpellRegistrar SPELL_REGISTRAR = new ModSpellRegistrar();
+    public static final ModTagRegistrar TAG_REGISTRAR = new ModTagRegistrar();
 
     public WheatMod() {
-        ModTagRegistrar tagRegistrar = new ModTagRegistrar();
-        new ModBlockRegistrar(tagRegistrar);
-        new ModEntityRegistrar(tagRegistrar);
-        new ModForgeEventHandler(tagRegistrar);
+        new ModBlockRegistrar(TAG_REGISTRAR);
+        new ModEntityRegistrar(TAG_REGISTRAR);
+        new ModForgeEventHandler(TAG_REGISTRAR);
         new ModDimensionRegistrar();
 
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientSetup);

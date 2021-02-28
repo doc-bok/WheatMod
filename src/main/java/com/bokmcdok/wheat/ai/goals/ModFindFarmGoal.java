@@ -1,18 +1,19 @@
 package com.bokmcdok.wheat.ai.goals;
 
 import com.bokmcdok.wheat.block.ModCropsBlock;
+import com.bokmcdok.wheat.supplier.ModTagSupplier;
+import com.bokmcdok.wheat.tag.ModTag;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.ai.goal.MoveToBlockGoal;
+import net.minecraft.util.LazyValue;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorldReader;
 
-import java.util.Set;
-
 public class ModFindFarmGoal extends MoveToBlockGoal {
-    private final Set<Block> mCropsToFind;
+    private final LazyValue<ModTag> mCropsToFind;
     private final CreatureEntity mEntity;
     private boolean mWantsToFind;
     private boolean mCanFind;
@@ -21,10 +22,10 @@ public class ModFindFarmGoal extends MoveToBlockGoal {
      * Construction
      * @param entity The entity that owns this goal
      */
-    public ModFindFarmGoal(CreatureEntity entity, Set<Block> cropsToRaid, double moveSpeed, int radius, int height) {
+    public ModFindFarmGoal(CreatureEntity entity, String blockTag, double moveSpeed, int radius, int height) {
         super(entity, moveSpeed, radius, height);
         mEntity = entity;
-        mCropsToFind = cropsToRaid;
+        mCropsToFind = new LazyValue<>(new ModTagSupplier(ModTagSupplier.TagType.BLOCK, blockTag));
     }
 
     /**
@@ -77,7 +78,7 @@ public class ModFindFarmGoal extends MoveToBlockGoal {
             BlockPos up = position.up();
             BlockState blockstate = world.getBlockState(up);
             block = blockstate.getBlock();
-            if (mCropsToFind.contains(block) && block instanceof ModCropsBlock) {
+            if (mCropsToFind.getValue().containsBlock(block) && block instanceof ModCropsBlock) {
                 mCanFind = true;
                 return true;
             }

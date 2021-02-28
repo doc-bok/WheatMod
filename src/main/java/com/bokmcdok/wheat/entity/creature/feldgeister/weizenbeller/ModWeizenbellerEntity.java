@@ -1,6 +1,6 @@
 package com.bokmcdok.wheat.entity.creature.feldgeister.weizenbeller;
 
-import com.bokmcdok.wheat.ai.behaviour.IUsesTags;
+import com.bokmcdok.wheat.WheatMod;
 import com.bokmcdok.wheat.entity.creature.animal.mouse.ModMouseEntity;
 import com.bokmcdok.wheat.entity.creature.animal.widowbird.ModWidowbirdEntity;
 import com.bokmcdok.wheat.entity.creature.feldgeister.ModFeldgeisterEntity;
@@ -26,8 +26,7 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 
-public class ModWeizenbellerEntity extends ModFeldgeisterEntity implements IUsesTags {
-    private ModTagRegistrar mTagRegistrar;
+public class ModWeizenbellerEntity extends ModFeldgeisterEntity {
 
     /**
      * Construction
@@ -51,15 +50,6 @@ public class ModWeizenbellerEntity extends ModFeldgeisterEntity implements IUses
     }
 
     /**
-     * Provides the entity with access to the tag registrar.
-     * @param tagRegistrar The global tag registrar.
-     */
-    @Override
-    public void setTagRegistrar(ModTagRegistrar tagRegistrar) {
-        mTagRegistrar = tagRegistrar;
-    }
-
-    /**
      * If a getreidewolf is fed meat they will start to pollinate crops instead of diseasing them.
      * @param player The player interacting with the entity.
      * @param hand The player's hand.
@@ -71,7 +61,7 @@ public class ModWeizenbellerEntity extends ModFeldgeisterEntity implements IUses
             ItemStack itemStack = player.getHeldItem(hand);
             Item item = itemStack.getItem();
 
-            if (mTagRegistrar.getItemTag("docwheat:flour").containsItem(item)) {
+            if (WheatMod.TAG_REGISTRAR.getItemTag("docwheat:flour").containsItem(item)) {
                 if (!player.abilities.isCreativeMode) {
                     itemStack.shrink(1);
                 }

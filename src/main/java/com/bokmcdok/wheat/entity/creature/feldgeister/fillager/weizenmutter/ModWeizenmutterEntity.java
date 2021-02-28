@@ -51,7 +51,6 @@ public class ModWeizenmutterEntity extends ModFillagerEntity implements ISpellca
     private static final ResourceLocation TEXTURE = new ResourceLocation("docwheat:textures/entity/feldgeister/weizenmutter.png");
     private static LazyValue<Block> DISEASED_WHEAT = new LazyValue<>(new ModBlockSupplier("docwheat:diseased_wheat"));
 
-    private ModTag mCropTag;
     private boolean mAngry = false;
 
     /**
@@ -184,16 +183,6 @@ public class ModWeizenmutterEntity extends ModFillagerEntity implements ISpellca
     }
 
     /**
-     * Get access to tags.
-     * @param tagRegistrar The tag registrar.
-     */
-    @Override
-    public void setTagRegistrar(ModTagRegistrar tagRegistrar) {
-        super.setTagRegistrar(tagRegistrar);
-        mCropTag = tagRegistrar.getBlockTag("docwheat:crop");
-    }
-
-    /**
      * Weizenmutters are similar to witches.
      */
     @Override
@@ -252,7 +241,7 @@ public class ModWeizenmutterEntity extends ModFillagerEntity implements ISpellca
         }));
 
         goalSelector.addGoal(6, new ModCastSpellOnAttackTargetGoal(this, WheatMod.SPELL_REGISTRAR.getSpell("true_polymorph_ahrenkind"), 1.0d, (caster, target) -> target instanceof VillagerEntity));
-        goalSelector.addGoal(7, new ModRaidFarmGoal(this, mCropTag.getBlocks(), 1.0d, 16, 1));
+        goalSelector.addGoal(7, new ModRaidFarmGoal(this, "docwheat:crop", 1.0d, 16, 1));
 
         goalSelector.removeGoal(mAttackGoal);
 

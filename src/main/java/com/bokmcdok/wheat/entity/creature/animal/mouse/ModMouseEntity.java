@@ -1,12 +1,9 @@
 package com.bokmcdok.wheat.entity.creature.animal.mouse;
 
-import com.bokmcdok.wheat.ai.behaviour.IUsesTags;
 import com.bokmcdok.wheat.ai.goals.ModBreedGoal;
 import com.bokmcdok.wheat.ai.goals.ModRaidFarmGoal;
 import com.bokmcdok.wheat.entity.ModEntityRegistrar;
 import com.bokmcdok.wheat.entity.creature.animal.cornsnake.ModCornsnakeEntity;
-import com.bokmcdok.wheat.supplier.ModBlockSupplier;
-import com.bokmcdok.wheat.tag.ModTagRegistrar;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.AgeableEntity;
@@ -28,7 +25,6 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.LazyValue;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
@@ -38,12 +34,8 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
 import java.util.Random;
-import java.util.Set;
 
-public class ModMouseEntity extends AnimalEntity implements IUsesTags {
-    private static LazyValue<Block> SEEDED_MOUSE_TRAP = new LazyValue<>(new ModBlockSupplier("docwheat:seeded_mouse_trap"));
-
-    private ModTagRegistrar mTagRegistrar;
+public class ModMouseEntity extends AnimalEntity {
 
     /**
      * Construction
@@ -59,9 +51,6 @@ public class ModMouseEntity extends AnimalEntity implements IUsesTags {
      */
     @Override
     protected void registerGoals() {
-        Set<Block> blocksToRaid = mTagRegistrar.getBlockTag("docwheat:crop").getBlocks();
-        blocksToRaid.add(SEEDED_MOUSE_TRAP.getValue());
-
         goalSelector.addGoal(1, new SwimGoal(this));
         goalSelector.addGoal(1, new PanicGoal(this, getSpeed()));
         goalSelector.addGoal(2, new ModBreedGoal(this, getSpeed()));
@@ -72,7 +61,7 @@ public class ModMouseEntity extends AnimalEntity implements IUsesTags {
         goalSelector.addGoal(4, new AvoidEntityGoal<>(this, CatEntity.class, 4.0F, getSpeed(), getSpeed()));
         goalSelector.addGoal(4, new AvoidEntityGoal<>(this, VillagerEntity.class, 4.0F, getSpeed(), getSpeed()));
         goalSelector.addGoal(4, new AvoidEntityGoal<>(this, ModCornsnakeEntity.class, 4.0F, getSpeed(), getSpeed()));
-        goalSelector.addGoal(5, new ModRaidFarmGoal(this, blocksToRaid, getSpeed(), 16, 1));
+        goalSelector.addGoal(5, new ModRaidFarmGoal(this, "docwheat:crop_traps", getSpeed(), 16, 1));
         goalSelector.addGoal(6, new WaterAvoidingRandomWalkingGoal(this, getSpeed()));
         goalSelector.addGoal(11, new LookAtGoal(this, PlayerEntity.class, 10.0F));
     }
@@ -147,15 +136,6 @@ public class ModMouseEntity extends AnimalEntity implements IUsesTags {
     public static boolean canSpawn(EntityType<ModMouseEntity> entity, IWorld world, SpawnReason reason, BlockPos position, Random random) {
         Block block = world.getBlockState(position.down()).getBlock();
         return block == Blocks.GRASS_BLOCK && world.getNeighborAwareLightSubtracted(position, 0) > 8;
-    }
-
-    /**
-     * Give access to tags
-     * @param tagRegistrar The tag registrar to use.
-     */
-    @Override
-    public void setTagRegistrar(ModTagRegistrar tagRegistrar) {
-        mTagRegistrar = tagRegistrar;
     }
 
     /**

@@ -1,6 +1,5 @@
 package com.bokmcdok.wheat.entity.creature.animal.widowbird;
 
-import com.bokmcdok.wheat.ai.behaviour.IUsesTags;
 import com.bokmcdok.wheat.ai.goals.ModCreateNestGoal;
 import com.bokmcdok.wheat.ai.goals.ModMateGoal;
 import com.bokmcdok.wheat.ai.goals.ModNestingGoal;
@@ -12,7 +11,6 @@ import com.bokmcdok.wheat.entity.creature.animal.butterfly.ModButterflyEntity;
 import com.bokmcdok.wheat.item.ModItemUtils;
 import com.bokmcdok.wheat.supplier.ModBlockSupplier;
 import com.bokmcdok.wheat.supplier.ModSoundEventSupplier;
-import com.bokmcdok.wheat.tag.ModTagRegistrar;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -47,13 +45,12 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 import java.util.Random;
 
-public class ModWidowbirdEntity extends ModNestingEntity implements IFlyingAnimal, IUsesTags {
+public class ModWidowbirdEntity extends ModNestingEntity implements IFlyingAnimal {
     private static LazyValue<Block> WIDOWBIRD_NEST = new LazyValue<>(new ModBlockSupplier("docwheat:widowbird_nest"));
 
     private static final LazyValue<SoundEvent> AMBIENT_SOUND = new LazyValue<>(new ModSoundEventSupplier("docwheat:widowbird_ambient"));
 
     private final ModFlappingController mFlappingController;
-    private ModTagRegistrar mTagRegistrar;
 
     /**
      * Construction
@@ -151,15 +148,6 @@ public class ModWidowbirdEntity extends ModNestingEntity implements IFlyingAnima
     }
 
     /**
-     * Provides access to tags.
-     * @param tagRegistrar The tag registrar.
-     */
-    @Override
-    public void setTagRegistrar(ModTagRegistrar tagRegistrar) {
-        mTagRegistrar = tagRegistrar;
-    }
-
-    /**
      * Get the ambient sound
      * TODO: Add custom sounds for widowbird.
      * @return The ambient sound event.
@@ -254,7 +242,7 @@ public class ModWidowbirdEntity extends ModNestingEntity implements IFlyingAnima
         goalSelector.addGoal(1, new ModCreateNestGoal(this, WIDOWBIRD_NEST.getValue(), getFlyingSpeed(), 16, 8));
         goalSelector.addGoal(1, new ModNestingGoal(this, WIDOWBIRD_NEST.getValue(), getFlyingSpeed(), 16, 8));
         goalSelector.addGoal(2, new WaterAvoidingRandomFlyingGoal(this, 1.0d));
-        goalSelector.addGoal(5, new ModRaidFarmGoal(this, mTagRegistrar.getBlockTag("docwheat:wheat").getBlocks(), getFlyingSpeed(), 16, 8));
+        goalSelector.addGoal(5, new ModRaidFarmGoal(this, "docwheat:wheat", getFlyingSpeed(), 16, 8));
         goalSelector.addGoal(9, new OcelotAttackGoal(this));
         goalSelector.addGoal(12, new LookAtGoal(this, ModButterflyEntity.class, 8.0f));
 
