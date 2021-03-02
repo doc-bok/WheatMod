@@ -11,7 +11,7 @@ import net.minecraft.util.math.MathHelper;
 import java.util.Arrays;
 
 public abstract class ModSegmentedModel<T extends Entity> extends SegmentedModel<T> {
-    private final ModelRenderer[] mSegments;
+    protected final ModelRenderer[] mSegments;
     private final ImmutableList<ModelRenderer> mRenderers;
     private final float mWriggleSpeed;
 
@@ -28,7 +28,6 @@ public abstract class ModSegmentedModel<T extends Entity> extends SegmentedModel
 
         mWriggleSpeed = wriggleSpeed;
 
-        final float[] zPlacement = new float[segmentSizes.length];
         mSegments = new ModelRenderer[segmentSizes.length];
         float f = -3.5f;
 
@@ -38,14 +37,18 @@ public abstract class ModSegmentedModel<T extends Entity> extends SegmentedModel
                     segmentSizes[i][0] * -0.5f, 0.0f, segmentSizes[i][2] * -0.5f,
                     segmentSizes[i][0], segmentSizes[i][1], segmentSizes[i][2]);
             mSegments[i].setRotationPoint(0.0f, 24.0f - segmentSizes[i][1], f);
-            zPlacement[i] = f;
+
             if (i < mSegments.length - 1) {
                 f += (segmentSizes[i][2] + segmentSizes[i + 1][2]) * 0.5f;
             }
         }
 
+        for (int i = mSegments.length - 1; i > 0; --i) {
+            convertToChild(mSegments[i - 1], mSegments[i]);
+        }
+
         ImmutableList.Builder<ModelRenderer> builder = ImmutableList.builder();
-        builder.addAll(Arrays.asList(mSegments));
+        builder.add(mSegments[0]);
         mRenderers = builder.build();
     }
 
@@ -86,8 +89,11 @@ public abstract class ModSegmentedModel<T extends Entity> extends SegmentedModel
     @Override
     public void func_225597_a_(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         for(int i = 0; i < mSegments.length; ++i) {
-            mSegments[i].rotateAngleY = MathHelper.cos(ageInTicks * mWriggleSpeed + (float)i * 0.15F * (float)Math.PI) * (float)Math.PI * 0.05F * (float)(1 + Math.abs(i - 2));
-            mSegments[i].rotationPointX = MathHelper.sin(ageInTicks * mWriggleSpeed + (float)i * 0.15F * (float)Math.PI) * (float)Math.PI * 0.2F * (float)Math.abs(i - 2);
+            mSegments[i].rotateAngleY = MathHelper.cos(ageInTicks * mWriggleSpeed + (float)i * 0.3F * (float)Math.PI) * (float)Math.PI * 0.05F * (float)(1 + Math.abs(i - 2));
+
+            if (i > 0) {
+                mSegments[i].rotateAngleY -= mSegments[i - 1].rotateAngleY;
+            }
         }
     }
 
@@ -98,5 +104,17 @@ public abstract class ModSegmentedModel<T extends Entity> extends SegmentedModel
     @Override
     public ImmutableList<ModelRenderer> func_225601_a_() {
         return mRenderers;
+    }
+
+    private void convertToChild(ModelRenderer parent, ModelRenderer child) {
+        child.rotationPointX -= parent.rotationPointX;
+        child.rotationPointY -= parent.rotationPointY;
+        child.rotationPointZ -= parent.rotationPointZ;
+
+        child.rotateAngleX -= parent.rotateAngleX;
+        child.rotateAngleY -= parent.rotateAngleY;
+        child.rotateAngleZ -= parent.rotateAngleZ;
+
+        parent.addChild(child);
     }
 }

@@ -40,7 +40,8 @@ import java.util.Random;
 
 public class ModCornsnakeEntity extends ModNestingEntity {
     private static final DataParameter<Integer> TYPE = EntityDataManager.createKey(ModCornsnakeEntity.class, DataSerializers.VARINT);
-    private static final LazyValue<SoundEvent> AMBIENT_SOUND = new LazyValue<>(new ModSoundEventSupplier("docwheat:cornsnake_ambient"));
+    //private static final LazyValue<SoundEvent> AMBIENT_SOUND = null;//new LazyValue<>(new ModSoundEventSupplier("docwheat:cornsnake_ambient"));
+    private static final LazyValue<SoundEvent> RATTLE_SOUND = new LazyValue<>(new ModSoundEventSupplier("docwheat:cornsnake_ambient"));
     private static final LazyValue<SoundEvent> DEATH_SOUND = new LazyValue<>(new ModSoundEventSupplier("docwheat:cornsnake_death"));
     private static final LazyValue<SoundEvent> HURT_SOUND = new LazyValue<>(new ModSoundEventSupplier("docwheat:cornsnake_hurt"));
     private static LazyValue<Block> CORNSNAKE_EGG = new LazyValue<>(new ModBlockSupplier("docwheat:cornsnake_egg"));
@@ -61,14 +62,14 @@ public class ModCornsnakeEntity extends ModNestingEntity {
     @Override
     protected void registerGoals() {
         goalSelector.addGoal(1, new SwimGoal(this));
-        goalSelector.addGoal(1, new PanicGoal(this, getSpeed()));
+        goalSelector.addGoal(1, new PanicGoal(this, getSpeed() * 2));
         goalSelector.addGoal(1, new ModMateGoal(this, getSpeed()));
         goalSelector.addGoal(1, new ModCreateNestGoal(this, CORNSNAKE_EGG.getValue(), getSpeed(), 16, 8));
         goalSelector.addGoal(5, new MeleeAttackGoal(this, getSpeed(), true));
         goalSelector.addGoal(6, new WaterAvoidingRandomWalkingGoal(this, 0.6D));
         goalSelector.addGoal(11, new LookAtGoal(this, ModMouseEntity.class, 10.0F));
 
-        targetSelector.addGoal(3, new HurtByTargetGoal((this)));
+        targetSelector.addGoal(3, new HurtByTargetGoal(this));
         targetSelector.addGoal(4,new NearestAttackableTargetGoal<>(this, ModMouseEntity.class, 10, false, false, null));
     }
 
@@ -95,7 +96,8 @@ public class ModCornsnakeEntity extends ModNestingEntity {
     }
 
     /**
-     * Handle the snake's type on spawning.
+     * Handle the snake's type on spawning.\
+     *
      * @param world The current world.
      * @param difficulty The current difficulty.
      * @param reason The reason for spawning.
@@ -212,7 +214,11 @@ public class ModCornsnakeEntity extends ModNestingEntity {
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return AMBIENT_SOUND.getValue();
+        if (isAggressive()) {
+            return RATTLE_SOUND.getValue();
+        } else {
+            return null;
+        }
     }
 
 
