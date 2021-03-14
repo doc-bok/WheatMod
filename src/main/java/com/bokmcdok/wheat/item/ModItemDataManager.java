@@ -16,8 +16,10 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Food;
 import net.minecraft.item.IArmorMaterial;
+import net.minecraft.item.IItemTier;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
+import net.minecraft.item.ItemTier;
 import net.minecraft.item.Rarity;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.JSONUtils;
@@ -25,6 +27,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.registry.Registry;
 import net.minecraftforge.common.ToolType;
+import net.minecraftforge.fml.common.Mod;
 
 import java.util.Optional;
 
@@ -40,7 +43,8 @@ public class ModItemDataManager extends ModDataManager<IModItem> {
         BLOCK,
         BLOCK_NAMED,
         SPAWN_EGG,
-        ARMOR
+        ARMOR,
+        WEAPON
     }
 
     /**
@@ -110,6 +114,7 @@ public class ModItemDataManager extends ModDataManager<IModItem> {
         deserializeFood(json, properties);
         deserializeThrowing(json, properties);
         deserializeColor(json, properties);
+        deserializeWeapon(json, properties);
 
         //  Create the right item type
         String typeValue = JSONUtils.getString(json, "type");
@@ -155,6 +160,15 @@ public class ModItemDataManager extends ModDataManager<IModItem> {
                 IArmorMaterial material = mArmorMaterialManager.getEntry(armorMaterial);
                 EquipmentSlotType slot = EquipmentSlotType.valueOf(armorSlot.toUpperCase());
                 result = new ModArmorItem(material, slot, properties);
+                break;
+            }
+
+            case WEAPON: {
+                float attackDamage = JSONUtils.getFloat(json, "damage");
+                float weight = JSONUtils.getFloat(json, "weight");
+                String tierName = JSONUtils.getString(json, "tier").toUpperCase();
+                IItemTier tier = ItemTier.valueOf(tierName);
+                result = new ModWeaponItem(tier, attackDamage, weight, properties);
                 break;
             }
 
@@ -265,6 +279,34 @@ public class ModItemDataManager extends ModDataManager<IModItem> {
         if (color != -1) {
             properties.color((item, state) -> deserializeColor(json));
         }
+    }
+
+    /**
+     * Read weapon properties, if any.
+     * @param json The JSON object from the file
+     * @param properties The properties to set.
+     */
+    private void deserializeWeapon(JsonObject json, ModItemImpl.ModItemProperties properties) {
+        setFloat(properties, json, "damage", ModItemImpl.ModItemProperties::setAttackDamage);
+        setFloat(properties, json, "weight", ModItemImpl.ModItemProperties::setWeight);
+
+        String damageType = JSONUtils.getString(json, "damage_type").toUpperCase();
+        properties.setDamageType(ModDamageType.valueOf(damageType));
+
+        String tier = JSONUtils.getString(json, "tier").toUpperCase();
+        properties.setItemTier(ItemTier.valueOf(tier));
+
+        setObjectArray(properties, json, "traits", (x, trait) -> {
+            JsonObject traitObject = trait.getAsJsonObject();
+
+            String traitName = JSONUtils.getString(traitObject, "name").toUpperCase();
+            float value = 0f;
+            if (JSONUtils.hasField(traitObject, "value")) {
+                value = JSONUtils.getFloat(traitObject, "value");
+            }
+
+            properties.addTrait(ModItemTrait.valueOf(traitName), value);
+        });
     }
 
     /**

@@ -6,6 +6,7 @@ import com.google.common.collect.Maps;
 import net.minecraft.client.renderer.color.IItemColor;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.IItemTier;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Effect;
@@ -44,6 +45,13 @@ public class ModItemImpl {
     private final String mArmorTexture;
     private final Map<ResourceLocation, Integer> mEnchantments;
 
+    //  Weapon attributes
+    private final ModDamageType mDamageType;
+    private final IItemTier mItemTier;
+    private final float mAttackDamage;
+    private final float mAttackSpeed;
+    private final Map<ModItemTrait, Float> mTraits;
+
     /**
      * Construction
      * @param properties The modded properties for the item.
@@ -69,6 +77,13 @@ public class ModItemImpl {
 
         mArmorTexture = properties.mArmorTexture;
         mEnchantments = properties.mEnchantments;
+
+        //  Weapons
+        mDamageType = properties.mDamageType;
+        mItemTier = properties.mItemTier;
+        mAttackDamage = properties.mAttackDamage;
+        mAttackSpeed = -2.0f + (-0.1f * properties.mWeight);
+        mTraits = properties.mTraits;
     }
 
     /**
@@ -222,6 +237,60 @@ public class ModItemImpl {
     }
 
     /**
+     * Get the damage type.
+     * @return The type of damage this weapon inflicts.
+     */
+    public ModDamageType getDamageType() {
+        return mDamageType;
+    }
+
+    /**
+     * Get the tier of this item.
+     * @return The item tier (WOOD, IRON, etc).
+     */
+    public IItemTier getItemTier() {
+        return mItemTier;
+    }
+
+    /**
+     * Get the attack damage of this weapon/tool.
+     * @return The attack damage.
+     */
+    public float getAttackDamage() {
+        return mAttackDamage;
+    }
+
+    /**
+     * Get the attack speed of this weapon.
+     * @return The attack speed.
+     */
+    public float getAttackSpeed() {
+        return mAttackSpeed;
+    }
+
+    /**
+     * Check if the item has a particular trait.
+     * @param trait The trait to check.
+     * @return TRUE if the item has the trait.
+     */
+    public boolean hasTrait(ModItemTrait trait) {
+        return mTraits.containsKey(trait);
+    }
+
+    /**
+     * Get the value of a trait.
+     * @param trait The trait to look for.
+     * @return The value of the attached trait.
+     */
+    public float getTraitValue(ModItemTrait trait) {
+        if (hasTrait(trait)) {
+            return mTraits.get(trait);
+        }
+
+        return 0.0f;
+    }
+
+    /**
      * Throw an item into the world.
      * @param item The item to throw.
      * @param world the current world.
@@ -315,7 +384,14 @@ public class ModItemImpl {
         private int mOnDamagedEffectDuration = 0;
         private int mOnDamagedEffectAmplifier = 0;
         private String mArmorTexture = null;
-        private Map<ResourceLocation, Integer> mEnchantments = Maps.newHashMap();
+        private final Map<ResourceLocation, Integer> mEnchantments = Maps.newHashMap();
+
+        //  Weapon attributes
+        private ModDamageType mDamageType;
+        private IItemTier mItemTier;
+        private float mAttackDamage;
+        private float mWeight;
+        private final Map<ModItemTrait, Float> mTraits = Maps.newHashMap();
 
         /**
          * This item can be thrown by right-clicking.
@@ -402,6 +478,55 @@ public class ModItemImpl {
          */
         public void addEnchantment(String registryName, int level) {
             mEnchantments.put(new ResourceLocation(registryName), level);
+        }
+
+        /**
+         * The damage type of the weapon.
+          * @param damageType The type to set.
+         */
+        public void setDamageType(ModDamageType damageType) {
+            mDamageType = damageType;
+        }
+
+        /**
+         * Set the tier of the weapon.
+         * @param itemTier The item tier (e.g. WOOD).
+         */
+        public void setItemTier(IItemTier itemTier) {
+            mItemTier = itemTier;
+        }
+
+        /**
+         * Set the attack damage of the weapon.
+         * @param damage The attack damage.
+         */
+        public void setAttackDamage(float damage) {
+            mAttackDamage = damage;
+        }
+
+        /**
+         * Set the weight of the weapon.
+         * @param weight The weight.
+         */
+        public void setWeight(float weight) {
+            mWeight = weight;
+        }
+
+        /**
+         * Add a trait to the weapon.
+         * @param trait The trait to add.
+         */
+        public void addTrait(ModItemTrait trait) {
+            addTrait(trait, 0.0f);
+        }
+
+        /**
+         * Add a trait to the weapon.
+         * @param trait The trait to add.
+         * @param value The optional value of the trait.
+         */
+        public void addTrait(ModItemTrait trait, float value) {
+            mTraits.put(trait, value);
         }
     }
 }
