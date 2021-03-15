@@ -8,14 +8,14 @@
   "traits": [
     {
       "name": "defensive",
-      "value" : 1
+      "value" : 0.9
     },
     {
       "name" : "nonlethal"
     },
     {
       "name" : "versatile",
-      "value" : 5
+      "value" : 1.5
     }
   ]
 }
