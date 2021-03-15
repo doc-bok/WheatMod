@@ -16,7 +16,8 @@ public class ModButterflyRenderer extends MobRenderer<ModButterflyEntity, ModBut
             new ResourceLocation("docwheat:textures/entity/animal/butterfly/butterfly04.png"),
             new ResourceLocation("docwheat:textures/entity/animal/butterfly/butterfly05.png"),
             new ResourceLocation("docwheat:textures/entity/animal/butterfly/butterfly06.png"),
-            new ResourceLocation("docwheat:textures/entity/animal/butterfly/butterfly07.png")
+            new ResourceLocation("docwheat:textures/entity/animal/butterfly/butterfly07.png"),
+            new ResourceLocation("docwheat:textures/entity/animal/butterfly/butterfly08.png")
     };
     private static final ResourceLocation MOTH_TEXTURE = new ResourceLocation("docwheat:textures/entity/animal/moth.png");
 
