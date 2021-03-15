@@ -127,18 +127,35 @@ public class ModItemDataManager extends ModDataManager<IModItem> {
                 break;
 
             case BLOCK: {
+                if (!JSONUtils.hasField(json, "block")) {
+                    LOGGER.error("Failed to load {}: block items need 'block' attribute", location.toString());
+                    return null;
+                }
+
                 String blockName = JSONUtils.getString(json, "block");
                 result = new ModBlockItem(getBlock(blockName), properties);
                 break;
             }
 
             case BLOCK_NAMED: {
+                if (!JSONUtils.hasField(json, "block")) {
+                    LOGGER.error("Failed to load {}: named block items need 'block' attribute", location.toString());
+                    return null;
+                }
+
                 String blockName = JSONUtils.getString(json, "block");
                 result = new ModBlockNamedItem(getBlock(blockName), properties);
                 break;
             }
 
             case SPAWN_EGG: {
+                if (!JSONUtils.hasField(json, "entity") ||
+                        !JSONUtils.hasField(json, "weight") ||
+                        !JSONUtils.hasField(json,"secondary_color")) {
+                    LOGGER.error("Failed to load {}: spawn eggs need 'entity', 'primary_color', and 'secondary_color' attributes", location.toString());
+                    return null;
+                }
+
                 String entityName = JSONUtils.getString(json, "entity");
 
                 Optional<EntityType<?>> entityType = Registry.ENTITY_TYPE.getValue(new ResourceLocation(entityName));
@@ -155,6 +172,12 @@ public class ModItemDataManager extends ModDataManager<IModItem> {
             }
 
             case ARMOR: {
+                if (!JSONUtils.hasField(json, "armor_material") ||
+                    !JSONUtils.hasField(json, "armor_slot")) {
+                    LOGGER.error("Failed to load {}: armour needs 'armor_material' and 'armor_slot' attributes", location.toString());
+                    return null;
+                }
+
                 String armorMaterial = JSONUtils.getString(json,"armor_material");
                 String armorSlot = JSONUtils.getString(json, "armor_slot");
                 IArmorMaterial material = mArmorMaterialManager.getEntry(armorMaterial);
@@ -164,6 +187,13 @@ public class ModItemDataManager extends ModDataManager<IModItem> {
             }
 
             case WEAPON: {
+                if (!JSONUtils.hasField(json, "damage") ||
+                    !JSONUtils.hasField(json, "weight") ||
+                    !JSONUtils.hasField(json,"tier")) {
+                    LOGGER.error("Failed to load {}: weapons need 'damage', 'weight', and 'tier' attributes", location.toString());
+                    return null;
+                }
+
                 float attackDamage = JSONUtils.getFloat(json, "damage");
                 float weight = JSONUtils.getFloat(json, "weight");
                 String tierName = JSONUtils.getString(json, "tier").toUpperCase();
@@ -173,7 +203,7 @@ public class ModItemDataManager extends ModDataManager<IModItem> {
             }
 
             default:
-                LOGGER.info("Item type {} not supported", typeValue);
+                LOGGER.error("Item type {} not supported", typeValue);
                 return null;
         }
 
