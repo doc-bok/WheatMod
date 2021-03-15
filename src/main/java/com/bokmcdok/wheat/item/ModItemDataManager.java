@@ -16,8 +16,10 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Food;
 import net.minecraft.item.IArmorMaterial;
+import net.minecraft.item.IItemTier;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
+import net.minecraft.item.ItemTier;
 import net.minecraft.item.Rarity;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.JSONUtils;
@@ -25,6 +27,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.registry.Registry;
 import net.minecraftforge.common.ToolType;
+import net.minecraftforge.fml.common.Mod;
 
 import java.util.Optional;
 
@@ -40,7 +43,8 @@ public class ModItemDataManager extends ModDataManager<IModItem> {
         BLOCK,
         BLOCK_NAMED,
         SPAWN_EGG,
-        ARMOR
+        ARMOR,
+        WEAPON
     }
 
     /**
@@ -110,6 +114,7 @@ public class ModItemDataManager extends ModDataManager<IModItem> {
         deserializeFood(json, properties);
         deserializeThrowing(json, properties);
         deserializeColor(json, properties);
+        deserializeWeapon(json, properties);
 
         //  Create the right item type
         String typeValue = JSONUtils.getString(json, "type");
@@ -122,18 +127,35 @@ public class ModItemDataManager extends ModDataManager<IModItem> {
                 break;
 
             case BLOCK: {
+                if (!JSONUtils.hasField(json, "block")) {
+                    LOGGER.error("Failed to load {}: block items need 'block' attribute", location.toString());
+                    return null;
+                }
+
                 String blockName = JSONUtils.getString(json, "block");
                 result = new ModBlockItem(getBlock(blockName), properties);
                 break;
             }
 
             case BLOCK_NAMED: {
+                if (!JSONUtils.hasField(json, "block")) {
+                    LOGGER.error("Failed to load {}: named block items need 'block' attribute", location.toString());
+                    return null;
+                }
+
                 String blockName = JSONUtils.getString(json, "block");
                 result = new ModBlockNamedItem(getBlock(blockName), properties);
                 break;
             }
 
             case SPAWN_EGG: {
+                if (!JSONUtils.hasField(json, "entity") ||
+                        !JSONUtils.hasField(json, "weight") ||
+                        !JSONUtils.hasField(json,"secondary_color")) {
+                    LOGGER.error("Failed to load {}: spawn eggs need 'entity', 'primary_color', and 'secondary_color' attributes", location.toString());
+                    return null;
+                }
+
                 String entityName = JSONUtils.getString(json, "entity");
 
                 Optional<EntityType<?>> entityType = Registry.ENTITY_TYPE.getValue(new ResourceLocation(entityName));
@@ -150,6 +172,12 @@ public class ModItemDataManager extends ModDataManager<IModItem> {
             }
 
             case ARMOR: {
+                if (!JSONUtils.hasField(json, "armor_material") ||
+                    !JSONUtils.hasField(json, "armor_slot")) {
+                    LOGGER.error("Failed to load {}: armour needs 'armor_material' and 'armor_slot' attributes", location.toString());
+                    return null;
+                }
+
                 String armorMaterial = JSONUtils.getString(json,"armor_material");
                 String armorSlot = JSONUtils.getString(json, "armor_slot");
                 IArmorMaterial material = mArmorMaterialManager.getEntry(armorMaterial);
@@ -158,8 +186,24 @@ public class ModItemDataManager extends ModDataManager<IModItem> {
                 break;
             }
 
+            case WEAPON: {
+                if (!JSONUtils.hasField(json, "damage") ||
+                    !JSONUtils.hasField(json, "weight") ||
+                    !JSONUtils.hasField(json,"tier")) {
+                    LOGGER.error("Failed to load {}: weapons need 'damage', 'weight', and 'tier' attributes", location.toString());
+                    return null;
+                }
+
+                float attackDamage = JSONUtils.getFloat(json, "damage");
+                float weight = JSONUtils.getFloat(json, "weight");
+                String tierName = JSONUtils.getString(json, "tier").toUpperCase();
+                IItemTier tier = ItemTier.valueOf(tierName);
+                result = new ModWeaponItem(tier, attackDamage, weight, properties);
+                break;
+            }
+
             default:
-                LOGGER.info("Item type {} not supported", typeValue);
+                LOGGER.error("Item type {} not supported", typeValue);
                 return null;
         }
 
@@ -265,6 +309,40 @@ public class ModItemDataManager extends ModDataManager<IModItem> {
         if (color != -1) {
             properties.color((item, state) -> deserializeColor(json));
         }
+    }
+
+    /**
+     * Read weapon properties, if any.
+     * @param json The JSON object from the file
+     * @param properties The properties to set.
+     */
+    private void deserializeWeapon(JsonObject json, ModItemImpl.ModItemProperties properties) {
+        setFloat(properties, json, "damage", ModItemImpl.ModItemProperties::setAttackDamage);
+        setFloat(properties, json, "weight", ModItemImpl.ModItemProperties::setWeight);
+
+        if (JSONUtils.hasField(json, "damage_type")) {
+            String damageType = JSONUtils.getString(json, "damage_type").toUpperCase();
+            properties.setDamageType(ModDamageType.valueOf(damageType));
+        }
+
+        if (JSONUtils.hasField(json, "tier")) {
+            String tier = JSONUtils.getString(json, "tier").toUpperCase();
+            properties.setItemTier(ItemTier.valueOf(tier));
+        }
+
+        setObjectArray(properties, json, "traits", (x, trait) -> {
+            JsonObject traitObject = trait.getAsJsonObject();
+
+            if (JSONUtils.hasField(json, "name")) {
+                String traitName = JSONUtils.getString(traitObject, "name").toUpperCase();
+                float value = 0f;
+                if (JSONUtils.hasField(traitObject, "value")) {
+                    value = JSONUtils.getFloat(traitObject, "value");
+                }
+
+                properties.addTrait(ModItemTrait.valueOf(traitName), value);
+            }
+        });
     }
 
     /**

@@ -11,6 +11,8 @@ import net.minecraftforge.common.ModDimension;
 import net.minecraftforge.event.entity.EntityEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.player.AttackEntityEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.village.VillagerTradesEvent;
 import net.minecraftforge.event.village.WandererTradesEvent;
@@ -34,7 +36,9 @@ public class ModForgeEventHandler {
 
         MinecraftForge.EVENT_BUS.addListener(this::onRegisterDimensionsEvent);
 
+        MinecraftForge.EVENT_BUS.addListener(this::onAttackEntityEvent);
         MinecraftForge.EVENT_BUS.addListener(this::onEntityJoinWorldEvent);
+        MinecraftForge.EVENT_BUS.addListener(this::OnLivingHurtEvent);
         MinecraftForge.EVENT_BUS.addListener(this::onLivingUpdateEvent);
         MinecraftForge.EVENT_BUS.addListener(this::onVillagerTradesEvent);
         MinecraftForge.EVENT_BUS.addListener(this::onWandererTradesEvent);
@@ -69,6 +73,22 @@ public class ModForgeEventHandler {
      */
     private void onLivingUpdateEvent(LivingEvent.LivingUpdateEvent event) {
         mLivingEntityEventHandler.onLivingUpdateEvent(event);
+    }
+
+    /**
+     * Fired when the player attacks an entity.
+     * @param event The event data.
+     */
+    private void onAttackEntityEvent(AttackEntityEvent event) {
+        mLivingEntityEventHandler.onAttackEntityEvent(event);
+    }
+
+    /**
+     * Fired when a living entity is hurt.
+     * @param event The event data.
+     */
+    private void OnLivingHurtEvent(LivingHurtEvent event) {
+        mLivingEntityEventHandler.OnLivingHurtEvent(event);
     }
 
     /**

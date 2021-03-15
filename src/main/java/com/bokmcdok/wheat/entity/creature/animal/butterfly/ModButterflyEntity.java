@@ -28,7 +28,7 @@ import javax.annotation.Nullable;
 import java.util.Random;
 
 public class ModButterflyEntity extends CreatureEntity {
-    private static final int MAX_VARIETIES = 7;
+    private static final int MAX_VARIETIES = 8;
 
     private static final DataParameter<Integer> VARIETY = EntityDataManager.createKey(ModButterflyEntity.class, DataSerializers.VARINT);
     private BlockPos mSpawnPosition;

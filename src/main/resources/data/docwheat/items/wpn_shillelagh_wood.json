@@ -1,0 +1,21 @@
+{
+  "type": "weapon",
+  "group": "combat",
+  "damage": 3.5,
+  "damage_type": "bludgeoning",
+  "weight": 4,
+  "tier": "wood",
+  "traits": [
+    {
+      "name": "defensive",
+      "value" : 0.9
+    },
+    {
+      "name" : "nonlethal"
+    },
+    {
+      "name" : "versatile",
+      "value" : 1.5
+    }
+  ]
+}
