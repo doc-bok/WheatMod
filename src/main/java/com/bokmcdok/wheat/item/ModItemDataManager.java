@@ -290,22 +290,28 @@ public class ModItemDataManager extends ModDataManager<IModItem> {
         setFloat(properties, json, "damage", ModItemImpl.ModItemProperties::setAttackDamage);
         setFloat(properties, json, "weight", ModItemImpl.ModItemProperties::setWeight);
 
-        String damageType = JSONUtils.getString(json, "damage_type").toUpperCase();
-        properties.setDamageType(ModDamageType.valueOf(damageType));
+        if (JSONUtils.hasField(json, "damage_type")) {
+            String damageType = JSONUtils.getString(json, "damage_type").toUpperCase();
+            properties.setDamageType(ModDamageType.valueOf(damageType));
+        }
 
-        String tier = JSONUtils.getString(json, "tier").toUpperCase();
-        properties.setItemTier(ItemTier.valueOf(tier));
+        if (JSONUtils.hasField(json, "tier")) {
+            String tier = JSONUtils.getString(json, "tier").toUpperCase();
+            properties.setItemTier(ItemTier.valueOf(tier));
+        }
 
         setObjectArray(properties, json, "traits", (x, trait) -> {
             JsonObject traitObject = trait.getAsJsonObject();
 
-            String traitName = JSONUtils.getString(traitObject, "name").toUpperCase();
-            float value = 0f;
-            if (JSONUtils.hasField(traitObject, "value")) {
-                value = JSONUtils.getFloat(traitObject, "value");
-            }
+            if (JSONUtils.hasField(json, "name")) {
+                String traitName = JSONUtils.getString(traitObject, "name").toUpperCase();
+                float value = 0f;
+                if (JSONUtils.hasField(traitObject, "value")) {
+                    value = JSONUtils.getFloat(traitObject, "value");
+                }
 
-            properties.addTrait(ModItemTrait.valueOf(traitName), value);
+                properties.addTrait(ModItemTrait.valueOf(traitName), value);
+            }
         });
     }
 
