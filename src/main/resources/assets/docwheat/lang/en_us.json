@@ -215,5 +215,8 @@
   "item.docwheat.blood_leather_helmet": "Blood Helmet",
   "item.docwheat.blood_leather_chestplate": "Blood Chestplate",
   "item.docwheat.blood_leather_leggings": "Blood Leggings",
-  "item.docwheat.blood_leather_boots": "Blood Boots"
+  "item.docwheat.blood_leather_boots": "Blood Boots",
+
+  "item.docwheat.wpn_shillelagh_wood": "Shillelagh",
+  "item.docwheat.wpn_shillelagh_iron": "Iron Shillelagh"
 }
