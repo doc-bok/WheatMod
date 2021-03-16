@@ -1,0 +1,6 @@
+{
+  "parent": "docwheat:item/large_handheld",
+  "textures": {
+    "layer0": "docwheat:item/wpn_shillelagh_iron"
+  }
+}
