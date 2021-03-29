@@ -35,4 +35,13 @@ public class ModCastSpellOnAttackTargetGoal extends ModCastSpellGoal {
     protected LivingEntity getTarget() {
         return mCaster.getAttackTarget();
     }
+
+    /**
+     * Reset the target so the entity doesn't just keep trying the same spell on the same target.
+     */
+    @Override
+    public void resetTask() {
+        super.resetTask();
+        mCaster.setAttackTarget(null);
+    }
 }

@@ -8,8 +8,6 @@ import com.bokmcdok.wheat.entity.creature.feldgeister.ModFeldgeisterEntity;
 import com.bokmcdok.wheat.entity.creature.feldgeister.fillager.ModFillagerEntity;
 import com.bokmcdok.wheat.entity.creature.feldgeister.fillager.ahrenkind.ModAhrenkindEntity;
 import com.bokmcdok.wheat.supplier.ModBlockSupplier;
-import com.bokmcdok.wheat.tag.ModTag;
-import com.bokmcdok.wheat.tag.ModTagRegistrar;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
@@ -49,7 +47,7 @@ import javax.annotation.Nullable;
 public class ModWeizenmutterEntity extends ModFillagerEntity implements ISpellcaster {
     private static final DataParameter<Boolean> SPELL = EntityDataManager.createKey(ModWeizenmutterEntity.class, DataSerializers.BOOLEAN);
     private static final ResourceLocation TEXTURE = new ResourceLocation("docwheat:textures/entity/feldgeister/weizenmutter.png");
-    private static LazyValue<Block> DISEASED_WHEAT = new LazyValue<>(new ModBlockSupplier("docwheat:diseased_wheat"));
+    private static final LazyValue<Block> DISEASED_WHEAT = new LazyValue<>(new ModBlockSupplier("docwheat:diseased_wheat"));
 
     private boolean mAngry = false;
 

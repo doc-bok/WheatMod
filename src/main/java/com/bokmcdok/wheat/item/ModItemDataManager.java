@@ -150,7 +150,7 @@ public class ModItemDataManager extends ModDataManager<IModItem> {
 
             case SPAWN_EGG: {
                 if (!JSONUtils.hasField(json, "entity") ||
-                        !JSONUtils.hasField(json, "weight") ||
+                        !JSONUtils.hasField(json, "primary_color") ||
                         !JSONUtils.hasField(json,"secondary_color")) {
                     LOGGER.error("Failed to load {}: spawn eggs need 'entity', 'primary_color', and 'secondary_color' attributes", location.toString());
                     return null;

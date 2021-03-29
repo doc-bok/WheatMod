@@ -54,6 +54,7 @@ class ModTerrain {
                     monsterSpawns.add(new Biome.SpawnListEntry(ModEntityRegistrar.weizenvogel, 40, 1, 1));
                     monsterSpawns.add(new Biome.SpawnListEntry(ModEntityRegistrar.getreidehahn, 8, 1, 1));
                     monsterSpawns.add(new Biome.SpawnListEntry(ModEntityRegistrar.weizenmutter, 5, 1, 1));
+                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityRegistrar.haferman, 3, 1, 1));
                     break;
 
                 case FOREST:
@@ -67,6 +68,7 @@ class ModTerrain {
                     monsterSpawns.add(new Biome.SpawnListEntry(ModEntityRegistrar.weizenvogel, 40, 1, 1));
                     monsterSpawns.add(new Biome.SpawnListEntry(ModEntityRegistrar.getreidehahn, 8, 1, 1));
                     monsterSpawns.add(new Biome.SpawnListEntry(ModEntityRegistrar.weizenmutter, 5, 1, 1));
+                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityRegistrar.haferman, 3, 1, 1));
                     break;
 
                 case RIVER:
@@ -80,6 +82,7 @@ class ModTerrain {
                     monsterSpawns.add(new Biome.SpawnListEntry(ModEntityRegistrar.weizenvogel, 40, 1, 1));
                     monsterSpawns.add(new Biome.SpawnListEntry(ModEntityRegistrar.getreidehahn, 8, 1, 1));
                     monsterSpawns.add(new Biome.SpawnListEntry(ModEntityRegistrar.weizenmutter, 5, 1, 1));
+                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityRegistrar.haferman, 3, 1, 1));
                     break;
 
                 case TAIGA:
@@ -91,6 +94,7 @@ class ModTerrain {
                     monsterSpawns.add(new Biome.SpawnListEntry(ModEntityRegistrar.haferbock, 8, 1, 1));
                     monsterSpawns.add(new Biome.SpawnListEntry(ModEntityRegistrar.getreidehahn, 8, 1, 1));
                     monsterSpawns.add(new Biome.SpawnListEntry(ModEntityRegistrar.weizenmutter, 5, 1, 1));
+                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityRegistrar.haferman, 3, 1, 1));
                     break;
 
                 case SAVANNA:
@@ -100,6 +104,7 @@ class ModTerrain {
                     monsterSpawns.add(new Biome.SpawnListEntry(ModEntityRegistrar.haferbock, 8, 1, 1));
                     monsterSpawns.add(new Biome.SpawnListEntry(ModEntityRegistrar.getreidehahn, 8, 1, 1));
                     monsterSpawns.add(new Biome.SpawnListEntry(ModEntityRegistrar.weizenmutter, 5, 1, 1));
+                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityRegistrar.haferman, 3, 1, 1));
                     break;
 
                 case EXTREME_HILLS:
@@ -115,6 +120,7 @@ class ModTerrain {
                     monsterSpawns.add(new Biome.SpawnListEntry(ModEntityRegistrar.haferbock, 8, 1, 1));
                     monsterSpawns.add(new Biome.SpawnListEntry(ModEntityRegistrar.getreidehahn, 8, 1, 1));
                     monsterSpawns.add(new Biome.SpawnListEntry(ModEntityRegistrar.weizenmutter, 5, 1, 1));
+                    monsterSpawns.add(new Biome.SpawnListEntry(ModEntityRegistrar.haferman, 3, 1, 1));
                     break;
 
                 case MUSHROOM:
