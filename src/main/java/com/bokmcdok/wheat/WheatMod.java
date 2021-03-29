@@ -3,6 +3,7 @@ package com.bokmcdok.wheat;
 import com.bokmcdok.wheat.block.ModBlockRegistrar;
 import com.bokmcdok.wheat.container.ModContainerUtils;
 import com.bokmcdok.wheat.dimension.ModDimensionRegistrar;
+import com.bokmcdok.wheat.effect.ModEffectRegistrar;
 import com.bokmcdok.wheat.entity.ModEntityRegistrar;
 import com.bokmcdok.wheat.screen.FlourMillScreen;
 import com.bokmcdok.wheat.spell.ModSpellRegistrar;
@@ -28,6 +29,7 @@ public class WheatMod
         new ModEntityRegistrar(TAG_REGISTRAR);
         new ModForgeEventHandler(TAG_REGISTRAR);
         new ModDimensionRegistrar();
+        new ModEffectRegistrar();
 
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientSetup);
     }

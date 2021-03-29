@@ -73,7 +73,7 @@ public abstract class ModSpell {
      * @return The casting time.
      */
     public int getCastingTime() {
-        return 60;
+        return 10;
     }
 
     /**

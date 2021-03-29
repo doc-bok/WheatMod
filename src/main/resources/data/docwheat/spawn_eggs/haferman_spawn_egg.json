@@ -1,0 +1,21 @@
+{
+    "type": "spawn_egg",
+    "group": "misc",
+    "entity": "docwheat:haferman",
+
+    "primary_color": {
+        "color": {
+            "r": 82,
+            "g": 82,
+            "b": 82
+        }
+    },
+
+    "secondary_color": {
+        "color": {
+            "r": 21,
+            "g": 21,
+            "b": 21
+        }
+    }
+}

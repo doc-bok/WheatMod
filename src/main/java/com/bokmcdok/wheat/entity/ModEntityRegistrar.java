@@ -12,6 +12,8 @@ import com.bokmcdok.wheat.entity.creature.animal.widowbird.ModWidowbirdEntity;
 import com.bokmcdok.wheat.entity.creature.animal.widowbird.ModWidowbirdRenderFactory;
 import com.bokmcdok.wheat.entity.creature.feldgeister.fillager.ahrenkind.ModAhrenkindEntity;
 import com.bokmcdok.wheat.entity.creature.feldgeister.fillager.ahrenkind.ModAhrenkindRenderFactory;
+import com.bokmcdok.wheat.entity.creature.feldgeister.fillager.haferman.ModHafermanEntity;
+import com.bokmcdok.wheat.entity.creature.feldgeister.fillager.haferman.ModHafermanRenderFactory;
 import com.bokmcdok.wheat.entity.creature.feldgeister.fillager.weizenmutter.ModWeizenmutterCornsnakeEntity;
 import com.bokmcdok.wheat.entity.creature.feldgeister.fillager.weizenmutter.ModWeizenmutterCornsnakeRenderFactory;
 import com.bokmcdok.wheat.entity.creature.feldgeister.fillager.weizenmutter.ModWeizenmutterEntity;
@@ -73,6 +75,7 @@ public class ModEntityRegistrar {    public static final EntityType<ThrownItemEn
     public static final EntityType<ModWeizenmutterCornsnakeEntity> weizenmutter_cornsnake = null;
     public static final EntityType<ModWeizenmutterGetreidewolfEntity> weizenmutter_getreidewolf = null;
     public static final EntityType<ModAhrenkindEntity> ahrenkind = null;
+    public static final EntityType<ModHafermanEntity> haferman = null;
 
     public static final TileEntityType<ModInventoryTileEntity> inventory = null;
     public static final TileEntityType<ModTrapTileEntity> trap = null;
@@ -115,6 +118,7 @@ public class ModEntityRegistrar {    public static final EntityType<ThrownItemEn
         EntitySpawnPlacementRegistry.register(weizenmutter_cornsnake, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ModWeizenmutterCornsnakeEntity::canWeizenmutterSpawn);
         EntitySpawnPlacementRegistry.register(weizenmutter_getreidewolf, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ModWeizenmutterGetreidewolfEntity::canSpawn);
         EntitySpawnPlacementRegistry.register(ahrenkind, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ModAhrenkindEntity::canSpawn);
+        EntitySpawnPlacementRegistry.register(haferman, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, ModHafermanEntity::canSpawn);
 
         RenderingRegistry.registerEntityRenderingHandler(stone_entity, new StoneRenderer());
         RenderingRegistry.registerEntityRenderingHandler(field_mouse, new ModMouseRenderFactory());
@@ -132,6 +136,7 @@ public class ModEntityRegistrar {    public static final EntityType<ThrownItemEn
         RenderingRegistry.registerEntityRenderingHandler(weizenmutter_cornsnake, new ModWeizenmutterCornsnakeRenderFactory());
         RenderingRegistry.registerEntityRenderingHandler(weizenmutter_getreidewolf, new ModWeizenmutterGetreidewulfRenderFactory());
         RenderingRegistry.registerEntityRenderingHandler(ahrenkind, new ModAhrenkindRenderFactory());
+        RenderingRegistry.registerEntityRenderingHandler(haferman, new ModHafermanRenderFactory());
 
         ClientRegistry.bindTileEntityRenderer(campfire, ModCampfireTileEntityRenderer::new);
     }
@@ -219,7 +224,12 @@ public class ModEntityRegistrar {    public static final EntityType<ThrownItemEn
                 EntityType.Builder.create(ModAhrenkindEntity::new, EntityClassification.MONSTER)
                         .size(0.6f, 1.95f)
                         .build("ahrenkind")
-                        .setRegistryName(WheatMod.MOD_ID, "ahrenkind")
+                        .setRegistryName(WheatMod.MOD_ID, "ahrenkind"),
+
+                EntityType.Builder.create(ModHafermanEntity::new, EntityClassification.MONSTER)
+                        .size(0.6f, 1.95f)
+                        .build("haferman")
+                        .setRegistryName(WheatMod.MOD_ID, "haferman")
         );
 
         ModItemUtils.loadSpawnEggs();
